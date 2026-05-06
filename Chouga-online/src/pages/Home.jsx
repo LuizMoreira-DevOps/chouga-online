@@ -1,4 +1,4 @@
-import WheelMenu from "../components/WheelMenu";
+import WheelMenu from "../components/WheelMenu.jsx";
 
 function Home() {
   return <WheelMenu />;
