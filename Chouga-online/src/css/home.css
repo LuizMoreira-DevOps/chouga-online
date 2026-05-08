@@ -201,7 +201,7 @@
 }
 
 .wheel-menu.closing .wheel-center img {
-    animation: closeSpin 0.9s ease-in-out forwards;
+    animation: closeSpin 0.5s cubic-bezier(0.77, 0, 0.175, 1)forwards;
 }
 
 @keyframes closeSpin {
