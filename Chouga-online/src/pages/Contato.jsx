@@ -1,14 +1,14 @@
 import Layout from "../components/Layout";
 
-function Camisetas() {
+function Contato() {
   return (
     <Layout>
       <section style={{ padding: "140px 48px" }}>
-        <h1>CAMISETAS</h1>
-        <p>Página de camisetas funcionando.</p>
+        <h1>CONTATO</h1>
+        <p>Fale com a Chouga.</p>
       </section>
     </Layout>
   );
 }
 
-export default Camisetas;
+export default Contato;
