@@ -1,13 +1,16 @@
 name: CI - Chouga Online
 
 on:
-  push:
-    branches: ["main"]
   pull_request:
-    branches: ["main"]
+    branches:
+      - main
+  push:
+    branches:
+      - main
 
 permissions:
   contents: read
+  security-events: write
 
 jobs:
   ci:
@@ -15,8 +18,8 @@ jobs:
     runs-on: ubuntu-latest
 
     defaults:
-      run:
-        working-directory: Chouga-online
+          run:
+            working-directory: Chouga-online
 
     steps:
       - name: Baixar repositório
