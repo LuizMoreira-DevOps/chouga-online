@@ -23,6 +23,10 @@ jobs:
 
     runs-on: ubuntu-latest
 
+  defaults:
+    run:
+      working-directory: Chouga-online
+
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
