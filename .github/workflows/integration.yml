@@ -18,8 +18,8 @@ jobs:
     runs-on: ubuntu-latest
 
     defaults:
-      run:
-        working-directory: Chouga-online
+          run:
+            working-directory: Chouga-online
 
     steps:
       - name: Baixar repositório
