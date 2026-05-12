@@ -1,5 +1,5 @@
 body {
-    overflow: hidden;
+    overflow: auto hidden;
 }
 
 .home {
@@ -135,10 +135,10 @@ body {
         translate(-50%, -50%) rotate(var(--angle)) translateY(calc(var(--wheel-radius) * -1)) rotate(calc(var(--angle) * -1));
 
     transition:
-    transform 0.55s cubic-bezier(0.77, 0, 0.175, 1),
-    opacity 0.45s ease,
-    filter 0.45s ease,
-    color 0.3s ease;
+        transform 0.55s cubic-bezier(0.77, 0, 0.175, 1),
+        opacity 0.45s ease,
+        filter 0.45s ease,
+        color 0.3s ease;
 }
 
 .wheel-item::before {
@@ -254,57 +254,82 @@ body {
         translate(-50%, -50%) rotate(var(--angle)) translateY(-24px) rotate(calc(var(--angle) * -1)) scale(0.2);
 }
 
-/* RESPONSIVO */
+/* =========================
+   NOTEBOOK / ZOOM MÉDIO
+========================= */
 
-@media (max-width: 1024px) {
-    .home {
-        grid-template-columns: 1fr;
-        text-align: center;
-        gap: 48px;
-        padding-top: 130px;
-    }
-
-    .hero-left {
-        align-items: center;
-        justify-self: center;
-    }
-
-    .hero-center {
-        justify-self: center;
-    }
-}
-
-@media (max-width: 640px) {
-    .header {
-        padding: 18px 20px;
-    }
-
-    .nav {
-        display: none;
-    }
-
-    .home {
-        padding: 120px 18px 48px;
-        gap: 36px;
-    }
-
-    .hero-left h1 {
-        font-size: 48px;
-    }
-
-    .hero-left p {
-        font-size: 18px;
-    }
-
+@media (max-width: 1400px) {
     .wheel-menu {
-        --wheel-size: min(92vw, 390px);
-        --wheel-radius: calc(var(--wheel-size) * 0.45);
+        --wheel-size: min(44vw, 68vh, 560px);
+        --wheel-radius: calc(var(--wheel-size) * 0.40);
     }
 
     .wheel-item {
-        width: 86px;
-        height: 86px;
-        gap: 6px;
+        width: 96px;
+        height: 96px;
+    }
+
+    .wheel-icon {
+        font-size: 34px;
+    }
+
+    .wheel-label {
+        font-size: 13px;
+    }
+}
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 900px) {
+    body {
+        overflow: auto hidden;
+    }
+
+    .home {
+        height: auto;
+        min-height: 100vh;
+
+        overflow: auto hidden;
+
+        display: flex;
+        flex-direction: column;
+
+        align-items: center;
+        justify-content: flex-start;
+
+        gap: 36px;
+
+        padding: 110px 20px 56px;
+    }
+
+    .hero-left {
+        max-width: 340px;
+
+        align-items: center;
+        text-align: center;
+
+        transform: none;
+    }
+
+    .hero-center {
+        position: relative;
+
+        left: auto;
+        top: auto;
+
+        transform: none;
+    }
+
+    .wheel-menu {
+        --wheel-size: min(78vw, 420px);
+        --wheel-radius: calc(var(--wheel-size) * 0.39);
+    }
+
+    .wheel-item {
+        width: 82px;
+        height: 82px;
     }
 
     .wheel-icon {
@@ -313,5 +338,42 @@ body {
 
     .wheel-label {
         font-size: 11px;
+    }
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 520px) {
+    .home {
+        padding: 96px 16px 44px;
+        gap: 28px;
+    }
+
+    .hero-left h1 {
+        font-size: 40px;
+    }
+
+    .hero-left p {
+        font-size: 17px;
+    }
+
+    .wheel-menu {
+        --wheel-size: min(82vw, 320px);
+        --wheel-radius: calc(var(--wheel-size) * 0.36);
+    }
+
+    .wheel-item {
+        width: 70px;
+        height: 70px;
+    }
+
+    .wheel-icon {
+        font-size: 22px;
+    }
+
+    .wheel-label {
+        font-size: 10px;
     }
 }
