@@ -1,15 +1,28 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import "../css/header.css";
 import logoImg from "../assets/images/Logo.png";
 
 function Header() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
     <header className="header">
-      <Link to="/" className="logo">
+      <Link to="/" className="logo" onClick={() => setMenuOpen(false)}>
         <img src={logoImg} alt="Logo Chouga Skateboard" />
       </Link>
 
-      <nav className="nav">
+      <button
+        className="menu-toggle"
+        type="button"
+        aria-label="Abrir menu"
+        aria-expanded={menuOpen}
+        onClick={() => setMenuOpen(!menuOpen)}
+      >
+        ☰
+      </button>
+
+      <nav className={`nav ${menuOpen ? "nav-open" : ""}`}>
         <a href="https://www.instagram.com/" target="_blank" rel="noreferrer">
           Instagram
         </a>
