@@ -1,5 +1,5 @@
 body {
-    overflow-x: hidden;
+    overflow: auto hidden;
 }
 
 .home {
@@ -285,16 +285,14 @@ body {
 @media (max-width: 900px) {
 
     body {
-        overflow-x: hidden;
-        overflow-y: auto;
+        overflow: auto hidden;
     }
 
     .home {
         height: auto;
         min-height: 100vh;
 
-        overflow-x: hidden;
-        overflow-y: auto;
+        overflow: auto hidden;
 
         display: flex;
         flex-direction: column;
