@@ -48,13 +48,19 @@ jobs:
       - name: Build do projeto
         run: npm run build
 
+      - name: Conferir build
+        run: |
+          pwd
+          ls -la
+          ls -la dist
+
       - name: Configurar GitHub Pages
         uses: actions/configure-pages@v5
 
       - name: Enviar artefato
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./Chouga-online/dist
+          path: ${{ github.workspace }}/Chouga-online/dist
 
       - name: Publicar no GitHub Pages
         id: deployment
