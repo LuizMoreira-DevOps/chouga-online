@@ -10,10 +10,15 @@ function Header() {
       </Link>
 
       <nav className="nav">
-        <Link to="/camisetas">Camisetas</Link>
-        <Link to="/shapes">Shapes</Link>
-        <Link to="/sobre">Sobre</Link>
-        <Link to="/contato">Contato</Link>
+        <a href="https://www.instagram.com/" target="_blank" rel="noreferrer">
+          Instagram
+        </a>
+
+        <a href="https://wa.me/55SEUNUMERO" target="_blank" rel="noreferrer">
+          WhatsApp
+        </a>
+
+        <span className="nav-badge">Drop em breve</span>
       </nav>
     </header>
   );
