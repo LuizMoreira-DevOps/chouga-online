@@ -52,3 +52,18 @@
 .nav-badge {
     color: var(--red);
 }
+
+@media (max-width: 900px),
+(max-height: 620px) {
+    .header {
+        padding: 18px 20px;
+    }
+
+    .logo {
+        width: 150px;
+    }
+
+    .nav {
+        display: none;
+    }
+}
