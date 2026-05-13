@@ -2,9 +2,6 @@
    CONFIGURAÇÕES GERAIS
 ========================= */
 
-body {
-    overflow: auto hidden;
-}
 
 /* =========================
    HOME / BACKGROUND
@@ -487,14 +484,14 @@ body {
 
 @media (max-width: 900px) {
     body {
-        overflow: auto hidden;
+        overflow-x: hidden;
     }
 
     .home {
         height: auto;
         min-height: 100svh;
 
-        overflow: auto hidden;
+        overflow: hidden;
 
         display: flex;
         flex-direction: column;
@@ -585,6 +582,8 @@ body {
     .home {
         padding: 90px 12px 20px;
         gap: 8px;
+
+        overflow: hidden;
     }
 
     .hero-left h1 {

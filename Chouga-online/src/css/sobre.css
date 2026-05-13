@@ -1,1 +1,215 @@
-/*stylelint-disable*/
+/* =========================
+   SOBRE PAGE
+========================= */
+
+.sobre-page {
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+
+    background: #0d0d0d;
+}
+
+.sobre-page::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background-image:
+        linear-gradient(rgba(0, 0, 0, 0.82),
+            rgba(0, 0, 0, 0.94)),
+        url("../assets/images/bg-home.png");
+
+    background-size: cover;
+    background-position: center;
+
+    opacity: 0.38;
+
+    z-index: 0;
+}
+
+/* =========================
+   CONTAINER
+========================= */
+
+.sobre-container {
+    position: relative;
+    z-index: 1;
+
+    min-height: 100vh;
+
+    display: grid;
+    grid-template-columns: 380px 620px;
+    justify-content: center;
+    align-items: center;
+
+    gap: 48px;
+
+    padding: 120px 70px 80px;
+}
+
+/* =========================
+   TEXTO
+========================= */
+
+.sobre-content {
+    max-width: 420px;
+}
+
+.sobre-tag {
+    display: inline-block;
+
+    margin-bottom: 12px;
+
+    color: var(--red);
+
+    font-size: 14px;
+    letter-spacing: 4px;
+}
+
+.sobre-title {
+    margin-bottom: 34px;
+
+    color: var(--text-light);
+
+    font-size: clamp(72px, 8vw, 120px);
+    line-height: 0.82;
+}
+
+.sobre-title strong {
+    color: var(--red);
+}
+
+.sobre-subtitle {
+    margin-bottom: 28px;
+
+    color: var(--text-light);
+
+    font-size: clamp(28px, 2vw, 42px);
+    line-height: 1.02;
+    font-weight: 500;
+
+    text-transform: uppercase;
+}
+
+.sobre-content p {
+    margin-bottom: 20px;
+
+    color: var(--text-light);
+
+    font-size: 22px;
+    line-height: 1.2;
+
+    opacity: 0.88;
+}
+
+/* =========================
+   GALERIA
+========================= */
+
+.sobre-gallery {
+    position: relative;
+
+    width: 620px;
+    height: 560px;
+    min-width: 620px;
+    min-height: 560px;
+
+    overflow: visible;
+}
+
+/* =========================
+   FOTOS
+========================= */
+
+.photo {
+    position: absolute;
+
+    display: block;
+
+    max-width: none;
+    min-width: 0;
+
+    object-fit: cover;
+    object-position: center;
+
+    border: 10px solid #f3dfcf;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+
+    filter:
+        grayscale(1) sepia(0.2) brightness(0.72);
+}
+
+.photo-1 {
+    width: 260px;
+    height: 330px;
+
+    top: 0;
+    left: 90px;
+
+    transform: rotate(-8deg);
+}
+
+.photo-2 {
+    width: 340px;
+    height: 230px;
+
+    top: 150px;
+    right: 20px;
+
+    transform: rotate(10deg);
+}
+
+.photo-3 {
+    width: 330px;
+    height: 210px;
+
+    bottom: 10px;
+    left: 0;
+
+    transform: rotate(2deg);
+}
+
+/* =========================
+   RESPONSIVO
+========================= */
+
+@media (max-width: 1100px) {
+    .photo {
+        position: relative;
+
+        width: 100%;
+        height: 260px;
+
+        top: auto;
+        right: auto;
+        bottom: auto;
+        left: auto;
+
+        transform: none;
+    }
+
+    .photo-1,
+    .photo-2,
+    .photo-3 {
+        width: 100%;
+        height: 260px;
+    }
+}
+/* =========================
+   MOBILE PEQUENO
+========================= */
+
+@media (max-width: 520px) {
+    .photo {
+        height: 220px;
+        border-width: 6px;
+    }
+
+    .photo-1,
+    .photo-2,
+    .photo-3 {
+        height: 220px;
+    }
+}
