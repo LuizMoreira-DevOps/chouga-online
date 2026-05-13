@@ -61,29 +61,59 @@
 @media (max-width: 900px),
 (max-height: 620px) {
     .header {
-        padding: 18px 20px;
+        padding: 25px 20px;
     }
 
     .logo {
-        width: 150px;
+        width: 120px;
     }
 
     .menu-toggle {
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        display: none;
+    }
 
-        width: 44px;
-        height: 44px;
+    @media (max-width: 900px) {
+        .menu-toggle {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
 
-        background: rgba(13, 13, 13, 0.75);
-        border: 1px solid rgba(255, 255, 255, 0.18);
-        border-radius: 12px;
+            width: 60px;
+            height: 60px;
 
-        color: var(--text-light);
-        font-size: 28px;
-        line-height: 1;
-        cursor: pointer;
+            background: rgba(13, 13, 13, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 10px;
+
+            padding: 0;
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            width: 28px;
+            height: 3px;
+
+            background: var(--text-light);
+            border-radius: 999px;
+
+            transition:
+                transform 0.3s ease,
+                opacity 0.2s ease;
+        }
+
+        .menu-toggle.is-open span:nth-child(1) {
+            transform: translateY(9px) rotate(45deg);
+        }
+
+        .menu-toggle.is-open span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.is-open span:nth-child(3) {
+            transform: translateY(-9px) rotate(-45deg);
+        }
     }
 
     .nav {
@@ -92,7 +122,7 @@
         right: 20px;
         left: 20px;
 
-        display: none;
+        display: flex;
         flex-direction: column;
         align-items: center;
         gap: 18px;
@@ -102,10 +132,20 @@
         border: 1px solid rgba(255, 255, 255, 0.12);
         border-radius: 18px;
         backdrop-filter: blur(10px);
+
+        opacity: 0;
+        transform: translateY(-12px);
+        pointer-events: none;
+
+        transition:
+            opacity 0.3s ease,
+            transform 0.3s ease;
     }
 
     .nav.nav-open {
-        display: flex;
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
     }
 
     .nav a,
