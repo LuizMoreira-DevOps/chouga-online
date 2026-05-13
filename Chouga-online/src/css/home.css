@@ -1,6 +1,14 @@
+/* =========================
+   CONFIGURAÇÕES GERAIS
+========================= */
+
 body {
     overflow: auto hidden;
 }
+
+/* =========================
+   HOME / BACKGROUND
+========================= */
 
 .home {
     height: 100vh;
@@ -21,21 +29,27 @@ body {
     content: "";
     position: absolute;
     inset: 0;
+
     background-image:
         linear-gradient(rgba(0, 0, 0, 0.78),
             rgba(0, 0, 0, 0.92)),
         url("../assets/images/bg-home.png");
+
     background-size: cover;
     background-position: center;
+
     opacity: 0.38;
     z-index: 0;
 }
 
-/* HERO LEFT */
+/* =========================
+   HERO LEFT / TEXTO
+========================= */
 
 .hero-left {
     position: relative;
     z-index: 2;
+
     width: 100%;
     max-width: 260px;
     justify-self: end;
@@ -62,13 +76,16 @@ body {
     width: 170px;
 }
 
-/* HERO CENTER */
+/* =========================
+   HERO CENTER / ÁREA DA WHEEL
+========================= */
 
 .hero-center {
     position: absolute;
     left: 50%;
     top: 50%;
     z-index: 2;
+
     width: 100%;
 
     display: flex;
@@ -78,25 +95,35 @@ body {
     transform: translate(-50%, -43%);
 }
 
-/* WHEEL MENU */
+/* =========================
+   WHEEL MENU / ESTRUTURA
+========================= */
 
 .wheel-menu {
     --wheel-size: min(68vw, 96vh, 900px);
     --wheel-radius: calc(var(--wheel-size) * 0.355);
 
     position: relative;
+
     width: var(--wheel-size);
     height: var(--wheel-size);
+
     margin: 0 auto;
 }
 
+/* =========================
+   WHEEL CENTER / IMAGEM CENTRAL
+========================= */
+
 .wheel-center {
     position: absolute;
-    width: calc(var(--wheel-size) * 0.49);
-    height: calc(var(--wheel-size) * 0.49);
     top: 50%;
     left: 50%;
     z-index: 4;
+
+    width: calc(var(--wheel-size) * 0.49);
+    height: calc(var(--wheel-size) * 0.49);
+
     transform: translate(-50%, -50%);
 }
 
@@ -120,12 +147,14 @@ body {
     width: 100%;
     height: 100%;
     object-fit: contain;
+
     filter:
         drop-shadow(0 0 10px rgba(233, 54, 18, 0.16)) drop-shadow(0 0 20px rgba(233, 54, 18, 0.1));
 }
 
-
-/* ITENS */
+/* =========================
+   WHEEL ITENS / BOTÕES DO MENU
+========================= */
 
 .wheel-item {
     position: absolute;
@@ -157,86 +186,19 @@ body {
         opacity 0.45s ease,
         filter 0.45s ease,
         color 0.3s ease;
+
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+
+    outline: none;
 }
 
-.coming-soon {
-    min-height: 100vh;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    padding: 120px 24px;
-
-    text-align: center;
+.wheel-item:focus,
+.wheel-item:active,
+.wheel-item:focus-visible {
+    outline: none;
+    box-shadow: none;
 }
-
-.coming-soon-content {
-    max-width: 620px;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    gap: 18px;
-}
-
-.coming-tag {
-    font-size: 12px;
-    letter-spacing: 4px;
-    opacity: 0.6;
-}
-
-.coming-soon h1 {
-    font-size: clamp(52px, 10vw, 120px);
-    line-height: 0.9;
-    letter-spacing: 4px;
-}
-
-.coming-soon p {
-    font-size: clamp(16px, 2vw, 22px);
-    line-height: 1.5;
-    opacity: 0.82;
-}
-
-/* 
-
-EFEITO DE FEIXE DE LUZ AO PASSAR O MOUSE SOBRE UM ITEM DO MENU - DESATIVADO POR ENQUANTO
-.wheel-menu::before {
-    content: "";
-    position: absolute; 
-    left: 50%; 
-    top: 50%;
-
-    width: 120px;
-    height: var(--wheel-radius);
-
-    background: linear-gradient(to top,
-            rgba(233, 54, 18, 0.48),
-            rgba(233, 54, 18, 0.18),
-            transparent);
- 
-    clip-path: polygon(46% 100%, 54% 100%, 100% 0, 0 0); 
-
-    opacity: 0;
-    filter: blur(8px); 
-
-    transform:
-        translate(-50%, -100%) rotate(var(--spot-angle, 0deg)); 
-
-    transform-origin: bottom center;
-
-    z-index: 3;
-    pointer-events: none;
-
-    transition: opacity 0.25s ease;
-}
-
-.wheel-menu:has(.wheel-item:hover)::before {
-    opacity: 1;
-} 
-
-*/
 
 .wheel-item:hover {
     transform:
@@ -248,6 +210,10 @@ EFEITO DE FEIXE DE LUZ AO PASSAR O MOUSE SOBRE UM ITEM DO MENU - DESATIVADO POR 
     color: var(--red);
     text-shadow: 0 0 12px rgba(233, 54, 18, 0.45);
 }
+
+/* =========================
+   WHEEL ÍCONES E TEXTOS
+========================= */
 
 .wheel-icon {
     width: 42px;
@@ -278,43 +244,16 @@ EFEITO DE FEIXE DE LUZ AO PASSAR O MOUSE SOBRE UM ITEM DO MENU - DESATIVADO POR 
     z-index: 2;
 }
 
-/* DIREÇÕES DO MENU - VARIÁVEIS DE ÂNGULO PARA CADA ITEM  - DESATIVADO POR ENQUANTO
-
-.wheel-menu:has(.wheel-item.top:hover) {
-    --spot-angle: 0deg;
+.wheel-icon,
+.wheel-label,
+.wheel-sub-label {
+    user-select: none;
+    pointer-events: none;
 }
 
-.wheel-menu:has(.wheel-item.top-right:hover) {
-    --spot-angle: 45deg;
-}
-
-.wheel-menu:has(.wheel-item.right:hover) {
-    --spot-angle: 90deg;
-}
-
-.wheel-menu:has(.wheel-item.bottom-right:hover) {
-    --spot-angle: 135deg;
-}
-
-.wheel-menu:has(.wheel-item.bottom:hover) {
-    --spot-angle: 180deg;
-}
-
-.wheel-menu:has(.wheel-item.bottom-left:hover) {
-    --spot-angle: 225deg;
-}
-
-.wheel-menu:has(.wheel-item.left:hover) {
-    --spot-angle: 270deg;
-}
-
-.wheel-menu:has(.wheel-item.top-left:hover) {
-    --spot-angle: 315deg;
-}
-
-*/
-
-/* POSIÇÕES */
+/* =========================
+   POSIÇÕES DOS ITENS DA WHEEL
+========================= */
 
 .wheel-item.top {
     --angle: 0deg;
@@ -356,13 +295,100 @@ EFEITO DE FEIXE DE LUZ AO PASSAR O MOUSE SOBRE UM ITEM DO MENU - DESATIVADO POR 
     --beam-angle: 315deg;
 }
 
-/* LINHAS DESATIVADAS */
+/* =========================
+   LINHAS DO MENU / DESATIVADAS
+========================= */
 
 .menu-line {
     display: none;
 }
 
-/* ANIMAÇÃO DE FECHAMENTO */
+/* =========================
+   EFEITO DE FEIXE DE LUZ / DESATIVADO POR ENQUANTO
+========================= */
+
+/*
+
+.wheel-menu::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+
+    width: 120px;
+    height: var(--wheel-radius);
+
+    background: linear-gradient(to top,
+            rgba(233, 54, 18, 0.48),
+            rgba(233, 54, 18, 0.18),
+            transparent);
+
+    clip-path: polygon(46% 100%, 54% 100%, 100% 0, 0 0);
+
+    opacity: 0;
+    filter: blur(8px);
+
+    transform:
+        translate(-50%, -100%)
+        rotate(var(--spot-angle, 0deg));
+
+    transform-origin: bottom center;
+
+    z-index: 3;
+    pointer-events: none;
+
+    transition: opacity 0.25s ease;
+}
+
+.wheel-menu:has(.wheel-item:hover)::before {
+    opacity: 1;
+}
+
+*/
+
+/* =========================
+   DIREÇÕES DO FEIXE DE LUZ / DESATIVADAS POR ENQUANTO
+========================= */
+
+/*
+
+.wheel-menu:has(.wheel-item.top:hover) {
+    --spot-angle: 0deg;
+}
+
+.wheel-menu:has(.wheel-item.top-right:hover) {
+    --spot-angle: 45deg;
+}
+
+.wheel-menu:has(.wheel-item.right:hover) {
+    --spot-angle: 90deg;
+}
+
+.wheel-menu:has(.wheel-item.bottom-right:hover) {
+    --spot-angle: 135deg;
+}
+
+.wheel-menu:has(.wheel-item.bottom:hover) {
+    --spot-angle: 180deg;
+}
+
+.wheel-menu:has(.wheel-item.bottom-left:hover) {
+    --spot-angle: 225deg;
+}
+
+.wheel-menu:has(.wheel-item.left:hover) {
+    --spot-angle: 270deg;
+}
+
+.wheel-menu:has(.wheel-item.top-left:hover) {
+    --spot-angle: 315deg;
+}
+
+*/
+
+/* =========================
+   ANIMAÇÃO DE FECHAMENTO
+========================= */
 
 .wheel-menu.closing .wheel-center img {
     animation: closeSpin 0.55s cubic-bezier(0.77, 0, 0.175, 1) forwards;
@@ -385,6 +411,50 @@ EFEITO DE FEIXE DE LUZ AO PASSAR O MOUSE SOBRE UM ITEM DO MENU - DESATIVADO POR 
 
     transform:
         translate(-50%, -50%) rotate(var(--angle)) translateY(-24px) rotate(calc(var(--angle) * -1)) scale(0.2);
+}
+
+/* =========================
+   PÁGINA EM BREVE
+========================= */
+
+.coming-soon {
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 120px 24px;
+
+    text-align: center;
+}
+
+.coming-soon-content {
+    max-width: 620px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 18px;
+}
+
+.coming-tag {
+    font-size: 12px;
+    letter-spacing: 4px;
+    opacity: 0.6;
+}
+
+.coming-soon h1 {
+    font-size: clamp(52px, 10vw, 120px);
+    line-height: 0.9;
+    letter-spacing: 4px;
+}
+
+.coming-soon p {
+    font-size: clamp(16px, 2vw, 22px);
+    line-height: 1.5;
+    opacity: 0.82;
 }
 
 /* =========================
@@ -431,9 +501,17 @@ EFEITO DE FEIXE DE LUZ AO PASSAR O MOUSE SOBRE UM ITEM DO MENU - DESATIVADO POR 
         align-items: center;
         justify-content: flex-start;
 
-        gap: 22px;
+        gap: 10px;
 
-        padding: 125px 20px 56px;
+        padding: 96px 20px 24px;
+    }
+
+    .home::before {
+        opacity: 0.28;
+
+        background-image:
+            linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.94)),
+            url("../assets/images/bg-home.png");
     }
 
     .hero-left {
@@ -441,16 +519,17 @@ EFEITO DE FEIXE DE LUZ AO PASSAR O MOUSE SOBRE UM ITEM DO MENU - DESATIVADO POR 
         align-items: center;
         text-align: center;
         transform: none;
+        margin-bottom: 4px;
     }
 
     .hero-left h1 {
-        font-size: clamp(42px, 12vw, 58px);
+        font-size: clamp(38px, 11vw, 52px);
         line-height: 0.9;
-        margin-bottom: 6px;
+        margin-bottom: 4px;
     }
 
     .hero-left p {
-        font-size: 17px;
+        font-size: 14px;
         line-height: 1.15;
         margin-bottom: 0;
     }
@@ -459,15 +538,17 @@ EFEITO DE FEIXE DE LUZ AO PASSAR O MOUSE SOBRE UM ITEM DO MENU - DESATIVADO POR 
         position: relative;
         left: auto;
         top: auto;
-        transform: none;
 
         width: 100%;
-        margin-top: 10px;
+
+        margin-top: 0;
+
+        transform: none;
     }
 
     .wheel-menu {
-        --wheel-size: min(82vw, 360px);
-        --wheel-radius: calc(var(--wheel-size) * 0.43);
+        --wheel-size: min(92vw, 390px);
+        --wheel-radius: calc(var(--wheel-size) * 0.41);
     }
 
     .wheel-center {
@@ -476,18 +557,23 @@ EFEITO DE FEIXE DE LUZ AO PASSAR O MOUSE SOBRE UM ITEM DO MENU - DESATIVADO POR 
     }
 
     .wheel-item {
-        width: 74px;
-        height: 74px;
-        gap: 7px;
+        width: 68px;
+        height: 68px;
+        gap: 4px;
     }
 
     .wheel-icon {
-        font-size: 27px;
+        font-size: 24px;
     }
 
     .wheel-label {
-        font-size: 10px;
-        letter-spacing: 0.8px;
+        font-size: 8.5px;
+        letter-spacing: 0.7px;
+    }
+
+    .wheel-sub-label {
+        font-size: 8px;
+        letter-spacing: 0.6px;
     }
 }
 
@@ -497,42 +583,37 @@ EFEITO DE FEIXE DE LUZ AO PASSAR O MOUSE SOBRE UM ITEM DO MENU - DESATIVADO POR 
 
 @media (max-width: 520px) {
     .home {
-        padding: 118px 14px 44px;
-        gap: 18px;
+        padding: 90px 12px 20px;
+        gap: 8px;
     }
 
     .hero-left h1 {
-        font-size: 44px;
+        font-size: 38px;
     }
 
     .hero-left p {
-        font-size: 16px;
+        font-size: 13px;
     }
 
     .wheel-menu {
-        --wheel-size: min(78vw, 305px);
-        --wheel-radius: calc(var(--wheel-size) * 0.44);
+        --wheel-size: min(94vw, 350px);
+        --wheel-radius: calc(var(--wheel-size) * 0.40);
     }
 
     .wheel-item {
-        width: 66px;
-        height: 66px;
+        width: 62px;
+        height: 62px;
     }
 
     .wheel-icon {
-        font-size: 24px;
+        font-size: 22px;
     }
 
     .wheel-label {
-        font-size: 9.5px;
+        font-size: 8px;
     }
-}
 
-@media (max-width: 900px) {
-    .home::before {
-        opacity: 0.28;
-        background-image:
-            linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.94)),
-            url("../assets/images/bg-home.png");
+    .wheel-sub-label {
+        font-size: 7.5px;
     }
 }
