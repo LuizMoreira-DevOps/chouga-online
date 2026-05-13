@@ -23,7 +23,7 @@ body {
     inset: 0;
     background-image:
         linear-gradient(rgba(0, 0, 0, 0.78),
-                rgba(0, 0, 0, 0.92)),
+            rgba(0, 0, 0, 0.92)),
         url("../assets/images/bg-home.png");
     background-size: cover;
     background-position: center;
@@ -81,8 +81,8 @@ body {
 /* WHEEL MENU */
 
 .wheel-menu {
-    --wheel-size: min(48vw, 76vh, 660px);
-    --wheel-radius: calc(var(--wheel-size) * 0.425);
+    --wheel-size: min(68vw, 96vh, 900px);
+    --wheel-radius: calc(var(--wheel-size) * 0.355);
 
     position: relative;
     width: var(--wheel-size);
@@ -108,12 +108,6 @@ body {
 
     width: 26px;
     height: 26px;
-
-    background:
-            radial-gradient(circle,
-                #111 0%,
-                #0d0d0d 60%,
-                transparent 100%);
 
     border-radius: 50%;
 
@@ -159,17 +153,20 @@ body {
         translate(-50%, -50%) rotate(var(--angle)) translateY(calc(var(--wheel-radius) * -1)) rotate(calc(var(--angle) * -1));
 
     transition:
-        transform 0.55s cubic-bezier(0.77, 0, 0.175, 1),
+        transform 0.35s ease,
         opacity 0.45s ease,
         filter 0.45s ease,
         color 0.3s ease;
 }
 
+/* 
+
+EFEITO DE FEIXE DE LUZ AO PASSAR O MOUSE SOBRE UM ITEM DO MENU - DESATIVADO POR ENQUANTO
 .wheel-menu::before {
-    content: ""; /* Feixe de luz que aparece ao passar o mouse sobre um item do menu */
-    position: absolute; /* Permite posicionar o feixe em relação ao centro do menu */
-    left: 50%; /* Centraliza horizontalmente */
-    top: 50%; /* Centraliza verticalmente */
+    content: "";
+    position: absolute; 
+    left: 50%; 
+    top: 50%;
 
     width: 120px;
     height: var(--wheel-radius);
@@ -179,13 +176,13 @@ body {
             rgba(233, 54, 18, 0.18),
             transparent);
  
-    clip-path: polygon(46% 100%, 54% 100%, 100% 0, 0 0); /* Forma de feixe de luz */
+    clip-path: polygon(46% 100%, 54% 100%, 100% 0, 0 0); 
 
     opacity: 0;
-    filter: blur(8px); /* Deixa o feixe mais suave e difuso */
+    filter: blur(8px); 
 
     transform:
-        translate(-50%, -100%) rotate(var(--spot-angle, 0deg)); /* Posiciona o feixe para sair do centro do menu e rotaciona de acordo com o item selecionado */
+        translate(-50%, -100%) rotate(var(--spot-angle, 0deg)); 
 
     transform-origin: bottom center;
 
@@ -197,11 +194,19 @@ body {
 
 .wheel-menu:has(.wheel-item:hover)::before {
     opacity: 1;
+} 
+
+*/
+
+.wheel-item:hover {
+    transform:
+        translate(-50%, -50%) rotate(var(--angle)) translateY(calc(var(--wheel-radius) * -1)) rotate(calc(var(--angle) * -1)) scale(1.08);
 }
 
 .wheel-item:hover .wheel-icon,
 .wheel-item:hover .wheel-label {
     color: var(--red);
+    text-shadow: 0 0 12px rgba(233, 54, 18, 0.45);
 }
 
 .wheel-icon {
@@ -233,7 +238,7 @@ body {
     z-index: 2;
 }
 
-/* DIREÇÕES DO MENU - VARIÁVEIS DE ÂNGULO PARA CADA ITEM */
+/* DIREÇÕES DO MENU - VARIÁVEIS DE ÂNGULO PARA CADA ITEM  - DESATIVADO POR ENQUANTO
 
 .wheel-menu:has(.wheel-item.top:hover) {
     --spot-angle: 0deg;
@@ -266,6 +271,8 @@ body {
 .wheel-menu:has(.wheel-item.top-left:hover) {
     --spot-angle: 315deg;
 }
+
+*/
 
 /* POSIÇÕES */
 
@@ -489,4 +496,3 @@ body {
             url("../assets/images/bg-home.png");
     }
 }
-
