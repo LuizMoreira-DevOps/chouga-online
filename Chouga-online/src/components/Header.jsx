@@ -13,13 +13,15 @@ function Header() {
       </Link>
 
       <button
-        className="menu-toggle"
+        className={`menu-toggle ${menuOpen ? "is-open" : ""}`}
         type="button"
-        aria-label="Abrir menu"
+        aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
         aria-expanded={menuOpen}
         onClick={() => setMenuOpen(!menuOpen)}
       >
-        ☰
+        <span></span>
+        <span></span>
+        <span></span>
       </button>
 
       <nav className={`nav ${menuOpen ? "nav-open" : ""}`}>
