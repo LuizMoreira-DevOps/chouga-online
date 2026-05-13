@@ -40,13 +40,13 @@
     min-height: 100vh;
 
     display: grid;
-    grid-template-columns: 380px 620px;
+    grid-template-columns: 420px 720px;
     justify-content: center;
     align-items: center;
 
-    gap: 48px;
+    gap: 70px;
 
-    padding: 120px 70px 80px;
+    padding: 95px 70px 60px;
 }
 
 /* =========================
@@ -73,7 +73,7 @@
 
     color: var(--text-light);
 
-    font-size: clamp(72px, 8vw, 120px);
+    font-size: clamp(72px, 7vw, 110px);
     line-height: 0.82;
 }
 
@@ -111,12 +111,12 @@
 .sobre-gallery {
     position: relative;
 
-    width: 620px;
-    height: 560px;
-    min-width: 620px;
-    min-height: 560px;
+    width: 720px;
+    height: 520px;
+    min-width: 720px;
+    min-height: 520px;
 
-    overflow: visible;
+    transform: translateY(-20px);
 }
 
 /* =========================
@@ -142,33 +142,33 @@
 }
 
 .photo-1 {
-    width: 260px;
-    height: 330px;
+    width: 300px;
+    height: 370px;
 
     top: 0;
-    left: 90px;
+    left: 120px;
 
-    transform: rotate(-8deg);
+    transform: rotate(-7deg);
 }
 
 .photo-2 {
-    width: 340px;
-    height: 230px;
+    width: 390px;
+    height: 250px;
 
-    top: 150px;
-    right: 20px;
+    top: 160px;
+    right: 0;
 
-    transform: rotate(10deg);
+    transform: rotate(9deg);
 }
 
 .photo-3 {
-    width: 330px;
-    height: 210px;
+    width: 390px;
+    height: 240px;
 
     bottom: 10px;
-    left: 0;
+    left: 20px;
 
-    transform: rotate(2deg);
+    transform: rotate(1deg);
 }
 
 /* =========================
