@@ -248,7 +248,6 @@ body {
 .wheel-label,
 .wheel-sub-label {
     user-select: none;
-    -webkit-user-select: none;
     pointer-events: none;
 }
 
