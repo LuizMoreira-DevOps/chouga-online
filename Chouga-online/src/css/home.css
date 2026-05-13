@@ -159,6 +159,46 @@ body {
         color 0.3s ease;
 }
 
+.coming-soon {
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 120px 24px;
+
+    text-align: center;
+}
+
+.coming-soon-content {
+    max-width: 620px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 18px;
+}
+
+.coming-tag {
+    font-size: 12px;
+    letter-spacing: 4px;
+    opacity: 0.6;
+}
+
+.coming-soon h1 {
+    font-size: clamp(52px, 10vw, 120px);
+    line-height: 0.9;
+    letter-spacing: 4px;
+}
+
+.coming-soon p {
+    font-size: clamp(16px, 2vw, 22px);
+    line-height: 1.5;
+    opacity: 0.82;
+}
+
 /* 
 
 EFEITO DE FEIXE DE LUZ AO PASSAR O MOUSE SOBRE UM ITEM DO MENU - DESATIVADO POR ENQUANTO
