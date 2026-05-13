@@ -10,6 +10,7 @@ import {
   FaCircle,
   FaSquare,
   FaPlay,
+  FaLock,
 } from "react-icons/fa";
 
 import wheelImg from "../assets/images/wheel.png";
@@ -20,11 +21,11 @@ function WheelMenu() {
 
   const items = [
     { label: "CAMISETA", icon: <FaTshirt />, path: "/camisetas", className: "top" },
-    { label: "MOLETOM", icon: <FaSquare />, path: "/shapes", className: "top-right" },
-    { label: "SHAPE", icon: <FaCircle />, path: "/shapes", className: "right" },
-    { label: "TÊNIS", icon: <FaShoePrints />, path: "/camisetas", className: "bottom-right" },
-    { label: "ACESSÓRIOS", icon: <FaPlay />, path: "/camisetas", className: "bottom" },
-    { label: "VÍDEOS", icon: <FaVideo />, path: "/sobre", className: "bottom-left" },
+    { label: "EM BREVE", icon: <FaLock />, path: "/em-breve", className: "top-right" },
+    { label: "EM BREVE", icon: <FaLock />, path: "/em-breve", className: "right" },
+    { label: "EM BREVE", icon: <FaLock />, path: "/em-breve", className: "bottom-right" },
+    { label: "EM BREVE", icon: <FaLock />, path: "/em-breve", className: "bottom" },
+    { label: "EM BREVE", icon: <FaLock />, path: "/em-breve", className: "bottom-left" },
     { label: "SOBRE", icon: <FaUsers />, path: "/sobre", className: "left" },
     { label: "CONTATO", icon: <FaEnvelope />, path: "/contato", className: "top-left" },
   ];
