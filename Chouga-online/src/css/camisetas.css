@@ -28,13 +28,10 @@
 .camisetas-breadcrumb {
     display: inline-block;
     margin-bottom: 4rem;
-
     color: var(--color-text);
-
     font-size: var(--text-sm);
     letter-spacing: 0.45em;
     text-transform: uppercase;
-
     opacity: 0.95;
 }
 
@@ -44,9 +41,7 @@
 
 .filter-group h2 {
     margin-bottom: 1.15rem;
-
     color: var(--color-text-strong);
-
     font-size: 1.45rem;
     font-weight: 500;
     letter-spacing: 0.02em;
@@ -56,17 +51,13 @@
 .filter-button {
     display: block;
     margin-bottom: 0.75rem;
-
     color: rgba(243, 215, 191, 0.55);
-
     background: transparent;
     border: 0;
-
     font-size: 1.35rem;
     line-height: 1;
     text-align: left;
     text-transform: uppercase;
-
     transition:
         color var(--transition-fast),
         transform var(--transition-fast);
@@ -81,21 +72,16 @@
 .filter-button.is-active::after {
     content: "";
     display: block;
-
     width: 72px;
     height: 3px;
-
     margin-top: 0.35rem;
-
     background: var(--color-red-strong);
 }
 
 .filter-divider {
     width: 100%;
     height: 2px;
-
     margin: 2.2rem 0;
-
     background: linear-gradient(90deg,
             rgba(243, 215, 191, 0.3),
             transparent);
@@ -109,13 +95,10 @@
 
 .size-list button {
     color: rgba(243, 215, 191, 0.55);
-
     background: transparent;
     border: 0;
-
     font-size: 1.2rem;
     text-transform: uppercase;
-
     transition:
         color var(--transition-fast),
         transform var(--transition-fast);
@@ -135,10 +118,8 @@
 .color-dot {
     width: 28px;
     height: 28px;
-
     border: 1px solid rgba(243, 215, 191, 0.8);
     border-radius: 50%;
-
     transition:
         transform var(--transition-fast),
         box-shadow var(--transition-fast);
@@ -177,7 +158,6 @@
     height: calc(100vh - var(--page-padding-top) - var(--page-padding-bottom));
     overflow-y: auto;
     padding-right: 12px;
-
     scrollbar-width: thin;
     scrollbar-color: rgba(243, 215, 191, 0.35) transparent;
 }
@@ -199,16 +179,12 @@
     position: sticky;
     top: 0;
     z-index: 2;
-
     margin-bottom: 1.2rem;
     padding-bottom: 1rem;
-
     color: var(--color-text-strong);
-
     background: linear-gradient(rgba(13, 13, 13, 0.96),
             rgba(13, 13, 13, 0.72),
             rgba(13, 13, 13, 0));
-
     font-size: clamp(4.5rem, 7vw, 7.5rem);
     font-weight: 400;
     line-height: 0.9;
@@ -220,7 +196,6 @@
 .products-grid {
     position: relative;
     isolation: isolate;
-
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 1rem 3rem;
@@ -233,12 +208,9 @@
 .product-card {
     position: relative;
     z-index: 1;
-
     cursor: pointer;
-
     border: 1px solid rgba(243, 215, 191, 0.22);
     background: rgba(13, 13, 13, 0.42);
-
     transition:
         opacity var(--transition-fast),
         filter var(--transition-fast),
@@ -261,11 +233,8 @@
 .product-image img {
     width: 100%;
     height: 100%;
-
     object-fit: cover;
-
     filter: brightness(0.88) contrast(1.05);
-
     transition:
         transform var(--transition-base),
         filter var(--transition-base);
@@ -283,7 +252,6 @@
 .product-info h3,
 .product-info span {
     color: var(--color-text-strong);
-
     font-family: "Courier New", monospace;
     font-size: 0.95rem;
     font-weight: 400;
@@ -298,7 +266,7 @@
 }
 
 /* =========================
-   PRODUCT FOCUS - DESKTOP
+   PRODUCT FOCUS
 ========================= */
 
 .product-card.dimmed {
@@ -311,15 +279,14 @@
     top: 50%;
     left: 50%;
     z-index: 1000;
-
-    width: min(82vw, 420px);
+    width: min(42vw, 760px);
     max-height: 78vh;
 
-    transform: translate(-50%, -50%);
+    overflow: hidden;
 
+    transform: translate(-50%, -50%);
     border-color: rgba(243, 215, 191, 0.75);
     background: rgba(13, 13, 13, 0.95);
-
     box-shadow:
         0 30px 80px rgba(0, 0, 0, 0.75),
         0 0 40px rgba(243, 215, 191, 0.1);
@@ -329,23 +296,35 @@
     transform: translate(-50%, -50%);
 }
 
-.product-card.selected .product-image {
-    aspect-ratio: 1 / 0.92;
-}
-
-/* .product-card.selected .product-image img {
-    transform: none;
-    object-fit: cover;
+/* .product-card.selected {
+    width: min(76vw, 360px);
+    max-height: 76vh;
 } */
 
+.product-card.selected .product-image {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+}
+
+.product-card.selected .product-image img {
+    width: 100%;
+    height: auto;
+
+    display: block;
+
+    object-fit: contain;
+    transform: none;
+}
+
 .product-card.selected .product-info {
-    padding: 0.85rem 1rem 1rem;
+    padding: 0.92rem 1rem 1rem;
     background: rgba(13, 13, 13, 0.8);
 }
 
 .product-card.selected .product-info h3,
 .product-card.selected .product-info span {
-    font-size: 1rem;
+    font-size: clamp(1.25rem, 2vw, 2rem);
     line-height: 1.2;
 }
 
@@ -380,13 +359,14 @@
 
     .camisetas-container {
         height: auto;
-        grid-template-columns: 1fr;
-        gap: 2.8rem;
+        grid-template-columns: 140px minmax(0, 1fr);
+        gap: 1.2rem;
+        align-items: start;
     }
 
     .camisetas-sidebar {
-        position: relative;
-        top: auto;
+        position: sticky;
+        top: 96px;
     }
 
     .camisetas-content {
@@ -400,27 +380,14 @@
         background: none;
     }
 
-    .product-card.selected {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        z-index: 1000;
-
-        width: min(82vw, 420px);
-        max-height: 78vh;
-
-        transform: translate(-50%, -50%);
-
-        border-color: rgba(243, 215, 191, 0.75);
-        background: rgba(13, 13, 13, 0.95);
-
-        box-shadow:
-            0 30px 80px rgba(0, 0, 0, 0.75),
-            0 0 40px rgba(243, 215, 191, 0.1);
+    .products-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1rem;
     }
 
-    .product-card.selected:hover {
-        transform: translate(-50%, -50%);
+    .product-card.selected {
+        width: min(76vw, 360px);
+        max-height: 76vh;
     }
 
     .product-card.selected .product-image {
@@ -429,18 +396,11 @@
 
     .product-card.selected .product-info {
         padding: 0.85rem 1rem 1rem;
-        background: rgba(13, 13, 13, 0.8);
     }
 
     .product-card.selected .product-info h3,
     .product-card.selected .product-info span {
         font-size: 1rem;
-        line-height: 1.2;
-    }
-
-    .product-card.dimmed {
-        opacity: 0.16;
-        filter: blur(1.5px);
     }
 }
 
@@ -449,41 +409,63 @@
 ========================= */
 
 @media (max-width: 520px) {
-    .camisetas-content h1 {
-        margin-bottom: 1.6rem;
-
-        font-size: clamp(3rem, 15vw, 4.4rem);
-        letter-spacing: 0.08em;
+    .camisetas-container {
+        grid-template-columns: 120px minmax(0, 1fr);
+        gap: 0.9rem;
     }
 
     .camisetas-breadcrumb {
+        margin-bottom: 2rem;
         font-size: var(--text-xs);
         letter-spacing: 0.32em;
     }
 
+    .filter-group {
+        margin-bottom: 2rem;
+    }
+
     .filter-group h2 {
-        font-size: 1.25rem;
+        font-size: 1rem;
     }
 
     .filter-button {
-        font-size: 1.1rem;
+        font-size: 0.9rem;
+    }
+
+    .size-list {
+        gap: 0.65rem;
+    }
+
+    .size-list button {
+        font-size: 0.85rem;
+    }
+
+    .color-list {
+        gap: 0.5rem;
+    }
+
+    .color-dot {
+        width: 22px;
+        height: 22px;
+    }
+
+    .camisetas-content h1 {
+        margin-bottom: 1.6rem;
+        font-size: clamp(3rem, 15vw, 4.4rem);
+        letter-spacing: 0.08em;
     }
 
     .products-grid {
         grid-template-columns: 1fr;
     }
 
-    .product-card.selected {
-        transform: scale(1.02);
-    }
-
-    .product-card.selected:hover {
-        transform: scale(1.02);
-    }
-
     .product-info h3,
     .product-info span {
         font-size: 0.9rem;
+    }
+
+    .product-card.selected {
+        width: min(72vw, 310px);
     }
 
     .product-card.selected .product-info h3,
