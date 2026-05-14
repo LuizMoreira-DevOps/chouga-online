@@ -8,45 +8,33 @@
     --color-red-strong: #f02a00;
     --color-muted: #8f8177;
     --color-border: rgba(243, 215, 191, 0.45);
-
     /* FONTS */
     --font-base: "Oswald", sans-serif;
     --font-display: "Permanent Marker", cursive;
-
     /* LAYOUT */
     --container-max: 1500px;
     --page-padding-x: clamp(18px, 5vw, 80px);
     --page-padding-top: 96px;
     --page-padding-bottom: 48px;
-
     /* SPACING */
     --gap-xs: 0.75rem;
     --gap-sm: 1rem;
     --gap-md: 1.5rem;
     --gap-lg: 2.5rem;
     --gap-xl: 4rem;
-
     /* TYPOGRAPHY */
     --text-xs: 0.8rem;
     --text-sm: 0.9rem;
     --text-md: 1rem;
     --text-lg: 1.15rem;
     --text-xl: 1.35rem;
-
     --title-lg: clamp(4rem, 6vw, 7rem);
     --title-md: clamp(3.5rem, 5vw, 6rem);
     --title-sm: clamp(2.4rem, 8vw, 4rem);
-
     /* EFFECTS */
     --transition-fast: 0.25s ease;
     --transition-base: 0.3s ease;
     --shadow-red: 0 0 30px rgba(233, 54, 18, 0.45);
-
-    /* BREAKPOINTS - referência */
-    /* mobile: 520px */
-    /* tablet: 900px */
-    /* desktop-small: 1100px */
-    /* notebook: 1400px */
 }
 
 * {
