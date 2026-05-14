@@ -1,54 +1,38 @@
+/* =========================
+   CONTATO PAGE
+========================= */
+
 .contato-page {
-    min-height: 100vh;
-    position: relative;
-    overflow-x: hidden;
-    background: #0d0d0d;
-    color: #f3d7bf;
-}
-
-.contato-page::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-image:
-        linear-gradient(rgba(0, 0, 0, 0.78),
-            rgba(0, 0, 0, 0.92)),
-        url("../assets/images/bg-home.png");
-    background-position: center;
-    background-size: cover;
-    opacity: 0.38;
-    z-index: 0;
-}
-
-.contato-hero {
-    position: relative;
-    z-index: 1;
-    min-height: 100vh;
-    padding: 90px 80px 32px;
-        display: flex;
-        align-items: center;
-        overflow: hidden;
+    background: var(--color-bg);
 }
 
 .contato-content {
-    width: min(100%, 1500px);
-    margin: 0 auto;
     display: grid;
-    grid-template-columns: minmax(320px, 0.75fr) minmax(620px, 1.45fr);
-    gap: clamp(32px, 4vw, 72px);
+    grid-template-columns:
+        minmax(320px, 0.78fr) minmax(560px, 1.35fr);
+
     align-items: center;
+
+    gap: clamp(40px, 6vw, 90px);
 }
 
 .contato-info {
     max-width: 460px;
 }
 
+/* =========================
+   TITULO
+========================= */
+
 .contato-info h1 {
-    margin: 0 0 3rem;
-    font-family: "Permanent Marker", cursive;
-    font-size: clamp(4rem, 6vw, 7rem);
+    margin-bottom: 2rem;
+
+    font-family: var(--font-display);
+
+    font-size: var(--title-lg);
     line-height: 0.82;
     letter-spacing: 0.02em;
+
     text-transform: uppercase;
 }
 
@@ -57,30 +41,43 @@
 }
 
 .contato-info h1 span:nth-child(1) {
-    color: #f3d7bf;
+    color: var(--color-text-strong);
     transform: rotate(-7deg);
 }
 
 .contato-info h1 span:nth-child(2),
 .contato-info h1 span:nth-child(3) {
-    color: #f02a00;
+    color: var(--color-red-strong);
     transform: rotate(-9deg);
 }
 
+/* =========================
+   TEXTO
+========================= */
+
 .contato-info p {
     max-width: 420px;
-    margin: 0 0 2.3rem;
-    font-size: 1.08rem;
+
+    margin-bottom: 2.3rem;
+
+    font-size: var(--text-lg);
     line-height: 1.4;
     letter-spacing: 0.04em;
+
     text-transform: uppercase;
 }
+
+/* =========================
+   LISTA
+========================= */
 
 .contato-list {
     display: grid;
     gap: 1rem;
+
     padding: 0;
     margin: 0 0 1.5rem;
+
     list-style: none;
 }
 
@@ -88,21 +85,29 @@
     display: flex;
     align-items: center;
     gap: 0.85rem;
-    font-size: 1rem;
+
+    font-size: var(--text-md);
     letter-spacing: 0.16em;
+
     text-transform: uppercase;
 }
 
 .contato-list li svg {
     flex-shrink: 0;
+
     width: 1.25rem;
+
     font-size: 1.2rem;
-    color: #f3d7bf;
+    color: var(--color-text-strong);
 }
 
 .contato-list span {
     line-height: 1.25;
 }
+
+/* =========================
+   SOCIAL
+========================= */
 
 .contato-social {
     display: flex;
@@ -112,15 +117,18 @@
 .contato-social a {
     width: 2.4rem;
     height: 2.4rem;
+
     display: grid;
     place-items: center;
-    color: #f3d7bf;
+
+    color: var(--color-text-strong);
+
     border: 1px solid rgba(243, 215, 191, 0.8);
-    text-decoration: none;
+
     transition:
-        color 0.25s ease,
-        background-color 0.25s ease,
-        transform 0.25s ease;
+        color var(--transition-fast),
+        background-color var(--transition-fast),
+        transform var(--transition-fast);
 }
 
 .contato-social a svg {
@@ -128,10 +136,15 @@
 }
 
 .contato-social a:hover {
-    color: #0d0d0d;
-    background-color: #f3d7bf;
+    color: var(--color-bg);
+    background-color: var(--color-text-strong);
+
     transform: translateY(-3px);
 }
+
+/* =========================
+   FORM
+========================= */
 
 .contato-form {
     display: grid;
@@ -147,27 +160,38 @@
     position: absolute;
     top: 1.15rem;
     left: 1.3rem;
+
     z-index: 1;
-    color: #f3d7bf;
-    font-size: 1rem;
+
+    color: var(--color-text-strong);
+
+    font-size: var(--text-md);
     letter-spacing: 0.04em;
+
     text-transform: uppercase;
+
     pointer-events: none;
 }
 
 .contato-form input,
 .contato-form textarea {
     width: 100%;
-    border: 1px solid rgba(243, 215, 191, 0.45);
+
+    border: 1px solid var(--color-border);
+
     background-color: rgba(12, 12, 12, 0.88);
-    color: #f3d7bf;
+
+    color: var(--color-text-strong);
+
     font: inherit;
-    font-size: 1.1rem;
+    font-size: 1.05rem;
+
     outline: none;
+
     transition:
-        border-color 0.25s ease,
-        box-shadow 0.25s ease,
-        background-color 0.25s ease;
+        border-color var(--transition-fast),
+        box-shadow var(--transition-fast),
+        background-color var(--transition-fast);
 }
 
 .contato-form input {
@@ -177,50 +201,80 @@
 
 .contato-form textarea {
     min-height: 170px;
+
     padding: 3rem 1.3rem 0.9rem;
+
     resize: vertical;
 }
 
 .contato-form input:focus,
 .contato-form textarea:focus {
-    border-color: #f02a00;
+    border-color: var(--color-red-strong);
+
     background-color: rgba(10, 10, 10, 0.98);
+
     box-shadow: 0 0 22px rgba(240, 42, 0, 0.22);
 }
 
+/* =========================
+   BOTÃO
+========================= */
+
 .contato-form button {
     height: 4rem;
+
     border: 0;
-    background-color: #f02a00;
+
+    background-color: var(--color-red-strong);
+
     color: #050505;
-    font-size: 1.08rem;
+
+    font-size: var(--text-lg);
     font-weight: 800;
     letter-spacing: 0.04em;
+
     text-transform: uppercase;
-    cursor: pointer;
+
     transition:
-        transform 0.25s ease,
-        box-shadow 0.25s ease,
-        filter 0.25s ease;
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast),
+        filter var(--transition-fast);
 }
 
 .contato-form button:hover {
     transform: translateY(-3px);
+
     filter: brightness(1.05);
-    box-shadow: 0 0 30px rgba(240, 42, 0, 0.45);
+
+    box-shadow: var(--shadow-red);
 }
 
 /* =========================
-   TABLET
+   DESKTOP MENOR
 ========================= */
 
-@media (max-width: 1100px) {
-    .contato-hero {
-        min-height: auto;
-        padding: 120px 32px 64px;
-        align-items: flex-start;
+@media (max-width: 1400px) {
+    .contato-content {
+        grid-template-columns:
+            minmax(300px, 0.75fr) minmax(520px, 1.2fr);
+
+        gap: 52px;
     }
 
+    .contato-info h1 {
+        font-size: clamp(3.8rem, 5.4vw, 6.4rem);
+    }
+
+    .contato-info p {
+        font-size: var(--text-md);
+    }
+}
+
+/* =========================
+   TABLET / MOBILE BASE
+========================= */
+
+@media (max-width: 900px) {
     .contato-content {
         grid-template-columns: 1fr;
         gap: 3rem;
@@ -228,8 +282,10 @@
 
     .contato-info {
         max-width: 100%;
-        text-align: center;
+
         margin: 0 auto;
+
+        text-align: center;
     }
 
     .contato-info p {
@@ -252,47 +308,43 @@
 }
 
 /* =========================
-   MOBILE
+   MOBILE PEQUENO
 ========================= */
 
-@media (max-width: 560px) {
-    .contato-hero {
-        padding: 100px 18px 48px;
-    }
-
+@media (max-width: 520px) {
     .contato-content {
         gap: 2.4rem;
     }
 
     .contato-info h1 {
         margin-bottom: 2rem;
-        font-size: clamp(4.1rem, 20vw, 5.8rem);
+
+        font-size: clamp(3.8rem, 18vw, 5.4rem);
     }
 
     .contato-info p {
         max-width: 320px;
-        margin-bottom: 2.4rem;
-        font-size: 1rem;
-    }
 
-    .contato-list {
-        gap: 1rem;
+        margin-bottom: 2rem;
+
+        font-size: var(--text-md);
     }
 
     .contato-list li {
         gap: 0.8rem;
-        font-size: 0.85rem;
+
+        font-size: var(--text-sm);
         letter-spacing: 0.1em;
     }
 
     .contato-list li svg {
-        width: 1.2rem;
-        font-size: 1.1rem;
+        width: 1.1rem;
+        font-size: 1rem;
     }
 
     .contato-social a {
-        width: 2.25rem;
-        height: 2.25rem;
+        width: 2.2rem;
+        height: 2.2rem;
     }
 
     .contato-form {
@@ -311,11 +363,11 @@
 
     .contato-form label span {
         left: 1.1rem;
-        font-size: 1rem;
+        font-size: var(--text-sm);
     }
 
     .contato-form button {
         height: 4rem;
-        font-size: 1rem;
+        font-size: var(--text-md);
     }
 }
