@@ -12,7 +12,7 @@ function Sobre() {
         <section className="sobre-container">
 
           <div className="sobre-content">
-            <span className="sobre-tag">SOBRE</span>
+            {/* <span className="sobre-tag">SOBRE</span> */}
 
             <h1 className="sobre-title">
               SOBRE
