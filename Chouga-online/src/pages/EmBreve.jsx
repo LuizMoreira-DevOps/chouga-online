@@ -3,19 +3,23 @@ import Layout from "../components/Layout";
 function EmBreve() {
   return (
     <Layout>
-      <section className="coming-soon">
-        <div className="coming-soon-content">
-          <span className="coming-tag">CHOUGA ONLINE</span>
+      <main className="coming-page page-bg">
+        <section className="coming-soon page-section">
+          <div className="coming-soon-content page-container">
+            <span className="coming-tag">
+              CHOUGA ONLINE
+            </span>
 
-          <h1>EM BREVE</h1>
+            <h1>EM BREVE</h1>
 
-          <p>
-            Estamos preparando algo pesado.
-            <br />
-            Novos produtos chegando em breve.
-          </p>
-        </div>
-      </section>
+            <p>
+              Estamos preparando algo pesado.
+              <br />
+              Novos produtos chegando em breve.
+            </p>
+          </div>
+        </section>
+      </main>
     </Layout>
   );
 }

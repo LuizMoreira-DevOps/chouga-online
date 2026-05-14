@@ -8,56 +8,54 @@ import sobre3 from "../assets/images/sobre-3.png";
 function Sobre() {
   return (
     <Layout>
-      <main className="sobre-page">
-        <section className="sobre-container">
+      <main className="sobre-page page-bg">
+        <section className="sobre-section page-section">
+          <div className="sobre-container page-container">
+            <div className="sobre-content">
+              <h1 className="sobre-title">
+                SOBRE
+                <br />
+                <strong>NÓS</strong>
+              </h1>
 
-          <div className="sobre-content">
-            {/* <span className="sobre-tag">SOBRE</span> */}
+              <h2 className="sobre-subtitle">
+                Nascida do concreto,
+                <br />
+                feita pra quem vive fora da curva.
+              </h2>
 
-            <h1 className="sobre-title">
-              SOBRE
-              <br />
-              <strong>NÓS</strong>
-            </h1>
+              <p>
+                A CHOUGA nasceu em 2022 da vontade de criar algo
+                real, autêntico e que representasse o corre das ruas.
+              </p>
 
-            <h2 className="sobre-subtitle">
-              Nascida do concreto,
-              <br />
-              feita pra quem vive fora da curva.
-            </h2>
+              <p>
+                Não é só sobre andar de skate.
+                <br />
+                É sobre atitude, liberdade e nunca parar de evoluir.
+              </p>
+            </div>
 
-            <p>
-              A CHOUGA nasceu em 2022 da vontade de criar algo
-              real, autêntico e que representasse o corre das ruas.
-            </p>
+            <div className="sobre-gallery">
+              <img
+                src={sobre1}
+                alt="Skatista Chouga"
+                className="photo photo-1"
+              />
 
-            <p>
-              Não é só sobre andar de skate.
-              <br />
-              É sobre atitude, liberdade e nunca parar de evoluir.
-            </p>
+              <img
+                src={sobre2}
+                alt="Skatista pista"
+                className="photo photo-2"
+              />
+
+              <img
+                src={sobre3}
+                alt="Equipe Chouga"
+                className="photo photo-3"
+              />
+            </div>
           </div>
-
-          <div className="sobre-gallery">
-            <img
-              src={sobre1}
-              alt="Skatista Chouga"
-              className="photo photo-1"
-            />
-
-            <img
-              src={sobre2}
-              alt="Skatista pista"
-              className="photo photo-2"
-            />
-
-            <img
-              src={sobre3}
-              alt="Equipe Chouga"
-              className="photo photo-3"
-            />
-          </div>
-
         </section>
       </main>
     </Layout>

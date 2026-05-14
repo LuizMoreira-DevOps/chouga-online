@@ -1,14 +1,23 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+
 import "../css/header.css";
 import logoImg from "../assets/images/Logo.png";
 
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
 
+  function closeMenu() {
+    setMenuOpen(false);
+  }
+
+  function toggleMenu() {
+    setMenuOpen((currentState) => !currentState);
+  }
+
   return (
     <header className="header">
-      <Link to="/" className="logo" onClick={() => setMenuOpen(false)}>
+      <Link to="/" className="logo" onClick={closeMenu}>
         <img src={logoImg} alt="Logo Chouga Skateboard" />
       </Link>
 
@@ -17,7 +26,7 @@ function Header() {
         type="button"
         aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
         aria-expanded={menuOpen}
-        onClick={() => setMenuOpen(!menuOpen)}
+        onClick={toggleMenu}
       >
         <span></span>
         <span></span>
@@ -25,12 +34,21 @@ function Header() {
       </button>
 
       <nav className={`nav ${menuOpen ? "nav-open" : ""}`}>
-        <a href="https://www.instagram.com/" target="_blank" rel="noreferrer">
-          Instagram
-        </a>
+        <Link to="/sobre" onClick={closeMenu}>
+          Sobre
+        </Link>
 
-        <a href="https://wa.me/55SEUNUMERO" target="_blank" rel="noreferrer">
-          WhatsApp
+        <Link to="/contato" onClick={closeMenu}>
+          Contato
+        </Link>
+
+        <a
+          href="https://www.instagram.com/"
+          target="_blank"
+          rel="noreferrer"
+          onClick={closeMenu}
+        >
+          Instagram
         </a>
 
         <span className="nav-badge">Drop em breve</span>

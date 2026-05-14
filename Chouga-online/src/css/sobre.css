@@ -3,55 +3,16 @@
 ========================= */
 
 .sobre-page {
-    min-height: 100vh;
-    position: relative;
-    overflow-x: hidden;
-
-    background: #0d0d0d;
+    background: var(--color-bg);
 }
-
-.sobre-page::before {
-    content: "";
-
-    position: absolute;
-    inset: 0;
-
-    background-image:
-        linear-gradient(rgba(0, 0, 0, 0.82),
-            rgba(0, 0, 0, 0.94)),
-        url("../assets/images/bg-home.png");
-
-    background-size: cover;
-    background-position: center;
-
-    opacity: 0.38;
-
-    z-index: 0;
-}
-
-/* =========================
-   CONTAINER
-========================= */
 
 .sobre-container {
-    position: relative;
-    z-index: 1;
-
-    min-height: 100vh;
-
     display: grid;
-    grid-template-columns: 420px 720px;
-    justify-content: center;
+    grid-template-columns: minmax(320px, 420px) minmax(560px, 720px);
     align-items: center;
-
-    gap: 70px;
-
-    padding: 95px 70px 60px;
+    justify-content: center;
+    gap: clamp(48px, 6vw, 72px);
 }
-
-/* =========================
-   TEXTO
-========================= */
 
 .sobre-content {
     max-width: 420px;
@@ -59,46 +20,49 @@
 
 .sobre-tag {
     display: inline-block;
-
     margin-bottom: 12px;
 
-    color: var(--red);
+    color: var(--color-red);
 
-    font-size: 14px;
+    font-size: var(--text-sm);
     letter-spacing: 4px;
+    text-transform: uppercase;
 }
 
 .sobre-title {
-    margin-bottom: 34px;
+    margin-bottom: 32px;
 
-    color: var(--text-light);
+    color: var(--color-text);
 
-    font-size: clamp(72px, 7vw, 110px);
+    font-size: clamp(4rem, 6vw, 7rem);
     line-height: 0.82;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
 }
 
 .sobre-title strong {
-    color: var(--red);
+    color: var(--color-red);
 }
 
 .sobre-subtitle {
+    max-width: 420px;
     margin-bottom: 28px;
 
-    color: var(--text-light);
+    color: var(--color-text);
 
-    font-size: clamp(28px, 2vw, 42px);
+    font-size: clamp(1.75rem, 2vw, 2.65rem);
     line-height: 1.02;
     font-weight: 500;
-
     text-transform: uppercase;
 }
 
 .sobre-content p {
+    max-width: 420px;
     margin-bottom: 20px;
 
-    color: var(--text-light);
+    color: var(--color-text);
 
-    font-size: 22px;
+    font-size: var(--text-xl);
     line-height: 1.2;
 
     opacity: 0.88;
@@ -118,10 +82,6 @@
 
     transform: translateY(-20px);
 }
-
-/* =========================
-   FOTOS
-========================= */
 
 .photo {
     position: absolute;
@@ -172,20 +132,58 @@
 }
 
 /* =========================
-   SOBRE RESPONSIVO
+   DESKTOP MENOR
 ========================= */
 
-@media (max-width: 1100px) {
+@media (max-width: 1400px) {
     .sobre-container {
-        min-height: auto;
+        grid-template-columns: minmax(300px, 390px) minmax(520px, 650px);
+        gap: 52px;
+    }
 
+    .sobre-title {
+        font-size: clamp(4rem, 5.5vw, 6.4rem);
+    }
+
+    .sobre-content p {
+        font-size: var(--text-lg);
+    }
+
+    .sobre-gallery {
+        width: 650px;
+        height: 470px;
+        min-width: 650px;
+        min-height: 470px;
+    }
+
+    .photo-1 {
+        width: 270px;
+        height: 335px;
+        left: 110px;
+    }
+
+    .photo-2 {
+        width: 350px;
+        height: 225px;
+        top: 145px;
+    }
+
+    .photo-3 {
+        width: 350px;
+        height: 215px;
+    }
+}
+
+/* =========================
+   TABLET / MOBILE BASE
+========================= */
+
+@media (max-width: 900px) {
+    .sobre-container {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-
         gap: 36px;
-
-        padding: 110px 22px 56px;
     }
 
     .sobre-content {
@@ -194,17 +192,18 @@
     }
 
     .sobre-title {
-        font-size: 64px;
+        margin-bottom: 28px;
+        font-size: var(--title-sm);
     }
 
     .sobre-subtitle {
-        max-width: 340px;
-        font-size: 24px;
+        max-width: 380px;
+        font-size: 1.5rem;
     }
 
     .sobre-content p {
-        max-width: 340px;
-        font-size: 17px;
+        max-width: 420px;
+        font-size: var(--text-md);
     }
 
     .sobre-gallery {
@@ -220,7 +219,10 @@
         transform: none;
     }
 
-    .photo {
+    .photo,
+    .photo-1,
+    .photo-2,
+    .photo-3 {
         position: relative;
 
         width: 100%;
@@ -229,16 +231,9 @@
 
         inset: auto;
 
-        transform: none;
-
         border-width: 6px;
-    }
 
-    .photo-1,
-    .photo-2,
-    .photo-3 {
-        width: 100%;
-        height: 230px;
+        transform: none;
     }
 }
 
@@ -248,20 +243,21 @@
 
 @media (max-width: 520px) {
     .sobre-container {
-        padding: 96px 18px 48px;
         gap: 30px;
     }
 
     .sobre-title {
-        font-size: 58px;
+        font-size: clamp(3.6rem, 16vw, 4.6rem);
     }
 
     .sobre-subtitle {
-        font-size: 22px;
+        max-width: 340px;
+        font-size: 1.35rem;
     }
 
     .sobre-content p {
-        font-size: 16px;
+        max-width: 340px;
+        font-size: var(--text-md);
     }
 
     .photo,
