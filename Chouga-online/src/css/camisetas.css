@@ -333,6 +333,7 @@
     pointer-events: none;
     user-select: none;
 }
+
 .product-card.selected .product-info h3,
 .product-card.selected .product-info span {
     pointer-events: none;
