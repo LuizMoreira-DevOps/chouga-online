@@ -8,6 +8,7 @@
 
 .contato-content {
     display: grid;
+    margin-top: 2rem;
     grid-template-columns:
         minmax(320px, 0.78fr) minmax(560px, 1.35fr);
 

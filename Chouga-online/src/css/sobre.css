@@ -8,6 +8,7 @@
 
 .sobre-container {
     display: grid;
+    margin-top: 2rem;
     grid-template-columns: minmax(320px, 420px) minmax(560px, 720px);
     align-items: center;
     justify-content: center;
