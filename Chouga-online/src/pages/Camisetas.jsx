@@ -14,17 +14,106 @@ import camisetaHoney from "../assets/camisetas/camiseta-honey.jpeg";
 import camisetaPreta from "../assets/camisetas/camiseta-preta.jpeg";
 
 const products = [
-  { id: 1, image: camisetaBranca, title: "Camiseta Skateboard Branca", price: "R$ 150,00" },
-  { id: 2, image: camisetaFlower, title: "Camiseta Flower", price: "R$ 150,00" },
-  { id: 3, image: camisetaLife, title: "Camiseta Chouga Life", price: "R$ 150,00" },
-  { id: 4, image: camisetaBomb, title: "Camiseta Chouga Bomb", price: "R$ 150,00" },
-  { id: 5, image: camisetaHoney, title: "Camiseta Chouga Honey", price: "R$ 150,00" },
-  { id: 6, image: camisetaPreta, title: "Camiseta Skateboard Preta", price: "R$ 150,00" },
+  {
+    id: 1,
+    image: camisetaBranca,
+    title: "Camiseta Skateboard Branca",
+    price: "R$ 150,00",
+  },
+  {
+    id: 2,
+    image: camisetaFlower,
+    title: "Camiseta Flower",
+    price: "R$ 150,00",
+  },
+  {
+    id: 3,
+    image: camisetaLife,
+    title: "Camiseta Chouga Life",
+    price: "R$ 150,00",
+  },
+  {
+    id: 4,
+    image: camisetaBomb,
+    title: "Camiseta Chouga Bomb",
+    price: "R$ 150,00",
+  },
+  {
+    id: 5,
+    image: camisetaHoney,
+    title: "Camiseta Chouga Honey",
+    price: "R$ 150,00",
+  },
+  {
+    id: 6,
+    image: camisetaPreta,
+    title: "Camiseta Skateboard Preta",
+    price: "R$ 150,00",
+  },
 ];
 
 function Camisetas() {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [zoomLevel, setZoomLevel] = useState(1);
+  const [dragPosition, setDragPosition] = useState({ x: 0, y: 0 });
+  const [dragStart, setDragStart] = useState(null);
+
+  function openProduct(product) {
+    setSelectedProduct(product);
+    setZoomLevel(1);
+    setDragPosition({ x: 0, y: 0 });
+    setDragStart(null);
+  }
+
+  function closeProduct() {
+    setSelectedProduct(null);
+    setZoomLevel(1);
+    setDragPosition({ x: 0, y: 0 });
+    setDragStart(null);
+  }
+
+  function decreaseZoom() {
+    setZoomLevel((value) => {
+      const nextValue = Math.max(1, value - 0.2);
+
+      if (nextValue === 1) {
+        setDragPosition({ x: 0, y: 0 });
+        setDragStart(null);
+      }
+
+      return nextValue;
+    });
+  }
+
+  function increaseZoom() {
+    setZoomLevel((value) => Math.min(2.4, value + 0.2));
+  }
+
+  function handlePointerDown(event) {
+    if (zoomLevel <= 1) {
+      return;
+    }
+
+    setDragStart({
+      x: event.clientX - dragPosition.x,
+      y: event.clientY - dragPosition.y,
+    });
+  }
+
+  function handlePointerMove(event) {
+    if (!dragStart || zoomLevel <= 1) {
+      return;
+    }
+
+    setDragPosition({
+      x: event.clientX - dragStart.x,
+      y: event.clientY - dragStart.y,
+    });
+  }
+
+  function stopDragging() {
+    setDragStart(null);
+  }
 
   return (
     <Layout>
@@ -76,11 +165,35 @@ function Camisetas() {
                 <h2>Cores</h2>
 
                 <div className="color-list">
-                  <button className="color-dot color-black" type="button" aria-label="Preto"></button>
-                  <button className="color-dot color-gray" type="button" aria-label="Cinza"></button>
-                  <button className="color-dot color-white" type="button" aria-label="Branco"></button>
-                  <button className="color-dot color-red" type="button" aria-label="Vermelho"></button>
-                  <button className="color-dot color-beige" type="button" aria-label="Bege"></button>
+                  <button
+                    className="color-dot color-black"
+                    type="button"
+                    aria-label="Preto"
+                  ></button>
+
+                  <button
+                    className="color-dot color-gray"
+                    type="button"
+                    aria-label="Cinza"
+                  ></button>
+
+                  <button
+                    className="color-dot color-white"
+                    type="button"
+                    aria-label="Branco"
+                  ></button>
+
+                  <button
+                    className="color-dot color-red"
+                    type="button"
+                    aria-label="Vermelho"
+                  ></button>
+
+                  <button
+                    className="color-dot color-beige"
+                    type="button"
+                    aria-label="Bege"
+                  ></button>
                 </div>
               </div>
             </aside>
@@ -93,10 +206,7 @@ function Camisetas() {
                     image={product.image}
                     title={product.title}
                     price={product.price}
-                    onClick={() => {
-                      setSelectedProduct(product);
-                      setZoomLevel(1);
-                    }}
+                    onClick={() => openProduct(product)}
                   />
                 ))}
               </div>
@@ -105,7 +215,7 @@ function Camisetas() {
                 <div
                   className="product-zoom-overlay"
                   role="presentation"
-                  onClick={() => setSelectedProduct(null)}
+                  onClick={closeProduct}
                 >
                   <div
                     className="product-zoom-modal"
@@ -118,7 +228,7 @@ function Camisetas() {
                       <button
                         className="zoom-close"
                         type="button"
-                        onClick={() => setSelectedProduct(null)}
+                        onClick={closeProduct}
                         aria-label="Fechar zoom"
                       >
                         ×
@@ -127,9 +237,7 @@ function Camisetas() {
                       <div className="zoom-actions">
                         <button
                           type="button"
-                          onClick={() =>
-                            setZoomLevel((value) => Math.max(1, value - 0.2))
-                          }
+                          onClick={decreaseZoom}
                           aria-label="Diminuir zoom"
                         >
                           −
@@ -137,9 +245,7 @@ function Camisetas() {
 
                         <button
                           type="button"
-                          onClick={() =>
-                            setZoomLevel((value) => Math.min(2, value + 0.2))
-                          }
+                          onClick={increaseZoom}
                           aria-label="Aumentar zoom"
                         >
                           +
@@ -147,11 +253,23 @@ function Camisetas() {
                       </div>
                     </div>
 
-                    <div className="zoom-image-wrapper">
+                    <div
+                      className={`zoom-image-wrapper ${
+                        zoomLevel > 1 ? "is-draggable" : ""
+                      }`}
+                      onPointerDown={handlePointerDown}
+                      onPointerMove={handlePointerMove}
+                      onPointerUp={stopDragging}
+                      onPointerCancel={stopDragging}
+                      onPointerLeave={stopDragging}
+                    >
                       <img
                         src={selectedProduct.image}
                         alt={selectedProduct.title}
-                        style={{ transform: `scale(${zoomLevel})` }}
+                        draggable="false"
+                        style={{
+                          transform: `translate(${dragPosition.x}px, ${dragPosition.y}px) scale(${zoomLevel})`,
+                        }}
                       />
                     </div>
 
