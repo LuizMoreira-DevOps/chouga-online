@@ -14,46 +14,17 @@ import camisetaHoney from "../assets/camisetas/camiseta-honey.jpeg";
 import camisetaPreta from "../assets/camisetas/camiseta-preta.jpeg";
 
 const products = [
-  {
-    id: 1,
-    image: camisetaBranca,
-    title: "Camiseta Skateboard Branca",
-    price: "R$ 150,00",
-  },
-  {
-    id: 2,
-    image: camisetaFlower,
-    title: "Camiseta Flower",
-    price: "R$ 150,00",
-  },
-  {
-    id: 3,
-    image: camisetaLife,
-    title: "Camiseta Chouga Life",
-    price: "R$ 150,00",
-  },
-  {
-    id: 4,
-    image: camisetaBomb,
-    title: "Camiseta Chouga Bomb",
-    price: "R$ 150,00",
-  },
-  {
-    id: 5,
-    image: camisetaHoney,
-    title: "Camiseta Chouga Honey",
-    price: "R$ 150,00",
-  },
-  {
-    id: 6,
-    image: camisetaPreta,
-    title: "Camiseta Skateboard Preta",
-    price: "R$ 150,00",
-  },
+  { id: 1, image: camisetaBranca, title: "Camiseta Skateboard Branca", price: "R$ 150,00" },
+  { id: 2, image: camisetaFlower, title: "Camiseta Flower", price: "R$ 150,00" },
+  { id: 3, image: camisetaLife, title: "Camiseta Chouga Life", price: "R$ 150,00" },
+  { id: 4, image: camisetaBomb, title: "Camiseta Chouga Bomb", price: "R$ 150,00" },
+  { id: 5, image: camisetaHoney, title: "Camiseta Chouga Honey", price: "R$ 150,00" },
+  { id: 6, image: camisetaPreta, title: "Camiseta Skateboard Preta", price: "R$ 150,00" },
 ];
 
 function Camisetas() {
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [zoomLevel, setZoomLevel] = useState(1);
 
   return (
     <Layout>
@@ -70,31 +41,19 @@ function Camisetas() {
               <div className="filter-group">
                 <h2>Categorias</h2>
 
-                <button
-                  className="filter-button is-active"
-                  type="button"
-                >
+                <button className="filter-button is-active" type="button">
                   Todas
                 </button>
 
-                <button
-                  className="filter-button"
-                  type="button"
-                >
+                <button className="filter-button" type="button">
                   Básicas
                 </button>
 
-                <button
-                  className="filter-button"
-                  type="button"
-                >
+                <button className="filter-button" type="button">
                   Estampadas
                 </button>
 
-                <button
-                  className="filter-button"
-                  type="button"
-                >
+                <button className="filter-button" type="button">
                   Colabs
                 </button>
               </div>
@@ -117,35 +76,11 @@ function Camisetas() {
                 <h2>Cores</h2>
 
                 <div className="color-list">
-                  <button
-                    className="color-dot color-black"
-                    type="button"
-                    aria-label="Preto"
-                  ></button>
-
-                  <button
-                    className="color-dot color-gray"
-                    type="button"
-                    aria-label="Cinza"
-                  ></button>
-
-                  <button
-                    className="color-dot color-white"
-                    type="button"
-                    aria-label="Branco"
-                  ></button>
-
-                  <button
-                    className="color-dot color-red"
-                    type="button"
-                    aria-label="Vermelho"
-                  ></button>
-
-                  <button
-                    className="color-dot color-beige"
-                    type="button"
-                    aria-label="Bege"
-                  ></button>
+                  <button className="color-dot color-black" type="button" aria-label="Preto"></button>
+                  <button className="color-dot color-gray" type="button" aria-label="Cinza"></button>
+                  <button className="color-dot color-white" type="button" aria-label="Branco"></button>
+                  <button className="color-dot color-red" type="button" aria-label="Vermelho"></button>
+                  <button className="color-dot color-beige" type="button" aria-label="Bege"></button>
                 </div>
               </div>
             </aside>
@@ -158,23 +93,75 @@ function Camisetas() {
                     image={product.image}
                     title={product.title}
                     price={product.price}
-                    isSelected={
-                      selectedProduct === product.id
-                    }
-                    isDimmed={
-                      selectedProduct !== null &&
-                      selectedProduct !== product.id
-                    }
-                    onClick={() =>
-                      setSelectedProduct(
-                        selectedProduct === product.id
-                          ? null
-                          : product.id
-                      )
-                    }
+                    onClick={() => {
+                      setSelectedProduct(product);
+                      setZoomLevel(1);
+                    }}
                   />
                 ))}
               </div>
+
+              {selectedProduct && (
+                <div
+                  className="product-zoom-overlay"
+                  role="presentation"
+                  onClick={() => setSelectedProduct(null)}
+                >
+                  <div
+                    className="product-zoom-modal"
+                    role="dialog"
+                    aria-modal="true"
+                    aria-label={selectedProduct.title}
+                    onClick={(event) => event.stopPropagation()}
+                  >
+                    <div className="zoom-controls">
+                      <button
+                        className="zoom-close"
+                        type="button"
+                        onClick={() => setSelectedProduct(null)}
+                        aria-label="Fechar zoom"
+                      >
+                        ×
+                      </button>
+
+                      <div className="zoom-actions">
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setZoomLevel((value) => Math.max(1, value - 0.2))
+                          }
+                          aria-label="Diminuir zoom"
+                        >
+                          −
+                        </button>
+
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setZoomLevel((value) => Math.min(2, value + 0.2))
+                          }
+                          aria-label="Aumentar zoom"
+                        >
+                          +
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="zoom-image-wrapper">
+                      <img
+                        src={selectedProduct.image}
+                        alt={selectedProduct.title}
+                        style={{ transform: `scale(${zoomLevel})` }}
+                      />
+                    </div>
+
+                    <div className="product-zoom-info">
+                      <h3>{selectedProduct.title}</h3>
+                      <span>{selectedProduct.price}</span>
+                    </div>
+                  </div>
+                </div>
+              )}
             </section>
           </div>
         </section>
