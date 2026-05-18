@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useState } from "react";
 
 import Layout from "../components/Layout";
@@ -60,9 +61,11 @@ function Camisetas() {
         <section className="camisetas-section page-section">
           <div className="camisetas-container page-container">
             <aside className="camisetas-sidebar">
-              <span className="camisetas-breadcrumb">
-                Home / Camiseta
-              </span>
+              <nav className="camisetas-breadcrumb" aria-label="Breadcrumb">
+                <Link to="/">Home</Link>
+                <span>/</span>
+                <Link to="/camisetas">Camiseta</Link>
+              </nav>
 
               <div className="filter-group">
                 <h2>Categorias</h2>
