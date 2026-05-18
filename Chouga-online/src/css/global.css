@@ -117,6 +117,36 @@ svg {
     margin-inline: auto;
 }
 
+/* =========================
+   REMOVE MOBILE CLICK OUTLINE
+========================= */
+
+button,
+a,
+input,
+textarea,
+select,
+[role="button"],
+.product-card,
+.filter-button,
+.color-dot {
+    -webkit-tap-highlight-color: transparent;
+}
+
+button:focus,
+button:active,
+a:focus,
+a:active,
+.product-card:focus,
+.product-card:active,
+.filter-button:focus,
+.filter-button:active,
+.color-dot:focus,
+.color-dot:active {
+    outline: none;
+    box-shadow: none;
+}
+
 @media (max-width: 900px) {
     :root {
         --page-padding-top: 100px;
