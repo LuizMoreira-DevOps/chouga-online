@@ -35,7 +35,7 @@
 }
 
 .hero-left h1 {
-    color: var(--color-text);
+    color: var(--color-red);
 
     font-size: clamp(2.25rem, 3.2vw, 3.25rem);
     line-height: 0.95;
@@ -47,18 +47,20 @@
 }
 
 .hero-left p {
-    margin-bottom: 1.75rem;
+    margin-bottom: 1.1rem;
 
     color: var(--color-text);
 
-    font-size: clamp(1.05rem, 1.4vw, 1.35rem);
-    line-height: 1.2;
+    font-size: clamp(2.20rem, 0.5vw, 1.3rem);
+    line-height: 1.05;
 
-    opacity: 0.9;
+    opacity: 0.92;
 
     font-family: var(--font-street);
-    
-    letter-spacing: 0.08em;
+
+    letter-spacing: 0.02em;
+
+    text-transform: uppercase;
 }
 
 .hero-line {
@@ -413,7 +415,7 @@
         order: 2;
         max-width: 340px;
         align-items: center;
-        margin-top: 0.5rem;
+        margin-top: 5rem;
         margin-bottom: 0;
         text-align: center;
         transform: none;
@@ -483,7 +485,7 @@
     }
 
     .hero-left {
-        margin-top: 0.25rem;
+        margin-top: 5rem;
     }
 
     .hero-left h1 {
