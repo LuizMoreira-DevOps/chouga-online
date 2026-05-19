@@ -103,6 +103,13 @@ function Camisetas() {
     );
   }
 
+  function scrollToTop() {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }
+
   const filteredProducts = products.filter((product) => {
     const matchCategory =
       categoryFilter === "todas" || product.category === categoryFilter;
@@ -132,9 +139,8 @@ function Camisetas() {
                 <h2>Categorias</h2>
 
                 <button
-                  className={`filter-button ${
-                    categoryFilter === "todas" ? "is-active" : ""
-                  }`}
+                  className={`filter-button ${categoryFilter === "todas" ? "is-active" : ""
+                    }`}
                   type="button"
                   onClick={() => setCategoryFilter("todas")}
                 >
@@ -142,9 +148,8 @@ function Camisetas() {
                 </button>
 
                 <button
-                  className={`filter-button ${
-                    categoryFilter === "basicas" ? "is-active" : ""
-                  }`}
+                  className={`filter-button ${categoryFilter === "basicas" ? "is-active" : ""
+                    }`}
                   type="button"
                   onClick={() => setCategoryFilter("basicas")}
                 >
@@ -152,9 +157,8 @@ function Camisetas() {
                 </button>
 
                 <button
-                  className={`filter-button ${
-                    categoryFilter === "estampadas" ? "is-active" : ""
-                  }`}
+                  className={`filter-button ${categoryFilter === "estampadas" ? "is-active" : ""
+                    }`}
                   type="button"
                   onClick={() => setCategoryFilter("estampadas")}
                 >
@@ -162,9 +166,8 @@ function Camisetas() {
                 </button>
 
                 <button
-                  className={`filter-button ${
-                    categoryFilter === "colabs" ? "is-active" : ""
-                  }`}
+                  className={`filter-button ${categoryFilter === "colabs" ? "is-active" : ""
+                    }`}
                   type="button"
                   onClick={() => setCategoryFilter("colabs")}
                 >
@@ -196,45 +199,40 @@ function Camisetas() {
 
                 <div className="color-list">
                   <button
-                    className={`color-dot color-black ${
-                      colorFilter === "preto" ? "is-active" : ""
-                    }`}
+                    className={`color-dot color-black ${colorFilter === "preto" ? "is-active" : ""
+                      }`}
                     type="button"
                     aria-label="Preto"
                     onClick={() => toggleColorFilter("preto")}
                   ></button>
 
                   <button
-                    className={`color-dot color-gray ${
-                      colorFilter === "cinza" ? "is-active" : ""
-                    }`}
+                    className={`color-dot color-gray ${colorFilter === "cinza" ? "is-active" : ""
+                      }`}
                     type="button"
                     aria-label="Cinza"
                     onClick={() => toggleColorFilter("cinza")}
                   ></button>
 
                   <button
-                    className={`color-dot color-white ${
-                      colorFilter === "branco" ? "is-active" : ""
-                    }`}
+                    className={`color-dot color-white ${colorFilter === "branco" ? "is-active" : ""
+                      }`}
                     type="button"
                     aria-label="Branco"
                     onClick={() => toggleColorFilter("branco")}
                   ></button>
 
                   <button
-                    className={`color-dot color-red ${
-                      colorFilter === "vermelho" ? "is-active" : ""
-                    }`}
+                    className={`color-dot color-red ${colorFilter === "vermelho" ? "is-active" : ""
+                      }`}
                     type="button"
                     aria-label="Vermelho"
                     onClick={() => toggleColorFilter("vermelho")}
                   ></button>
 
                   <button
-                    className={`color-dot color-beige ${
-                      colorFilter === "bege" ? "is-active" : ""
-                    }`}
+                    className={`color-dot color-beige ${colorFilter === "bege" ? "is-active" : ""
+                      }`}
                     type="button"
                     aria-label="Bege"
                     onClick={() => toggleColorFilter("bege")}
@@ -333,9 +331,8 @@ function Camisetas() {
                     </div>
 
                     <div
-                      className={`zoom-image-wrapper ${
-                        zoomLevel > 1 ? "is-draggable" : ""
-                      }`}
+                      className={`zoom-image-wrapper ${zoomLevel > 1 ? "is-draggable" : ""
+                        }`}
                       onPointerDown={handlePointerDown}
                       onPointerMove={handlePointerMove}
                       onPointerUp={stopDragging}
@@ -362,6 +359,14 @@ function Camisetas() {
             </section>
           </div>
         </section>
+        <button
+          className="back-to-top"
+          type="button"
+          onClick={scrollToTop}
+          aria-label="Voltar ao topo"
+        >
+          ↑
+        </button>
       </main>
     </Layout>
   );
