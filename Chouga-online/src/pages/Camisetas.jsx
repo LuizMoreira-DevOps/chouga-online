@@ -93,6 +93,16 @@ function Camisetas() {
     setDragStart(null);
   }
 
+  function toggleSizeFilter(size) {
+    setSizeFilter((currentSize) => (currentSize === size ? "todos" : size));
+  }
+
+  function toggleColorFilter(color) {
+    setColorFilter((currentColor) =>
+      currentColor === color ? "todos" : color,
+    );
+  }
+
   const filteredProducts = products.filter((product) => {
     const matchCategory =
       categoryFilter === "todas" || product.category === categoryFilter;
@@ -122,7 +132,9 @@ function Camisetas() {
                 <h2>Categorias</h2>
 
                 <button
-                  className={`filter-button ${categoryFilter === "todas" ? "is-active" : ""}`}
+                  className={`filter-button ${
+                    categoryFilter === "todas" ? "is-active" : ""
+                  }`}
                   type="button"
                   onClick={() => setCategoryFilter("todas")}
                 >
@@ -130,7 +142,9 @@ function Camisetas() {
                 </button>
 
                 <button
-                  className={`filter-button ${categoryFilter === "basicas" ? "is-active" : ""}`}
+                  className={`filter-button ${
+                    categoryFilter === "basicas" ? "is-active" : ""
+                  }`}
                   type="button"
                   onClick={() => setCategoryFilter("basicas")}
                 >
@@ -138,7 +152,9 @@ function Camisetas() {
                 </button>
 
                 <button
-                  className={`filter-button ${categoryFilter === "estampadas" ? "is-active" : ""}`}
+                  className={`filter-button ${
+                    categoryFilter === "estampadas" ? "is-active" : ""
+                  }`}
                   type="button"
                   onClick={() => setCategoryFilter("estampadas")}
                 >
@@ -146,7 +162,9 @@ function Camisetas() {
                 </button>
 
                 <button
-                  className={`filter-button ${categoryFilter === "colabs" ? "is-active" : ""}`}
+                  className={`filter-button ${
+                    categoryFilter === "colabs" ? "is-active" : ""
+                  }`}
                   type="button"
                   onClick={() => setCategoryFilter("colabs")}
                 >
@@ -160,41 +178,16 @@ function Camisetas() {
                 <h2>Tamanhos</h2>
 
                 <div className="size-list">
-                  <button
-                  className={sizeFilter === "P" ? "is-active" : ""}
-                  type="button"
-                  onClick={() => setSizeFilter(sizeFilter === "P" ? "todos" : "P")}
-                >
-                  P
-                </button>
-                  <button
-                    className={sizeFilter === "M" ? "is-active" : ""}
-                    type="button"
-                    onClick={() => setSizeFilter(sizeFilter === "M" ? "todos" : "M")}
-                  >
-                    M
-                  </button>
-                  <button
-                    className={sizeFilter === "G" ? "is-active" : ""}
-                    type="button"
-                    onClick={() => setSizeFilter(sizeFilter === "G" ? "todos" : "G")}
-                  >
-                    G
-                  </button>
-                  <button
-                    className={sizeFilter === "GG" ? "is-active" : ""}
-                    type="button"
-                    onClick={() => setSizeFilter(sizeFilter === "GG" ? "todos" : "GG")}
-                  >
-                    GG
-                  </button>
-                  <button
-                    className={sizeFilter === "XG" ? "is-active" : ""}
-                    type="button"
-                    onClick={() => setSizeFilter(sizeFilter === "XG" ? "todos" : "XG")}
-                  >
-                    XG
-                  </button>
+                  {["P", "M", "G", "GG", "XG"].map((size) => (
+                    <button
+                      key={size}
+                      className={sizeFilter === size ? "is-active" : ""}
+                      type="button"
+                      onClick={() => toggleSizeFilter(size)}
+                    >
+                      {size}
+                    </button>
+                  ))}
                 </div>
               </div>
 
@@ -203,84 +196,99 @@ function Camisetas() {
 
                 <div className="color-list">
                   <button
-                  className={`color-dot color-black ${colorFilter === "preto" ? "is-active" : ""}`}
-                  type="button"
-                  aria-label="Preto"
-                  onClick={() => setColorFilter(colorFilter === "preto" ? "todos" : "preto")}
-                ></button>
+                    className={`color-dot color-black ${
+                      colorFilter === "preto" ? "is-active" : ""
+                    }`}
+                    type="button"
+                    aria-label="Preto"
+                    onClick={() => toggleColorFilter("preto")}
+                  ></button>
 
                   <button
-                    className={`color-dot color-gray ${colorFilter === "cinza" ? "is-active" : ""}`}
+                    className={`color-dot color-gray ${
+                      colorFilter === "cinza" ? "is-active" : ""
+                    }`}
                     type="button"
                     aria-label="Cinza"
-                    onClick={() => setColorFilter(colorFilter === "cinza" ? "todos" : "cinza")}
+                    onClick={() => toggleColorFilter("cinza")}
                   ></button>
 
                   <button
-                    className={`color-dot color-white ${colorFilter === "branco" ? "is-active" : ""}`}
+                    className={`color-dot color-white ${
+                      colorFilter === "branco" ? "is-active" : ""
+                    }`}
                     type="button"
                     aria-label="Branco"
-                    onClick={() => setColorFilter(colorFilter === "branco" ? "todos" : "branco")}
+                    onClick={() => toggleColorFilter("branco")}
                   ></button>
 
                   <button
-                  className={`color-dot color-red ${colorFilter === "vermelho" ? "is-active" : ""}`}
-                  type="button"
-                  aria-label="Vermelho"
-                  onClick={() =>
-                    setColorFilter(colorFilter === "vermelho" ? "todos" : "vermelho")
-                  }
-                ></button>
+                    className={`color-dot color-red ${
+                      colorFilter === "vermelho" ? "is-active" : ""
+                    }`}
+                    type="button"
+                    aria-label="Vermelho"
+                    onClick={() => toggleColorFilter("vermelho")}
+                  ></button>
 
-                <button
-                  className={`color-dot color-beige ${colorFilter === "bege" ? "is-active" : ""}`}
-                  type="button"
-                  aria-label="Bege"
-                  onClick={() =>
-                    setColorFilter(colorFilter === "bege" ? "todos" : "bege")
-                  }
-                ></button>
+                  <button
+                    className={`color-dot color-beige ${
+                      colorFilter === "bege" ? "is-active" : ""
+                    }`}
+                    type="button"
+                    aria-label="Bege"
+                    onClick={() => toggleColorFilter("bege")}
+                  ></button>
                 </div>
               </div>
             </aside>
 
             <section className="camisetas-content">
-              <div className="products-grid">
-                {filteredProducts.map((product) => (
-                  <article className="product-card" key={product.id}>
-                    <button
-                      className="product-card-button"
-                      type="button"
-                      onClick={() => openProduct(product)}
-                    >
-                      <div className="product-image">
-                        <img src={product.image} alt={product.title} />
-                      </div>
+              {filteredProducts.length > 0 ? (
+                <div className="products-grid">
+                  {filteredProducts.map((product) => (
+                    <article className="product-card" key={product.id}>
+                      <button
+                        className="product-card-button"
+                        type="button"
+                        onClick={() => openProduct(product)}
+                      >
+                        <div className="product-image">
+                          <img src={product.image} alt={product.title} />
+                        </div>
 
-                      <div className="product-info">
-                        <h3>{product.title}</h3>
-                        <span>{product.price}</span>
-                      </div>
-                    </button>
-
-                    <div className="product-actions">
-                      <button type="button" onClick={() => openProduct(product)}>
-                        Saiba mais
+                        <div className="product-info">
+                          <h3>{product.title}</h3>
+                          <span>{product.price}</span>
+                        </div>
                       </button>
 
-                      <a
-                        href={`https://wa.me/5541997485063?text=${encodeURIComponent(
-                          `Olá! Tenho interesse na ${product.title}.`
-                        )}`}
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        WhatsApp
-                      </a>
-                    </div>
-                  </article>
-                ))}
-              </div>
+                      <div className="product-actions">
+                        <button
+                          type="button"
+                          onClick={() => openProduct(product)}
+                        >
+                          Saiba mais
+                        </button>
+
+                        <a
+                          href={`https://wa.me/5541997485063?text=${encodeURIComponent(
+                            `Olá! Tenho interesse na ${product.title}.`,
+                          )}`}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          WhatsApp
+                        </a>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              ) : (
+                <p className="products-empty">
+                  Nenhuma camiseta encontrada com esses filtros.
+                </p>
+              )}
 
               {selectedProduct && (
                 <div
@@ -325,8 +333,9 @@ function Camisetas() {
                     </div>
 
                     <div
-                      className={`zoom-image-wrapper ${zoomLevel > 1 ? "is-draggable" : ""
-                        }`}
+                      className={`zoom-image-wrapper ${
+                        zoomLevel > 1 ? "is-draggable" : ""
+                      }`}
                       onPointerDown={handlePointerDown}
                       onPointerMove={handlePointerMove}
                       onPointerUp={stopDragging}
