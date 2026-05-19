@@ -414,6 +414,58 @@
     margin-top: 0.2rem;
 }
 
+.product-card-button {
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    text-align: left;
+}
+
+.product-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.45rem;
+    padding: 0 0.6rem 0.65rem;
+}
+
+.product-actions button,
+.product-actions a {
+    display: grid;
+    place-items: center;
+    min-height: 38px;
+    border: 1px solid rgba(243, 215, 191, 0.32);
+    color: var(--color-text-strong);
+    background: rgba(13, 13, 13, 0.72);
+    font-family: "Courier New", monospace;
+    font-size: 0.78rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition:
+        border-color var(--transition-fast),
+        color var(--transition-fast),
+        transform var(--transition-fast),
+        background var(--transition-fast);
+}
+
+.product-actions button:hover,
+.product-actions a:hover {
+    border-color: var(--color-red-strong);
+    color: var(--color-red-strong);
+    background: rgba(255, 42, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.size-list button.is-active,
+.color-dot.is-active {
+    color: var(--color-red-strong);
+    outline: 2px solid var(--color-red-strong);
+    outline-offset: 3px;
+}
+
+
 /* =========================
    DESKTOP MENOR
 ========================= */

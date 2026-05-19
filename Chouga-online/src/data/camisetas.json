@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "imageKey": "camisetaBranca",
+    "title": "Camiseta Skateboard Branca",
+    "price": "R$ 150,00",
+    "category": "basicas",
+    "colors": ["branco"],
+    "sizes": ["P", "M", "G", "GG"],
+    "description": "Camiseta branca com estética streetwear Chouga."
+  },
+  {
+    "id": 2,
+    "imageKey": "camisetaFlower",
+    "title": "Camiseta Flower",
+    "price": "R$ 150,00",
+    "category": "estampadas",
+    "colors": ["preto"],
+    "sizes": ["P", "M", "G"],
+    "description": "Modelo estampado com visual urbano."
+  },
+  {
+    "id": 3,
+    "imageKey": "camisetaLife",
+    "title": "Camiseta Chouga Life",
+    "price": "R$ 150,00",
+    "category": "estampadas",
+    "colors": ["preto"],
+    "sizes": ["M", "G", "GG"],
+    "description": "Camiseta com identidade Chouga Life."
+  },
+  {
+    "id": 4,
+    "imageKey": "camisetaBomb",
+    "title": "Camiseta Chouga Bomb",
+    "price": "R$ 150,00",
+    "category": "colabs",
+    "colors": ["preto"],
+    "sizes": ["P", "M", "G", "GG"],
+    "description": "Modelo Chouga Bomb com pegada skate street."
+  },
+  {
+    "id": 5,
+    "imageKey": "camisetaHoney",
+    "title": "Camiseta Chouga Honey",
+    "price": "R$ 150,00",
+    "category": "estampadas",
+    "colors": ["bege"],
+    "sizes": ["M", "G", "GG"],
+    "description": "Camiseta Chouga Honey com visual alternativo."
+  },
+  {
+    "id": 6,
+    "imageKey": "camisetaPreta",
+    "title": "Camiseta Skateboard Preta",
+    "price": "R$ 150,00",
+    "category": "basicas",
+    "colors": ["preto"],
+    "sizes": ["P", "M", "G", "GG", "XG"],
+    "description": "Camiseta preta clássica com estética skate."
+  }
+]
