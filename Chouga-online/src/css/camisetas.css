@@ -482,35 +482,77 @@
     right: 1rem;
     bottom: 1rem;
     z-index: 1200;
+
     display: none;
-    place-items: center;
-    width: 48px;
-    height: 48px;
-    border: 1px solid rgba(243, 215, 191, 0.42);
+    align-items: center;
+    justify-content: center;
+
+    width: 46px;
+    height: 46px;
+
+    border: 1px solid rgba(243, 215, 191, 0.18);
     border-radius: 50%;
+
+    background:
+        linear-gradient(145deg,
+            rgba(255, 42, 0, 0.12),
+            rgba(13, 13, 13, 0.92));
+
     color: var(--color-text-strong);
-    background: rgba(13, 13, 13, 0.88);
-    font-size: 1.4rem;
+
+    font-size: 1.1rem;
     font-weight: 700;
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
-    backdrop-filter: blur(8px);
+
+    box-shadow:
+        0 10px 24px rgba(0, 0, 0, 0.42),
+        0 0 18px rgba(255, 42, 0, 0.08);
+
+    backdrop-filter: blur(10px);
+
+    cursor: pointer;
+
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+
     transition:
+        transform var(--transition-fast),
         border-color var(--transition-fast),
         color var(--transition-fast),
-        transform var(--transition-fast),
-        background var(--transition-fast);
+        background var(--transition-fast),
+        box-shadow var(--transition-fast);
 }
 
 .back-to-top:hover {
-    border-color: var(--color-red-strong);
+    border-color: rgba(255, 42, 0, 0.45);
+
     color: var(--color-red-strong);
-    background: rgba(255, 42, 0, 0.12);
+
     transform: translateY(-3px);
+
+    box-shadow:
+        0 14px 28px rgba(0, 0, 0, 0.5),
+        0 0 22px rgba(255, 42, 0, 0.18);
+}
+
+.back-to-top:focus,
+.back-to-top:active,
+.back-to-top:focus-visible {
+    outline: none;
+    box-shadow:
+        0 10px 24px rgba(0, 0, 0, 0.42),
+        0 0 18px rgba(255, 42, 0, 0.08);
+
+    color: var(--color-text-strong);
+
+    background:
+        linear-gradient(145deg,
+            rgba(255, 42, 0, 0.12),
+            rgba(13, 13, 13, 0.92));
 }
 
 @media (max-width: 900px) {
     .back-to-top {
-        display: grid;
+        display: flex;
     }
 }
 

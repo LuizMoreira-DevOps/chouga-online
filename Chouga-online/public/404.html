@@ -1,0 +1,17 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <script>
+        const basePath = "/chouga-online";
+        const redirectPath = window.location.pathname.replace(basePath, "");
+
+        sessionStorage.setItem("redirectPath", redirectPath);
+        window.location.replace(basePath + "/");
+    </script>
+</head>
+
+<body></body>
+
+</html>
