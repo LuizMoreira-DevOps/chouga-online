@@ -3,18 +3,15 @@
 ========================= */
 
 .home-section {
-    height: 100vh;
-
+    min-height: 100svh;
     display: grid;
-    grid-template-columns: 270px minmax(620px, 1fr);
+    grid-template-columns: minmax(220px, 270px) minmax(0, 1fr);
     align-items: center;
     justify-content: center;
-    column-gap: 56px;
-
+    column-gap: clamp(32px, 4vw, 56px);
     padding:
         var(--page-padding-top) var(--page-padding-x) var(--page-padding-bottom);
-
-    overflow: hidden;
+    overflow: clip;
 }
 
 /* =========================
@@ -71,14 +68,16 @@
     top: 50%;
     left: 50%;
     z-index: 2;
-
-    width: 100%;
-
+    width: min(100%, var(--container-max));
     display: flex;
     align-items: center;
     justify-content: center;
-
     transform: translate(-50%, -43%);
+    pointer-events: none;
+}
+
+.hero-center .wheel-menu {
+    pointer-events: auto;
 }
 
 /* =========================
@@ -394,65 +393,50 @@
 
 @media (max-width: 900px) {
     .home-section {
-        height: auto;
         min-height: 100svh;
-
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: flex-start;
-
-        gap: 10px;
-
+        gap: clamp(14px, 4vw, 28px);
         padding: 96px 20px 24px;
-
         overflow: hidden;
     }
 
     .hero-left {
+        order: 2;
         max-width: 340px;
-
         align-items: center;
-
-        margin-bottom: 4px;
-
+        margin-top: 0.5rem;
+        margin-bottom: 0;
         text-align: center;
-
         transform: none;
     }
 
     .hero-left h1 {
         margin-bottom: 4px;
-
         font-size: clamp(2.35rem, 11vw, 3.25rem);
         line-height: 0.9;
     }
 
     .hero-left p {
         margin-bottom: 0;
-
         font-size: var(--text-sm);
         line-height: 1.15;
     }
 
     .hero-center {
+        order: 1;
         position: relative;
         top: auto;
         left: auto;
-
         width: 100%;
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        margin-top: 2rem;
-
+        margin-top: 0.75rem;
         transform: none;
     }
 
     .wheel-menu {
-        --wheel-size: min(92vw, 390px);
+        --wheel-size: min(88vw, 390px);
         --wheel-radius: calc(var(--wheel-size) * 0.41);
     }
 
@@ -488,12 +472,16 @@
 
 @media (max-width: 520px) {
     .home-section {
-        gap: 8px;
+        gap: 12px;
         padding: 90px 12px 20px;
     }
 
+    .hero-left {
+        margin-top: 0.25rem;
+    }
+
     .hero-left h1 {
-        font-size: 2.4rem;
+        font-size: clamp(2.15rem, 12vw, 2.8rem);
     }
 
     .hero-left p {
@@ -501,7 +489,7 @@
     }
 
     .wheel-menu {
-        --wheel-size: min(88vw, 320px);
+        --wheel-size: min(86vw, 320px);
         --wheel-radius: calc(var(--wheel-size) * 0.4);
     }
 
