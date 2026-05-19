@@ -477,6 +477,43 @@
     outline-offset: 3px;
 }
 
+.back-to-top {
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 1200;
+    display: none;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border: 1px solid rgba(243, 215, 191, 0.42);
+    border-radius: 50%;
+    color: var(--color-text-strong);
+    background: rgba(13, 13, 13, 0.88);
+    font-size: 1.4rem;
+    font-weight: 700;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(8px);
+    transition:
+        border-color var(--transition-fast),
+        color var(--transition-fast),
+        transform var(--transition-fast),
+        background var(--transition-fast);
+}
+
+.back-to-top:hover {
+    border-color: var(--color-red-strong);
+    color: var(--color-red-strong);
+    background: rgba(255, 42, 0, 0.12);
+    transform: translateY(-3px);
+}
+
+@media (max-width: 900px) {
+    .back-to-top {
+        display: grid;
+    }
+}
+
 /* =========================
    DESKTOP MENOR
 ========================= */
