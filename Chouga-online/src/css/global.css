@@ -1,3 +1,28 @@
+@font-face {
+    font-family: "Bangers";
+    src: url("../assets/fonts/Bangers-Regular.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Sedgwick";
+    src: url("../assets/fonts/SedgwickAveDisplay-Regular.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "PermanentMarker";
+    src: url("../assets/fonts/PermanentMarker-Regular.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "BlackOps";
+    src: url("../assets/fonts/BlackOpsOne-Regular.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "RubikGlitch";
+    src: url("../assets/fonts/RubikGlitch-Regular.ttf") format("truetype");
+}
+
 :root {
     /* COLORS */
     --color-bg: #0d0d0d;
@@ -11,7 +36,8 @@
 
     /* FONTS */
     --font-base: "Oswald", sans-serif;
-    --font-display: "Permanent Marker", cursive;
+    --font-display: "Bangers", sans-serif;
+    --font-street: "Sedgwick", cursive;
 
     /* LAYOUT */
     --container-max: 1500px;
