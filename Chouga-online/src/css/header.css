@@ -1,15 +1,15 @@
 .header {
-    width: 100%;
-    padding: 24px var(--page-padding-x);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
 
     display: flex;
     align-items: center;
     justify-content: space-between;
 
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 999;
+    width: 100%;
+    padding: 24px var(--page-padding-x);
 
     background: linear-gradient(to bottom,
             rgba(13, 13, 13, 0.75),
@@ -17,9 +17,9 @@
 }
 
 .logo {
-    width: clamp(120px, 12vw, 190px);
     display: flex;
     align-items: center;
+    width: clamp(120px, 12vw, 190px);
 }
 
 .logo img {
@@ -28,10 +28,107 @@
     object-fit: contain;
 }
 
-.nav {
+.logo-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.logo-mark {
+    position: absolute;
+    top: -2px;
+    right: -12px;
+
+    color: var(--color-text-strong);
+
+    font-size: 0.75rem;
+    font-weight: 700;
+
+    opacity: 0.82;
+}
+
+.header-actions {
     display: flex;
     align-items: center;
-    gap: 24px;
+    gap: 0.75rem;
+}
+
+.header-icon-button,
+.menu-toggle {
+    width: 58px;
+    height: 58px;
+
+    border: 1px solid rgba(243, 215, 191, 0.18);
+    border-radius: 50%;
+
+    background: rgba(13, 13, 13, 0.55);
+    backdrop-filter: blur(8px);
+
+    transition:
+        border-color var(--transition-fast),
+        color var(--transition-fast),
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast);
+}
+
+.header-icon-button {
+    position: relative;
+    display: grid;
+    place-items: center;
+    color: var(--color-text-strong);
+    font-size: 1.55rem;
+}
+
+.header-icon-button:hover,
+.menu-toggle:hover {
+    border-color: var(--color-red-strong);
+    color: var(--color-red-strong);
+    transform: translateY(-2px);
+    box-shadow: 0 0 18px rgba(255, 42, 0, 0.18);
+}
+
+.lock-icon {
+    position: absolute;
+    right: 1px;
+    bottom: 1px;
+    width: 20px;
+    height: 20px;
+    padding: 3px;
+    border-radius: 50%;
+    color: var(--color-bg);
+    background: var(--color-text-strong);
+    font-size: 0.82rem;
+}
+
+.nav {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: var(--page-padding-x);
+
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+
+    padding: 1rem 1.2rem;
+
+    border: 1px solid rgba(243, 215, 191, 0.12);
+    border-radius: 18px;
+
+    background: rgba(13, 13, 13, 0.94);
+    backdrop-filter: blur(10px);
+
+    opacity: 0;
+    transform: translateY(-12px);
+    pointer-events: none;
+
+    transition:
+        opacity var(--transition-base),
+        transform var(--transition-base);
+}
+
+.nav.nav-open {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
 }
 
 .nav a,
@@ -41,6 +138,7 @@
     text-transform: uppercase;
     letter-spacing: 1.4px;
     opacity: 0.85;
+
     transition:
         color var(--transition-base),
         opacity var(--transition-base);
@@ -56,12 +154,42 @@
 }
 
 .menu-toggle {
-    display: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 0;
+    cursor: pointer;
 }
 
-/* =========================
-   TABLET / MOBILE
-========================= */
+.menu-toggle span {
+    width: 24px;
+    height: 2.5px;
+    border-radius: 999px;
+    background: var(--color-text-strong);
+
+    transition:
+        transform var(--transition-base),
+        opacity var(--transition-fast),
+        background var(--transition-fast);
+}
+
+.menu-toggle:hover span {
+    background: var(--color-red-strong);
+}
+
+.menu-toggle.is-open span:nth-child(1) {
+    transform: translateY(8.5px) rotate(45deg);
+}
+
+.menu-toggle.is-open span:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-toggle.is-open span:nth-child(3) {
+    transform: translateY(-8.5px) rotate(-45deg);
+}
 
 @media (max-width: 900px) {
     .header {
@@ -72,79 +200,23 @@
         width: 120px;
     }
 
+    .header-actions {
+        gap: 0.6rem;
+    }
+
+    .header-icon-button,
     .menu-toggle {
-        width: 56px;
-        height: 56px;
-
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 6px;
-
-        background: rgba(13, 13, 13, 0.75);
-        border: 1px solid rgba(255, 255, 255, 0.18);
-        border-radius: 10px;
-
-        padding: 0;
-        cursor: pointer;
-    }
-
-    .menu-toggle span {
-        width: 28px;
-        height: 3px;
-
-        background: var(--color-text);
-        border-radius: 999px;
-
-        transition:
-            transform var(--transition-base),
-            opacity var(--transition-fast);
-    }
-
-    .menu-toggle.is-open span:nth-child(1) {
-        transform: translateY(9px) rotate(45deg);
-    }
-
-    .menu-toggle.is-open span:nth-child(2) {
-        opacity: 0;
-    }
-
-    .menu-toggle.is-open span:nth-child(3) {
-        transform: translateY(-9px) rotate(-45deg);
+        width: 52px;
+        height: 52px;
     }
 
     .nav {
-        position: absolute;
-        top: calc(100% + 8px);
         right: 20px;
         left: 20px;
-
-        display: flex;
         flex-direction: column;
         align-items: center;
         gap: 18px;
-
         padding: 24px;
-
-        background: rgba(13, 13, 13, 0.96);
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        border-radius: 18px;
-        backdrop-filter: blur(10px);
-
-        opacity: 0;
-        transform: translateY(-12px);
-        pointer-events: none;
-
-        transition:
-            opacity var(--transition-base),
-            transform var(--transition-base);
-    }
-
-    .nav.nav-open {
-        opacity: 1;
-        transform: translateY(0);
-        pointer-events: auto;
     }
 
     .nav a,
@@ -152,10 +224,6 @@
         font-size: var(--text-sm);
     }
 }
-
-/* =========================
-   MOBILE PEQUENO
-========================= */
 
 @media (max-width: 520px) {
     .header {
@@ -166,8 +234,44 @@
         width: 112px;
     }
 
+    .logo-mark {
+        right: -10px;
+        font-size: 0.65rem;
+    }
+
+    .header-actions {
+        gap: 0.45rem;
+    }
+
+    .header-icon-button,
     .menu-toggle {
-        width: 52px;
-        height: 52px;
+        width: 44px;
+        height: 44px;
+    }
+
+    .header-icon-button {
+        font-size: 1.1rem;
+    }
+
+    .menu-toggle {
+        gap: 5px;
+    }
+
+    .menu-toggle span {
+        width: 20px;
+        height: 2px;
+    }
+
+    .menu-toggle.is-open span:nth-child(1) {
+        transform: translateY(7px) rotate(45deg);
+    }
+
+    .menu-toggle.is-open span:nth-child(3) {
+        transform: translateY(-7px) rotate(-45deg);
+    }
+
+    .lock-icon {
+        width: 14px;
+        height: 14px;
     }
 }

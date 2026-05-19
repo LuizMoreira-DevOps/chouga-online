@@ -10,10 +10,13 @@ function Home() {
         <section className="home-section page-section">
           {/* TEXTO ESQUERDA */}
           <div className="hero-left">
-            <h1>NAS RUAS</h1>
-
+            <h1>
+              Streetwear 
+            </h1>
             <p>
-              Feito nas ruas para as ruas.
+              não se veste.
+              <br />
+              Se vive.
             </p>
 
             <span className="hero-line"></span>
