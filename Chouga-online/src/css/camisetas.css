@@ -510,6 +510,15 @@
     outline-offset: 3px;
 }
 
+.camisetas-page.is-zoom-open~footer,
+.blusas-page.is-zoom-open~footer {
+    display: none;
+}
+
+/* =========================
+   BACK TO TOP
+========================= */
+
 .back-to-top {
     position: fixed;
     right: 1rem;

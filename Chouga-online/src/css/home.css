@@ -494,7 +494,7 @@
     }
 
     .hero-left p {
-        font-size: 0.82rem;
+        font-size: 0.95rem;
     }
 
     .wheel-menu {
@@ -513,13 +513,15 @@
     }
 
     .wheel-label {
-        font-size: 0.82rem;
+        font-size: 0.95rem;
         letter-spacing: 0.7px;
+        margin-top: 3rem;
     }
 
     .wheel-sub-label {
         font-size: 0.5rem;
         letter-spacing: 0.6px;
+        margin-top: 0.5rem;
     }
 
     .coming-soon-content {
