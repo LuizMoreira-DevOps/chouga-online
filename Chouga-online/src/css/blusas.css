@@ -525,59 +525,119 @@
 
 .back-to-top {
     position: fixed;
-    right: 1rem;
-    bottom: 1rem;
+    right: 1.1rem;
+    bottom: 1.1rem;
     z-index: 3000;
+
     display: none;
     align-items: center;
     justify-content: center;
-    width: 46px;
-    height: 46px;
-    border: 1px solid rgba(243, 215, 191, 0.18);
+
+    width: 58px;
+    height: 58px;
+
+    border: 1px solid rgba(243, 215, 191, 0.38);
     border-radius: 50%;
-    background:
-        linear-gradient(145deg,
-            rgba(255, 42, 0, 0.12),
-            rgba(13, 13, 13, 0.92));
+
     color: var(--color-text-strong);
-    font-size: 1.1rem;
+    background:
+        radial-gradient(circle at 35% 28%,
+            rgba(243, 215, 191, 0.22),
+            transparent 32%),
+        linear-gradient(145deg,
+            rgba(255, 42, 0, 0.28),
+            rgba(13, 13, 13, 0.96) 62%);
+
+    font-size: 1.45rem;
     font-weight: 700;
+    line-height: 1;
+
     box-shadow:
-        0 10px 24px rgba(0, 0, 0, 0.42),
-        0 0 18px rgba(255, 42, 0, 0.08);
+        0 14px 30px rgba(0, 0, 0, 0.58),
+        0 0 24px rgba(255, 42, 0, 0.18),
+        inset 0 0 18px rgba(243, 215, 191, 0.08);
+
     backdrop-filter: blur(10px);
+
     cursor: pointer;
+
     -webkit-tap-highlight-color: transparent;
     outline: none;
+
     transition:
-        transform var(--transition-fast),
         border-color var(--transition-fast),
         color var(--transition-fast),
+        transform var(--transition-fast),
         background var(--transition-fast),
         box-shadow var(--transition-fast);
 }
 
+.back-to-top::before {
+    content: "";
+
+    position: absolute;
+    inset: 7px;
+
+    border: 1px solid rgba(243, 215, 191, 0.16);
+    border-radius: 50%;
+
+    pointer-events: none;
+}
+
+.back-to-top::after {
+    content: "";
+
+    position: absolute;
+    inset: -7px;
+
+    border: 1px solid rgba(255, 42, 0, 0.18);
+    border-radius: 50%;
+
+    opacity: 0;
+
+    transition:
+        opacity var(--transition-fast),
+        transform var(--transition-fast);
+
+    pointer-events: none;
+}
+
 .back-to-top:hover {
-    border-color: rgba(255, 42, 0, 0.45);
+    border-color: rgba(255, 42, 0, 0.75);
+
     color: var(--color-red-strong);
-    transform: translateY(-3px);
+
+    transform: translateY(-4px) scale(1.04);
+
     box-shadow:
-        0 14px 28px rgba(0, 0, 0, 0.5),
-        0 0 22px rgba(255, 42, 0, 0.18);
+        0 18px 36px rgba(0, 0, 0, 0.68),
+        0 0 30px rgba(255, 42, 0, 0.34),
+        inset 0 0 18px rgba(243, 215, 191, 0.1);
+}
+
+.back-to-top:hover::after {
+    opacity: 1;
+    transform: scale(1.08);
 }
 
 .back-to-top:focus,
 .back-to-top:active,
 .back-to-top:focus-visible {
     outline: none;
-    box-shadow:
-        0 10px 24px rgba(0, 0, 0, 0.42),
-        0 0 18px rgba(255, 42, 0, 0.08);
+
     color: var(--color-text-strong);
     background:
+        radial-gradient(circle at 35% 28%,
+            rgba(243, 215, 191, 0.22),
+            transparent 32%),
         linear-gradient(145deg,
-            rgba(255, 42, 0, 0.12),
-            rgba(13, 13, 13, 0.92));
+            rgba(255, 42, 0, 0.28),
+            rgba(13, 13, 13, 0.96) 62%);
+
+    box-shadow:
+        0 14px 30px rgba(0, 0, 0, 0.58),
+        0 0 24px rgba(255, 42, 0, 0.18),
+        inset 0 0 18px rgba(243, 215, 191, 0.08);
 }
 
 @media (max-width: 900px) {
@@ -883,15 +943,13 @@
     }
 
     .back-to-top {
-        right: 2rem;
-        bottom: 2rem;
-
-        width: 76px;
-        height: 76px;
-
-        border-width: 2px;
-
-        font-size: 1.45rem;
+        right: 1rem;
+        bottom: 1rem;
+    
+        width: 62px;
+        height: 62px;
+    
+        font-size: 1.55rem;
 
         background:
             linear-gradient(145deg,
