@@ -124,7 +124,7 @@ function Blusas() {
 
   return (
     <Layout>
-      <main className="blusas-page page-bg">
+      <main className={`blusas-page page-bg ${selectedProduct ? "is-zoom-open" : ""}`}>
         <section className="blusas-section page-section">
           <div className="blusas-container page-container">
             <aside className="blusas-sidebar">

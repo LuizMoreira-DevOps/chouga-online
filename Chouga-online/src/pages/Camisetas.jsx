@@ -135,7 +135,7 @@ function Camisetas() {
 
   return (
     <Layout>
-      <main className="camisetas-page page-bg">
+      <main className={`camisetas-page page-bg ${selectedProduct ? "is-zoom-open" : ""}`}>
         <section className="camisetas-section page-section">
           <div className="camisetas-container page-container">
             <aside className="camisetas-sidebar">

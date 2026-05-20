@@ -514,6 +514,11 @@
     margin-top: 0.2rem;
 }
 
+.camisetas-page.is-zoom-open~footer,
+.blusas-page.is-zoom-open~footer {
+    display: none;
+}
+
 /* =========================
    BACK TO TOP
 ========================= */
