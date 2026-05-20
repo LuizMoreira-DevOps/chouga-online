@@ -122,12 +122,48 @@ svg {
     inset: 0;
     z-index: 0;
     background-image:
-        linear-gradient(rgba(0, 0, 0, 0.78),
-            rgba(0, 0, 0, 0.92)),
-        url("../assets/images/bg-home.png");
-    background-position: center;
+        linear-gradient(rgba(0, 0, 0, var(--bg-overlay-start, 0.78)),
+            rgba(0, 0, 0, var(--bg-overlay-end, 0.92))),
+        var(--page-bg-image, url("../assets/images/bg-home.png"));
+    background-position: var(--page-bg-position, center);
     background-size: cover;
-    opacity: 0.38;
+    opacity: var(--page-bg-opacity, 0.38);
+}
+
+.home.page-bg {
+    --page-bg-opacity: 0.38;
+    --bg-overlay-start: 0.78;
+    --bg-overlay-end: 0.92;
+    --page-bg-position: center;
+}
+
+.camisetas-page.page-bg,
+.blusas-page.page-bg {
+    --page-bg-opacity: 0.32;
+    --bg-overlay-start: 0.82;
+    --bg-overlay-end: 0.94;
+    --page-bg-position: center;
+}
+
+.sobre-page.page-bg {
+    --page-bg-opacity: 0.34;
+    --bg-overlay-start: 0.8;
+    --bg-overlay-end: 0.93;
+    --page-bg-position: center;
+}
+
+.contato-page.page-bg {
+    --page-bg-opacity: 0.28;
+    --bg-overlay-start: 0.86;
+    --bg-overlay-end: 0.96;
+    --page-bg-position: center;
+}
+
+.coming-page.page-bg {
+    --page-bg-opacity: 0.32;
+    --bg-overlay-start: 0.84;
+    --bg-overlay-end: 0.96;
+    --page-bg-position: center;
 }
 
 .page-section {
