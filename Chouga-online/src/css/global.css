@@ -230,9 +230,13 @@ select:focus-visible {
     border-color: var(--color-red-strong);
 }
 
+/* =========================
+   RESPONSIVE LAYOUT
+========================= */
+
 @media (max-width: 900px) {
     :root {
-        --page-padding-top: 100px;
+        --page-padding-top: 88px;
         --page-padding-bottom: 48px;
     }
 
@@ -243,7 +247,7 @@ select:focus-visible {
 
 @media (max-width: 520px) {
     :root {
-        --page-padding-top: 96px;
+        --page-padding-top: 82px;
         --page-padding-bottom: 40px;
     }
 }
