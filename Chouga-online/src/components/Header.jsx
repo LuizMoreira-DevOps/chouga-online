@@ -5,11 +5,34 @@ import { FiHome, FiLock, FiShoppingCart, FiUser } from "react-icons/fi";
 import "../css/header.css";
 import logoImg from "../assets/logo/Logo.png";
 
+const navLinks = [
+  {
+    label: "Camisetas",
+    path: "/camisetas",
+  },
+  {
+    label: "Blusas",
+    path: "/blusas",
+  },
+  {
+    label: "Sobre",
+    path: "/sobre",
+  },
+  {
+    label: "Contato",
+    path: "/contato",
+  },
+];
+
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
 
   const isHome = location.pathname === "/";
+
+  const visibleNavLinks = navLinks.filter(
+    (link) => link.path !== location.pathname,
+  );
 
   function closeMenu() {
     setMenuOpen(false);
@@ -79,22 +102,11 @@ function Header() {
 
       {!isHome && (
         <nav className={`nav ${menuOpen ? "nav-open" : ""}`}>
-
-          <Link to="/camisetas" onClick={closeMenu}>
-            Camisetas
-          </Link>
-
-          <Link to="/shapes" onClick={closeMenu}>
-            Shapes
-          </Link>
-
-          <Link to="/sobre" onClick={closeMenu}>
-            Sobre
-          </Link>
-
-          <Link to="/contato" onClick={closeMenu}>
-            Contato
-          </Link>
+          {visibleNavLinks.map((link) => (
+            <Link key={link.path} to={link.path} onClick={closeMenu}>
+              {link.label}
+            </Link>
+          ))}
 
           <a
             href="https://www.instagram.com/"
