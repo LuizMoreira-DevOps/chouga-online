@@ -388,7 +388,7 @@
 .product-zoom-overlay {
     position: fixed;
     inset: 0;
-    z-index: 2000;
+    z-index: 9999;
     display: grid;
     place-items: center;
     padding: 1rem;
@@ -878,11 +878,11 @@
     }
 
     .back-to-top {
-        right: 1rem;
-        bottom: 1rem;
+        right: 2rem;
+        bottom: 2rem;
 
-        width: 56px;
-        height: 56px;
+        width: 76px;
+        height: 76px;
 
         border-width: 2px;
 
