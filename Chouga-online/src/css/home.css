@@ -491,10 +491,11 @@
 
     .hero-left h1 {
         font-size: clamp(2.15rem, 12vw, 2.8rem);
+        margin-top: 3rem;
     }
 
     .hero-left p {
-        font-size: 0.95rem;
+        font-size: 1rem;
     }
 
     .wheel-menu {
@@ -515,13 +516,11 @@
     .wheel-label {
         font-size: 0.95rem;
         letter-spacing: 0.7px;
-        margin-top: 3rem;
     }
 
     .wheel-sub-label {
         font-size: 0.5rem;
         letter-spacing: 0.6px;
-        margin-top: 0.5rem;
     }
 
     .coming-soon-content {
