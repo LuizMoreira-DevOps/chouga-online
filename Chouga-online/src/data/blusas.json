@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "imageKey": "blusaBomb",
+    "title": "Blusa Chouga Bomber",
+    "price": "R$ 189,90",
+    "category": "blusas",
+    "colors": ["preto"],
+    "sizes": ["P", "M", "G", "GG"],
+    "description": "Blusa Chouga Bomber com visual urbano e presença streetwear."
+  },
+  {
+    "id": 2,
+    "imageKey": "blusaCity",
+    "title": "Blusa Chouga City",
+    "price": "R$ 159,90",
+    "category": "blusas",
+    "colors": ["preto"],
+    "sizes": ["P", "M", "G"],
+    "description": "Blusa Chouga City inspirada no movimento das ruas."
+  },
+  {
+    "id": 3,
+    "imageKey": "blusaSkull",
+    "title": "Blusa Chouga Skull",
+    "price": "R$ 219,90",
+    "category": "blusas",
+    "colors": ["preto"],
+    "sizes": ["M", "G", "GG"],
+    "description": "Blusa Chouga Skull com estética forte e pegada skate street."
+  },
+  {
+    "id": 4,
+    "imageKey": "blusaWheel",
+    "title": "Blusa Chouga Wheel",
+    "price": "R$ 149,90",
+    "category": "blusas",
+    "colors": ["preto"],
+    "sizes": ["P", "M", "G", "GG"],
+    "description": "Blusa Chouga Wheel com referência à roda e identidade da marca."
+  }
+]
