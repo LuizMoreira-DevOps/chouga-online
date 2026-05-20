@@ -3,8 +3,8 @@
 ========================= */
 
 .camisetas-section {
-    height: 100vh;
-    overflow: hidden;
+    min-height: 100vh;
+    overflow: visible;
 }
 
 .camisetas-container {
@@ -206,24 +206,8 @@
 ========================= */
 
 .camisetas-content {
-    height: calc(100vh - var(--page-padding-top) - var(--page-padding-bottom));
-    overflow-y: auto;
-    padding-right: 12px;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(243, 215, 191, 0.35) transparent;
-}
-
-.camisetas-content::-webkit-scrollbar {
-    width: 6px;
-}
-
-.camisetas-content::-webkit-scrollbar-thumb {
-    background: rgba(243, 215, 191, 0.35);
-    border-radius: 999px;
-}
-
-.camisetas-content::-webkit-scrollbar-track {
-    background: transparent;
+    min-width: 0;
+    padding-right: 0;
 }
 
 .camisetas-content h1 {
@@ -667,8 +651,7 @@
 
 @media (max-width: 900px) {
     .camisetas-section {
-        height: auto;
-        overflow: visible;
+        min-height: auto;
     }
 
     .camisetas-container {
@@ -752,8 +735,6 @@
     }
 
     .camisetas-content {
-        height: auto;
-        overflow: visible;
         padding-right: 0;
     }
 

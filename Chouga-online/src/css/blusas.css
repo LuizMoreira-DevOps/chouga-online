@@ -3,8 +3,8 @@
 ========================= */
 
 .blusas-section {
-    height: 100vh;
-    overflow: hidden;
+    min-height: 100vh;
+    overflow: visible;
 }
 
 .blusas-container {
@@ -208,24 +208,7 @@
 ========================= */
 
 .blusas-content {
-    height: calc(100vh - var(--page-padding-top) - var(--page-padding-bottom));
-    overflow-y: auto;
-    padding-right: 12px;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(243, 215, 191, 0.35) transparent;
-}
-
-.blusas-content::-webkit-scrollbar {
-    width: 6px;
-}
-
-.blusas-content::-webkit-scrollbar-thumb {
-    background: rgba(243, 215, 191, 0.35);
-    border-radius: 999px;
-}
-
-.blusas-content::-webkit-scrollbar-track {
-    background: transparent;
+    padding-right: 0;
 }
 
 .blusas-content h1 {
@@ -671,14 +654,11 @@
 
 @media (max-width: 900px) {
     .blusas-section {
-        height: auto;
-        overflow: visible;
+        min-height: auto;
     }
 
-    .blusas-container {
-        height: auto;
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
+    .blusas-content {
+        padding-right: 0;
     }
 
     .blusas-sidebar {
