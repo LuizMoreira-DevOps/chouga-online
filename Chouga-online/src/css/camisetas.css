@@ -336,7 +336,7 @@
 .product-zoom-overlay {
     position: fixed;
     inset: 0;
-    z-index: 2000;
+    z-index: 9999;
     display: grid;
     place-items: center;
     padding: 1rem;
@@ -514,7 +514,7 @@
     position: fixed;
     right: 1rem;
     bottom: 1rem;
-    z-index: 1200;
+    z-index: 3000;
 
     display: none;
     align-items: center;
@@ -721,21 +721,35 @@
 
 @media (max-width: 700px) {
     .product-zoom-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+
         align-items: start;
+
+        width: 100vw;
+        height: 100dvh;
         padding: 5.5rem 0.8rem 1rem;
+
         overflow-y: auto;
+
+        background: rgba(0, 0, 0, 0.96);
+        overscroll-behavior: contain;
     }
 
     .product-zoom-modal {
         width: 100%;
-        max-height: none;
-        overflow: visible;
+        max-height: calc(100dvh - 6.5rem);
+        overflow: hidden;
+
         border-radius: 14px;
     }
 
     .zoom-image-wrapper {
-        height: min(62vh, 560px);
+        height: min(58dvh, 520px);
         max-height: none;
+        overflow: hidden;
+
         border-bottom: 1px solid rgba(243, 215, 191, 0.22);
     }
 
@@ -750,14 +764,17 @@
         top: 0.75rem;
         right: 0.75rem;
         bottom: auto;
+
         padding: 0.35rem;
     }
 
     .zoom-close,
     .zoom-actions button {
-        width: 42px;
-        height: 42px;
+        width: 46px;
+        height: 46px;
         border-radius: 0;
+
+        font-size: 1.35rem;
     }
 
     .product-zoom-info {
@@ -765,11 +782,11 @@
     }
 
     .product-zoom-info h3 {
-        font-size: 1.25rem;
+        font-size: 1.05rem;
     }
 
     .product-zoom-info span {
-        font-size: 1rem;
+        font-size: 0.95rem;
     }
 }
 
@@ -863,10 +880,23 @@
     }
 
     .back-to-top {
-        right: 0.75rem;
-        bottom: 0.75rem;
-        width: 42px;
-        height: 42px;
-        font-size: 1.15rem;
+        right: 2rem;
+        bottom: 2rem;
+    
+        width: 76px;
+        height: 76px;
+
+        border-width: 2px;
+
+        font-size: 1.45rem;
+
+        background:
+            linear-gradient(145deg,
+                rgba(255, 42, 0, 0.32),
+                rgba(13, 13, 13, 0.96));
+
+        box-shadow:
+            0 12px 28px rgba(0, 0, 0, 0.55),
+            0 0 22px rgba(255, 42, 0, 0.22);
     }
 }
