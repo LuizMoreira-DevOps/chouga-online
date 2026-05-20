@@ -170,7 +170,28 @@ a:active,
 .color-dot:focus,
 .color-dot:active {
     outline: none;
-    box-shadow: none;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+[role="button"]:focus-visible,
+.product-card:focus-visible,
+.filter-button:focus-visible,
+.color-dot:focus-visible {
+    outline: 2px solid var(--color-red-strong);
+    outline-offset: 4px;
+    box-shadow:
+        0 0 0 4px rgba(13, 13, 13, 0.95),
+        0 0 18px rgba(255, 42, 0, 0.38);
+}
+
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+    border-color: var(--color-red-strong);
 }
 
 @media (max-width: 900px) {
