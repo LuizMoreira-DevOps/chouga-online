@@ -8,6 +8,8 @@ import {
   FaLock,
 } from "react-icons/fa";
 
+import { GiHoodie } from "react-icons/gi";
+
 import wheelImg from "../assets/images/wheel.png";
 
 const menuItems = [
@@ -19,10 +21,10 @@ const menuItems = [
     className: "top",
   },
   {
-    id: "breve-1",
-    label: "EM BREVE",
-    icon: <FaLock />,
-    path: "/em-breve",
+    id: "blusas",
+    label: "BLUSAS",
+    icon: <GiHoodie />,
+    path: "/blusas",
     className: "top-right",
   },
   {

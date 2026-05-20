@@ -3,41 +3,30 @@ import { Link } from "react-router-dom";
 
 import Layout from "../components/Layout";
 
-import camisetasData from "../data/camisetas.json";
+import blusasData from "../data/blusas.json";
 
-import "../css/camisetas.css";
+import "../css/blusas.css";
 
 const imageFiles = {
-  camisetaBranca: "camiseta-skateboard-branca.jpeg",
-  camisetaBelinhaPrimavera: "camiseta-belinha-primavera.jpeg",
-  camisetaLife: "camiseta-life.jpeg",
-  camisetaBomber: "camiseta-bomber-cinza.jpeg",
-  camisetaBelinhaOutono: "camiseta-belinha-outono.jpeg",
-  camisetaPreta: "camiseta-skateboard-preta.jpeg",
-  camisetaSkull: "camiseta-chouga-skull.jpeg",
-  camisetaCity: "camiseta-chouga-city.jpeg",
-  camisetaPraia: "camiseta-chouga-praia.jpeg",
-  camisetaBasicPreta: "camiseta-chouga-basic-preta.jpeg",
-  camisetaBasicBranca: "camiseta-chouga-basic-branca.jpeg",
-  camisetaChougaBranca: "camiseta-chouga-branca.jpeg",
-  camisetaChougaAzul: "camiseta-chouga-azul.jpeg",
-  camisetaBasicCinza: "camiseta-chouga-basic-cinza.jpeg",
-  camisetaChougaWeed: "camiseta-chouga-weed.jpeg",
+  blusaBomb: "blusa-chouga-bomb.jpeg",
+  blusaCity: "blusa-chouga-city.jpeg",
+  blusaSkull: "blusa-chouga-skull.jpeg",
+  blusaWheel: "blusa-chouga-wheel.jpeg",
 };
 
 function getProductImage(imageKey) {
   return new URL(
-    `../assets/images/camisetas/${imageFiles[imageKey]}`,
+    `../assets/images/blusas/${imageFiles[imageKey]}`,
     import.meta.url,
   ).href;
 }
 
-const products = camisetasData.map((product) => ({
+const products = blusasData.map((product) => ({
   ...product,
   image: getProductImage(product.imageKey),
 }));
 
-function Camisetas() {
+function Blusas() {
   const [categoryFilter, setCategoryFilter] = useState("todas");
   const [sizeFilter, setSizeFilter] = useState("todos");
   const [colorFilter, setColorFilter] = useState("todos");
@@ -135,14 +124,14 @@ function Camisetas() {
 
   return (
     <Layout>
-      <main className="camisetas-page page-bg">
-        <section className="camisetas-section page-section">
-          <div className="camisetas-container page-container">
-            <aside className="camisetas-sidebar">
-              <nav className="camisetas-breadcrumb" aria-label="Breadcrumb">
+      <main className="blusas-page page-bg">
+        <section className="blusas-section page-section">
+          <div className="blusas-container page-container">
+            <aside className="blusas-sidebar">
+              <nav className="blusas-breadcrumb" aria-label="Breadcrumb">
                 <Link to="/">Home</Link>
                 <span>/</span>
-                <Link to="/camisetas">Camiseta</Link>
+                <Link to="/blusas">Blusas</Link>
               </nav>
 
               <div className="filter-group">
@@ -265,7 +254,8 @@ function Camisetas() {
               </div>
             </aside>
 
-            <section className="camisetas-content">
+            <section className="blusas-content">
+
               {filteredProducts.length > 0 ? (
                 <div className="products-grid">
                   {filteredProducts.map((product) => (
@@ -308,7 +298,7 @@ function Camisetas() {
                 </div>
               ) : (
                 <p className="products-empty">
-                  Nenhuma camiseta encontrada com esses filtros.
+                  Nenhuma blusa encontrada com esses filtros.
                 </p>
               )}
 
@@ -397,4 +387,4 @@ function Camisetas() {
   );
 }
 
-export default Camisetas;
+export default Blusas;

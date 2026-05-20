@@ -4,15 +4,15 @@
     "imageKey": "camisetaBranca",
     "title": "Camiseta Skateboard Branca",
     "price": "R$ 150,00",
-    "category": "basicas",
+    "category": "estampadas",
     "colors": ["branco"],
     "sizes": ["P", "M", "G", "GG"],
     "description": "Camiseta branca com estética streetwear Chouga."
   },
   {
     "id": 2,
-    "imageKey": "camisetaFlower",
-    "title": "Camiseta Flower",
+    "imageKey": "camisetaBelinhaPrimavera",
+    "title": "Camiseta Chouga Belinha Primavera",
     "price": "R$ 150,00",
     "category": "estampadas",
     "colors": ["preto"],
@@ -31,32 +31,122 @@
   },
   {
     "id": 4,
-    "imageKey": "camisetaBomb",
-    "title": "Camiseta Chouga Bomb",
+    "imageKey": "camisetaBomber",
+    "title": "Camiseta Chouga Bomber",
     "price": "R$ 150,00",
-    "category": "colabs",
-    "colors": ["preto"],
+    "category": "estampadas",
+    "colors": ["cinza"],
     "sizes": ["P", "M", "G", "GG"],
-    "description": "Modelo Chouga Bomb com pegada skate street."
+    "description": "Modelo Chouga Bomber com pegada skate street."
   },
   {
     "id": 5,
-    "imageKey": "camisetaHoney",
-    "title": "Camiseta Chouga Honey",
+    "imageKey": "camisetaBelinhaOutono",
+    "title": "Camiseta Chouga Belinha Outono",
     "price": "R$ 150,00",
     "category": "estampadas",
-    "colors": ["bege"],
+    "colors": ["cinza"],
     "sizes": ["M", "G", "GG"],
-    "description": "Camiseta Chouga Honey com visual alternativo."
+    "description": "Camiseta Chouga Belinha com visual alternativo."
   },
   {
     "id": 6,
     "imageKey": "camisetaPreta",
     "title": "Camiseta Skateboard Preta",
     "price": "R$ 150,00",
-    "category": "basicas",
+    "category": "estampadas",
     "colors": ["preto"],
     "sizes": ["P", "M", "G", "GG", "XG"],
     "description": "Camiseta preta clássica com estética skate."
+  },
+  {
+    "id": 7,
+    "imageKey": "camisetaSkull",
+    "title": "Camiseta Chouga Skull",
+    "price": "R$ 150,00",
+    "category": "estampadas",
+    "colors": ["preto"],
+    "sizes": ["P", "M", "G", "GG"],
+    "description": "Camiseta Chouga Skull com pegada streetwear."
+  },
+  {
+    "id": 8,
+    "imageKey": "camisetaCity",
+    "title": "Camiseta Chouga City",
+    "price": "R$ 150,00",
+    "category": "estampadas",
+    "colors": ["preto"],
+    "sizes": ["P", "M", "G", "GG"],
+    "description": "Camiseta Chouga City com pegada streetwear."
+  },
+  {
+    "id": 9,
+    "imageKey": "camisetaPraia",
+    "title": "Camiseta Chouga Praia",
+    "price": "R$ 150,00",
+    "category": "estampadas",
+    "colors": ["preto"],
+    "sizes": ["P", "M", "G", "GG"],
+    "description": "Camiseta Chouga Praia com pegada streetwear."
+  },
+  {
+    "id": 10,
+    "imageKey": "camisetaBasicPreta",
+    "title": "Camiseta Chouga Basic Preta",
+    "price": "R$ 150,00",
+    "category": "básicas",
+    "colors": ["preto"],
+    "sizes": ["P", "M", "G", "GG"],
+    "description": "Camiseta básica preta com identidade Chouga."
+  },
+  {
+    "id": 11,
+    "imageKey": "camisetaBasicBranca",
+    "title": "Camiseta Chouga Basic Branca",
+    "price": "R$ 150,00",
+    "category": "básicas",
+    "colors": ["branco"],
+    "sizes": ["P", "M", "G", "GG"],
+    "description": "Camiseta básica branca com identidade Chouga."
+  },
+  {
+    "id": 12,
+    "imageKey": "camisetaChougaBranca",
+    "title": "Camiseta Chouga Branca",
+    "price": "R$ 150,00",
+    "category": "básicas",
+    "colors": ["branco"],
+    "sizes": ["P", "M", "G", "GG"],
+    "description": "Camiseta branca com identidade Chouga."
+  },
+  {
+    "id": 13,
+    "imageKey": "camisetaChougaAzul",
+    "title": "Camiseta Chouga Azul",
+    "price": "R$ 150,00",
+    "category": "básicas",
+    "colors": ["azul"],
+    "sizes": ["P", "M", "G", "GG"],
+    "description": "Camiseta azul com identidade Chouga."
+  },
+  {
+    "id": 14,
+    "imageKey": "camisetaBasicCinza",
+    "title": "Camiseta Chouga Basic Cinza",
+    "price": "R$ 150,00",
+    "category": "básicas",
+    "colors": ["cinza"],
+    "sizes": ["P", "M", "G", "GG"],
+    "description": "Camiseta cinza com identidade Chouga."
+  },
+  {
+    "id": 15,
+    "imageKey": "camisetaChougaWeed",
+    "title": "Camiseta Chouga Weed",
+    "price": "R$ 150,00",
+    "category": "básicas",
+    "colors": ["preta"],
+    "sizes": ["P", "M", "G", "GG"],
+    "description": "Camiseta preta com identidade Chouga."
   }
 ]
