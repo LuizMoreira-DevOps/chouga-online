@@ -446,7 +446,7 @@
 
     .wheel-menu {
         --wheel-size: min(90vw, 400px);
-        --wheel-radius: calc(var(--wheel-size) * 0.455);
+        --wheel-radius: calc(var(--wheel-size) * 0.5);
     }
 
     .wheel-center {
@@ -499,24 +499,27 @@
 
     .wheel-menu {
         --wheel-size: min(86vw, 320px);
-        --wheel-radius: calc(var(--wheel-size) * 0.4);
+        --wheel-radius: calc(var(--wheel-size) * 0.5);
     }
 
     .wheel-item {
-        width: 62px;
-        height: 62px;
+        width: 68px;
+        height: 68px;
+        gap: 4px;
     }
 
     .wheel-icon {
-        font-size: 22px;
+        font-size: 40px;
     }
 
     .wheel-label {
-        font-size: 0.5rem;
+        font-size: 0.82rem;
+        letter-spacing: 0.7px;
     }
 
     .wheel-sub-label {
-        font-size: 0.47rem;
+        font-size: 0.5rem;
+        letter-spacing: 0.6px;
     }
 
     .coming-soon-content {
