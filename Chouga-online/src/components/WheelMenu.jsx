@@ -8,7 +8,7 @@ import {
   FaLock,
 } from "react-icons/fa";
 
-import { GiHoodie } from "react-icons/gi";
+import { GiHoodie, GiTShirt, GiEnvelope, GiLockers } from "react-icons/gi";
 
 import wheelImg from "../assets/images/wheel.png";
 
@@ -16,7 +16,7 @@ const menuItems = [
   {
     id: "camisetas",
     label: "CAMISETA",
-    icon: <FaTshirt />,
+    icon: <GiTShirt />,
     path: "/camisetas",
     className: "top",
   },
