@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Layout from "../components/Layout";
 import "../css/contato.css";
 
@@ -10,10 +11,18 @@ import {
 } from "react-icons/fa";
 
 function Contato() {
+  const [formStatus, setFormStatus] = useState("");
+
   function handleSubmit(event) {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
+
+    const website = formData.get("website");
+
+    if (website) {
+      return;
+    }
 
     const nome = formData.get("nome");
     const email = formData.get("email");
@@ -33,6 +42,12 @@ ${mensagem}`;
     )}`;
 
     window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+
+    setFormStatus(
+      "Mensagem preparada! O WhatsApp foi aberto para concluir o envio.",
+    );
+
+    event.currentTarget.reset();
   }
 
   return (
@@ -91,6 +106,18 @@ ${mensagem}`;
             </aside>
 
             <form className="contato-form" onSubmit={handleSubmit}>
+              <div className="contato-honeypot" aria-hidden="true">
+                <label>
+                  <span>Website</span>
+                  <input
+                    type="text"
+                    name="website"
+                    tabIndex="-1"
+                    autoComplete="off"
+                  />
+                </label>
+              </div>
+
               <label>
                 <span>Nome</span>
                 <input type="text" name="nome" required />
@@ -112,6 +139,12 @@ ${mensagem}`;
               </label>
 
               <button type="submit">Enviar mensagem</button>
+
+              {formStatus && (
+                <p className="contato-form-status" role="status">
+                  {formStatus}
+                </p>
+              )}
             </form>
           </div>
         </section>
