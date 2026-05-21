@@ -90,7 +90,7 @@ function WheelMenu() {
   return (
     <div className={`wheel-menu ${closing ? "closing" : ""}`}>
       <div className="wheel-center">
-        <img src={wheelImg} alt="Roda Chouga Skateboard" />
+        <img src={wheelImg} alt="Wheel Chouga Skateboard" />
       </div>
 
       {menuItems.map((item) => (

@@ -18,28 +18,30 @@ function Footer() {
                         <span className="footer-logo-mark">®</span>
                     </div>
                     <p>
-                        Nas ruas, feito nas ruas
+                        Feito nas ruas.
                         <br />
-                        para as ruas.
+                        Para quem vive o corre.
                     </p>
                 </div>
 
                 <div className="footer-links">
                     <a
-                        href="https://instagram.com"
+                        href="https://instagram.com/chougaskateboard_/"
                         target="_blank"
                         rel="noreferrer"
+                        aria-label="Instagram da Chouga Skateboard"
                     >
-                        <FaInstagram />
+                        <FaInstagram aria-hidden="true" />
                         Instagram
                     </a>
 
                     <a
-                        href="https://wa.me/5541997485063"
+                        href="https://wa.me/5541997485063?text=Salve%2C%20Chouga!%20Vim%20pelo%20site%20e%20queria%20saber%20mais%20sobre%20os%20produtos."
                         target="_blank"
                         rel="noreferrer"
+                        aria-label="WhatsApp da Chouga Skateboard"
                     >
-                        <FaWhatsapp />
+                        <FaWhatsapp aria-hidden="true" />
                         WhatsApp
                     </a>
                 </div>
