@@ -22,10 +22,6 @@ const navLinks = [
     label: "Contato",
     path: "/contato",
   },
-  {
-    label: "EM BREVE",
-    path: "/em-breve",
-  },
 ];
 
 function Header() {
