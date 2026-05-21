@@ -444,7 +444,7 @@
 
     .hero-left h1 {
         font-size: clamp(1.95rem, 10.5vw, 2.55rem);
-        margin-top: 2.5rem;
+        margin-top: 3rem;
     }
 
     .wheel-menu {
