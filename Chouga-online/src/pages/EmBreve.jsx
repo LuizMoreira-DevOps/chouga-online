@@ -1,4 +1,5 @@
 import Layout from "../components/Layout";
+import "../css/embreve.css";
 
 function EmBreve() {
   return (
@@ -7,16 +8,26 @@ function EmBreve() {
         <section className="coming-soon page-section">
           <div className="coming-soon-content page-container">
             <span className="coming-tag">
-              CHOUGA ONLINE
+              CHOUGA SKATEBOARD
             </span>
 
-            <h1>EM BREVE</h1>
+            <h1>
+              Drop
+              <span>em breve</span>
+            </h1>
 
-            <p>
+            <p className="coming-lead">
               Estamos preparando algo pesado.
-              <br />
-              Novos produtos chegando em breve.
             </p>
+
+            <p className="coming-text">
+              Novos produtos estão entrando no corre.
+              Fica por perto.
+            </p>
+
+            <div className="coming-warning">
+              <span>Área em construção</span>
+            </div>
           </div>
         </section>
       </main>

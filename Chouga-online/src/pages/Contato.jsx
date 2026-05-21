@@ -5,12 +5,36 @@ import {
   FaEnvelope,
   FaPhoneAlt,
   FaMapMarkerAlt,
-  FaFacebookF,
   FaInstagram,
-  FaYoutube,
+  FaWhatsapp,
 } from "react-icons/fa";
 
 function Contato() {
+  function handleSubmit(event) {
+    event.preventDefault();
+
+    const formData = new FormData(event.currentTarget);
+
+    const nome = formData.get("nome");
+    const email = formData.get("email");
+    const assunto = formData.get("assunto");
+    const mensagem = formData.get("mensagem");
+
+    const texto = `Olá, Chouga! Meu nome é ${nome}.
+
+E-mail: ${email}
+Assunto: ${assunto}
+
+Mensagem:
+${mensagem}`;
+
+    const whatsappUrl = `https://wa.me/5541997485063?text=${encodeURIComponent(
+      texto,
+    )}`;
+
+    window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+  }
+
   return (
     <Layout>
       <main className="contato-page page-bg">
@@ -30,55 +54,61 @@ function Contato() {
 
               <ul className="contato-list">
                 <li>
-                  <FaEnvelope />
-                  <span>chouga@email.com.br</span>
+                  <FaEnvelope aria-hidden="true" />
+                  <span>chougaskateboard@gmail.com</span>
                 </li>
 
                 <li>
-                  <FaPhoneAlt />
-                  <span>(041) 9 9999-9999</span>
+                  <FaPhoneAlt aria-hidden="true" />
+                  <span>(41) 99748-5063</span>
                 </li>
 
                 <li>
-                  <FaMapMarkerAlt />
+                  <FaMapMarkerAlt aria-hidden="true" />
                   <span>Curitiba - PR / Brasil</span>
                 </li>
               </ul>
 
               <div className="contato-social">
-                <a href="/" aria-label="Facebook">
-                  <FaFacebookF />
+                <a
+                  href="https://instagram.com/chougaskateboard_/"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Instagram da Chouga Skateboard"
+                >
+                  <FaInstagram aria-hidden="true" />
                 </a>
 
-                <a href="/" aria-label="Instagram">
-                  <FaInstagram />
-                </a>
-
-                <a href="/" aria-label="YouTube">
-                  <FaYoutube />
+                <a
+                  href="https://wa.me/5541997485063"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="WhatsApp da Chouga Skateboard"
+                >
+                  <FaWhatsapp aria-hidden="true" />
                 </a>
               </div>
             </aside>
 
-            <form className="contato-form">
+            <form className="contato-form" onSubmit={handleSubmit}>
               <label>
                 <span>Nome</span>
-                <input type="text" name="nome" />
+                <input type="text" name="nome" required />
               </label>
 
               <label>
                 <span>E-mail</span>
-                <input type="email" name="email" />
+                <input type="email" name="email" required />
               </label>
 
               <label>
                 <span>Assunto</span>
-                <input type="text" name="assunto" />
+                <input type="text" name="assunto" required />
               </label>
 
               <label>
                 <span>Mensagem</span>
-                <textarea name="mensagem" rows="5" />
+                <textarea name="mensagem" rows="5" required />
               </label>
 
               <button type="submit">Enviar mensagem</button>

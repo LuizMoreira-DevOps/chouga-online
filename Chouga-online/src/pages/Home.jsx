@@ -2,27 +2,24 @@ import Layout from "../components/Layout";
 import WheelMenu from "../components/WheelMenu";
 
 import "../css/home.css";
+import "../css/embreve.css";
 
 function Home() {
   return (
-    <Layout>
+    <Layout hideFooter>
       <main className="home page-bg">
         <section className="home-section page-section">
-          {/* TEXTO ESQUERDA */}
           <div className="hero-left">
             <h1>
-              Streetwear 
+              Streetwear
             </h1>
             <p>
               não se veste.
               <br />
               Se vive.
             </p>
-
-            <span className="hero-line"></span>
           </div>
 
-          {/* MENU CENTRAL */}
           <div className="hero-center">
             <WheelMenu />
           </div>

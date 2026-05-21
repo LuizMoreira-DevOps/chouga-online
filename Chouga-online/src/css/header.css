@@ -52,6 +52,8 @@
     gap: 0.75rem;
 }
 
+/* Botões de ícone e menu toggle */
+
 .header-icon-button,
 .menu-toggle {
     width: 58px;
@@ -85,6 +87,8 @@
     transform: translateY(-2px);
     box-shadow: 0 0 18px rgba(255, 42, 0, 0.18);
 }
+
+/* Ícone de cadeado para indicar que a conta é privada */
 
 .lock-icon {
     position: absolute;

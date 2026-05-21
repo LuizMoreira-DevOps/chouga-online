@@ -1,0 +1,190 @@
+/* =========================
+   EM BREVE PAGE
+========================= */
+
+.coming-page {
+    background: var(--color-bg);
+}
+
+.coming-page.page-bg {
+    --page-bg-opacity: 0.34;
+    --bg-overlay-start: 0.86;
+    --bg-overlay-end: 0.98;
+    --page-bg-position: center;
+}
+
+.coming-soon {
+    display: grid;
+    place-items: center;
+    min-height: 100vh;
+    text-align: center;
+}
+
+.coming-soon-content {
+    position: relative;
+
+    width: min(100%, 820px);
+    padding: clamp(2rem, 5vw, 4rem);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    border: 1px solid rgba(243, 215, 191, 0.18);
+
+    background:
+        radial-gradient(circle at 50% 0,
+            rgba(255, 42, 0, 0.16),
+            transparent 38%),
+        rgba(13, 13, 13, 0.52);
+
+    box-shadow:
+        0 28px 70px rgba(0, 0, 0, 0.65),
+        0 0 34px rgba(255, 42, 0, 0.12),
+        inset 0 0 28px rgba(243, 215, 191, 0.035);
+
+    backdrop-filter: blur(8px);
+}
+
+.coming-soon-content::before,
+.coming-soon-content::after {
+    content: "";
+
+    position: absolute;
+
+    width: 72px;
+    height: 4px;
+
+    background: var(--color-red-strong);
+    box-shadow: 0 0 18px rgba(255, 42, 0, 0.55);
+}
+
+.coming-soon-content::before {
+    top: -2px;
+    left: 2rem;
+}
+
+.coming-soon-content::after {
+    right: 2rem;
+    bottom: -2px;
+}
+
+.coming-tag {
+    margin-bottom: 1.2rem;
+
+    color: var(--color-text);
+
+    font-size: var(--text-xs);
+    letter-spacing: 0.42em;
+
+    text-transform: uppercase;
+
+    opacity: 0.62;
+}
+
+.coming-soon h1 {
+    margin-bottom: 1.2rem;
+
+    color: var(--color-red-strong);
+
+    font-family: "BlackOps", var(--font-display), sans-serif;
+    font-size: clamp(4rem, 12vw, 9rem);
+    line-height: 0.78;
+    letter-spacing: 0.04em;
+
+    text-transform: uppercase;
+
+    text-shadow:
+        0 0 20px rgba(255, 42, 0, 0.28),
+        0 10px 0 rgba(0, 0, 0, 0.45);
+}
+
+.coming-soon h1 span {
+    display: block;
+
+    color: var(--color-text-strong);
+
+    font-family: var(--font-display);
+    font-size: 0.44em;
+    letter-spacing: 0.12em;
+}
+
+.coming-lead {
+    margin-bottom: 0.85rem;
+
+    color: var(--color-text-strong);
+
+    font-family: var(--font-street);
+    font-size: clamp(1.5rem, 3vw, 2.4rem);
+    line-height: 1;
+
+    text-transform: uppercase;
+}
+
+.coming-text {
+    max-width: 560px;
+
+    color: var(--color-text);
+
+    font-size: clamp(1rem, 1.6vw, 1.2rem);
+    line-height: 1.45;
+    letter-spacing: 0.05em;
+
+    text-transform: uppercase;
+
+    opacity: 0.86;
+}
+
+.coming-warning {
+    margin-top: 2rem;
+    padding: 0.75rem 1.15rem;
+
+    border: 1px solid rgba(255, 42, 0, 0.38);
+
+    color: var(--color-red-strong);
+    background: rgba(255, 42, 0, 0.08);
+
+    font-family: "Courier New", monospace;
+    font-size: 0.82rem;
+    letter-spacing: 0.16em;
+
+    text-transform: uppercase;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 700px) {
+    .coming-soon {
+        min-height: auto;
+        align-items: start;
+    }
+
+    .coming-soon-content {
+        margin-top: 1rem;
+        padding: 2.2rem 1.2rem;
+    }
+
+    .coming-tag {
+        font-size: 0.68rem;
+        letter-spacing: 0.28em;
+    }
+
+    .coming-soon h1 {
+        font-size: clamp(3.4rem, 18vw, 5.4rem);
+    }
+
+    .coming-lead {
+        font-size: clamp(1.35rem, 8vw, 2rem);
+    }
+
+    .coming-text {
+        font-size: 0.9rem;
+    }
+
+    .coming-warning {
+        font-size: 0.68rem;
+        letter-spacing: 0.12em;
+    }
+}

@@ -22,6 +22,10 @@ const navLinks = [
     label: "Contato",
     path: "/contato",
   },
+  {
+    label: "EM BREVE",
+    path: "/em-breve",
+  },
 ];
 
 function Header() {
@@ -61,29 +65,31 @@ function Header() {
             aria-label="Página inicial"
             title="Página inicial"
           >
-            <FiHome />
+            <FiHome aria-hidden="true" />
           </Link>
         )}
 
-        <button
+        <Link
+          to="/em-breve"
           className="header-icon-button is-locked"
-          type="button"
-          aria-label="Login em breve"
           title="Login em breve"
+          aria-label="Login em breve"
+          onClick={closeMenu}
         >
-          <FiUser />
-          <FiLock className="lock-icon" />
-        </button>
+          <FiUser aria-hidden="true" />
+          <FiLock className="lock-icon" aria-hidden="true" />
+        </Link>
 
-        <button
+        <Link
+          to="/em-breve"
           className="header-icon-button is-locked"
-          type="button"
-          aria-label="Carrinho em breve"
           title="Carrinho em breve"
+          aria-label="Carrinho em breve"
+          onClick={closeMenu}
         >
-          <FiShoppingCart />
-          <FiLock className="lock-icon" />
-        </button>
+          <FiShoppingCart aria-hidden="true" />
+          <FiLock className="lock-icon" aria-hidden="true" />
+        </Link>
 
         {!isHome && (
           <button
@@ -107,17 +113,6 @@ function Header() {
               {link.label}
             </Link>
           ))}
-
-          <a
-            href="https://www.instagram.com/"
-            target="_blank"
-            rel="noreferrer"
-            onClick={closeMenu}
-          >
-            Instagram
-          </a>
-
-          <span className="nav-badge">Drop em breve</span>
         </nav>
       )}
     </header>
