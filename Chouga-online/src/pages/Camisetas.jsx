@@ -39,10 +39,41 @@ const products = camisetasData.map((product) => ({
 
 const categories = [
   { label: "Todas", value: "todos" },
-  { label: "Básicas", value: "básicas" },
-  { label: "Estampadas", value: "estampadas" },
+  { label: "Camisetas Básicas", value: "básicas" },
+  { label: "Camisetas Estampadas", value: "estampadas" },
   { label: "Colabs", value: "colabs" },
 ];
+
+const colorOptions = {
+  preto: {
+    label: "Preto",
+    className: "color-black",
+  },
+  cinza: {
+    label: "Cinza",
+    className: "color-gray",
+  },
+  branco: {
+    label: "Branco",
+    className: "color-white",
+  },
+  vermelho: {
+    label: "Vermelho",
+    className: "color-red",
+  },
+  bege: {
+    label: "Bege",
+    className: "color-beige",
+  },
+  azul: {
+    label: "Azul",
+    className: "color-blue",
+  },
+};
+
+const availableColors = [
+  ...new Set(products.flatMap((product) => product.colors)),
+].filter((color) => colorOptions[color]);
 
 function Camisetas() {
   const [categoryFilter, setCategoryFilter] = useState("todos");
@@ -196,65 +227,22 @@ function Camisetas() {
                 <h2>Cores</h2>
 
                 <div className="color-list">
-                  <button
-                    className={`color-dot color-black ${
-                      colorFilter === "preto" ? "is-active" : ""
-                    }`}
-                    type="button"
-                    aria-label="Preto"
-                    title="Preto"
-                    onClick={() => toggleColorFilter("preto")}
-                  ></button>
+                  {availableColors.map((color) => {
+                    const option = colorOptions[color];
 
-                  <button
-                    className={`color-dot color-gray ${
-                      colorFilter === "cinza" ? "is-active" : ""
-                    }`}
-                    type="button"
-                    aria-label="Cinza"
-                    title="Cinza"
-                    onClick={() => toggleColorFilter("cinza")}
-                  ></button>
-
-                  <button
-                    className={`color-dot color-white ${
-                      colorFilter === "branco" ? "is-active" : ""
-                    }`}
-                    type="button"
-                    aria-label="Branco"
-                    title="Branco"
-                    onClick={() => toggleColorFilter("branco")}
-                  ></button>
-
-                  <button
-                    className={`color-dot color-red ${
-                      colorFilter === "vermelho" ? "is-active" : ""
-                    }`}
-                    type="button"
-                    aria-label="Vermelho"
-                    title="Vermelho"
-                    onClick={() => toggleColorFilter("vermelho")}
-                  ></button>
-
-                  <button
-                    className={`color-dot color-beige ${
-                      colorFilter === "bege" ? "is-active" : ""
-                    }`}
-                    type="button"
-                    aria-label="Bege"
-                    title="Bege"
-                    onClick={() => toggleColorFilter("bege")}
-                  ></button>
-
-                  <button
-                    className={`color-dot color-blue ${
-                      colorFilter === "azul" ? "is-active" : ""
-                    }`}
-                    type="button"
-                    aria-label="Azul"
-                    title="Azul"
-                    onClick={() => toggleColorFilter("azul")}
-                  ></button>
+                    return (
+                      <button
+                        key={color}
+                        className={`color-dot ${option.className} ${
+                          colorFilter === color ? "is-active" : ""
+                        }`}
+                        type="button"
+                        aria-label={option.label}
+                        title={option.label}
+                        onClick={() => toggleColorFilter(color)}
+                      ></button>
+                    );
+                  })}
                 </div>
               </div>
             </aside>
