@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { FiSearch } from "react-icons/fi";
 
 import Layout from "../components/Layout";
+import ProductDetailsModal from "../components/ProductDetailsModal";
 
 import camisetasData from "../data/camisetas.json";
 
@@ -80,6 +82,7 @@ function Camisetas() {
   const [sizeFilter, setSizeFilter] = useState("todos");
   const [colorFilter, setColorFilter] = useState("todos");
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [detailsProduct, setDetailsProduct] = useState(null);
   const [zoomLevel, setZoomLevel] = useState(1);
   const [dragPosition, setDragPosition] = useState({ x: 0, y: 0 });
   const [dragStart, setDragStart] = useState(null);
@@ -96,6 +99,14 @@ function Camisetas() {
     setZoomLevel(1);
     setDragPosition({ x: 0, y: 0 });
     setDragStart(null);
+  }
+
+  function openProductDetails(product) {
+    setDetailsProduct(product);
+  }
+
+  function closeProductDetails() {
+    setDetailsProduct(null);
   }
 
   function decreaseZoom() {
@@ -175,7 +186,7 @@ function Camisetas() {
     <Layout>
       <main
         className={`camisetas-page page-bg ${
-          selectedProduct ? "is-zoom-open" : ""
+          selectedProduct || detailsProduct ? "is-zoom-open" : ""
         }`}
       >
         <section className="camisetas-section page-section">
@@ -259,6 +270,10 @@ function Camisetas() {
                       >
                         <div className="product-image">
                           <img src={product.image} alt={product.title} />
+
+                          <span className="product-zoom-hint" aria-hidden="true">
+                            <FiSearch />
+                          </span>
                         </div>
 
                         <div className="product-info">
@@ -270,9 +285,9 @@ function Camisetas() {
                       <div className="product-actions">
                         <button
                           type="button"
-                          onClick={() => openProduct(product)}
+                          onClick={() => openProductDetails(product)}
                         >
-                          Saiba mais
+                          Ver produto
                         </button>
 
                         <a
@@ -292,6 +307,14 @@ function Camisetas() {
                 <p className="products-empty">
                   Nenhum produto encontrado nessa categoria.
                 </p>
+              )}
+
+              {detailsProduct && (
+                <ProductDetailsModal
+                  product={detailsProduct}
+                  onClose={closeProductDetails}
+                  whatsappPhone="5541997485063"
+                />
               )}
 
               {selectedProduct && (
