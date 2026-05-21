@@ -1064,4 +1064,12 @@
 
         font-size: 0.95rem;
     }
+
+    .blusas-content {
+        padding-bottom: 5.5rem;
+    }
+
+    .product-card:last-child {
+        margin-bottom: 2rem;
+    }
 }
