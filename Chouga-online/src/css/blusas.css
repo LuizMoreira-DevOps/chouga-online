@@ -433,7 +433,7 @@
     position: relative;
     width: min(88vw, 720px);
     max-height: 86vh;
-    overflow: hidden;
+    overflow: visible;
     border: 1px solid rgba(243, 215, 191, 0.42);
     background: rgba(13, 13, 13, 0.96);
     box-shadow:
@@ -467,22 +467,25 @@
 
 .zoom-controls {
     position: absolute;
-    right: 1rem;
-    bottom: 5.4rem;
-    z-index: 3;
+    left: 50%;
+    bottom: -1.55rem;
+    z-index: 4;
+
     display: flex;
-    flex-direction: column;
-    gap: 0.55rem;
-    padding: 0.35rem;
+    gap: 0.65rem;
+
+    padding: 0.4rem;
     border: 1px solid rgba(243, 215, 191, 0.28);
-    background: rgba(13, 13, 13, 0.72);
-    backdrop-filter: blur(6px);
+
+    background: rgba(13, 13, 13, 0.88);
+    backdrop-filter: blur(8px);
+
+    transform: translateX(-50%);
 }
 
 .zoom-actions {
     display: flex;
-    flex-direction: column;
-    gap: 0.55rem;
+    gap: 0.65rem;
 }
 
 .zoom-close,
@@ -513,6 +516,11 @@
 }
 
 .zoom-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 5;
+
     color: var(--color-red-strong);
 }
 
@@ -892,12 +900,25 @@
         object-fit: contain;
     }
 
-    .zoom-controls {
+    .zoom-close {
         top: 0.75rem;
         right: 0.75rem;
-        bottom: auto;
+    }
+
+    .zoom-controls {
+        left: 50%;
+        right: auto;
+        bottom: 0.75rem;
+
+        flex-direction: row;
 
         padding: 0.35rem;
+
+        transform: translateX(-50%);
+    }
+
+    .zoom-actions {
+        flex-direction: row;
     }
 
     .zoom-close,

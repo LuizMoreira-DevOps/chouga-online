@@ -316,16 +316,16 @@ function Blusas() {
                     aria-label={selectedProduct.title}
                     onClick={(event) => event.stopPropagation()}
                   >
-                    <div className="zoom-controls">
-                      <button
-                        className="zoom-close"
-                        type="button"
-                        onClick={closeProduct}
-                        aria-label="Fechar zoom"
-                      >
-                        ×
-                      </button>
+                    <button
+                      className="zoom-close"
+                      type="button"
+                      onClick={closeProduct}
+                      aria-label="Fechar zoom"
+                    >
+                      ×
+                    </button>
 
+                    <div className="zoom-controls">
                       <div className="zoom-actions">
                         <button
                           type="button"
