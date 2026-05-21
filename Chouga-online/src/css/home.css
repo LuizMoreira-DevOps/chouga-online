@@ -434,37 +434,37 @@
 
 @media (max-width: 520px) {
     .home-section {
-        gap: 10px;
-        padding: 76px 12px 20px;
+        gap: 8px;
+        padding: 72px 12px 18px;
     }
 
     .hero-left {
-        margin-top: 1.5rem;
+        margin-top: 2rem;
     }
 
     .hero-left h1 {
-        font-size: clamp(2.15rem, 12vw, 2.8rem);
-        margin-top: 0;
+        font-size: clamp(1.95rem, 10.5vw, 2.55rem);
+        margin-top: 2.5rem;
     }
 
     .wheel-menu {
-        --wheel-size: min(86vw, 320px);
+        --wheel-size: min(84vw, 300px);
         --wheel-radius: calc(var(--wheel-size) * 0.5);
     }
 
     .wheel-item {
-        width: 68px;
-        height: 68px;
+        width: 64px;
+        height: 64px;
         gap: 4px;
     }
 
     .wheel-icon {
-        font-size: 40px;
+        font-size: 36px;
     }
 
     .wheel-label {
-        font-size: 0.95rem;
-        letter-spacing: 0.7px;
+        font-size: 0.82rem;
+        letter-spacing: 1.5px;
     }
 
     .wheel-sub-label {
