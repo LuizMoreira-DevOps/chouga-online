@@ -394,7 +394,9 @@
     border: 1px solid rgba(243, 215, 191, 0.5);
     color: var(--color-text-strong);
     background:
-        linear-gradient(145deg, rgba(255, 42, 0, 0.16), rgba(13, 13, 13, 0.94));
+        linear-gradient(145deg,
+            rgba(255, 42, 0, 0.16),
+            rgba(13, 13, 13, 0.94));
     cursor: pointer;
     font-size: 1.45rem;
     font-weight: 700;
@@ -509,7 +511,7 @@
     bottom: 1.1rem;
     z-index: 3000;
 
-    display: none;
+    display: flex;
     align-items: center;
     justify-content: center;
 
@@ -618,12 +620,6 @@
         0 14px 30px rgba(0, 0, 0, 0.58),
         0 0 24px rgba(255, 42, 0, 0.18),
         inset 0 0 18px rgba(243, 215, 191, 0.08);
-}
-
-@media (max-width: 900px) {
-    .back-to-top {
-        display: flex;
-    }
 }
 
 /* =========================
@@ -750,6 +746,56 @@
 }
 
 /* =========================
+   FILTROS COMPACTOS MOBILE
+========================= */
+
+@media (max-width: 700px) {
+    .camisetas-sidebar {
+        padding: 0.75rem;
+    }
+
+    .camisetas-breadcrumb {
+        margin-bottom: 0.9rem;
+    }
+
+    .filter-group {
+        margin-bottom: 0.8rem;
+    }
+
+    .filter-group h2 {
+        margin-bottom: 0.5rem;
+        font-size: 0.85rem;
+    }
+
+    .filter-button {
+        min-height: 28px;
+        margin: 0 0.32rem 0.32rem 0;
+        padding: 0 0.55rem;
+        font-size: 0.68rem;
+    }
+
+    .filter-divider {
+        margin: 0.75rem 0;
+    }
+
+    .size-list,
+    .color-list {
+        gap: 0.42rem;
+    }
+
+    .size-list button {
+        min-width: 29px;
+        height: 29px;
+        font-size: 0.72rem;
+    }
+
+    .color-dot {
+        width: 23px;
+        height: 23px;
+    }
+}
+
+/* =========================
    ZOOM MOBILE
 ========================= */
 
@@ -830,55 +876,67 @@
 
 @media (max-width: 520px) {
     .camisetas-container {
-        gap: 1.25rem;
+        gap: 1rem;
     }
 
     .camisetas-sidebar {
-        padding: 0.85rem;
+        padding: 0.65rem;
     }
 
     .camisetas-breadcrumb {
-        margin-bottom: 1rem;
-        font-size: 0.62rem;
-        letter-spacing: 0.16em;
+        margin-bottom: 0.75rem;
+        font-size: 0.56rem;
+        letter-spacing: 0.13em;
     }
 
     .filter-group {
-        margin-bottom: 1rem;
+        margin-bottom: 0.65rem;
     }
 
     .filter-group h2 {
-        font-size: 0.9rem;
+        margin-bottom: 0.45rem;
+        font-size: 0.78rem;
+        line-height: 1;
     }
 
     .filter-button {
-        min-height: 30px;
-        margin: 0 0.35rem 0.35rem 0;
-        padding: 0 0.6rem;
-        font-size: 0.72rem;
+        min-height: 26px;
+        margin: 0 0.28rem 0.28rem 0;
+        padding: 0 0.5rem;
+        font-size: 0.64rem;
+        line-height: 1;
     }
 
     .filter-divider {
-        margin: 0.95rem 0;
+        height: 1px;
+        margin: 0.65rem 0;
     }
 
     .size-list {
-        gap: 0.45rem;
+        gap: 0.35rem;
     }
 
     .size-list button {
-        min-width: 30px;
-        height: 30px;
-        font-size: 0.75rem;
+        min-width: 27px;
+        height: 27px;
+        font-size: 0.68rem;
     }
 
     .color-list {
-        gap: 0.5rem;
+        gap: 0.38rem;
     }
 
     .color-dot {
-        width: 25px;
-        height: 25px;
+        width: 21px;
+        height: 21px;
+    }
+
+    .color-dot.is-active {
+        transform: translateY(-2px) scale(1.06);
+    }
+
+    .color-dot.is-active::after {
+        inset: -6px;
     }
 
     .products-grid {
@@ -914,21 +972,29 @@
     }
 
     .back-to-top {
-        right: 1rem;
-        bottom: 1rem;
-    
-        width: 62px;
-        height: 62px;
-    
-        font-size: 1.56rem;
+        right: 0.75rem;
+        bottom: 0.75rem;
+
+        width: 48px;
+        height: 48px;
+
+        font-size: 1.2rem;
 
         background:
             linear-gradient(145deg,
-                rgba(255, 42, 0, 0.32),
+                rgba(255, 42, 0, 0.28),
                 rgba(13, 13, 13, 0.96));
 
         box-shadow:
-            0 12px 28px rgba(0, 0, 0, 0.55),
-            0 0 22px rgba(255, 42, 0, 0.22);
+            0 10px 22px rgba(0, 0, 0, 0.52),
+            0 0 16px rgba(255, 42, 0, 0.18);
+    }
+
+    .back-to-top::before {
+        inset: 6px;
+    }
+
+    .back-to-top::after {
+        inset: -5px;
     }
 }
