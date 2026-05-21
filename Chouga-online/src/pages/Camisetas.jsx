@@ -37,8 +37,15 @@ const products = camisetasData.map((product) => ({
   image: getProductImage(product.imageKey),
 }));
 
+const categories = [
+  { label: "Todas", value: "todos" },
+  { label: "Básicas", value: "básicas" },
+  { label: "Estampadas", value: "estampadas" },
+  { label: "Colabs", value: "colabs" },
+];
+
 function Camisetas() {
-  const [categoryFilter, setCategoryFilter] = useState("todas");
+  const [categoryFilter, setCategoryFilter] = useState("todos");
   const [sizeFilter, setSizeFilter] = useState("todos");
   const [colorFilter, setColorFilter] = useState("todos");
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -122,7 +129,7 @@ function Camisetas() {
 
   const filteredProducts = products.filter((product) => {
     const matchCategory =
-      categoryFilter === "todas" || product.category === categoryFilter;
+      categoryFilter === "todos" || product.category === categoryFilter;
 
     const matchSize =
       sizeFilter === "todos" || product.sizes.includes(sizeFilter);
@@ -135,7 +142,11 @@ function Camisetas() {
 
   return (
     <Layout>
-      <main className={`camisetas-page page-bg ${selectedProduct ? "is-zoom-open" : ""}`}>
+      <main
+        className={`camisetas-page page-bg ${
+          selectedProduct ? "is-zoom-open" : ""
+        }`}
+      >
         <section className="camisetas-section page-section">
           <div className="camisetas-container page-container">
             <aside className="camisetas-sidebar">
@@ -148,41 +159,18 @@ function Camisetas() {
               <div className="filter-group">
                 <h2>Categorias</h2>
 
-                <button
-                  className={`filter-button ${categoryFilter === "todas" ? "is-active" : ""
+                {categories.map((category) => (
+                  <button
+                    key={category.value}
+                    className={`filter-button ${
+                      categoryFilter === category.value ? "is-active" : ""
                     }`}
-                  type="button"
-                  onClick={() => setCategoryFilter("todas")}
-                >
-                  Todas
-                </button>
-
-                <button
-                  className={`filter-button ${categoryFilter === "básicas" ? "is-active" : ""
-                    }`}
-                  type="button"
-                  onClick={() => setCategoryFilter("básicas")}
-                >
-                  Básicas
-                </button>
-
-                <button
-                  className={`filter-button ${categoryFilter === "estampadas" ? "is-active" : ""
-                    }`}
-                  type="button"
-                  onClick={() => setCategoryFilter("estampadas")}
-                >
-                  Estampadas
-                </button>
-
-                <button
-                  className={`filter-button ${categoryFilter === "colabs" ? "is-active" : ""
-                    }`}
-                  type="button"
-                  onClick={() => setCategoryFilter("colabs")}
-                >
-                  Colabs
-                </button>
+                    type="button"
+                    onClick={() => setCategoryFilter(category.value)}
+                  >
+                    {category.label}
+                  </button>
+                ))}
               </div>
 
               <div className="filter-divider"></div>
@@ -209,8 +197,9 @@ function Camisetas() {
 
                 <div className="color-list">
                   <button
-                    className={`color-dot color-black ${colorFilter === "preto" ? "is-active" : ""
-                      }`}
+                    className={`color-dot color-black ${
+                      colorFilter === "preto" ? "is-active" : ""
+                    }`}
                     type="button"
                     aria-label="Preto"
                     title="Preto"
@@ -218,8 +207,9 @@ function Camisetas() {
                   ></button>
 
                   <button
-                    className={`color-dot color-gray ${colorFilter === "cinza" ? "is-active" : ""
-                      }`}
+                    className={`color-dot color-gray ${
+                      colorFilter === "cinza" ? "is-active" : ""
+                    }`}
                     type="button"
                     aria-label="Cinza"
                     title="Cinza"
@@ -227,8 +217,9 @@ function Camisetas() {
                   ></button>
 
                   <button
-                    className={`color-dot color-white ${colorFilter === "branco" ? "is-active" : ""
-                      }`}
+                    className={`color-dot color-white ${
+                      colorFilter === "branco" ? "is-active" : ""
+                    }`}
                     type="button"
                     aria-label="Branco"
                     title="Branco"
@@ -236,8 +227,9 @@ function Camisetas() {
                   ></button>
 
                   <button
-                    className={`color-dot color-red ${colorFilter === "vermelho" ? "is-active" : ""
-                      }`}
+                    className={`color-dot color-red ${
+                      colorFilter === "vermelho" ? "is-active" : ""
+                    }`}
                     type="button"
                     aria-label="Vermelho"
                     title="Vermelho"
@@ -245,8 +237,9 @@ function Camisetas() {
                   ></button>
 
                   <button
-                    className={`color-dot color-beige ${colorFilter === "bege" ? "is-active" : ""
-                      }`}
+                    className={`color-dot color-beige ${
+                      colorFilter === "bege" ? "is-active" : ""
+                    }`}
                     type="button"
                     aria-label="Bege"
                     title="Bege"
@@ -254,8 +247,9 @@ function Camisetas() {
                   ></button>
 
                   <button
-                    className={`color-dot color-blue ${colorFilter === "azul" ? "is-active" : ""
-                      }`}
+                    className={`color-dot color-blue ${
+                      colorFilter === "azul" ? "is-active" : ""
+                    }`}
                     type="button"
                     aria-label="Azul"
                     title="Azul"
@@ -308,7 +302,7 @@ function Camisetas() {
                 </div>
               ) : (
                 <p className="products-empty">
-                  Nenhuma camiseta encontrada com esses filtros.
+                  Nenhum produto encontrado nessa categoria.
                 </p>
               )}
 
@@ -355,8 +349,9 @@ function Camisetas() {
                     </div>
 
                     <div
-                      className={`zoom-image-wrapper ${zoomLevel > 1 ? "is-draggable" : ""
-                        }`}
+                      className={`zoom-image-wrapper ${
+                        zoomLevel > 1 ? "is-draggable" : ""
+                      }`}
                       onPointerDown={handlePointerDown}
                       onPointerMove={handlePointerMove}
                       onPointerUp={stopDragging}
