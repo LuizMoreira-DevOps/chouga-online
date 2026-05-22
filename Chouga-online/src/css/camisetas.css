@@ -877,8 +877,9 @@
 
     .product-zoom-modal {
         width: 100%;
-        max-height: calc(100dvh - 6.5rem);
-        overflow: hidden;
+        max-height: calc(100dvh - 11rem);
+        margin-bottom: 5.25rem;
+        overflow: visible;
 
         border-radius: 14px;
     }
@@ -906,11 +907,28 @@
     .zoom-controls {
         left: 50%;
         right: auto;
-        bottom: 0.75rem;
+        bottom: -4.25rem;
 
         flex-direction: row;
 
-        padding: 0.35rem;
+        padding: 0.4rem;
+        border: 1px solid rgba(243, 215, 191, 0.38);
+        border-radius: 999px;
+
+        background:
+            radial-gradient(circle at 35% 28%,
+                rgba(243, 215, 191, 0.16),
+                transparent 34%),
+            linear-gradient(145deg,
+                rgba(255, 42, 0, 0.22),
+                rgba(13, 13, 13, 0.96) 68%);
+
+        box-shadow:
+            0 14px 30px rgba(0, 0, 0, 0.58),
+            0 0 22px rgba(255, 42, 0, 0.16),
+            inset 0 0 14px rgba(243, 215, 191, 0.07);
+
+        backdrop-filter: blur(10px);
 
         transform: translateX(-50%);
     }
@@ -923,9 +941,12 @@
     .zoom-actions button {
         width: 46px;
         height: 46px;
-        border-radius: 0;
 
         font-size: 1.35rem;
+    }
+
+    .zoom-actions button {
+        border-radius: 50%;
     }
 
     .product-zoom-info {
