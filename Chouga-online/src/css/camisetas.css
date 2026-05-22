@@ -563,6 +563,11 @@
     letter-spacing: 0.06em;
 }
 
+.camisetas-page.is-zoom-open~footer,
+.blusas-page.is-zoom-open~footer {
+    display: none;
+}
+
 .product-card-button {
     width: 100%;
     padding: 0;

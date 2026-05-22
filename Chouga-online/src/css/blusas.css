@@ -612,6 +612,7 @@
     font-weight: 700;
     letter-spacing: 0.06em;
 }
+
 .camisetas-page.is-zoom-open~footer,
 .blusas-page.is-zoom-open~footer {
     display: none;
@@ -800,6 +801,7 @@
         gap: 0.55rem;
     }
 }
+
 /* =========================
    DESKTOP MENOR
 ========================= */
