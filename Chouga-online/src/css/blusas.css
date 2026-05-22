@@ -743,7 +743,6 @@
 ========================= */
 
 @media (min-width: 701px) {
-
     body:has(.camisetas-page.is-zoom-open) header,
     body:has(.blusas-page.is-zoom-open) header {
         pointer-events: none;
