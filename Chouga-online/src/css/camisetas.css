@@ -1189,12 +1189,12 @@
 
     .back-to-top {
         right: 0.75rem;
-        bottom: 0.75rem;
+        bottom: 5rem;
 
-        width: 48px;
-        height: 48px;
+        width: 52px;
+        height: 52px;
 
-        font-size: 1.2rem;
+        font-size: 1.25rem;
 
         background:
             linear-gradient(145deg,
