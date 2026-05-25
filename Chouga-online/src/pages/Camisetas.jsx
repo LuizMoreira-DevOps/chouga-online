@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { FiSearch } from "react-icons/fi";
+import ProductCard from "../components/ProductCard";
 
 import Layout from "../components/Layout";
 import ProductDetailsModal from "../components/ProductDetailsModal";
@@ -253,45 +253,13 @@ function Camisetas() {
               {filteredProducts.length > 0 ? (
                 <div className="products-grid">
                   {filteredProducts.map((product) => (
-                    <article className="product-card" key={product.id}>
-                      <button
-                        className="product-card-button"
-                        type="button"
-                        onClick={() => openProduct(product)}
-                      >
-                        <div className="product-image">
-                          <img src={product.image} alt={product.title} />
-
-                          <span className="product-zoom-hint" aria-hidden="true">
-                            <FiSearch />
-                          </span>
-                        </div>
-
-                        <div className="product-info">
-                          <h3>{product.title}</h3>
-                          <span>{product.price}</span>
-                        </div>
-                      </button>
-
-                      <div className="product-actions">
-                        <button
-                          type="button"
-                          onClick={() => openProductDetails(product)}
-                        >
-                          Ver produto
-                        </button>
-
-                        <a
-                          href={`https://wa.me/5541997485063?text=${encodeURIComponent(
-                            `Olá! Tenho interesse na ${product.title}.`,
-                          )}`}
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          WhatsApp
-                        </a>
-                      </div>
-                    </article>
+                    <ProductCard
+                      key={product.id}
+                      product={product}
+                      onOpen={openProduct}
+                      onOpenDetails={openProductDetails}
+                      whatsappPhone="5541997485063"
+                    />
                   ))}
                 </div>
               ) : (
