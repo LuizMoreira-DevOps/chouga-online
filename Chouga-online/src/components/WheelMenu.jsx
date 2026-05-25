@@ -2,13 +2,15 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import {
-  FaTshirt,
   FaEnvelope,
   FaUsers,
   FaLock,
 } from "react-icons/fa";
 
-import { GiHoodie, GiTShirt, GiEnvelope, GiLockers } from "react-icons/gi";
+import { 
+  GiHoodie, 
+  GiTShirt,
+} from "react-icons/gi";
 
 import wheelImg from "../assets/images/wheel.png";
 
