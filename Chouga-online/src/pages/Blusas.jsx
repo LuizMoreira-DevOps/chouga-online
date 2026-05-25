@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { FiSearch } from "react-icons/fi";
 
 import Layout from "../components/Layout";
 import ProductDetailsModal from "../components/ProductDetailsModal";
+import BackToTop from "../components/BackToTop";
 
 import blusasData from "../data/blusas.json";
 
@@ -73,20 +74,6 @@ function Blusas() {
   const [zoomLevel, setZoomLevel] = useState(1);
   const [dragPosition, setDragPosition] = useState({ x: 0, y: 0 });
   const [dragStart, setDragStart] = useState(null);
-  const [showBackToTop, setShowBackToTop] = useState(false);
-
-  useEffect(() => {
-    function handleScroll() {
-      setShowBackToTop(window.scrollY > 320);
-    }
-
-    window.addEventListener("scroll", handleScroll);
-    handleScroll();
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
 
   function openProduct(product) {
     setSelectedProduct(product);
@@ -163,13 +150,6 @@ function Blusas() {
     );
   }
 
-  function scrollToTop() {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  }
-
   const filteredProducts = products.filter((product) => {
     const matchCategory =
       categoryFilter === "todos" || product.category === categoryFilter;
@@ -186,8 +166,9 @@ function Blusas() {
   return (
     <Layout>
       <main
-        className={`blusas-page page-bg ${selectedProduct || detailsProduct ? "is-zoom-open" : ""
-          }`}
+        className={`blusas-page page-bg ${
+          selectedProduct || detailsProduct ? "is-zoom-open" : ""
+        }`}
       >
         <section className="blusas-section page-section">
           <div className="blusas-container page-container">
@@ -204,8 +185,9 @@ function Blusas() {
                 {categories.map((category) => (
                   <button
                     key={category.value}
-                    className={`filter-button ${categoryFilter === category.value ? "is-active" : ""
-                      }`}
+                    className={`filter-button ${
+                      categoryFilter === category.value ? "is-active" : ""
+                    }`}
                     type="button"
                     onClick={() => setCategoryFilter(category.value)}
                   >
@@ -235,6 +217,7 @@ function Blusas() {
 
               <div className="filter-group">
                 <h2>Cores</h2>
+
                 <div className="color-list">
                   {availableColors.map((color) => {
                     const option = colorOptions[color];
@@ -242,8 +225,9 @@ function Blusas() {
                     return (
                       <button
                         key={color}
-                        className={`color-dot ${option.className} ${colorFilter === color ? "is-active" : ""
-                          }`}
+                        className={`color-dot ${option.className} ${
+                          colorFilter === color ? "is-active" : ""
+                        }`}
                         type="button"
                         aria-label={option.label}
                         title={option.label}
@@ -268,7 +252,10 @@ function Blusas() {
                         <div className="product-image">
                           <img src={product.image} alt={product.title} />
 
-                          <span className="product-zoom-hint" aria-hidden="true">
+                          <span
+                            className="product-zoom-hint"
+                            aria-hidden="true"
+                          >
                             <FiSearch />
                           </span>
                         </div>
@@ -357,8 +344,9 @@ function Blusas() {
                     </div>
 
                     <div
-                      className={`zoom-image-wrapper ${zoomLevel > 1 ? "is-draggable" : ""
-                        }`}
+                      className={`zoom-image-wrapper ${
+                        zoomLevel > 1 ? "is-draggable" : ""
+                      }`}
                       onPointerDown={handlePointerDown}
                       onPointerMove={handlePointerMove}
                       onPointerUp={stopDragging}
@@ -386,16 +374,7 @@ function Blusas() {
           </div>
         </section>
 
-        {showBackToTop && (
-          <button
-            className="back-to-top"
-            type="button"
-            onClick={scrollToTop}
-            aria-label="Voltar ao topo"
-          >
-            ↑
-          </button>
-        )}
+        <BackToTop />
       </main>
     </Layout>
   );

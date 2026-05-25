@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { FiSearch } from "react-icons/fi";
 
 import Layout from "../components/Layout";
 import ProductDetailsModal from "../components/ProductDetailsModal";
+import BackToTop from "../components/BackToTop";
 
 import camisetasData from "../data/camisetas.json";
 
@@ -86,20 +87,6 @@ function Camisetas() {
   const [zoomLevel, setZoomLevel] = useState(1);
   const [dragPosition, setDragPosition] = useState({ x: 0, y: 0 });
   const [dragStart, setDragStart] = useState(null);
-  const [showBackToTop, setShowBackToTop] = useState(false);
-
-  useEffect(() => {
-    function handleScroll() {
-      setShowBackToTop(window.scrollY > 320);
-    }
-
-    window.addEventListener("scroll", handleScroll);
-    handleScroll();
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
 
   function openProduct(product) {
     setSelectedProduct(product);
@@ -174,13 +161,6 @@ function Camisetas() {
     setColorFilter((currentColor) =>
       currentColor === color ? "todos" : color,
     );
-  }
-
-  function scrollToTop() {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
   }
 
   const filteredProducts = products.filter((product) => {
@@ -400,16 +380,7 @@ function Camisetas() {
           </div>
         </section>
 
-        {showBackToTop && (
-          <button
-            className="back-to-top"
-            type="button"
-            onClick={scrollToTop}
-            aria-label="Voltar ao topo"
-          >
-            ↑
-          </button>
-        )}
+        <BackToTop />
       </main>
     </Layout>
   );
