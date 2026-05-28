@@ -179,7 +179,8 @@ function Camisetas() {
   return (
     <Layout>
       <main
-        className={`camisetas-page page-bg ${selectedProduct || detailsProduct ? "is-zoom-open" : ""
+        className={`camisetas-page page-bg ${
+          selectedProduct || detailsProduct ? "is-zoom-open" : ""
           }`}
       >
         <section className="camisetas-section page-section">
@@ -202,11 +203,11 @@ function Camisetas() {
 
             <section className="camisetas-content">
               <ProductGrid
-              products={filteredProducts}
-              onOpenProduct={openProduct}
-              onOpenProductDetails={openProductDetails}
-              whatsappPhone="5541997485063"
-            />
+                products={filteredProducts}
+                onOpenProduct={openProduct}
+                onOpenProductDetails={openProductDetails}
+                whatsappPhone="5541997485063"
+              />
 
               {detailsProduct && (
                 <ProductDetailsModal
