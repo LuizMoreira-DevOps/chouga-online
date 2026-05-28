@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import ProductFilters from "../components/ProductFilters";
 import ProductCard from "../components/ProductCard";
 import ProductZoomModal from "../components/ProductZoomModal";
 import Layout from "../components/Layout";
@@ -166,75 +166,27 @@ function Blusas() {
   return (
     <Layout>
       <main
-        className={`blusas-page page-bg ${selectedProduct || detailsProduct ? "is-zoom-open" : ""
-          }`}
+        className={`blusas-page page-bg ${
+          selectedProduct || detailsProduct ? "is-zoom-open" : ""
+        }`}
       >
         <section className="blusas-section page-section">
           <div className="blusas-container page-container">
-            <aside className="blusas-sidebar">
-              <nav className="blusas-breadcrumb" aria-label="Breadcrumb">
-                <Link to="/">Home</Link>
-                <span>/</span>
-                <Link to="/blusas">Blusas</Link>
-              </nav>
-
-              <div className="filter-group">
-                <h2>Categorias</h2>
-
-                {categories.map((category) => (
-                  <button
-                    key={category.value}
-                    className={`filter-button ${categoryFilter === category.value ? "is-active" : ""
-                      }`}
-                    type="button"
-                    onClick={() => setCategoryFilter(category.value)}
-                  >
-                    {category.label}
-                  </button>
-                ))}
-              </div>
-
-              <div className="filter-divider"></div>
-
-              <div className="filter-group">
-                <h2>Tamanhos</h2>
-
-                <div className="size-list">
-                  {["P", "M", "G", "GG", "XG"].map((size) => (
-                    <button
-                      key={size}
-                      className={sizeFilter === size ? "is-active" : ""}
-                      type="button"
-                      onClick={() => toggleSizeFilter(size)}
-                    >
-                      {size}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div className="filter-group">
-                <h2>Cores</h2>
-
-                <div className="color-list">
-                  {availableColors.map((color) => {
-                    const option = colorOptions[color];
-
-                    return (
-                      <button
-                        key={color}
-                        className={`color-dot ${option.className} ${colorFilter === color ? "is-active" : ""
-                          }`}
-                        type="button"
-                        aria-label={option.label}
-                        title={option.label}
-                        onClick={() => toggleColorFilter(color)}
-                      ></button>
-                    );
-                  })}
-                </div>
-              </div>
-            </aside>
+            <ProductFilters
+              page="blusas"
+              breadcrumbLabel="Blusas"
+              breadcrumbPath="/blusas"
+              categories={categories}
+              categoryFilter={categoryFilter}
+              onCategoryChange={setCategoryFilter}
+              sizes={["P", "M", "G", "GG", "XG"]}
+              sizeFilter={sizeFilter}
+              onSizeToggle={toggleSizeFilter}
+              availableColors={availableColors}
+              colorOptions={colorOptions}
+              colorFilter={colorFilter}
+              onColorToggle={toggleColorFilter}
+            />
 
             <section className="blusas-content">
               {filteredProducts.length > 0 ? (
