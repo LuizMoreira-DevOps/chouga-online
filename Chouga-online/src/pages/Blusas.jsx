@@ -189,23 +189,12 @@ function Blusas() {
             />
 
             <section className="blusas-content">
-              {filteredProducts.length > 0 ? (
-                <div className="products-grid">
-                  {filteredProducts.map((product) => (
-                    <ProductCard
-                      key={product.id}
-                      product={product}
-                      onOpen={openProduct}
-                      onOpenDetails={openProductDetails}
-                      whatsappPhone="5541997485063"
-                    />
-                  ))}
-                </div>
-              ) : (
-                <p className="products-empty">
-                  Nenhum produto encontrado nessa categoria.
-                </p>
-              )}
+              <ProductGrid
+                products={filteredProducts}
+                onOpenProduct={openProduct}
+                onOpenProductDetails={openProductDetails}
+                whatsappPhone="5541997485063"
+              />
 
               {detailsProduct && (
                 <ProductDetailsModal
