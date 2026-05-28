@@ -5,8 +5,14 @@ import ProductZoomModal from "../components/ProductZoomModal";
 import Layout from "../components/Layout";
 import ProductDetailsModal from "../components/ProductDetailsModal";
 import BackToTop from "../components/BackToTop";
-import { colorOptions, productSizes, getAvailableColors } from "../constants/productFilters";
+import {
+  colorOptions,
+  filterProducts,
+  getAvailableColors,
+  productSizes,
+} from "../constants/productFilters";
 import blusasData from "../data/blusas.json";
+import useProductZoom from "../hooks/useProductZoom";
 
 import "../css/blusas.css";
 
@@ -40,18 +46,20 @@ function Blusas() {
   const [categoryFilter, setCategoryFilter] = useState("todos");
   const [sizeFilter, setSizeFilter] = useState("todos");
   const [colorFilter, setColorFilter] = useState("todos");
-  const [selectedProduct, setSelectedProduct] = useState(null);
   const [detailsProduct, setDetailsProduct] = useState(null);
-  const [zoomLevel, setZoomLevel] = useState(1);
-  const [dragPosition, setDragPosition] = useState({ x: 0, y: 0 });
-  const [dragStart, setDragStart] = useState(null);
 
-  function openProduct(product) {
-    setSelectedProduct(product);
-    setZoomLevel(1);
-    setDragPosition({ x: 0, y: 0 });
-    setDragStart(null);
-  }
+  const {
+    selectedProduct,
+    zoomLevel,
+    dragPosition,
+    openProduct,
+    closeProduct,
+    decreaseZoom,
+    increaseZoom,
+    handlePointerDown,
+    handlePointerMove,
+    stopDragging,
+  } = useProductZoom();
 
   function openProductDetails(product) {
     setDetailsProduct(product);
@@ -59,56 +67,6 @@ function Blusas() {
 
   function closeProductDetails() {
     setDetailsProduct(null);
-  }
-
-  function closeProduct() {
-    setSelectedProduct(null);
-    setZoomLevel(1);
-    setDragPosition({ x: 0, y: 0 });
-    setDragStart(null);
-  }
-
-  function decreaseZoom() {
-    setZoomLevel((value) => {
-      const nextValue = Math.max(1, value - 0.2);
-
-      if (nextValue === 1) {
-        setDragPosition({ x: 0, y: 0 });
-        setDragStart(null);
-      }
-
-      return nextValue;
-    });
-  }
-
-  function increaseZoom() {
-    setZoomLevel((value) => Math.min(2.4, value + 0.2));
-  }
-
-  function handlePointerDown(event) {
-    if (zoomLevel <= 1) {
-      return;
-    }
-
-    setDragStart({
-      x: event.clientX - dragPosition.x,
-      y: event.clientY - dragPosition.y,
-    });
-  }
-
-  function handlePointerMove(event) {
-    if (!dragStart || zoomLevel <= 1) {
-      return;
-    }
-
-    setDragPosition({
-      x: event.clientX - dragStart.x,
-      y: event.clientY - dragStart.y,
-    });
-  }
-
-  function stopDragging() {
-    setDragStart(null);
   }
 
   function toggleSizeFilter(size) {
@@ -121,18 +79,12 @@ function Blusas() {
     );
   }
 
-  const filteredProducts = products.filter((product) => {
-    const matchCategory =
-      categoryFilter === "todos" || product.category === categoryFilter;
-
-    const matchSize =
-      sizeFilter === "todos" || product.sizes.includes(sizeFilter);
-
-    const matchColor =
-      colorFilter === "todos" || product.colors.includes(colorFilter);
-
-    return matchCategory && matchSize && matchColor;
-  });
+  const filteredProducts = filterProducts(
+    products,
+    categoryFilter,
+    sizeFilter,
+    colorFilter,
+  );
 
   return (
     <Layout>
