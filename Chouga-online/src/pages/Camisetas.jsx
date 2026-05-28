@@ -5,7 +5,7 @@ import ProductZoomModal from "../components/ProductZoomModal";
 import Layout from "../components/Layout";
 import ProductDetailsModal from "../components/ProductDetailsModal";
 import BackToTop from "../components/BackToTop";
-
+import { colorOptions, productSizes } from "../constants/productFilters";
 import camisetasData from "../data/camisetas.json";
 
 import "../css/camisetas.css";
@@ -46,33 +46,6 @@ const categories = [
   { label: "Camisetas Estampadas", value: "estampadas" },
   { label: "Colabs", value: "colabs" },
 ];
-
-const colorOptions = {
-  preto: {
-    label: "Preto",
-    className: "color-black",
-  },
-  cinza: {
-    label: "Cinza",
-    className: "color-gray",
-  },
-  branco: {
-    label: "Branco",
-    className: "color-white",
-  },
-  vermelho: {
-    label: "Vermelho",
-    className: "color-red",
-  },
-  bege: {
-    label: "Bege",
-    className: "color-beige",
-  },
-  azul: {
-    label: "Azul",
-    className: "color-blue",
-  },
-};
 
 const availableColors = [
   ...new Set(products.flatMap((product) => product.colors)),
@@ -181,7 +154,7 @@ function Camisetas() {
       <main
         className={`camisetas-page page-bg ${
           selectedProduct || detailsProduct ? "is-zoom-open" : ""
-          }`}
+        }`}
       >
         <section className="camisetas-section page-section">
           <div className="camisetas-container page-container">
@@ -192,7 +165,7 @@ function Camisetas() {
               categories={categories}
               categoryFilter={categoryFilter}
               onCategoryChange={setCategoryFilter}
-              sizes={["P", "M", "G", "GG", "XG"]}
+              sizes={productSizes}
               sizeFilter={sizeFilter}
               onSizeToggle={toggleSizeFilter}
               availableColors={availableColors}

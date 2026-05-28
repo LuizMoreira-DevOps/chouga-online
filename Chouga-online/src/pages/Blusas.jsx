@@ -5,7 +5,7 @@ import ProductZoomModal from "../components/ProductZoomModal";
 import Layout from "../components/Layout";
 import ProductDetailsModal from "../components/ProductDetailsModal";
 import BackToTop from "../components/BackToTop";
-
+import { colorOptions, productSizes } from "../constants/productFilters";
 import blusasData from "../data/blusas.json";
 
 import "../css/blusas.css";
@@ -33,33 +33,6 @@ const categories = [
   { label: "Todas", value: "todos" },
   { label: "Blusas estampadas", value: "estampadas" },
 ];
-
-const colorOptions = {
-  preto: {
-    label: "Preto",
-    className: "color-black",
-  },
-  cinza: {
-    label: "Cinza",
-    className: "color-gray",
-  },
-  branco: {
-    label: "Branco",
-    className: "color-white",
-  },
-  vermelho: {
-    label: "Vermelho",
-    className: "color-red",
-  },
-  bege: {
-    label: "Bege",
-    className: "color-beige",
-  },
-  azul: {
-    label: "Azul",
-    className: "color-blue",
-  },
-};
 
 const availableColors = [
   ...new Set(products.flatMap((product) => product.colors)),
@@ -179,7 +152,7 @@ function Blusas() {
               categories={categories}
               categoryFilter={categoryFilter}
               onCategoryChange={setCategoryFilter}
-              sizes={["P", "M", "G", "GG", "XG"]}
+              sizes={productSizes}
               sizeFilter={sizeFilter}
               onSizeToggle={toggleSizeFilter}
               availableColors={availableColors}
