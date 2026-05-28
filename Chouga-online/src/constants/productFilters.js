@@ -28,7 +28,27 @@ export const colorOptions = {
 };
 
 export function getAvailableColors(products) {
-    return [...new Set(products.flatMap((product) => product.colors))].filter(
-        (color) => colorOptions[color],
-    );
+  return [...new Set(products.flatMap((product) => product.colors))].filter(
+    (color) => colorOptions[color],
+  );
+}
+
+export function filterProducts(
+  products,
+  categoryFilter,
+  sizeFilter,
+  colorFilter,
+) {
+  return products.filter((product) => {
+    const matchCategory =
+      categoryFilter === "todos" || product.category === categoryFilter;
+
+    const matchSize =
+      sizeFilter === "todos" || product.sizes.includes(sizeFilter);
+
+    const matchColor =
+      colorFilter === "todos" || product.colors.includes(colorFilter);
+
+    return matchCategory && matchSize && matchColor;
+  });
 }

@@ -5,7 +5,12 @@ import ProductZoomModal from "../components/ProductZoomModal";
 import Layout from "../components/Layout";
 import ProductDetailsModal from "../components/ProductDetailsModal";
 import BackToTop from "../components/BackToTop";
-import { colorOptions, productSizes, getAvailableColors } from "../constants/productFilters";
+import { 
+  colorOptions, 
+  productSizes, 
+  getAvailableColors, 
+  filterProducts, 
+} from "../constants/productFilters";
 import camisetasData from "../data/camisetas.json";
 
 import "../css/camisetas.css";
@@ -134,18 +139,12 @@ function Camisetas() {
     );
   }
 
-  const filteredProducts = products.filter((product) => {
-    const matchCategory =
-      categoryFilter === "todos" || product.category === categoryFilter;
-
-    const matchSize =
-      sizeFilter === "todos" || product.sizes.includes(sizeFilter);
-
-    const matchColor =
-      colorFilter === "todos" || product.colors.includes(colorFilter);
-
-    return matchCategory && matchSize && matchColor;
-  });
+  const filteredProducts = filterProducts(
+    products,
+    categoryFilter,
+    sizeFilter,
+    colorFilter,
+  );
 
   return (
     <Layout>
