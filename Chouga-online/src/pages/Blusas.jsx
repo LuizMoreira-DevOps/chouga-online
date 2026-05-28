@@ -5,7 +5,7 @@ import ProductZoomModal from "../components/ProductZoomModal";
 import Layout from "../components/Layout";
 import ProductDetailsModal from "../components/ProductDetailsModal";
 import BackToTop from "../components/BackToTop";
-import { colorOptions, productSizes } from "../constants/productFilters";
+import { colorOptions, productSizes, getAvailableColors } from "../constants/productFilters";
 import blusasData from "../data/blusas.json";
 
 import "../css/blusas.css";
@@ -34,9 +34,7 @@ const categories = [
   { label: "Blusas estampadas", value: "estampadas" },
 ];
 
-const availableColors = [
-  ...new Set(products.flatMap((product) => product.colors)),
-].filter((color) => colorOptions[color]);
+const availableColors = getAvailableColors(products);
 
 function Blusas() {
   const [categoryFilter, setCategoryFilter] = useState("todos");

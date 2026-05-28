@@ -26,3 +26,9 @@ export const colorOptions = {
     className: "color-blue",
   },
 };
+
+export function getAvailableColors(products) {
+    return [...new Set(products.flatMap((product) => product.colors))].filter(
+        (color) => colorOptions[color],
+    );
+}
