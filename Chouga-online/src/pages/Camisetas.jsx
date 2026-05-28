@@ -5,7 +5,7 @@ import ProductZoomModal from "../components/ProductZoomModal";
 import Layout from "../components/Layout";
 import ProductDetailsModal from "../components/ProductDetailsModal";
 import BackToTop from "../components/BackToTop";
-import { colorOptions, productSizes } from "../constants/productFilters";
+import { colorOptions, productSizes, getAvailableColors } from "../constants/productFilters";
 import camisetasData from "../data/camisetas.json";
 
 import "../css/camisetas.css";
@@ -47,9 +47,7 @@ const categories = [
   { label: "Colabs", value: "colabs" },
 ];
 
-const availableColors = [
-  ...new Set(products.flatMap((product) => product.colors)),
-].filter((color) => colorOptions[color]);
+const availableColors = getAvailableColors(products);
 
 function Camisetas() {
   const [categoryFilter, setCategoryFilter] = useState("todos");
