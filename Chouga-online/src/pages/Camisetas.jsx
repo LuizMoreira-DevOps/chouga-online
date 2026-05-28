@@ -1,6 +1,6 @@
 import { useState } from "react";
 import ProductFilters from "../components/ProductFilters";
-import ProductCard from "../components/ProductCard";
+import ProductGrid from "../components/ProductGrid";
 import ProductZoomModal from "../components/ProductZoomModal";
 import Layout from "../components/Layout";
 import ProductDetailsModal from "../components/ProductDetailsModal";
@@ -201,23 +201,12 @@ function Camisetas() {
             />
 
             <section className="camisetas-content">
-              {filteredProducts.length > 0 ? (
-                <div className="products-grid">
-                  {filteredProducts.map((product) => (
-                    <ProductCard
-                      key={product.id}
-                      product={product}
-                      onOpen={openProduct}
-                      onOpenDetails={openProductDetails}
-                      whatsappPhone="5541997485063"
-                    />
-                  ))}
-                </div>
-              ) : (
-                <p className="products-empty">
-                  Nenhum produto encontrado nessa categoria.
-                </p>
-              )}
+              <ProductGrid
+              products={filteredProducts}
+              onOpenProduct={openProduct}
+              onOpenProductDetails={openProductDetails}
+              whatsappPhone="5541997485063"
+            />
 
               {detailsProduct && (
                 <ProductDetailsModal
