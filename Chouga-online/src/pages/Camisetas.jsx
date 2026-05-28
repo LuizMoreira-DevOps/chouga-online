@@ -7,12 +7,13 @@ import ProductDetailsModal from "../components/ProductDetailsModal";
 import BackToTop from "../components/BackToTop";
 import {
   colorOptions,
-  filterProducts,
   getAvailableColors,
   productSizes,
 } from "../constants/productFilters";
-import camisetasData from "../data/camisetas.json";
+import useProductFilters from "../hooks/useProductFilters";
 import useProductZoom from "../hooks/useProductZoom";
+
+import camisetasData from "../data/camisetas.json";
 
 import "../css/camisetas.css";
 
@@ -56,9 +57,6 @@ const categories = [
 const availableColors = getAvailableColors(products);
 
 function Camisetas() {
-  const [categoryFilter, setCategoryFilter] = useState("todos");
-  const [sizeFilter, setSizeFilter] = useState("todos");
-  const [colorFilter, setColorFilter] = useState("todos");
   const [detailsProduct, setDetailsProduct] = useState(null);
 
   function openProductDetails(product) {
@@ -82,22 +80,15 @@ function Camisetas() {
     stopDragging,
   } = useProductZoom();
 
-  function toggleSizeFilter(size) {
-    setSizeFilter((currentSize) => (currentSize === size ? "todos" : size));
-  }
-
-  function toggleColorFilter(color) {
-    setColorFilter((currentColor) =>
-      currentColor === color ? "todos" : color,
-    );
-  }
-
-  const filteredProducts = filterProducts(
-    products,
+  const {
     categoryFilter,
     sizeFilter,
     colorFilter,
-  );
+    filteredProducts,
+    setCategoryFilter,
+    toggleSizeFilter,
+    toggleColorFilter,
+  } = useProductFilters(products);
 
   return (
     <Layout>

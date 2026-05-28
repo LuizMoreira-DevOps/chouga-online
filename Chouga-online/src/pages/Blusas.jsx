@@ -7,12 +7,13 @@ import ProductDetailsModal from "../components/ProductDetailsModal";
 import BackToTop from "../components/BackToTop";
 import {
   colorOptions,
-  filterProducts,
   getAvailableColors,
   productSizes,
 } from "../constants/productFilters";
-import blusasData from "../data/blusas.json";
+import useProductFilters from "../hooks/useProductFilters";
 import useProductZoom from "../hooks/useProductZoom";
+
+import blusasData from "../data/blusas.json";
 
 import "../css/blusas.css";
 
@@ -43,9 +44,6 @@ const categories = [
 const availableColors = getAvailableColors(products);
 
 function Blusas() {
-  const [categoryFilter, setCategoryFilter] = useState("todos");
-  const [sizeFilter, setSizeFilter] = useState("todos");
-  const [colorFilter, setColorFilter] = useState("todos");
   const [detailsProduct, setDetailsProduct] = useState(null);
 
   const {
@@ -61,6 +59,16 @@ function Blusas() {
     stopDragging,
   } = useProductZoom();
 
+  const {
+    categoryFilter,
+    sizeFilter,
+    colorFilter,
+    filteredProducts,
+    setCategoryFilter,
+    toggleSizeFilter,
+    toggleColorFilter,
+  } = useProductFilters(products);
+
   function openProductDetails(product) {
     setDetailsProduct(product);
   }
@@ -68,23 +76,6 @@ function Blusas() {
   function closeProductDetails() {
     setDetailsProduct(null);
   }
-
-  function toggleSizeFilter(size) {
-    setSizeFilter((currentSize) => (currentSize === size ? "todos" : size));
-  }
-
-  function toggleColorFilter(color) {
-    setColorFilter((currentColor) =>
-      currentColor === color ? "todos" : color,
-    );
-  }
-
-  const filteredProducts = filterProducts(
-    products,
-    categoryFilter,
-    sizeFilter,
-    colorFilter,
-  );
 
   return (
     <Layout>
