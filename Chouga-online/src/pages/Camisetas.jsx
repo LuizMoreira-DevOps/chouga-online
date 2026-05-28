@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import ProductCard from "../components/ProductCard";
-
+import ProductZoomModal from "../components/ProductZoomModal";
 import Layout from "../components/Layout";
 import ProductDetailsModal from "../components/ProductDetailsModal";
 import BackToTop from "../components/BackToTop";
@@ -276,74 +276,19 @@ function Camisetas() {
                 />
               )}
 
-              {selectedProduct && (
-                <div
-                  className="product-zoom-overlay"
-                  role="presentation"
-                  onClick={closeProduct}
-                >
-                  <div
-                    className="product-zoom-modal"
-                    role="dialog"
-                    aria-modal="true"
-                    aria-label={selectedProduct.title}
-                    onClick={(event) => event.stopPropagation()}
-                  >
-                    <button
-                      className="zoom-close"
-                      type="button"
-                      onClick={closeProduct}
-                      aria-label="Fechar zoom"
-                    >
-                      ×
-                    </button>
-
-                    <div className="zoom-controls">
-                      <div className="zoom-actions">
-                        <button
-                          type="button"
-                          onClick={decreaseZoom}
-                          aria-label="Diminuir zoom"
-                        >
-                          −
-                        </button>
-
-                        <button
-                          type="button"
-                          onClick={increaseZoom}
-                          aria-label="Aumentar zoom"
-                        >
-                          +
-                        </button>
-                      </div>
-                    </div>
-
-                    <div
-                      className={`zoom-image-wrapper ${zoomLevel > 1 ? "is-draggable" : ""
-                        }`}
-                      onPointerDown={handlePointerDown}
-                      onPointerMove={handlePointerMove}
-                      onPointerUp={stopDragging}
-                      onPointerCancel={stopDragging}
-                      onPointerLeave={stopDragging}
-                    >
-                      <img
-                        src={selectedProduct.image}
-                        alt={selectedProduct.title}
-                        draggable="false"
-                        style={{
-                          transform: `translate(${dragPosition.x}px, ${dragPosition.y}px) scale(${zoomLevel})`,
-                        }}
-                      />
-                    </div>
-
-                    <div className="product-zoom-info">
-                      <h3>{selectedProduct.title}</h3>
-                      <span>{selectedProduct.price}</span>
-                    </div>
-                  </div>
-                </div>
-              )}
+              <ProductZoomModal
+                product={selectedProduct}
+                zoomLevel={zoomLevel}
+                dragPosition={dragPosition}
+                onClose={closeProduct}
+                onDecreaseZoom={decreaseZoom}
+                onIncreaseZoom={increaseZoom}
+                onPointerDown={handlePointerDown}
+                onPointerMove={handlePointerMove}
+                onPointerUp={stopDragging}
+                onPointerCancel={stopDragging}
+                onPointerLeave={stopDragging}
+              />
             </section>
           </div>
         </section>
