@@ -1,6 +1,6 @@
 import { useState } from "react";
 import ProductFilters from "../components/ProductFilters";
-import ProductCard from "../components/ProductCard";
+import ProductGrid from "../components/ProductGrid";
 import ProductZoomModal from "../components/ProductZoomModal";
 import Layout from "../components/Layout";
 import ProductDetailsModal from "../components/ProductDetailsModal";
