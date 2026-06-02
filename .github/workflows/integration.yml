@@ -1,18 +1,25 @@
 name: CI - Chouga Online
 
 on:
-  push:
-    branches: ["main"]
   pull_request:
-    branches: ["main"]
+    branches:
+      - main
+  push:
+    branches:
+      - main
 
 permissions:
   contents: read
+  security-events: write
 
 jobs:
   ci:
     name: Continuous Integration
     runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: Chouga-online
 
     steps:
       - name: Baixar repositório
@@ -23,12 +30,27 @@ jobs:
         with:
           node-version: 22
           cache: npm
+          cache-dependency-path: Chouga-online/package-lock.json
 
       - name: Instalar dependências
         run: npm ci
 
-      - name: Rodar linters
+      - name: Instalar Supabase CLI
+        uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      - name: Rodar linters do projeto
         run: npm run lint
+
+      - name: Iniciar banco local do Supabase
+        run: supabase db start
+
+      - name: Rodar lint do banco Supabase
+        run: supabase db lint --level error
 
       - name: Build do projeto
         run: npm run build
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}

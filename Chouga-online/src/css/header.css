@@ -1,65 +1,305 @@
 .header {
-    width: 100%;
-
-    padding: 24px 48px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
 
     display: flex;
     align-items: center;
     justify-content: space-between;
 
-    position: fixed;
-    top: 0;
-    left: 0;
+    width: 100%;
+    padding: 24px var(--page-padding-x);
 
-    z-index: 999;
-    pointer-events: none;
+    background: linear-gradient(to bottom,
+            rgba(13, 13, 13, 0.75),
+            rgba(13, 13, 13, 0));
 }
-
-.logo,
-.nav,
-.nav a {
-    pointer-events: auto;
-}
-
-/* ========================================
-   LOGO
-======================================== */
 
 .logo {
-    width: 190px;
-
     display: flex;
     align-items: center;
+    width: clamp(120px, 12vw, 190px);
 }
 
 .logo img {
     width: 100%;
     height: auto;
-
     object-fit: contain;
 }
 
-/* ========================================
-   NAV
-======================================== */
-
-.nav {
-    display: flex;
-    gap: 28px;
+.logo-wrapper {
+    position: relative;
+    width: 100%;
 }
 
-.nav a {
-    color: var(--text-light);
+.logo-mark {
+    position: absolute;
+    top: -2px;
+    right: -12px;
 
-    font-size: 14px;
+    color: var(--color-text-strong);
 
+    font-size: 0.75rem;
+    font-weight: 700;
+
+    opacity: 0.82;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+/* Botões de ícone e menu toggle */
+
+.header-icon-button,
+.menu-toggle {
+    width: 58px;
+    height: 58px;
+
+    border: 1px solid rgba(243, 215, 191, 0.18);
+    border-radius: 50%;
+
+    background: rgba(13, 13, 13, 0.55);
+    backdrop-filter: blur(8px);
+
+    transition:
+        border-color var(--transition-fast),
+        color var(--transition-fast),
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast);
+}
+
+.header-icon-button {
+    position: relative;
+    display: grid;
+    place-items: center;
+    color: var(--color-text-strong);
+    font-size: 1.55rem;
+}
+
+.header-icon-button:hover,
+.menu-toggle:hover {
+    border-color: var(--color-red-strong);
+    color: var(--color-red-strong);
+    transform: translateY(-2px);
+    box-shadow: 0 0 18px rgba(255, 42, 0, 0.18);
+}
+
+/* Ícone de cadeado para indicar que a conta é privada */
+
+.lock-icon {
+    position: absolute;
+    right: 1px;
+    bottom: 1px;
+    width: 20px;
+    height: 20px;
+    padding: 3px;
+    border-radius: 50%;
+    color: var(--color-bg);
+    background: var(--color-text-strong);
+    font-size: 0.82rem;
+}
+
+.nav {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: var(--page-padding-x);
+
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+
+    padding: 1rem 1.25rem;
+
+    border: 1px solid rgba(243, 215, 191, 0.2);
+    border-radius: 18px;
+
+    background: rgba(13, 13, 13, 0.985);
+    backdrop-filter: blur(12px);
+
+    box-shadow:
+        0 18px 38px rgba(0, 0, 0, 0.65),
+        0 0 22px rgba(255, 42, 0, 0.1),
+        inset 0 0 18px rgba(243, 215, 191, 0.035);
+
+    opacity: 0;
+    transform: translateY(-12px);
+    pointer-events: none;
+
+    transition:
+        opacity var(--transition-base),
+        transform var(--transition-base),
+        box-shadow var(--transition-fast);
+}
+
+.nav.nav-open {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.nav a,
+.nav-badge {
+    color: var(--color-text);
+    font-size: var(--text-xs);
     text-transform: uppercase;
+    letter-spacing: 1.4px;
+    opacity: 0.85;
 
-    letter-spacing: 1px;
-
-    transition: 0.3s ease;
+    transition:
+        color var(--transition-base),
+        opacity var(--transition-base);
 }
 
 .nav a:hover {
-    color: var(--red);
+    color: var(--color-red);
+    opacity: 1;
+}
+
+.nav-badge {
+    color: var(--color-red);
+}
+
+.menu-toggle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 0;
+    cursor: pointer;
+}
+
+.menu-toggle span {
+    width: 24px;
+    height: 2.5px;
+    border-radius: 999px;
+    background: var(--color-text-strong);
+
+    transition:
+        transform var(--transition-base),
+        opacity var(--transition-fast),
+        background var(--transition-fast);
+}
+
+.menu-toggle:hover span {
+    background: var(--color-red-strong);
+}
+
+.menu-toggle.is-open span:nth-child(1) {
+    transform: translateY(8.5px) rotate(45deg);
+}
+
+.menu-toggle.is-open span:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-toggle.is-open span:nth-child(3) {
+    transform: translateY(-8.5px) rotate(-45deg);
+}
+
+/* MOBILE MÉDIO */
+
+@media (max-width: 900px) {
+    .header {
+        padding: 16px 20px;
+    }
+
+    .logo {
+        width: 114px;
+    }
+
+    .header-actions {
+        gap: 0.55rem;
+    }
+
+    .header-icon-button,
+    .menu-toggle {
+        width: 48px;
+        height: 48px;
+    }
+
+    .nav {
+        right: 20px;
+        left: 20px;
+        flex-direction: column;
+        align-items: center;
+        gap: 18px;
+        padding: 22px;
+
+        border-color: rgba(243, 215, 191, 0.2);
+        border-radius: 20px;
+
+        background: rgba(13, 13, 13, 0.985);
+
+        box-shadow:
+            0 20px 42px rgba(0, 0, 0, 0.7),
+            0 0 20px rgba(255, 42, 0, 0.1);
+    }
+
+    .nav a,
+    .nav-badge {
+        font-size: var(--text-sm);
+    }
+}
+
+/* MOBILE PEQUENO */
+
+@media (max-width: 520px) {
+    .header {
+        padding: 14px 16px;
+    }
+
+    .logo {
+        width: 104px;
+    }
+
+    .logo-mark {
+        top: -1px;
+        right: -9px;
+        font-size: 0.62rem;
+    }
+
+    .header-actions {
+        gap: 0.4rem;
+    }
+
+    .header-icon-button,
+    .menu-toggle {
+        width: 40px;
+        height: 40px;
+    }
+
+    .header-icon-button {
+        font-size: 1rem;
+    }
+
+    .menu-toggle {
+        gap: 4px;
+    }
+
+    .menu-toggle span {
+        width: 18px;
+        height: 2px;
+    }
+
+    .menu-toggle.is-open span:nth-child(1) {
+        transform: translateY(6px) rotate(45deg);
+    }
+
+    .menu-toggle.is-open span:nth-child(3) {
+        transform: translateY(-6px) rotate(-45deg);
+    }
+
+    .lock-icon {
+        right: 0;
+        bottom: 0;
+        width: 13px;
+        height: 13px;
+        padding: 2px;
+        font-size: 0.68rem;
+    }
 }

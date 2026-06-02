@@ -12,14 +12,20 @@ permissions:
   id-token: write
 
 concurrency:
-  group: "pages"
+  group: pages
   cancel-in-progress: true
 
 jobs:
   deploy:
     name: Continuous Deploy
+
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
+
     runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: Chouga-online
 
     environment:
       name: github-pages
@@ -34,12 +40,22 @@ jobs:
         with:
           node-version: 22
           cache: npm
+          cache-dependency-path: Chouga-online/package-lock.json
 
       - name: Instalar dependências
         run: npm ci
 
       - name: Build do projeto
         run: npm run build
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+
+      - name: Conferir build
+        run: |
+          pwd
+          ls -la
+          ls -la dist
 
       - name: Configurar GitHub Pages
         uses: actions/configure-pages@v5
@@ -47,7 +63,7 @@ jobs:
       - name: Enviar artefato
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist
+          path: ${{ github.workspace }}/Chouga-online/dist
 
       - name: Publicar no GitHub Pages
         id: deployment
