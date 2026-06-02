@@ -18,8 +18,8 @@ jobs:
     runs-on: ubuntu-latest
 
     defaults:
-          run:
-            working-directory: Chouga-online
+      run:
+        working-directory: Chouga-online
 
     steps:
       - name: Baixar repositório
@@ -35,8 +35,19 @@ jobs:
       - name: Instalar dependências
         run: npm ci
 
-      - name: Rodar linters
+      - name: Instalar Supabase CLI
+        uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      - name: Rodar linters do projeto
         run: npm run lint
+
+      - name: Iniciar banco local do Supabase
+        run: supabase db start
+
+      - name: Rodar lint do banco Supabase
+        run: supabase db lint --level error
 
       - name: Build do projeto
         run: npm run build

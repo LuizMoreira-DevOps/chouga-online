@@ -56,7 +56,7 @@ function normalizeProduct(product) {
   const sizes = [
     ...new Set(
       product.variacoes
-        ?.map((variation) => variation.tamanho?.toLowerCase())
+        ?.map((variation) => variation.tamanho)
         .filter(Boolean),
     ),
   ];
@@ -105,6 +105,7 @@ function Camisetas() {
 
         setProducts(camisetas);
       } catch (loadError) {
+        console.error("Erro ao carregar produtos:", loadError);
         setError(loadError.message);
       } finally {
         setLoading(false);
@@ -116,11 +117,16 @@ function Camisetas() {
 
   const availableColors = getAvailableColors(products);
 
-  const availableSizes = productSizes.filter((size) =>
-    products.some((product) =>
-      product.sizes?.includes(size.value.toLowerCase()),
-    ),
-  );
+  const availableSizes = productSizes.filter((size) => {
+    const sizeValue = typeof size === "string" ? size : size.value;
+
+    return products.some((product) =>
+      product.sizes?.some(
+        (productSize) =>
+          productSize.toLowerCase() === sizeValue?.toLowerCase(),
+      ),
+    );
+  });
 
   const {
     selectedProduct,
