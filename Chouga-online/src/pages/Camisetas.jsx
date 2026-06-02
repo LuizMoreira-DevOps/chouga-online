@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProductFilters from "../components/ProductFilters";
 import ProductGrid from "../components/ProductGrid";
 import ProductZoomModal from "../components/ProductZoomModal";
@@ -12,40 +12,66 @@ import {
 } from "../constants/productFilters";
 import useProductFilters from "../hooks/useProductFilters";
 import useProductZoom from "../hooks/useProductZoom";
-
-import camisetasData from "../data/camisetas.json";
+import { getProdutosCatalogo } from "../services/produtosServices";
 
 import "../css/camisetas.css";
 
-const imageFiles = {
-  camisetaBranca: "camiseta-skateboard-branca.jpeg",
-  camisetaBelinhaPrimavera: "camiseta-belinha-primavera.jpeg",
-  camisetaLife: "camiseta-life.jpeg",
-  camisetaBomber: "camiseta-bomber-cinza.jpeg",
-  camisetaBelinhaOutono: "camiseta-belinha-outono.jpeg",
-  camisetaPreta: "camiseta-skateboard-preta.jpeg",
-  camisetaSkull: "camiseta-chouga-skull.jpeg",
-  camisetaCity: "camiseta-chouga-city.jpeg",
-  camisetaPraia: "camiseta-chouga-praia.jpeg",
-  camisetaBasicPreta: "camiseta-chouga-basic-preta.jpeg",
-  camisetaBasicBranca: "camiseta-chouga-basic-branca.jpeg",
-  camisetaChougaBranca: "camiseta-chouga-branca.jpeg",
-  camisetaChougaAzul: "camiseta-chouga-azul.jpeg",
-  camisetaBasicCinza: "camiseta-chouga-basic-cinza.jpeg",
-  camisetaChougaWeed: "camiseta-chouga-weed.jpeg",
-};
-
-function getProductImage(imageKey) {
+function getProductImage(imageFileName) {
   return new URL(
-    `../assets/images/camisetas/${imageFiles[imageKey]}`,
+    `../assets/images/camisetas/${imageFileName}`,
     import.meta.url,
   ).href;
 }
 
-const products = camisetasData.map((product) => ({
-  ...product,
-  image: getProductImage(product.imageKey),
-}));
+function getProductCategory(product) {
+  const tags = product.tags || [];
+
+  if (tags.includes("Colab")) {
+    return "colabs";
+  }
+
+  if (tags.includes("Básica")) {
+    return "básicas";
+  }
+
+  if (tags.includes("Estampada")) {
+    return "estampadas";
+  }
+
+  return "estampadas";
+}
+
+function normalizeProduct(product) {
+  const mainImage =
+    product.imagens?.find((image) => image.principal) || product.imagens?.[0];
+
+  const colors = [
+    ...new Set(
+      product.variacoes
+        ?.map((variation) => variation.cor?.toLowerCase())
+        .filter(Boolean),
+    ),
+  ];
+
+  const sizes = [
+    ...new Set(
+      product.variacoes
+        ?.map((variation) => variation.tamanho)
+        .filter(Boolean),
+    ),
+  ];
+
+  return {
+    ...product,
+    title: product.nome,
+    price: `R$ ${Number(product.preco).toFixed(2).replace(".", ",")}`,
+    category: getProductCategory(product),
+    colors,
+    sizes,
+    image: mainImage ? getProductImage(mainImage.url) : "",
+    imageAlt: mainImage?.alt_text || product.nome,
+  };
+}
 
 const categories = [
   { label: "Todas", value: "todos" },
@@ -54,10 +80,11 @@ const categories = [
   { label: "Colabs", value: "colabs" },
 ];
 
-const availableColors = getAvailableColors(products);
-
 function Camisetas() {
+  const [products, setProducts] = useState([]);
   const [detailsProduct, setDetailsProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   function openProductDetails(product) {
     setDetailsProduct(product);
@@ -66,6 +93,40 @@ function Camisetas() {
   function closeProductDetails() {
     setDetailsProduct(null);
   }
+
+  useEffect(() => {
+    async function loadProdutos() {
+      try {
+        const produtos = await getProdutosCatalogo();
+
+        const camisetas = produtos
+          .filter((produto) => produto.categoria === "Camisetas")
+          .map(normalizeProduct);
+
+        setProducts(camisetas);
+      } catch (loadError) {
+        console.error("Erro ao carregar produtos:", loadError);
+        setError(loadError.message);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadProdutos();
+  }, []);
+
+  const availableColors = getAvailableColors(products);
+
+  const availableSizes = productSizes.filter((size) => {
+    const sizeValue = typeof size === "string" ? size : size.value;
+
+    return products.some((product) =>
+      product.sizes?.some(
+        (productSize) =>
+          productSize.toLowerCase() === sizeValue?.toLowerCase(),
+      ),
+    );
+  });
 
   const {
     selectedProduct,
@@ -106,7 +167,7 @@ function Camisetas() {
               categories={categories}
               categoryFilter={categoryFilter}
               onCategoryChange={setCategoryFilter}
-              sizes={productSizes}
+              sizes={availableSizes}
               sizeFilter={sizeFilter}
               onSizeToggle={toggleSizeFilter}
               availableColors={availableColors}
@@ -116,12 +177,18 @@ function Camisetas() {
             />
 
             <section className="camisetas-content">
-              <ProductGrid
-                products={filteredProducts}
-                onOpenProduct={openProduct}
-                onOpenProductDetails={openProductDetails}
-                whatsappPhone="5541997485063"
-              />
+              {loading && <p>Carregando produtos...</p>}
+
+              {error && <p>Erro ao carregar produtos: {error}</p>}
+
+              {!loading && !error && (
+                <ProductGrid
+                  products={filteredProducts}
+                  onOpenProduct={openProduct}
+                  onOpenProductDetails={openProductDetails}
+                  whatsappPhone="5541997485063"
+                />
+              )}
 
               {detailsProduct && (
                 <ProductDetailsModal
