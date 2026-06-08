@@ -16,11 +16,23 @@ import { getProdutosCatalogo } from "../services/produtosServices";
 
 import "../css/camisetas.css";
 
-function getProductImage(imageFileName) {
-  return new URL(
-    `../assets/images/camisetas/${imageFileName}`,
-    import.meta.url,
-  ).href;
+function getProductImage(imageUrl) {
+  if (!imageUrl) {
+    return "";
+  }
+
+  if (imageUrl.startsWith("http")) {
+    return imageUrl;
+  }
+
+  if (imageUrl.startsWith("/uploads")) {
+    const strapiUrl = import.meta.env.VITE_STRAPI_URL || "http://localhost:1337";
+
+    return `${strapiUrl}${imageUrl}`;
+  }
+
+  return new URL(`../assets/images/camisetas/${imageUrl}`, import.meta.url)
+    .href;
 }
 
 function getProductCategory(product) {
