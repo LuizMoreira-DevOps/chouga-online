@@ -16,14 +16,22 @@ import { getProdutosCatalogo } from "../services/produtosServices";
 
 import "../css/blusas.css";
 
-const productImages = import.meta.glob("../assets/images/blusas/*", {
-  eager: true,
-  query: "?url",
-  import: "default",
-});
+function getProductImage(imageUrl) {
+  if (!imageUrl) {
+    return "";
+  }
 
-function getProductImage(imageFileName) {
-  return productImages[`../assets/images/blusas/${imageFileName}`] || "";
+  if (imageUrl.startsWith("http")) {
+    return imageUrl;
+  }
+
+  if (imageUrl.startsWith("/uploads")) {
+    const strapiUrl = import.meta.env.VITE_STRAPI_URL || "http://localhost:1337";
+
+    return `${strapiUrl}${imageUrl}`;
+  }
+
+  return new URL(`../assets/images/blusas/${imageUrl}`, import.meta.url).href;
 }
 
 function getProductCategory(product) {
