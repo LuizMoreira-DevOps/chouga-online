@@ -34,7 +34,36 @@ function getProductImage(imageUrl) {
   return new URL(`../assets/images/blusas/${imageUrl}`, import.meta.url).href;
 }
 
+function isBlusaProduct(product) {
+  return product.categoria_slug?.startsWith("blusas");
+}
+
+function formatCategoryLabel(category) {
+  return category || "Blusas";
+}
+
+function getDynamicCategories(products) {
+  const categoryOptions = products
+    .filter((product) => product.categoria_slug)
+    .map((product) => ({
+      label: formatCategoryLabel(product.categoria),
+      value: product.categoria_slug,
+    }));
+
+  const uniqueCategoryOptions = Array.from(
+    new Map(
+      categoryOptions.map((category) => [category.value, category]),
+    ).values(),
+  );
+
+  return [{ label: "Todas", value: "todos" }, ...uniqueCategoryOptions];
+}
+
 function getProductCategory(product) {
+  if (product.categoria_slug) {
+    return product.categoria_slug;
+  }
+
   const tags = product.tags || [];
 
   if (tags.includes("Colab")) {
@@ -42,14 +71,14 @@ function getProductCategory(product) {
   }
 
   if (tags.includes("Básica")) {
-    return "básicas";
+    return "basicas";
   }
 
   if (tags.includes("Estampada")) {
     return "estampadas";
   }
 
-  return "estampadas";
+  return "blusas";
 }
 
 function normalizeProduct(product) {
@@ -84,11 +113,6 @@ function normalizeProduct(product) {
   };
 }
 
-const categories = [
-  { label: "Todas", value: "todos" },
-  { label: "Blusas estampadas", value: "estampadas" },
-];
-
 function Blusas() {
   const [products, setProducts] = useState([]);
   const [detailsProduct, setDetailsProduct] = useState(null);
@@ -96,6 +120,8 @@ function Blusas() {
   const [error, setError] = useState("");
 
   const availableColors = getAvailableColors(products);
+
+  const categories = getDynamicCategories(products);
 
   const availableSizes = productSizes.filter((size) => {
     const sizeValue = typeof size === "string" ? size : size.value;
@@ -144,9 +170,7 @@ function Blusas() {
       try {
         const produtos = await getProdutosCatalogo();
 
-        const blusas = produtos
-          .filter((produto) => produto.categoria === "Blusas")
-          .map(normalizeProduct);
+        const blusas = produtos.filter(isBlusaProduct).map(normalizeProduct);
 
         setProducts(blusas);
       } catch (loadError) {
