@@ -1,0 +1,74 @@
+{
+  "kind": "collectionType",
+  "collectionName": "produtos",
+  "info": {
+    "singularName": "produto",
+    "pluralName": "produtos",
+    "displayName": "Produto"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "nome": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "nome",
+      "required": true
+    },
+    "descricaoCurta": {
+      "type": "string"
+    },
+    "descricao": {
+      "type": "blocks"
+    },
+    "preco": {
+      "type": "decimal",
+      "required": true
+    },
+    "precoPromocional": {
+      "type": "decimal"
+    },
+    "ativo": {
+      "type": "boolean",
+      "default": true
+    },
+    "destaque": {
+      "type": "boolean",
+      "default": false
+    },
+    "ordem": {
+      "type": "integer",
+      "default": 0
+    },
+    "categoria": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::categoria.categoria",
+      "inversedBy": "produtos"
+    },
+    "cores": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::cor.cor",
+      "inversedBy": "produtos"
+    },
+    "tamanhos": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::tamanho.tamanho",
+      "inversedBy": "produtos"
+    },
+    "imagens": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": [
+        "images"
+      ]
+    }
+  }
+}
