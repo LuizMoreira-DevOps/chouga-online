@@ -110,37 +110,52 @@ function getImageUrl(image) {
   return `${STRAPI_URL}${imageUrl}`;
 }
 
-function getMainImageUrl(produto) {
+function getAllImageUrls(produto) {
   const imagens = produto.imagens ?? produto.imagem;
 
   if (!imagens || typeof imagens !== "object") {
-    return null;
+    return [];
   }
 
   if (Array.isArray(imagens.data)) {
-    const firstImage = getAttributes(imagens.data[0]);
-
-    return getImageUrl(firstImage);
+    return imagens.data.map(getAttributes).map(getImageUrl).filter(Boolean);
   }
 
   if (imagens.data) {
     const image = getAttributes(imagens.data);
+    const imageUrl = getImageUrl(image);
 
-    return getImageUrl(image);
+    return imageUrl ? [imageUrl] : [];
   }
 
   if (Array.isArray(imagens)) {
-    return getImageUrl(getAttributes(imagens[0]));
+    return imagens.map(getAttributes).map(getImageUrl).filter(Boolean);
   }
 
-  return getImageUrl(getAttributes(imagens));
+  const imageUrl = getImageUrl(getAttributes(imagens));
+
+  return imageUrl ? [imageUrl] : [];
+}
+
+function getStrapiIdentity(strapiProduto, produto) {
+  return {
+    strapi_id: strapiProduto.id ?? produto.id ?? null,
+    strapi_document_id:
+      strapiProduto.documentId ??
+      strapiProduto.document_id ??
+      produto.documentId ??
+      produto.document_id ??
+      null,
+  };
 }
 
 function normalizeProduto(strapiProduto) {
   const produto = getAttributes(strapiProduto);
   const categoria = getSingleRelation(produto.categoria);
+  const identity = getStrapiIdentity(strapiProduto, produto);
 
   return {
+    ...identity,
     slug: produto.slug,
     nome: produto.nome ?? produto.titulo ?? produto.title,
     descricao: produto.descricao ?? produto.description ?? null,
@@ -149,7 +164,7 @@ function normalizeProduto(strapiProduto) {
     categoria: categoria?.nome ?? categoria?.name ?? null,
     cores: getNames(produto.cores),
     tamanhos: getNames(produto.tamanhos),
-    imagem_url: getMainImageUrl(produto),
+    imagens: getAllImageUrls(produto),
     ativo: produto.ativo ?? true,
     destaque: produto.destaque ?? false,
   };
@@ -171,6 +186,18 @@ function buildSku(produto, cor, tamanho) {
   return [produto.slug, slugify(cor), slugify(tamanho)]
     .filter(Boolean)
     .join("-");
+}
+
+function getProductConflictField(produto) {
+  if (produto.strapi_document_id) {
+    return "strapi_document_id";
+  }
+
+  if (produto.strapi_id) {
+    return "strapi_id";
+  }
+
+  return "slug";
 }
 
 async function fetchProdutosFromStrapi() {
@@ -224,19 +251,35 @@ async function deleteProductImages(produtoId) {
   }
 }
 
-async function insertProductImage(produtoId, produto) {
-  if (!produto.imagem_url) {
-    console.log("Produto sem imagem principal. Pulando imagem.");
+async function deleteProductVariations(produtoId) {
+  if (!SYNC_WRITE) {
+    console.log(`[DRY RUN] remover variações antigas do produto ${produtoId}`);
     return;
   }
 
-  const payload = {
+  const { error } = await supabase
+    .from("variacoes_produto")
+    .delete()
+    .eq("produto_id", produtoId);
+
+  if (error) {
+    throw new Error(`Erro ao remover variacoes_produto: ${error.message}`);
+  }
+}
+
+async function insertProductImages(produtoId, produto) {
+  if (!produto.imagens.length) {
+    console.log("Produto sem imagens. Pulando imagens.");
+    return;
+  }
+
+  const payload = produto.imagens.map((url, index) => ({
     produto_id: produtoId,
-    url: produto.imagem_url,
+    url,
     alt_text: produto.nome,
-    ordem: 1,
-    principal: true,
-  };
+    ordem: index + 1,
+    principal: index === 0,
+  }));
 
   if (!SYNC_WRITE) {
     console.log("[DRY RUN] insert em imagens_produto:", payload);
@@ -254,6 +297,7 @@ async function syncProduto(produto) {
   console.log(`\nSincronizando produto: ${produto.nome}`);
 
   const categoriaSlug = slugify(produto.categoria);
+
   const categoria = await upsertAndReturnSingle(
     "categorias",
     {
@@ -276,9 +320,13 @@ async function syncProduto(produto) {
     "slug",
   );
 
+  const productConflictField = getProductConflictField(produto);
+
   const produtoDb = await upsertAndReturnSingle(
     "produtos",
     {
+      strapi_id: produto.strapi_id,
+      strapi_document_id: produto.strapi_document_id,
       nome: produto.nome,
       categoria_id: categoria.id,
       marca_id: marca.id,
@@ -290,11 +338,13 @@ async function syncProduto(produto) {
       ativo: produto.ativo,
       atualizado_em: new Date().toISOString(),
     },
-    "slug",
+    productConflictField,
   );
 
   await deleteProductImages(produtoDb.id);
-  await insertProductImage(produtoDb.id, produto);
+  await insertProductImages(produtoDb.id, produto);
+
+  await deleteProductVariations(produtoDb.id);
 
   for (const corNome of produto.cores) {
     const corSlug = slugify(corNome);
@@ -359,7 +409,19 @@ async function syncProdutos() {
   const produtos = strapiProdutos.map(normalizeProduto);
 
   console.log("\nProdutos normalizados:");
-  console.table(produtos);
+  console.table(
+    produtos.map((produto) => ({
+      strapi_id: produto.strapi_id,
+      strapi_document_id: produto.strapi_document_id,
+      nome: produto.nome,
+      slug: produto.slug,
+      preco: produto.preco,
+      categoria: produto.categoria,
+      cores: produto.cores.join(", "),
+      tamanhos: produto.tamanhos.join(", "),
+      imagens: produto.imagens.length,
+    })),
+  );
 
   for (const produto of produtos) {
     if (
