@@ -12,14 +12,6 @@ function formatLabel(value) {
   return text.charAt(0).toUpperCase() + text.slice(1);
 }
 
-function formatTextList(items) {
-  if (!items || items.length === 0) {
-    return "Não informado";
-  }
-
-  return items.map((item) => formatLabel(item)).join(" / ");
-}
-
 function getProductDescription(product) {
   return product.descricao || product.description || "";
 }
@@ -108,18 +100,6 @@ function ProductDetailsModal({ product, onClose, whatsappPhone }) {
 
           <h2>{product.title}</h2>
           <strong>{product.price}</strong>
-
-          <dl className="product-details-specs">
-            <div>
-              <dt>Tamanhos</dt>
-              <dd>{formatTextList(sizes)}</dd>
-            </div>
-
-            <div>
-              <dt>Cores</dt>
-              <dd>{formatTextList(colors)}</dd>
-            </div>
-          </dl>
 
           {description && (
             <section className="product-details-section">
