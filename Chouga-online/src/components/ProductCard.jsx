@@ -1,6 +1,6 @@
 import { FiSearch } from "react-icons/fi";
 
-function ProductCard({ product, onOpen, onOpenDetails, whatsappPhone }) {
+function ProductCard({ product, onOpen, onOpenDetails }) {
   return (
     <article className="product-card">
       <button
@@ -26,16 +26,6 @@ function ProductCard({ product, onOpen, onOpenDetails, whatsappPhone }) {
         <button type="button" onClick={() => onOpenDetails(product)}>
           Ver produto
         </button>
-
-        <a
-          href={`https://wa.me/${whatsappPhone}?text=${encodeURIComponent(
-            `Olá! Tenho interesse na ${product.title}.`,
-          )}`}
-          target="_blank"
-          rel="noreferrer"
-        >
-          WhatsApp
-        </a>
       </div>
     </article>
   );
