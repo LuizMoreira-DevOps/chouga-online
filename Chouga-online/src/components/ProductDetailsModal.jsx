@@ -69,7 +69,7 @@ function ProductDetailsModal({ product, onClose, whatsappPhone }) {
     selectedSize ? `Tamanho: ${String(selectedSize).toUpperCase()}` : null,
     `Quantidade: ${quantity}`,
     `Preço: ${product.price}`,
-    product.image ? `Imagem: ${product.image}` : null,
+    /*product.image ? `Imagem: ${product.image}` : null,*/
     "",
     "Pode me ajudar com a compra?",
   ].filter(Boolean);
