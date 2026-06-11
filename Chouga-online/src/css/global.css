@@ -131,7 +131,7 @@ svg {
 }
 
 .home.page-bg {
-    --page-bg-opacity: 0.38;
+    --page-bg-opacity: 0.99;
     --bg-overlay-start: 0.78;
     --bg-overlay-end: 0.92;
     --page-bg-position: center;
@@ -139,28 +139,28 @@ svg {
 
 .camisetas-page.page-bg,
 .blusas-page.page-bg {
-    --page-bg-opacity: 0.32;
+    --page-bg-opacity: 0.99;
     --bg-overlay-start: 0.82;
     --bg-overlay-end: 0.94;
     --page-bg-position: center;
 }
 
 .sobre-page.page-bg {
-    --page-bg-opacity: 0.34;
+    --page-bg-opacity: 0.99;
     --bg-overlay-start: 0.8;
     --bg-overlay-end: 0.93;
     --page-bg-position: center;
 }
 
 .contato-page.page-bg {
-    --page-bg-opacity: 0.28;
+    --page-bg-opacity: 0.99;
     --bg-overlay-start: 0.86;
     --bg-overlay-end: 0.96;
     --page-bg-position: center;
 }
 
 .coming-page.page-bg {
-    --page-bg-opacity: 0.32;
+    --page-bg-opacity: 0.99;
     --bg-overlay-start: 0.84;
     --bg-overlay-end: 0.96;
     --page-bg-position: center;
