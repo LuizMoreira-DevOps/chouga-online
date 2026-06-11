@@ -7,130 +7,233 @@
 }
 
 .sobre-container {
-    display: grid;
-    margin-top: clamp(3rem, 6vh, 5rem);
-    grid-template-columns: minmax(320px, 420px) minmax(560px, 720px);
-    align-items: center;
-    justify-content: center;
-    gap: clamp(48px, 6vw, 72px);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(42px, 6vw, 84px);
+
+    min-height: calc(100vh - var(--page-padding-top) - var(--page-padding-bottom));
+    padding-top: clamp(1rem, 2.4vh, 2.6rem);
 }
 
-.sobre-content {
-    max-width: 420px;
+/* =========================
+   HERO
+========================= */
+
+.sobre-hero {
+    display: grid;
+    grid-template-columns: minmax(330px, 0.86fr) minmax(520px, 1.14fr);
+    align-items: center;
+    gap: clamp(48px, 7vw, 116px);
+}
+
+.sobre-copy {
+    position: relative;
+    z-index: 2;
+    max-width: 560px;
 }
 
 .sobre-tag {
-    display: inline-block;
-    margin-bottom: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
 
     color: var(--color-red);
 
     font-size: var(--text-sm);
-    letter-spacing: 4px;
+    line-height: 1;
+    letter-spacing: 0.28em;
     text-transform: uppercase;
 }
 
+.sobre-tag::before {
+    content: "";
+    width: 38px;
+    height: 3px;
+    background: var(--color-red);
+}
+
 .sobre-title {
-    margin-bottom: 32px;
+    margin-bottom: 28px;
 
     color: var(--color-text);
     font-family: var(--font-display);
 
-    font-size: var(--title-lg);
-    line-height: 0.82;
-    letter-spacing: 0.05em;
+    font-size: clamp(5.2rem, 7.7vw, 9.2rem);
+    line-height: 0.76;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
+    text-shadow: 0 12px 30px rgba(0, 0, 0, 0.65);
 }
 
 .sobre-title strong {
     color: var(--color-red);
 }
 
-.sobre-subtitle {
-    max-width: 420px;
-    margin-bottom: 28px;
+.sobre-kicker {
+    width: fit-content;
+    margin-bottom: 22px;
+    padding: 9px 14px;
 
-    color: var(--color-text);
+    color: var(--color-text-strong);
+    border-left: 2px solid var(--color-red);
+    background:
+        linear-gradient(90deg, rgba(13, 13, 13, 0.9), rgba(13, 13, 13, 0.38)),
+        rgba(13, 13, 13, 0.58);
 
-    font-size: clamp(1.75rem, 2vw, 2.65rem);
-    line-height: 1.02;
-    font-weight: 500;
+    font-size: var(--text-lg);
+    line-height: 1;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
 }
 
-.sobre-content p {
-    max-width: 420px;
-    margin-bottom: 20px;
+.sobre-callout {
+    color: var(--color-text-strong);
 
-    color: var(--color-text);
-
-    font-size: var(--text-xl);
-    line-height: 1.2;
-
-    opacity: 0.88;
+    font-size: clamp(2rem, 3.25vw, 4rem);
+    line-height: 0.98;
+    font-weight: 500;
+    text-transform: uppercase;
+    text-shadow: 0 12px 28px rgba(0, 0, 0, 0.72);
 }
 
 /* =========================
-   GALERIA
+   FOTOS
 ========================= */
 
-.sobre-gallery {
-    position: relative;
+.sobre-photo {
+    margin: 0;
 
-    width: 660px;
-    height: 480px;
-    min-width: 660px;
-    min-height: 480px;
-
-    transform: translateY(-8px);
+    border: 9px solid #f3dfcf;
+    background: #f3dfcf;
+    box-shadow:
+        0 28px 62px rgba(0, 0, 0, 0.66),
+        0 0 0 1px rgba(13, 13, 13, 0.55);
 }
 
-.photo {
-    position: absolute;
-
+.sobre-photo img {
     display: block;
-
-    max-width: none;
-    min-width: 0;
-
-    object-fit: cover;
-    object-position: center;
-
-    border: 10px solid #f3dfcf;
-    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+    width: 100%;
+    height: auto;
 
     filter:
-        grayscale(1) sepia(0.2) brightness(0.72);
+        grayscale(1) sepia(0.16) brightness(0.78) contrast(1.16);
 }
 
-.photo-1 {
-    width: 270px;
-    height: 335px;
+.sobre-photo-main {
+    position: relative;
+    justify-self: end;
+    width: min(100%, 690px);
 
-    top: 0;
-    left: 105px;
-
-    transform: rotate(-7deg);
+    transform: rotate(2.5deg);
 }
 
-.photo-2 {
-    width: 350px;
-    height: 225px;
+.sobre-photo-main::before {
+    content: "";
+    position: absolute;
+    inset: -24px;
+    z-index: -1;
 
-    top: 150px;
-    right: 0;
+    border: 1px solid rgba(243, 215, 191, 0.16);
+    background: rgba(13, 13, 13, 0.34);
+    box-shadow: inset 0 0 70px rgba(0, 0, 0, 0.75);
 
-    transform: rotate(9deg);
+    transform: rotate(-2deg);
 }
 
-.photo-3 {
-    width: 350px;
-    height: 215px;
+/* =========================
+   STORY
+========================= */
 
-    bottom: 10px;
-    left: 18px;
+.sobre-story {
+    display: grid;
+    grid-template-columns: minmax(420px, 0.95fr) minmax(460px, 1.05fr);
+    align-items: center;
+    gap: clamp(44px, 6vw, 96px);
+}
 
-    transform: rotate(1deg);
+.sobre-text-card {
+    max-width: 760px;
+    padding: clamp(24px, 3vw, 38px);
+
+    border-left: 2px solid rgba(233, 54, 18, 0.92);
+    background:
+        linear-gradient(90deg, rgba(13, 13, 13, 0.92), rgba(13, 13, 13, 0.54)),
+        rgba(13, 13, 13, 0.72);
+    box-shadow: 0 24px 55px rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(2px);
+}
+
+.sobre-text-card p {
+    max-width: 680px;
+    margin-bottom: 22px;
+
+    color: var(--color-text);
+
+    font-size: clamp(1.1rem, 1.35vw, 1.45rem);
+    line-height: 1.34;
+
+    opacity: 0.94;
+}
+
+.sobre-text-card p:last-child {
+    margin-bottom: 0;
+}
+
+/* =========================
+   MEMORIES
+========================= */
+
+.sobre-memory-wall {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(180px, 260px));
+    align-items: center;
+    justify-content: center;
+    gap: clamp(20px, 2.6vw, 34px);
+
+    min-height: 520px;
+}
+
+.sobre-photo-memory {
+    width: min(100%, 260px);
+}
+
+.sobre-photo-memory-one {
+    transform: rotate(-4deg) translateY(-18px);
+}
+
+.sobre-photo-memory-two {
+    transform: rotate(3deg) translateY(28px);
+}
+
+.sobre-photo-memory-three {
+    transform: rotate(2deg) translateY(-10px);
+}
+
+.sobre-photo-memory-four {
+    transform: rotate(-3deg) translateY(22px);
+}
+
+/* =========================
+   PILLS
+========================= */
+
+.sobre-pill-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.sobre-pill-list span {
+    padding: 7px 13px;
+
+    color: var(--color-text);
+    border: 1px solid rgba(243, 215, 191, 0.34);
+    background: rgba(13, 13, 13, 0.62);
+
+    font-size: var(--text-xs);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
 }
 
 /* =========================
@@ -139,41 +242,43 @@
 
 @media (max-width: 1400px) {
     .sobre-container {
-        margin-top: clamp(3.5rem, 7vh, 5.5rem);
-        grid-template-columns: minmax(300px, 390px) minmax(520px, 650px);
-        gap: 52px;
+        gap: 56px;
+    }
+
+    .sobre-hero {
+        grid-template-columns: minmax(300px, 0.82fr) minmax(460px, 1.18fr);
+        gap: 64px;
     }
 
     .sobre-title {
-        font-size: clamp(4rem, 5.5vw, 6.4rem);
+        font-size: clamp(4.6rem, 6.5vw, 7rem);
     }
 
-    .sobre-content p {
+    .sobre-callout {
+        font-size: clamp(1.8rem, 2.9vw, 3.25rem);
+    }
+
+    .sobre-photo-main {
+        width: min(100%, 560px);
+    }
+
+    .sobre-story {
+        grid-template-columns: minmax(390px, 1fr) minmax(410px, 1fr);
+        gap: 58px;
+    }
+
+    .sobre-photo-memory {
+        width: min(100%, 230px);
+    }
+
+    .sobre-memory-wall {
+        grid-template-columns: repeat(2, minmax(160px, 230px));
+        gap: 24px;
+        min-height: 470px;
+    }
+
+    .sobre-text-card p {
         font-size: var(--text-lg);
-    }
-
-    .sobre-gallery {
-        width: 590px;
-        height: 430px;
-        min-width: 590px;
-        min-height: 430px;
-    }
-
-    .photo-1 {
-        width: 245px;
-        height: 305px;
-        left: 95px;
-    }
-
-    .photo-2 {
-        width: 315px;
-        height: 205px;
-        top: 132px;
-    }
-
-    .photo-3 {
-        width: 315px;
-        height: 195px;
     }
 }
 
@@ -183,61 +288,68 @@
 
 @media (max-width: 900px) {
     .sobre-container {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 36px;
-        margin-top: 1.5rem;
+        gap: 34px;
+        min-height: auto;
+        padding-top: 1.5rem;
     }
 
-    .sobre-content {
-        width: 100%;
+    .sobre-hero,
+    .sobre-story {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 28px;
+    }
+
+    .sobre-copy {
         max-width: 100%;
     }
 
     .sobre-title {
-        margin-bottom: 28px;
         font-size: var(--title-sm);
     }
 
-    .sobre-subtitle {
-        max-width: 380px;
-        font-size: 1.5rem;
-    }
-
-    .sobre-content p {
-        max-width: 420px;
+    .sobre-kicker {
         font-size: var(--text-md);
+        line-height: 1.15;
     }
 
-    .sobre-gallery {
-        width: 100%;
-        min-width: 0;
-        height: auto;
-        min-height: 0;
+    .sobre-callout {
+        font-size: 1.55rem;
+    }
 
-        display: flex;
-        flex-direction: column;
-        gap: 18px;
-
+    .sobre-photo,
+    .sobre-photo-main,
+    .sobre-photo-memory,
+    .sobre-photo-memory-one,
+    .sobre-photo-memory-two,
+    .sobre-photo-memory-three,
+    .sobre-photo-memory-four {
         transform: none;
     }
 
-    .photo,
-    .photo-1,
-    .photo-2,
-    .photo-3 {
-        position: relative;
-
-        width: 100%;
-        max-width: 100%;
-        height: 230px;
-
-        inset: auto;
-
+    .sobre-photo {
         border-width: 6px;
+    }
 
-        transform: none;
+    .sobre-photo-main::before {
+        display: none;
+    }
+
+    .sobre-memory-wall {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: start;
+        min-height: 0;
+        gap: 18px;
+    }
+
+    .sobre-text-card {
+        padding: 20px;
+    }
+
+    .sobre-text-card p {
+        font-size: var(--text-md);
     }
 }
 
@@ -247,27 +359,43 @@
 
 @media (max-width: 520px) {
     .sobre-container {
-        gap: 30px;
+        gap: 28px;
+    }
+
+    .sobre-tag {
+        font-size: 0.72rem;
+        letter-spacing: 0.2em;
     }
 
     .sobre-title {
-        font-size: clamp(3.6rem, 16vw, 4.6rem);
+        font-size: clamp(3.7rem, 16vw, 4.8rem);
     }
 
-    .sobre-subtitle {
+    .sobre-kicker {
+        max-width: 100%;
+        font-size: 0.84rem;
+        letter-spacing: 0.08em;
+    }
+
+    .sobre-callout {
         max-width: 340px;
-        font-size: 1.35rem;
+        font-size: 1.28rem;
     }
 
-    .sobre-content p {
-        max-width: 340px;
-        font-size: var(--text-md);
+    .sobre-text-card {
+        padding: 16px;
     }
 
-    .photo,
-    .photo-1,
-    .photo-2,
-    .photo-3 {
-        height: clamp(180px, 48vw, 190px);
+    .sobre-pill-list {
+        gap: 8px;
+    }
+
+    .sobre-pill-list span {
+        padding: 6px 10px;
+        letter-spacing: 0.16em;
+    }
+
+    .sobre-memory-wall {
+        grid-template-columns: 1fr;
     }
 }

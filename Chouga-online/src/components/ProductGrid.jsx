@@ -1,11 +1,6 @@
 import ProductCard from "./ProductCard";
 
-function ProductGrid({
-  products,
-  onOpenProduct,
-  onOpenProductDetails,
-  whatsappPhone,
-}) {
+function ProductGrid({ products, onOpenProduct, onOpenProductDetails }) {
   if (products.length === 0) {
     return (
       <p className="products-empty">
@@ -22,7 +17,6 @@ function ProductGrid({
           product={product}
           onOpen={onOpenProduct}
           onOpenDetails={onOpenProductDetails}
-          whatsappPhone={whatsappPhone}
         />
       ))}
     </div>
