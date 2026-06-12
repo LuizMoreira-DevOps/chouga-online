@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { sortProductSizes } from "../constants/productFilters";
 
 import "../css/productDetailsModal.css";
 
@@ -25,7 +26,7 @@ function ProductDetailsModal({ product, onClose, whatsappPhone }) {
   const inspiration = getProductInspiration(product);
 
   const colors = product.colors || [];
-  const sizes = product.sizes || [];
+  const sizes = sortProductSizes(product.sizes || []);
 
   const [selectedColor, setSelectedColor] = useState(colors[0] || "");
   const [selectedSize, setSelectedSize] = useState(sizes[0] || "");
