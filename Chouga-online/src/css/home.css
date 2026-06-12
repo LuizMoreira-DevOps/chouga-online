@@ -350,29 +350,27 @@
 ========================= */
 
 @media (max-width: 900px) {
-    @media (max-width: 900px) {
-        .home-section {
-            height: 100svh;
-            min-height: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: clamp(12px, 3vw, 22px);
-            padding: 82px 20px 24px;
-            overflow: hidden;
-            margin-top: 0;
-        }
+    .home-section {
+        height: 100svh;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: clamp(12px, 3vw, 22px);
+        padding: 82px 20px 24px;
+        overflow: hidden;
+        margin-top: 0;
+    }
 
-        .hero-left {
-            order: 2;
-            max-width: 340px;
-            align-items: center;
-            margin-top: 1.8rem;
-            margin-bottom: 0;
-            text-align: center;
-            transform: none;
-        }
+    .hero-left {
+        order: 2;
+        max-width: 340px;
+        align-items: center;
+        margin-top: 1.8rem;
+        margin-bottom: 0;
+        text-align: center;
+        transform: none;
     }
 
     .hero-left h1 {
@@ -433,18 +431,28 @@
 ========================= */
 
 @media (max-width: 520px) {
+    .home.page-bg::before {
+        background-position: center 42%;
+        background-size: auto 125%;
+    }
+
     .home-section {
+        justify-content: flex-start;
         gap: 8px;
-        padding: 72px 12px 18px;
+        padding: 108px 12px 18px;
+    }
+
+    .hero-center {
+        margin-top: 0;
     }
 
     .hero-left {
-        margin-top: 2rem;
+        margin-top: 1.25rem;
     }
 
     .hero-left h1 {
+        margin-top: 0;
         font-size: clamp(1.95rem, 10.5vw, 2.55rem);
-        margin-top: 3rem;
     }
 
     .wheel-menu {
