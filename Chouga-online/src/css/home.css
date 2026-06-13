@@ -443,7 +443,7 @@
     }
 
     .hero-center {
-        margin-top: 0;
+        margin-top: 100px;
     }
 
     .hero-left {
@@ -451,7 +451,7 @@
     }
 
     .hero-left h1 {
-        margin-top: 0;
+        margin-top: 50px;
         font-size: clamp(1.95rem, 10.5vw, 2.55rem);
     }
 
