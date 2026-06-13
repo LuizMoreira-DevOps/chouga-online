@@ -1,3 +1,7 @@
 {
-    "workbench.browser.openLocalhostLinks": false
+    "workbench.browser.openLocalhostLinks": false,
+    "deno.enable": true,
+    "deno.enablePaths": [
+        "./Chouga-online/supabase/functions"
+    ]
 }
