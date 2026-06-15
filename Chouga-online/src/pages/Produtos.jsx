@@ -60,14 +60,17 @@ function getProductImage(imageUrl, assetFolder) {
   return getLegacyImage(imageUrl, assetFolder);
 }
 
-function belongsToGroup(product, groupSlug) {
-  const categorySlug = normalizeText(product.categoria_slug);
-  const normalizedGroupSlug = normalizeText(groupSlug);
+function belongsToCategoryGroups(product, categoryGroups) {
+  const categorySlug = normalizeText(product.categoria_slug || product.category);
 
-  return (
-    categorySlug === normalizedGroupSlug ||
-    categorySlug.startsWith(`${normalizedGroupSlug}-`)
-  );
+  return categoryGroups.some((group) => {
+    const normalizedGroup = normalizeText(group);
+
+    return (
+      categorySlug === normalizedGroup ||
+      categorySlug.startsWith(`${normalizedGroup}-`)
+    );
+  });
 }
 
 function normalizeProduct(product, assetFolder) {
@@ -104,6 +107,7 @@ function normalizeProduct(product, assetFolder) {
 
 function Produtos({
   groupSlug,
+  categoryGroups = [groupSlug],
   pageClass,
   title,
   path,
@@ -161,7 +165,7 @@ function Produtos({
 
         const catalog = await getProdutosCatalogo();
         const groupProducts = catalog
-          .filter((product) => belongsToGroup(product, groupSlug))
+          .filter((product) => belongsToCategoryGroups(product, categoryGroups))
           .map((product) => normalizeProduct(product, assetFolder));
 
         if (isMounted) {
@@ -185,7 +189,7 @@ function Produtos({
     return () => {
       isMounted = false;
     };
-  }, [assetFolder, groupSlug, title]);
+  }, [assetFolder, title, categoryGroups]);
 
   return (
     <Layout>
