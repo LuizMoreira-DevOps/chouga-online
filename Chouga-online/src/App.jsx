@@ -10,6 +10,7 @@ const productPages = [
   {
     path: "/camisetas",
     groupSlug: "camisetas",
+    categoryGroups: ["camisetas", "cropped"],
     pageClass: "camisetas",
     title: "Camisetas",
     assetFolder: "camisetas",
@@ -17,6 +18,7 @@ const productPages = [
   {
     path: "/blusas",
     groupSlug: "blusas",
+    categoryGroups: ["blusas"],
     pageClass: "blusas",
     title: "Blusas",
     assetFolder: "blusas",
