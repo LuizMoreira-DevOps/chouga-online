@@ -145,11 +145,14 @@ export function filterProducts(
   categoryFilter,
   sizeFilter,
   colorFilter,
+  searchFilter = "",
 ) {
   return products.filter((product) => {
     const productSizes = Array.isArray(product.sizes) ? product.sizes : [];
-
     const productColors = Array.isArray(product.colors) ? product.colors : [];
+    const productTags = Array.isArray(product.tags) ? product.tags : [];
+
+    const normalizedSearch = normalizeText(searchFilter);
 
     const matchCategory =
       categoryFilter === "todos" ||
@@ -167,6 +170,34 @@ export function filterProducts(
         (color) => normalizeText(color) === normalizeText(colorFilter),
       );
 
-    return matchCategory && matchSize && matchColor;
+    const searchableContent = [
+      product.name,
+      product.nome,
+      product.title,
+      product.titulo,
+      product.slug,
+      product.category,
+      product.categoria,
+      product.description,
+      product.descricao,
+      product.summary,
+      product.resumo,
+      product.model,
+      product.modelo,
+      product.type,
+      product.tipo,
+      product.gender,
+      product.genero,
+      ...productSizes,
+      ...productColors,
+      ...productTags,
+    ]
+      .map(normalizeText)
+      .join(" ");
+
+    const matchSearch =
+      !normalizedSearch || searchableContent.includes(normalizedSearch);
+
+    return matchCategory && matchSize && matchColor && matchSearch;
   });
 }

@@ -3,5 +3,7 @@
     "deno.enable": true,
     "deno.enablePaths": [
         "./Chouga-online/supabase/functions"
-    ]
+    ],
+    "search.useParentIgnoreFiles": true,
+    "search.useGlobalIgnoreFiles": true
 }
