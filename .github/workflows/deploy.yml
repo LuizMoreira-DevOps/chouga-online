@@ -6,6 +6,8 @@ on:
     types:
       - completed
 
+  workflow_dispatch:
+
 permissions:
   contents: read
   pages: write
@@ -13,13 +15,13 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   deploy:
     name: Continuous Deploy
 
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
 
     runs-on: ubuntu-latest
 
@@ -67,4 +69,4 @@ jobs:
 
       - name: Publicar no GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
