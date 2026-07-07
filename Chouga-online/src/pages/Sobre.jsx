@@ -4,7 +4,7 @@ import "../css/sobre.css";
 import sobre1 from "../assets/images/sobre-1.jpeg";
 import sobre2 from "../assets/images/sobre-2.jpeg";
 import sobre3 from "../assets/images/sobre-3.jpeg";
-import sobre4 from "../assets/images/sobre-4.png";
+import sobre4 from "../assets/images/sobre-4.jpeg";
 import sobre5 from "../assets/images/sobre-5.jpeg";
 
 function Sobre() {
