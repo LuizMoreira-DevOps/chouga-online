@@ -479,7 +479,6 @@
 }
 
 @keyframes deckHintPulse {
-
     0%,
     100% {
         opacity: 0.3;
@@ -892,7 +891,6 @@
 ========================= */
 
 @media (prefers-reduced-motion: reduce) {
-
     .deck-skate,
     .deck-stick,
     .deck-menu-hint {
