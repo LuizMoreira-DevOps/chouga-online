@@ -1,13 +1,11 @@
 import { useState } from "react";
+
 import {
   FaEnvelope,
   FaLock,
+  FaShoppingBag,
   FaUsers,
 } from "react-icons/fa";
-import {
-  GiHoodie,
-  GiTShirt,
-} from "react-icons/gi";
 import {
   useLocation,
   useNavigate,
@@ -27,42 +25,42 @@ const PAGE_LOAD_ID = crypto.randomUUID();
 
 const menuItems = [
   {
-    id: "camisetas",
-    label: "CAMISETA",
-    icon: <GiTShirt />,
-    path: "/camisetas",
+    id: "produtos",
+    label: "PRODUTOS",
+    icon: <FaShoppingBag />,
+    path: "/produtos",
     className: "top",
-  },
-  {
-    id: "blusas",
-    label: "BLUSAS",
-    icon: <GiHoodie />,
-    path: "/blusas",
-    className: "top-right",
   },
   {
     id: "eventos",
     label: "EVENTOS",
     icon: <FaLock />,
     path: "/em-breve",
-    className: "right",
+    className: "top-right",
   },
   {
     id: "atletas",
     label: "ATLETAS",
     icon: <FaLock />,
     path: "/em-breve",
+    className: "right",
+  },
+  {
+    id: "personalizacao",
+    label: "PERSONALIZAÇÃO",
+    icon: <FaLock />,
+    path: "/em-breve",
     className: "bottom-right",
   },
   {
-    id: "criacao-personalizacao",
-    label: "CRIAÇÃO/PERSONALIZAÇÃO",
+    id: "breve-1",
+    label: "EM BREVE",
     icon: <FaLock />,
     path: "/em-breve",
     className: "bottom",
   },
   {
-    id: "breve-5",
+    id: "breve-2",
     label: "EM BREVE",
     icon: <FaLock />,
     path: "/em-breve",

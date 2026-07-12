@@ -1,4 +1,8 @@
-import { Route, Routes } from "react-router-dom";
+import {
+  Navigate,
+  Route,
+  Routes,
+} from "react-router-dom";
 
 import Contato from "./pages/Contato";
 import EmBreve from "./pages/EmBreve";
@@ -6,41 +10,56 @@ import Home from "./pages/Home";
 import Produtos from "./pages/Produtos";
 import Sobre from "./pages/Sobre";
 
-const productPages = [
-  {
-    path: "/camisetas",
-    groupSlug: "camisetas",
-    categoryGroups: ["camisetas", "cropped"],
-    pageClass: "camisetas",
-    title: "Camisetas",
-    assetFolder: "camisetas",
-  },
-  {
-    path: "/blusas",
-    groupSlug: "blusas",
-    categoryGroups: ["blusas"],
-    pageClass: "blusas",
-    title: "Blusas",
-    assetFolder: "blusas",
-  },
-];
+const productsPage = {
+  path: "/produtos",
+  groupSlug: "produtos",
+  categoryGroups: [
+    "camisetas",
+    "cropped",
+    "blusas",
+  ],
+  pageClass: "camisetas",
+  title: "Produtos",
+};
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
 
-      {productPages.map((page) => (
-        <Route
-          key={page.path}
-          path={page.path}
-          element={<Produtos {...page} />}
-        />
-      ))}
+      <Route
+        path={productsPage.path}
+        element={<Produtos {...productsPage} />}
+      />
+
+      <Route
+        path="/camisetas"
+        element={
+          <Navigate
+            to="/produtos?categoria=camisetas"
+            replace
+          />
+        }
+      />
+
+      <Route
+        path="/blusas"
+        element={
+          <Navigate
+            to="/produtos?categoria=blusas"
+            replace
+          />
+        }
+      />
 
       <Route path="/sobre" element={<Sobre />} />
       <Route path="/contato" element={<Contato />} />
       <Route path="/em-breve" element={<EmBreve />} />
+
+      <Route
+        path="*"
+        element={<Navigate to="/" replace />}
+      />
     </Routes>
   );
 }
