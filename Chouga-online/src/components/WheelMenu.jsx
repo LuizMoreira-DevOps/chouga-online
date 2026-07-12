@@ -1,18 +1,29 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-
 import {
   FaEnvelope,
-  FaUsers,
   FaLock,
+  FaUsers,
 } from "react-icons/fa";
-
-import { 
-  GiHoodie, 
+import {
+  GiHoodie,
   GiTShirt,
 } from "react-icons/gi";
+import {
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 
-import wheelImg from "../assets/images/wheel.png";
+import homeWheels1 from "../assets/images/homeWheels-1.png";
+import homeWheels2 from "../assets/images/homeWheels-2.png";
+import homeWheels3 from "../assets/images/homeWheels-3.png";
+
+const wheels = [
+  homeWheels1,
+  homeWheels2,
+  homeWheels3,
+];
+
+const PAGE_LOAD_ID = crypto.randomUUID();
 
 const menuItems = [
   {
@@ -44,7 +55,7 @@ const menuItems = [
     className: "bottom-right",
   },
   {
-    id: "criacao_personalizacao",
+    id: "criacao-personalizacao",
     label: "CRIAÇÃO/PERSONALIZAÇÃO",
     icon: <FaLock />,
     path: "/em-breve",
@@ -73,9 +84,63 @@ const menuItems = [
   },
 ];
 
+function selectNextWheel(visitId) {
+  const savedVisitId = sessionStorage.getItem(
+    "chouga-home-visit",
+  );
+
+  const savedWheelIndex = Number(
+    sessionStorage.getItem("chouga-wheel-index"),
+  );
+
+  /*
+   * O React StrictMode pode inicializar o componente
+   * duas vezes durante o desenvolvimento.
+   *
+   * Quando isso acontecer, mantemos a mesma wheel
+   * para a mesma visita.
+   */
+  if (
+    savedVisitId === visitId
+    && Number.isInteger(savedWheelIndex)
+    && savedWheelIndex >= 0
+    && savedWheelIndex < wheels.length
+  ) {
+    return savedWheelIndex;
+  }
+
+  const currentIndex = Number.isInteger(savedWheelIndex)
+    ? savedWheelIndex
+    : -1;
+
+  const nextIndex = (currentIndex + 1) % wheels.length;
+
+  sessionStorage.setItem(
+    "chouga-home-visit",
+    visitId,
+  );
+
+  sessionStorage.setItem(
+    "chouga-wheel-index",
+    String(nextIndex),
+  );
+
+  return nextIndex;
+}
+
 function WheelMenu() {
   const [closing, setClosing] = useState(false);
+
+  const location = useLocation();
   const navigate = useNavigate();
+
+  const [wheelIndex] = useState(() => {
+    const visitId = `${PAGE_LOAD_ID}:${location.key}`;
+
+    return selectNextWheel(visitId);
+  });
+
+  const currentWheel = wheels[wheelIndex];
 
   function handleClick(path) {
     if (closing) {
@@ -92,7 +157,10 @@ function WheelMenu() {
   return (
     <div className={`wheel-menu ${closing ? "closing" : ""}`}>
       <div className="wheel-center">
-        <img src={wheelImg} alt="Wheel Chouga Skateboard" />
+        <img
+          src={currentWheel}
+          alt={`Wheel Chouga Skateboard ${wheelIndex + 1}`}
+        />
       </div>
 
       {menuItems.map((item) => (
@@ -102,8 +170,13 @@ function WheelMenu() {
           className={`wheel-item ${item.className}`}
           onClick={() => handleClick(item.path)}
         >
-          <span className="wheel-icon">{item.icon}</span>
-          <span className="wheel-label">{item.label}</span>
+          <span className="wheel-icon">
+            {item.icon}
+          </span>
+
+          <span className="wheel-label">
+            {item.label}
+          </span>
         </button>
       ))}
     </div>
