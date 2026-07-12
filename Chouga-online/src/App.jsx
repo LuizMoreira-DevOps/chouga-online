@@ -3,7 +3,6 @@ import { Route, Routes } from "react-router-dom";
 import Contato from "./pages/Contato";
 import EmBreve from "./pages/EmBreve";
 import Home from "./pages/Home";
-import HomeDeck from "./pages/HomeDeck";
 import Produtos from "./pages/Produtos";
 import Sobre from "./pages/Sobre";
 
@@ -30,7 +29,6 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/deck" element={<HomeDeck />} />
 
       {productPages.map((page) => (
         <Route
