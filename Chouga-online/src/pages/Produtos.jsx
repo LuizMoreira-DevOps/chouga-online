@@ -1,15 +1,23 @@
-import { useEffect, useMemo, useState } from "react";
+import {
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+import { useSearchParams } from "react-router-dom";
+
 import BackToTop from "../components/BackToTop";
 import Layout from "../components/Layout";
 import ProductDetailsModal from "../components/ProductDetailsModal";
 import ProductFilters from "../components/ProductFilters";
 import ProductGrid from "../components/ProductGrid";
 import ProductZoomModal from "../components/ProductZoomModal";
+
 import {
   getAvailableColors,
   getAvailableSizes,
   getDynamicCategories,
 } from "../constants/productFilters";
+
 import useProductFilters from "../hooks/useProductFilters";
 import useProductZoom from "../hooks/useProductZoom";
 import { getProdutosCatalogo } from "../services/produtosServices";
@@ -33,10 +41,28 @@ function normalizeText(value) {
     .toLowerCase();
 }
 
+function getProductCategorySlug(product) {
+  return normalizeText(
+    product.categoria_slug || product.category,
+  );
+}
+
+function getAssetFolder(product) {
+  const categorySlug = getProductCategorySlug(product);
+
+  if (categorySlug.startsWith("blusas")) {
+    return "blusas";
+  }
+
+  return "camisetas";
+}
+
 function getLegacyImage(imageUrl, assetFolder) {
-  const expectedSuffix = `/assets/images/${assetFolder}/${imageUrl}`;
-  const imageEntry = Object.entries(legacyImages).find(([path]) =>
-    path.endsWith(expectedSuffix),
+  const expectedSuffix =
+    `/assets/images/${assetFolder}/${imageUrl}`;
+
+  const imageEntry = Object.entries(legacyImages).find(
+    ([path]) => path.endsWith(expectedSuffix),
   );
 
   return imageEntry?.[1] ?? "";
@@ -52,7 +78,9 @@ function getProductImage(imageUrl, assetFolder) {
   }
 
   if (imageUrl.startsWith("/uploads")) {
-    const strapiUrl = import.meta.env.VITE_STRAPI_URL || "http://localhost:1337";
+    const strapiUrl =
+      import.meta.env.VITE_STRAPI_URL
+      || "http://localhost:1337";
 
     return `${strapiUrl}${imageUrl}`;
   }
@@ -60,27 +88,35 @@ function getProductImage(imageUrl, assetFolder) {
   return getLegacyImage(imageUrl, assetFolder);
 }
 
-function belongsToCategoryGroups(product, categoryGroups) {
-  const categorySlug = normalizeText(product.categoria_slug || product.category);
+function belongsToCategoryGroups(
+  product,
+  categoryGroups,
+) {
+  const categorySlug = getProductCategorySlug(product);
 
   return categoryGroups.some((group) => {
     const normalizedGroup = normalizeText(group);
 
     return (
-      categorySlug === normalizedGroup ||
-      categorySlug.startsWith(`${normalizedGroup}-`)
+      categorySlug === normalizedGroup
+      || categorySlug.startsWith(
+        `${normalizedGroup}-`,
+      )
     );
   });
 }
 
-function normalizeProduct(product, assetFolder) {
+function normalizeProduct(product) {
   const mainImage =
-    product.imagens?.find((image) => image.principal) ?? product.imagens?.[0];
+    product.imagens?.find((image) => image.principal)
+    ?? product.imagens?.[0];
 
   const colors = [
     ...new Set(
       product.variacoes
-        ?.map((variation) => normalizeText(variation.cor))
+        ?.map((variation) =>
+          normalizeText(variation.cor),
+        )
         .filter(Boolean),
     ),
   ];
@@ -88,49 +124,59 @@ function normalizeProduct(product, assetFolder) {
   const sizes = [
     ...new Set(
       product.variacoes
-        ?.map((variation) => String(variation.tamanho ?? "").trim())
+        ?.map((variation) =>
+          String(
+            variation.tamanho ?? "",
+          ).trim(),
+        )
         .filter(Boolean),
     ),
   ];
 
+  const assetFolder = getAssetFolder(product);
+
   return {
     ...product,
     title: product.nome,
-    price: `R$ ${Number(product.preco).toFixed(2).replace(".", ",")}`,
-    category: product.categoria_slug || "sem-categoria",
+    price: `R$ ${Number(product.preco)
+      .toFixed(2)
+      .replace(".", ",")}`,
+    category:
+      product.categoria_slug
+      || product.category
+      || "sem-categoria",
     colors,
     sizes,
-    image: mainImage ? getProductImage(mainImage.url, assetFolder) : "",
-    imageAlt: mainImage?.alt_text || product.nome,
+    image: mainImage
+      ? getProductImage(
+          mainImage.url,
+          assetFolder,
+        )
+      : "",
+    imageAlt:
+      mainImage?.alt_text || product.nome,
   };
 }
 
 function Produtos({
-  groupSlug,
-  categoryGroups = [groupSlug],
-  pageClass,
-  title,
-  path,
-  assetFolder = groupSlug,
+  categoryGroups = [
+    "camisetas",
+    "cropped",
+    "blusas",
+  ],
+  pageClass = "camisetas",
+  title = "Produtos",
+  path = "/produtos",
   whatsappPhone = "5541997485063",
 }) {
+  const [searchParams, setSearchParams] =
+    useSearchParams();
+
   const [products, setProducts] = useState([]);
-  const [detailsProduct, setDetailsProduct] = useState(null);
+  const [detailsProduct, setDetailsProduct] =
+    useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-
-  const availableColors = useMemo(
-    () => getAvailableColors(products),
-    [products],
-  );
-  const availableSizes = useMemo(
-    () => getAvailableSizes(products),
-    [products],
-  );
-  const categories = useMemo(
-    () => getDynamicCategories(products, title),
-    [products, title],
-  );
 
   const {
     selectedProduct,
@@ -155,6 +201,21 @@ function Produtos({
     toggleColorFilter,
   } = useProductFilters(products);
 
+  const availableColors = useMemo(
+    () => getAvailableColors(products),
+    [products],
+  );
+
+  const availableSizes = useMemo(
+    () => getAvailableSizes(products),
+    [products],
+  );
+
+  const categories = useMemo(
+    () => getDynamicCategories(products, title),
+    [products, title],
+  );
+
   useEffect(() => {
     let isMounted = true;
 
@@ -163,16 +224,26 @@ function Produtos({
         setLoading(true);
         setError("");
 
-        const catalog = await getProdutosCatalogo();
-        const groupProducts = catalog
-          .filter((product) => belongsToCategoryGroups(product, categoryGroups))
-          .map((product) => normalizeProduct(product, assetFolder));
+        const catalog =
+          await getProdutosCatalogo();
+
+        const normalizedProducts = catalog
+          .filter((product) =>
+            belongsToCategoryGroups(
+              product,
+              categoryGroups,
+            ),
+          )
+          .map(normalizeProduct);
 
         if (isMounted) {
-          setProducts(groupProducts);
+          setProducts(normalizedProducts);
         }
       } catch (loadError) {
-        console.error(`Erro ao carregar ${title.toLowerCase()}:`, loadError);
+        console.error(
+          "Erro ao carregar produtos:",
+          loadError,
+        );
 
         if (isMounted) {
           setError(loadError.message);
@@ -189,24 +260,85 @@ function Produtos({
     return () => {
       isMounted = false;
     };
-  }, [assetFolder, title, categoryGroups]);
+  }, [categoryGroups]);
+
+  useEffect(() => {
+    if (products.length === 0) {
+      return;
+    }
+
+    const requestedCategory = normalizeText(
+      searchParams.get("categoria"),
+    );
+
+    if (!requestedCategory) {
+      return;
+    }
+
+    const matchingCategory = categories.find(
+      (category) => {
+        const categoryValue = normalizeText(
+          category.value,
+        );
+
+        return (
+          categoryValue === requestedCategory
+          || categoryValue.startsWith(
+            `${requestedCategory}-`,
+          )
+        );
+      },
+    );
+
+    if (matchingCategory) {
+      setCategoryFilter(
+        matchingCategory.value,
+      );
+    }
+  }, [
+    categories,
+    products,
+    searchParams,
+    setCategoryFilter,
+  ]);
+
+  function handleCategoryChange(category) {
+    setCategoryFilter(category);
+
+    if (category === "todos") {
+      setSearchParams({});
+      return;
+    }
+
+    setSearchParams({
+      categoria: category,
+    });
+  }
 
   return (
     <Layout>
       <main
         className={`${pageClass}-page page-bg ${
-          selectedProduct || detailsProduct ? "is-zoom-open" : ""
+          selectedProduct || detailsProduct
+            ? "is-zoom-open"
+            : ""
         }`}
       >
-        <section className={`${pageClass}-section page-section`}>
-          <div className={`${pageClass}-container page-container`}>
+        <section
+          className={`${pageClass}-section page-section`}
+        >
+          <div
+            className={`${pageClass}-container page-container`}
+          >
             <ProductFilters
               page={pageClass}
               breadcrumbLabel={title}
               breadcrumbPath={path}
               categories={categories}
               categoryFilter={categoryFilter}
-              onCategoryChange={setCategoryFilter}
+              onCategoryChange={
+                handleCategoryChange
+              }
               sizes={availableSizes}
               sizeFilter={sizeFilter}
               onSizeToggle={toggleSizeFilter}
@@ -215,24 +347,39 @@ function Produtos({
               onColorToggle={toggleColorFilter}
             />
 
-            <section className={`${pageClass}-content`}>
-              {loading && <p>Carregando produtos...</p>}
+            <section
+              className={`${pageClass}-content`}
+            >
+              {loading && (
+                <p>Carregando produtos...</p>
+              )}
 
-              {error && <p>Erro ao carregar produtos: {error}</p>}
+              {error && (
+                <p>
+                  Erro ao carregar produtos:{" "}
+                  {error}
+                </p>
+              )}
 
               {!loading && !error && (
                 <ProductGrid
                   products={filteredProducts}
                   onOpenProduct={openProduct}
-                  onOpenProductDetails={setDetailsProduct}
+                  onOpenProductDetails={
+                    setDetailsProduct
+                  }
                 />
               )}
 
               {detailsProduct && (
                 <ProductDetailsModal
                   product={detailsProduct}
-                  onClose={() => setDetailsProduct(null)}
-                  whatsappPhone={whatsappPhone}
+                  onClose={() =>
+                    setDetailsProduct(null)
+                  }
+                  whatsappPhone={
+                    whatsappPhone
+                  }
                 />
               )}
 
@@ -243,8 +390,12 @@ function Produtos({
                 onClose={closeProduct}
                 onDecreaseZoom={decreaseZoom}
                 onIncreaseZoom={increaseZoom}
-                onPointerDown={handlePointerDown}
-                onPointerMove={handlePointerMove}
+                onPointerDown={
+                  handlePointerDown
+                }
+                onPointerMove={
+                  handlePointerMove
+                }
                 onPointerUp={stopDragging}
                 onPointerCancel={stopDragging}
                 onPointerLeave={stopDragging}
