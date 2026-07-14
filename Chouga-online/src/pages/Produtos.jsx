@@ -33,6 +33,15 @@ const legacyImages = import.meta.glob(
   },
 );
 
+const categoryAliases = {
+  camiseta: "camisetas",
+  camisetas: "camisetas",
+  cropped: "cropped",
+  croppeds: "cropped",
+  blusa: "blusas",
+  blusas: "blusas",
+};
+
 function normalizeText(value) {
   return String(value ?? "")
     .normalize("NFD")
@@ -41,16 +50,29 @@ function normalizeText(value) {
     .toLowerCase();
 }
 
+function normalizeCategorySlug(value) {
+  return normalizeText(value)
+    .replace(/[\s_]+/g, "-")
+    .replace(/-+/g, "-")
+    .split("-")
+    .filter(Boolean)
+    .map((part) => categoryAliases[part] ?? part)
+    .join("-");
+}
+
 function getProductCategorySlug(product) {
-  return normalizeText(
-    product.categoria_slug || product.category,
+  return normalizeCategorySlug(
+    product.categoria_slug
+      || product.category
+      || product.categoria,
   );
 }
 
 function getAssetFolder(product) {
   const categorySlug = getProductCategorySlug(product);
+  const categoryParts = categorySlug.split("-");
 
-  if (categorySlug.startsWith("blusas")) {
+  if (categoryParts.includes("blusas")) {
     return "blusas";
   }
 
@@ -62,7 +84,8 @@ function getLegacyImage(imageUrl, assetFolder) {
     `/assets/images/${assetFolder}/${imageUrl}`;
 
   const imageEntry = Object.entries(legacyImages).find(
-    ([path]) => path.endsWith(expectedSuffix),
+    ([imagePath]) =>
+      imagePath.endsWith(expectedSuffix),
   );
 
   return imageEntry?.[1] ?? "";
@@ -93,22 +116,27 @@ function belongsToCategoryGroups(
   categoryGroups,
 ) {
   const categorySlug = getProductCategorySlug(product);
+  const categoryParts = categorySlug.split("-");
 
   return categoryGroups.some((group) => {
-    const normalizedGroup = normalizeText(group);
+    const normalizedGroup =
+      normalizeCategorySlug(group);
 
     return (
       categorySlug === normalizedGroup
       || categorySlug.startsWith(
         `${normalizedGroup}-`,
       )
+      || categoryParts.includes(normalizedGroup)
     );
   });
 }
 
 function normalizeProduct(product) {
   const mainImage =
-    product.imagens?.find((image) => image.principal)
+    product.imagens?.find(
+      (image) => image.principal,
+    )
     ?? product.imagens?.[0];
 
   const colors = [
@@ -133,6 +161,9 @@ function normalizeProduct(product) {
     ),
   ];
 
+  const categorySlug =
+    getProductCategorySlug(product);
+
   const assetFolder = getAssetFolder(product);
 
   return {
@@ -141,10 +172,9 @@ function normalizeProduct(product) {
     price: `R$ ${Number(product.preco)
       .toFixed(2)
       .replace(".", ",")}`,
-    category:
-      product.categoria_slug
-      || product.category
-      || "sem-categoria",
+    category: categorySlug || "sem-categoria",
+    categoria_slug:
+      categorySlug || "sem-categoria",
     colors,
     sizes,
     image: mainImage
@@ -246,7 +276,11 @@ function Produtos({
         );
 
         if (isMounted) {
-          setError(loadError.message);
+          setError(
+            loadError instanceof Error
+              ? loadError.message
+              : "Não foi possível carregar os produtos.",
+          );
         }
       } finally {
         if (isMounted) {
@@ -267,9 +301,10 @@ function Produtos({
       return;
     }
 
-    const requestedCategory = normalizeText(
-      searchParams.get("categoria"),
-    );
+    const requestedCategory =
+      normalizeCategorySlug(
+        searchParams.get("categoria"),
+      );
 
     if (!requestedCategory) {
       return;
@@ -277,14 +312,19 @@ function Produtos({
 
     const matchingCategory = categories.find(
       (category) => {
-        const categoryValue = normalizeText(
-          category.value,
-        );
+        const categoryValue =
+          normalizeCategorySlug(category.value);
+
+        const categoryParts =
+          categoryValue.split("-");
 
         return (
           categoryValue === requestedCategory
           || categoryValue.startsWith(
             `${requestedCategory}-`,
+          )
+          || categoryParts.includes(
+            requestedCategory,
           )
         );
       },
@@ -311,7 +351,7 @@ function Produtos({
     }
 
     setSearchParams({
-      categoria: category,
+      categoria: normalizeCategorySlug(category),
     });
   }
 
