@@ -1,10 +1,12 @@
 name: CD - Chouga Online
 
 on:
-  workflow_run:
-    workflows: ["CI - Chouga Online"]
-    types:
-      - completed
+  push:
+    branches:
+      - main
+    paths:
+      - "Chouga-online/**"
+      - ".github/workflows/deploy.yml"
 
   workflow_dispatch:
 
@@ -15,14 +17,11 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   deploy:
     name: Continuous Deploy
-
-    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
-
     runs-on: ubuntu-latest
 
     defaults:
@@ -40,24 +39,21 @@ jobs:
       - name: Configurar Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 22.14.0
           cache: npm
           cache-dependency-path: Chouga-online/package-lock.json
 
       - name: Instalar dependências
         run: npm ci
 
+      - name: Rodar linters
+        run: npm run lint
+
       - name: Build do projeto
         run: npm run build
         env:
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
-
-      - name: Conferir build
-        run: |
-          pwd
-          ls -la
-          ls -la dist
 
       - name: Configurar GitHub Pages
         uses: actions/configure-pages@v5

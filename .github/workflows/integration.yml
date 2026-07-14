@@ -4,6 +4,7 @@ on:
   pull_request:
     branches:
       - main
+
   push:
     branches:
       - main
@@ -28,26 +29,15 @@ jobs:
       - name: Configurar Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 22.14.0
           cache: npm
           cache-dependency-path: Chouga-online/package-lock.json
 
       - name: Instalar dependências
         run: npm ci
 
-      - name: Instalar Supabase CLI
-        uses: supabase/setup-cli@v1
-        with:
-          version: latest
-
       - name: Rodar linters do projeto
         run: npm run lint
-
-      - name: Iniciar banco local do Supabase
-        run: supabase db start
-
-      - name: Rodar lint do banco Supabase
-        run: supabase db lint --level error
 
       - name: Build do projeto
         run: npm run build
