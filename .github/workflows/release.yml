@@ -1,0 +1,55 @@
+name: Release automático
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "Chouga-online/**"
+      - ".github/workflows/release.yml"
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+concurrency:
+  group: release-main
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: Validar e publicar release
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: Chouga-online
+
+    steps:
+      - name: Baixar o repositório
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.14.0
+          cache: npm
+          cache-dependency-path: Chouga-online/package-lock.json
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Executar lint
+        run: npm run lint
+
+      - name: Executar build
+        run: npm run build
+
+      - name: Criar release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx semantic-release
