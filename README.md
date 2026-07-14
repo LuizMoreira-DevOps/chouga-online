@@ -13,7 +13,7 @@ Uma aplicação web criada para apresentar os produtos, a identidade e a cultura
 
 ![Release](https://img.shields.io/github/v/release/LuizMoreira-DevOps/chouga-online?style=for-the-badge)
 ![Build](https://img.shields.io/github/actions/workflow/status/LuizMoreira-DevOps/chouga-online/deploy.yml?branch=main&style=for-the-badge&label=build)
-![License](https://img.shields.io/badge/license-proprietary-7A2B2E?style=for-the-badge)
+![Uso](https://img.shields.io/badge/uso-restrito-7A2B2E?style=for-the-badge)
 
 </div>
 
