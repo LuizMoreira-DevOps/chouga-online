@@ -1,6 +1,6 @@
 import ProductCard from "./ProductCard";
 
-function ProductGrid({ products, onOpenProduct, onOpenProductDetails }) {
+function ProductGrid({ products }) {
   if (products.length === 0) {
     return (
       <p className="products-empty">
@@ -12,12 +12,7 @@ function ProductGrid({ products, onOpenProduct, onOpenProductDetails }) {
   return (
     <div className="products-grid">
       {products.map((product) => (
-        <ProductCard
-          key={product.id}
-          product={product}
-          onOpen={onOpenProduct}
-          onOpenDetails={onOpenProductDetails}
-        />
+        <ProductCard key={product.id} product={product} />
       ))}
     </div>
   );
