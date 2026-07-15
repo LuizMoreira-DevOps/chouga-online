@@ -9,6 +9,7 @@ import EmBreve from "./pages/EmBreve";
 import Home from "./pages/Home";
 import Produtos from "./pages/Produtos";
 import Sobre from "./pages/Sobre";
+import ProdutoDetalhes from "./pages/ProdutoDetalhes";
 
 const productsPage = {
   path: "/produtos",
@@ -30,6 +31,11 @@ function App() {
       <Route
         path={productsPage.path}
         element={<Produtos {...productsPage} />}
+      />
+
+      <Route
+        path="/produtos/:slug"
+        element={<ProdutoDetalhes />}
       />
 
       <Route
