@@ -73,9 +73,7 @@ function ProductZoomModal({
         </button>
 
         <div
-          className={`zoom-image-wrapper ${
-            zoomLevel > 1 ? "is-draggable" : ""
-          }`}
+          className="zoom-image-wrapper is-draggable"
           onPointerDown={onPointerDown}
           onPointerMove={onPointerMove}
           onPointerUp={onPointerUp}

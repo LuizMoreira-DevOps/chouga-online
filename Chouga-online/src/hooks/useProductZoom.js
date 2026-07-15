@@ -2,13 +2,24 @@ import { useState } from "react";
 
 function useProductZoom() {
   const [selectedProduct, setSelectedProduct] = useState(null);
+
   const [zoomLevel, setZoomLevel] = useState(1);
-  const [dragPosition, setDragPosition] = useState({ x: 0, y: 0 });
+
+  const [dragPosition, setDragPosition] = useState({
+    x: 0,
+    y: 0,
+  });
+
   const [dragStart, setDragStart] = useState(null);
 
   function resetZoom() {
     setZoomLevel(1);
-    setDragPosition({ x: 0, y: 0 });
+
+    setDragPosition({
+      x: 0,
+      y: 0,
+    });
+
     setDragStart(null);
   }
 
@@ -23,26 +34,21 @@ function useProductZoom() {
   }
 
   function decreaseZoom() {
-    setZoomLevel((value) => {
-      const nextValue = Math.max(1, value - 0.2);
-
-      if (nextValue === 1) {
-        setDragPosition({ x: 0, y: 0 });
-        setDragStart(null);
-      }
-
-      return nextValue;
-    });
+    setZoomLevel((currentZoom) =>
+      Math.max(1, Number((currentZoom - 0.2).toFixed(1))),
+    );
   }
 
   function increaseZoom() {
-    setZoomLevel((value) => Math.min(2.4, value + 0.2));
+    setZoomLevel((currentZoom) =>
+      Math.min(2.4, Number((currentZoom + 0.2).toFixed(1))),
+    );
   }
 
   function handlePointerDown(event) {
-    if (zoomLevel <= 1) {
-      return;
-    }
+    event.preventDefault();
+
+    event.currentTarget.setPointerCapture(event.pointerId);
 
     setDragStart({
       x: event.clientX - dragPosition.x,
@@ -51,7 +57,7 @@ function useProductZoom() {
   }
 
   function handlePointerMove(event) {
-    if (!dragStart || zoomLevel <= 1) {
+    if (!dragStart) {
       return;
     }
 
@@ -61,7 +67,11 @@ function useProductZoom() {
     });
   }
 
-  function stopDragging() {
+  function stopDragging(event) {
+    if (event?.currentTarget?.hasPointerCapture?.(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId);
+    }
+
     setDragStart(null);
   }
 

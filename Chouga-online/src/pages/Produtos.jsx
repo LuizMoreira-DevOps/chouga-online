@@ -1,11 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
 import BackToTop from "../components/BackToTop";
 import Layout from "../components/Layout";
 import ProductFilters from "../components/ProductFilters";
 import ProductGrid from "../components/ProductGrid";
-import ProductZoomModal from "../components/ProductZoomModal";
 
 import {
   getAvailableColors,
@@ -14,9 +13,9 @@ import {
 } from "../constants/productFilters";
 
 import useProductFilters from "../hooks/useProductFilters";
-import useProductZoom from "../hooks/useProductZoom";
 import { getProdutosCatalogo } from "../services/produtosServices";
 
+import "../css/products.css";
 import "../css/camisetas.css";
 import "../css/blusas.css";
 
@@ -63,6 +62,7 @@ function getProductCategorySlug(product) {
 
 function getAssetFolder(product) {
   const categorySlug = getProductCategorySlug(product);
+
   const categoryParts = categorySlug.split("-");
 
   if (categoryParts.includes("blusas")) {
@@ -73,7 +73,9 @@ function getAssetFolder(product) {
 }
 
 function getLegacyImage(imageUrl, assetFolder) {
-  const expectedSuffix = `/assets/images/${assetFolder}/${imageUrl}`;
+  const normalizedImageUrl = String(imageUrl ?? "").replace(/^\/+/, "");
+
+  const expectedSuffix = `/assets/images/${assetFolder}/${normalizedImageUrl}`;
 
   const imageEntry = Object.entries(legacyImages).find(([imagePath]) =>
     imagePath.endsWith(expectedSuffix),
@@ -103,6 +105,7 @@ function getProductImage(imageUrl, assetFolder) {
 
 function belongsToCategoryGroups(product, categoryGroups) {
   const categorySlug = getProductCategorySlug(product);
+
   const categoryParts = categorySlug.split("-");
 
   return categoryGroups.some((group) => {
@@ -143,7 +146,10 @@ function normalizeProduct(product) {
   return {
     ...product,
     title: product.nome,
-    price: `R$ ${Number(product.preco).toFixed(2).replace(".", ",")}`,
+    price: Number(product.preco).toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    }),
     category: categorySlug || "sem-categoria",
     categoria_slug: categorySlug || "sem-categoria",
     colors,
@@ -159,26 +165,13 @@ function Produtos({
   title = "Produtos",
   path = "/produtos",
 }) {
-  const navigate = useNavigate();
-
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
 
-  const {
-    selectedProduct,
-    zoomLevel,
-    dragPosition,
-    openProduct,
-    closeProduct,
-    decreaseZoom,
-    increaseZoom,
-    handlePointerDown,
-    handlePointerMove,
-    stopDragging,
-  } = useProductZoom();
+  const [loading, setLoading] = useState(true);
+
+  const [error, setError] = useState("");
 
   const {
     categoryFilter,
@@ -211,26 +204,6 @@ function Produtos({
         setError("");
 
         const catalog = await getProdutosCatalogo();
-
-        console.log("CATÁLOGO COMPLETO:", catalog);
-        console.table(
-          catalog.map((product) => ({
-            id: product.id,
-            slug: product.slug,
-            nome: product.nome,
-            categoria: product.categoria,
-            categoriaSlug: product.categoria_slug,
-            preco: product.preco,
-            imagens: product.imagens?.length ?? 0,
-            variacoes: product.variacoes?.length ?? 0,
-            descricao: Boolean(product.descricao),
-            inspiracao: Boolean(product.inspiracao),
-            composicao: Boolean(product.composicao),
-            cuidados: Boolean(product.cuidados),
-            modelagem: Boolean(product.modelagem),
-            medidas: Boolean(product.medidas),
-          })),
-        );
 
         const normalizedProducts = catalog
           .filter((product) => belongsToCategoryGroups(product, categoryGroups))
@@ -306,23 +279,9 @@ function Produtos({
     });
   }
 
-  function handleOpenProductDetails(product) {
-    if (!product?.slug) {
-      console.error("Produto sem slug:", product);
-
-      return;
-    }
-
-    navigate(`/produtos/${product.slug}`);
-  }
-
   return (
     <Layout>
-      <main
-        className={`${pageClass}-page page-bg ${
-          selectedProduct ? "is-zoom-open" : ""
-        }`}
-      >
+      <main className={`${pageClass}-page page-bg`}>
         <section className={`${pageClass}-section page-section`}>
           <div className={`${pageClass}-container page-container`}>
             <ProductFilters
@@ -346,26 +305,8 @@ function Produtos({
               {error && <p>Erro ao carregar produtos: {error}</p>}
 
               {!loading && !error && (
-                <ProductGrid
-                  products={filteredProducts}
-                  onOpenProduct={openProduct}
-                  onOpenProductDetails={handleOpenProductDetails}
-                />
+                <ProductGrid products={filteredProducts} />
               )}
-
-              <ProductZoomModal
-                product={selectedProduct}
-                zoomLevel={zoomLevel}
-                dragPosition={dragPosition}
-                onClose={closeProduct}
-                onDecreaseZoom={decreaseZoom}
-                onIncreaseZoom={increaseZoom}
-                onPointerDown={handlePointerDown}
-                onPointerMove={handlePointerMove}
-                onPointerUp={stopDragging}
-                onPointerCancel={stopDragging}
-                onPointerLeave={stopDragging}
-              />
             </section>
           </div>
         </section>
