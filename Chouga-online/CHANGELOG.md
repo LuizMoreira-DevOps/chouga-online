@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.1.1...v1.2.0) (2026-07-15)
+
+
+### Features
+
+* implementa nova experiência de catálogo e detalhes de produtos ([aaa9b47](https://github.com/LuizMoreira-DevOps/chouga-online/commit/aaa9b47a658d0afe620bfbd137faa352d346c3dd))
+
 ## [1.1.1](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.1.0...v1.1.1) (2026-07-14)
 
 
