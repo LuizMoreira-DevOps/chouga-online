@@ -1,3 +1,7 @@
+import { useEffect } from "react";
+
+import "../css/productZoomModal.css";
+
 function ProductZoomModal({
   product,
   zoomLevel,
@@ -11,21 +15,52 @@ function ProductZoomModal({
   onPointerCancel,
   onPointerLeave,
 }) {
+  useEffect(() => {
+    if (!product) {
+      return undefined;
+    }
+
+    const previousBodyOverflow = document.body.style.overflow;
+
+    const previousHtmlOverflow = document.documentElement.style.overflow;
+
+    document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
+
+    function handleKeyDown(event) {
+      if (event.key === "Escape") {
+        onClose();
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousBodyOverflow;
+
+      document.documentElement.style.overflow = previousHtmlOverflow;
+
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [product, onClose]);
+
   if (!product) {
     return null;
   }
 
+  const productTitle = product.title || product.nome || "Produto Chouga";
+
+  const productImageAlt = product.imageAlt || productTitle;
+
+  const zoomPercentage = Math.round(zoomLevel * 100);
+
   return (
-    <div
-      className="product-zoom-overlay"
-      role="presentation"
-      onClick={onClose}
-    >
-      <div
+    <div className="product-zoom-overlay" role="presentation" onClick={onClose}>
+      <article
         className="product-zoom-modal"
         role="dialog"
         aria-modal="true"
-        aria-label={product.title}
+        aria-label={`Imagem ampliada de ${productTitle}`}
         onClick={(event) => event.stopPropagation()}
       >
         <button
@@ -36,26 +71,6 @@ function ProductZoomModal({
         >
           ×
         </button>
-
-        <div className="zoom-controls">
-          <div className="zoom-actions">
-            <button
-              type="button"
-              onClick={onDecreaseZoom}
-              aria-label="Diminuir zoom"
-            >
-              −
-            </button>
-
-            <button
-              type="button"
-              onClick={onIncreaseZoom}
-              aria-label="Aumentar zoom"
-            >
-              +
-            </button>
-          </div>
-        </div>
 
         <div
           className={`zoom-image-wrapper ${
@@ -69,19 +84,43 @@ function ProductZoomModal({
         >
           <img
             src={product.image}
-            alt={product.title}
+            alt={productImageAlt}
             draggable="false"
             style={{
-              transform: `translate(${dragPosition.x}px, ${dragPosition.y}px) scale(${zoomLevel})`,
+              transform: `translate3d(${dragPosition.x}px, ${dragPosition.y}px, 0) scale(${zoomLevel})`,
             }}
           />
         </div>
 
-        <div className="product-zoom-info">
-          <h3>{product.title}</h3>
-          <span>{product.price}</span>
-        </div>
-      </div>
+        <footer className="product-zoom-footer">
+          <div className="product-zoom-info">
+            <h3>{productTitle}</h3>
+
+            {product.price && <span>{product.price}</span>}
+          </div>
+
+          <div className="zoom-actions" aria-label="Controles de zoom">
+            <button
+              type="button"
+              onClick={onDecreaseZoom}
+              disabled={zoomLevel <= 1}
+              aria-label="Diminuir zoom"
+            >
+              −
+            </button>
+
+            <span aria-live="polite">{zoomPercentage}%</span>
+
+            <button
+              type="button"
+              onClick={onIncreaseZoom}
+              aria-label="Aumentar zoom"
+            >
+              +
+            </button>
+          </div>
+        </footer>
+      </article>
     </div>
   );
 }
