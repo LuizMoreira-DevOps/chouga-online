@@ -17,6 +17,10 @@ const legacyImages = import.meta.glob(
   },
 );
 
+const SIZE_ORDER = ["PP", "P", "M", "G", "GG", "XG", "XGG"];
+
+const MAX_ORDER_QUANTITY = 10;
+
 function formatPrice(value) {
   const price = Number(value);
 
@@ -147,8 +151,6 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
         setError("");
 
         const productData = await getProdutoBySlug(slug);
-        console.log("Produto recebido do Strapi:", productData);
-        console.log("Variações recebidas do Strapi:", productData?.variacoes);
 
         if (isMounted) {
           setProduct(productData);
@@ -215,7 +217,24 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
           .map((variation) => String(variation.tamanho ?? "").trim())
           .filter(Boolean),
       ),
-    ];
+    ].sort((firstSize, secondSize) => {
+      const firstIndex = SIZE_ORDER.indexOf(firstSize.toUpperCase());
+      const secondIndex = SIZE_ORDER.indexOf(secondSize.toUpperCase());
+
+      if (firstIndex === -1 && secondIndex === -1) {
+        return firstSize.localeCompare(secondSize, "pt-BR");
+      }
+
+      if (firstIndex === -1) {
+        return 1;
+      }
+
+      if (secondIndex === -1) {
+        return -1;
+      }
+
+      return firstIndex - secondIndex;
+    });
   }, [availableVariations, selectedColor]);
 
   const currentSize = sizes.includes(selectedSize) ? selectedSize : "";
@@ -258,17 +277,9 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
     currentSize,
   ]);
 
-  /* const availableStock = selectedVariation
-    ? Math.max(0, Number(selectedVariation.estoque ?? 0))
-    : 0; */
-
-  const maxOrderQuantity = 10; // Define a quantidade máxima de pedido
-
   const unitPrice = Number(selectedVariation?.preco ?? product?.preco ?? 0);
 
   const totalPrice = unitPrice * quantity;
-
-  /* const canBuy = Boolean(selectedVariation && availableStock > 0); */
 
   const canBuy = Boolean(selectedVariation);
 
@@ -278,7 +289,7 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
 
   function increaseQuantity() {
     setQuantity((currentQuantity) =>
-      Math.min(maxOrderQuantity, currentQuantity + 1),
+      Math.min(MAX_ORDER_QUANTITY, currentQuantity + 1),
     );
   } // Função para aumentar a quantidade, respeitando o limite máximo de pedido
 
@@ -289,7 +300,7 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
       return;
     }
 
-    setQuantity(Math.min(Math.max(nextQuantity, 1), maxOrderQuantity));
+    setQuantity(Math.min(Math.max(nextQuantity, 1), MAX_ORDER_QUANTITY));
   } // Função para lidar com a mudança de quantidade, respeitando o limite máximo de pedido
 
   function handleOpenZoom() {
@@ -500,53 +511,55 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
               )}
 
               {selectedVariation && (
-                <div className="produto-detalhes-quantity">
-                  <div className="produto-detalhes-quantity-heading">
-                    <span>Quantidade</span>
+                <>
+                  <div className="produto-detalhes-quantity">
+                    <div className="produto-detalhes-quantity-heading">
+                      <span>Quantidade</span>
 
-                    <span className="produto-detalhes-stock">
-                      Produção sob encomenda
-                    </span>
+                      <span className="produto-detalhes-stock">
+                        Produção sob encomenda
+                      </span>
+                    </div>
 
-                    <p className="produto-detalhes-order-note">
-                      Produto feito sob encomenda. O prazo de produção será
-                      confirmado pelo WhatsApp.
+                    <div className="produto-detalhes-quantity-control">
+                      <button
+                        type="button"
+                        onClick={decreaseQuantity}
+                        disabled={quantity <= 1}
+                        aria-label="Diminuir quantidade"
+                      >
+                        −
+                      </button>
+
+                      <input
+                        type="number"
+                        min="1"
+                        max={MAX_ORDER_QUANTITY}
+                        value={quantity}
+                        onChange={handleQuantityChange}
+                        aria-label="Quantidade do produto"
+                      />
+
+                      <button
+                        type="button"
+                        onClick={increaseQuantity}
+                        disabled={quantity >= MAX_ORDER_QUANTITY}
+                        aria-label="Aumentar quantidade"
+                      >
+                        +
+                      </button>
+                    </div>
+
+                    <p className="produto-detalhes-total">
+                      Total: <strong>{formatPrice(totalPrice)}</strong>
                     </p>
                   </div>
 
-                  <div className="produto-detalhes-quantity-control">
-                    <button
-                      type="button"
-                      onClick={decreaseQuantity}
-                      disabled={quantity <= 1}
-                      aria-label="Diminuir quantidade"
-                    >
-                      −
-                    </button>
-
-                    <input
-                      type="number"
-                      min="1"
-                      max={maxOrderQuantity}
-                      value={quantity}
-                      onChange={handleQuantityChange}
-                      aria-label="Quantidade do produto"
-                    />
-
-                    <button
-                      type="button"
-                      onClick={increaseQuantity}
-                      disabled={quantity >= maxOrderQuantity}
-                      aria-label="Aumentar quantidade"
-                    >
-                      +
-                    </button>
-                  </div>
-
-                  <p className="produto-detalhes-total">
-                    Total: <strong>{formatPrice(totalPrice)}</strong>
+                  <p className="produto-detalhes-order-note">
+                    Produto feito sob encomenda. O prazo de produção será
+                    confirmado pelo WhatsApp.
                   </p>
-                </div>
+                </>
               )}
 
               <button
