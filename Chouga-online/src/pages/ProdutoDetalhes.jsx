@@ -106,8 +106,7 @@ function getProductImages(product) {
 
 function getAvailableVariations(product) {
   return (product?.variacoes ?? []).filter(
-    (variation) =>
-      variation.ativo !== false && Number(variation.estoque ?? 1) > 0,
+    (variation) => variation.ativo !== false,
   );
 }
 
@@ -148,6 +147,8 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
         setError("");
 
         const productData = await getProdutoBySlug(slug);
+        console.log("Produto recebido do Strapi:", productData);
+        console.log("Variações recebidas do Strapi:", productData?.variacoes);
 
         if (isMounted) {
           setProduct(productData);
@@ -257,25 +258,29 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
     currentSize,
   ]);
 
-  const availableStock = selectedVariation
+  /* const availableStock = selectedVariation
     ? Math.max(0, Number(selectedVariation.estoque ?? 0))
-    : 0;
+    : 0; */
+
+  const maxOrderQuantity = 10; // Define a quantidade máxima de pedido
 
   const unitPrice = Number(selectedVariation?.preco ?? product?.preco ?? 0);
 
   const totalPrice = unitPrice * quantity;
 
-  const canBuy = Boolean(selectedVariation && availableStock > 0);
+  /* const canBuy = Boolean(selectedVariation && availableStock > 0); */
+
+  const canBuy = Boolean(selectedVariation);
 
   function decreaseQuantity() {
     setQuantity((currentQuantity) => Math.max(1, currentQuantity - 1));
-  }
+  } // Função para diminuir a quantidade, respeitando o limite máximo de pedido
 
   function increaseQuantity() {
     setQuantity((currentQuantity) =>
-      Math.min(availableStock, currentQuantity + 1),
+      Math.min(maxOrderQuantity, currentQuantity + 1),
     );
-  }
+  } // Função para aumentar a quantidade, respeitando o limite máximo de pedido
 
   function handleQuantityChange(event) {
     const nextQuantity = Number(event.target.value);
@@ -284,8 +289,8 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
       return;
     }
 
-    setQuantity(Math.min(Math.max(nextQuantity, 1), availableStock));
-  }
+    setQuantity(Math.min(Math.max(nextQuantity, 1), maxOrderQuantity));
+  } // Função para lidar com a mudança de quantidade, respeitando o limite máximo de pedido
 
   function handleOpenZoom() {
     if (!currentImage) {
@@ -307,6 +312,7 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
 
     const productPageUrl = buildProductUrl(product.slug);
 
+    // Monta a mensagem para o WhatsApp
     const message = [
       "Olá! Tenho interesse neste produto da Chouga:",
       "",
@@ -317,12 +323,14 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
       `Preço unitário: ${formatPrice(unitPrice)}`,
       `Total: ${formatPrice(totalPrice)}`,
       selectedVariation.sku ? `SKU: ${selectedVariation.sku}` : "",
+      "Tipo de pedido: Produção sob encomenda",
       "",
       `Link: ${productPageUrl}`,
     ]
       .filter(Boolean)
       .join("\n");
 
+    // Monta a URL do WhatsApp com a mensagem codificada
     const whatsappUrl =
       `https://wa.me/${whatsappPhone}` + `?text=${encodeURIComponent(message)}`;
 
@@ -497,10 +505,13 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
                     <span>Quantidade</span>
 
                     <span className="produto-detalhes-stock">
-                      {availableStock === 1
-                        ? "Última unidade"
-                        : `${availableStock} unidades disponíveis`}
+                      Produção sob encomenda
                     </span>
+
+                    <p className="produto-detalhes-order-note">
+                      Produto feito sob encomenda. O prazo de produção será
+                      confirmado pelo WhatsApp.
+                    </p>
                   </div>
 
                   <div className="produto-detalhes-quantity-control">
@@ -516,7 +527,7 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
                     <input
                       type="number"
                       min="1"
-                      max={availableStock}
+                      max={maxOrderQuantity}
                       value={quantity}
                       onChange={handleQuantityChange}
                       aria-label="Quantidade do produto"
@@ -525,7 +536,7 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
                     <button
                       type="button"
                       onClick={increaseQuantity}
-                      disabled={quantity >= availableStock}
+                      disabled={quantity >= maxOrderQuantity}
                       aria-label="Aumentar quantidade"
                     >
                       +

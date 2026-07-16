@@ -294,6 +294,20 @@
 }
 
 /* =========================
+   NOTA DE PEDIDO
+========================= */
+
+.produto-detalhes-order-note {
+  margin: 0;
+  padding: 14px 16px;
+  border: 1px solid var(--color-border-soft);
+  background: var(--color-bg-soft);
+  color: var(--color-text-72);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+}
+
+/* =========================
    QUANTIDADE
 ========================= */
 
