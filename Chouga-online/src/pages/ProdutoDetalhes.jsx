@@ -35,9 +35,10 @@ function formatPrice(value) {
 }
 
 function buildProductUrl(slug) {
-  const siteUrl = import.meta.env.VITE_SITE_URL || window.location.origin;
+  const configuredSiteUrl = import.meta.env.VITE_SITE_URL;
+  const siteUrl = configuredSiteUrl || window.location.origin;
 
-  return `${siteUrl.replace(/\/$/, "")}/produtos/${slug}`;
+  return `${siteUrl.replace(/\/$/, "")}/produtos/${encodeURIComponent(slug)}`;
 }
 
 function normalizeText(value) {
