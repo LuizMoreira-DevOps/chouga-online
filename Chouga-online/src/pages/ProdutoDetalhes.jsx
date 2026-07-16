@@ -330,9 +330,9 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
       `Produto: ${product.nome}`,
       selectedColor ? `Cor: ${selectedColor}` : "",
       currentSize ? `Tamanho: ${currentSize}` : "",
-      `Quantidade: ${quantity}`,
       `Preço unitário: ${formatPrice(unitPrice)}`,
-      `Total: ${formatPrice(totalPrice)}`,
+      `Quantidade: ${quantity}`,
+      `Total do pedido: ${formatPrice(totalPrice)}`,
       selectedVariation.sku ? `SKU: ${selectedVariation.sku}` : "",
       "Tipo de pedido: Produção sob encomenda",
       "",
@@ -449,7 +449,8 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
                 <h1>{product.nome}</h1>
 
                 <p className="produto-detalhes-price">
-                  {formatPrice(product.preco)}
+                  <strong>{formatPrice(unitPrice)}</strong>
+                  <span>por unidade</span>
                 </p>
               </div>
 
@@ -515,10 +516,6 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
                   <div className="produto-detalhes-quantity">
                     <div className="produto-detalhes-quantity-heading">
                       <span>Quantidade</span>
-
-                      <span className="produto-detalhes-stock">
-                        Produção sob encomenda
-                      </span>
                     </div>
 
                     <div className="produto-detalhes-quantity-control">
@@ -550,15 +547,20 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
                       </button>
                     </div>
 
-                    <p className="produto-detalhes-total">
-                      Total: <strong>{formatPrice(totalPrice)}</strong>
+                    <p className="produto-detalhes-total" aria-live="polite">
+                      Total para {quantity}{" "}
+                      {quantity === 1 ? "unidade" : "unidades"}:
+                      <strong>{formatPrice(totalPrice)}</strong>
                     </p>
                   </div>
 
-                  <p className="produto-detalhes-order-note">
-                    Produto feito sob encomenda. O prazo de produção será
-                    confirmado pelo WhatsApp.
-                  </p>
+                  <div className="produto-detalhes-order-note">
+                    <strong>Sob encomenda</strong>
+
+                    <span>
+                      O prazo de produção será confirmado pelo WhatsApp.
+                    </span>
+                  </div>
                 </>
               )}
 
