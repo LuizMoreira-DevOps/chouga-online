@@ -90,8 +90,6 @@
 ========================= */
 
 .produto-detalhes-thumbnails {
-  position: sticky;
-  top: 120px;
   display: flex;
   flex-direction: column;
   gap: 14px;
