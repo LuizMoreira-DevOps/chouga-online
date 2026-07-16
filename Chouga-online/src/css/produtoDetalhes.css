@@ -603,7 +603,7 @@
     position: static;
     flex-direction: row;
     overflow-x: auto;
-    padding-bottom: 6px;
+    padding: 2px 0 6px;
   }
 
   .produto-detalhes-thumbnails button {
@@ -617,6 +617,11 @@
 
   .produto-detalhes-heading h1 {
     font-size: 2.3rem;
+  }
+
+  .produto-detalhes-thumbnails button:hover,
+  .produto-detalhes-thumbnails button.is-active {
+    transform: none;
   }
 }
 
