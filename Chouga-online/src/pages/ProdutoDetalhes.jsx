@@ -124,6 +124,8 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
 
   const [selectedSize, setSelectedSize] = useState("");
 
+  const [quantity, setQuantity] = useState(1);
+
   const {
     selectedProduct,
     zoomLevel,
@@ -152,6 +154,7 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
           setSelectedImage("");
           setSelectedColor("");
           setSelectedSize("");
+          setQuantity(1);
         }
       } catch (loadError) {
         console.error("Erro ao carregar produto:", loadError);
@@ -216,26 +219,73 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
 
   const currentSize = sizes.includes(selectedSize) ? selectedSize : "";
 
-  const selectedVariation = useMemo(
-    () =>
-      availableVariations.find((variation) => {
-        const colorMatches =
-          !selectedColor ||
-          normalizeText(variation.cor) === normalizeText(selectedColor);
+  const selectedVariation = useMemo(() => {
+    if (!availableVariations.length) {
+      return null;
+    }
 
-        const sizeMatches =
-          !currentSize ||
-          String(variation.tamanho ?? "").trim() === currentSize;
+    const requiresColor = colors.length > 0;
+    const requiresSize = sizes.length > 0;
+
+    if (requiresColor && !selectedColor) {
+      return null;
+    }
+
+    if (requiresSize && !currentSize) {
+      return null;
+    }
+
+    return (
+      availableVariations.find((variation) => {
+        const variationColor = String(variation.cor ?? "").trim();
+        const variationSize = String(variation.tamanho ?? "").trim();
+
+        const colorMatches =
+          !requiresColor ||
+          normalizeText(variationColor) === normalizeText(selectedColor);
+
+        const sizeMatches = !requiresSize || variationSize === currentSize;
 
         return colorMatches && sizeMatches;
-      }),
-    [availableVariations, selectedColor, currentSize],
-  );
+      }) ?? null
+    );
+  }, [
+    availableVariations,
+    colors.length,
+    sizes.length,
+    selectedColor,
+    currentSize,
+  ]);
 
-  const canBuy =
-    colors.length === 0
-      ? Boolean(currentSize || sizes.length === 0)
-      : Boolean(selectedColor && (currentSize || sizes.length === 0));
+  const availableStock = selectedVariation
+    ? Math.max(0, Number(selectedVariation.estoque ?? 0))
+    : 0;
+
+  const unitPrice = Number(selectedVariation?.preco ?? product?.preco ?? 0);
+
+  const totalPrice = unitPrice * quantity;
+
+  const canBuy = Boolean(selectedVariation && availableStock > 0);
+
+  function decreaseQuantity() {
+    setQuantity((currentQuantity) => Math.max(1, currentQuantity - 1));
+  }
+
+  function increaseQuantity() {
+    setQuantity((currentQuantity) =>
+      Math.min(availableStock, currentQuantity + 1),
+    );
+  }
+
+  function handleQuantityChange(event) {
+    const nextQuantity = Number(event.target.value);
+
+    if (!Number.isInteger(nextQuantity)) {
+      return;
+    }
+
+    setQuantity(Math.min(Math.max(nextQuantity, 1), availableStock));
+  }
 
   function handleOpenZoom() {
     if (!currentImage) {
@@ -251,7 +301,7 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
   }
 
   function handleWhatsApp() {
-    if (!canBuy) {
+    if (!canBuy || !selectedVariation) {
       return;
     }
 
@@ -261,10 +311,12 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
       "Olá! Tenho interesse neste produto da Chouga:",
       "",
       `Produto: ${product.nome}`,
-      `Preço: ${formatPrice(product.preco)}`,
       selectedColor ? `Cor: ${selectedColor}` : "",
       currentSize ? `Tamanho: ${currentSize}` : "",
-      selectedVariation?.sku ? `SKU: ${selectedVariation.sku}` : "",
+      `Quantidade: ${quantity}`,
+      `Preço unitário: ${formatPrice(unitPrice)}`,
+      `Total: ${formatPrice(totalPrice)}`,
+      selectedVariation.sku ? `SKU: ${selectedVariation.sku}` : "",
       "",
       `Link: ${productPageUrl}`,
     ]
@@ -404,6 +456,7 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
                         onClick={() => {
                           setSelectedColor(color);
                           setSelectedSize("");
+                          setQuantity(1);
                         }}
                       >
                         {color}
@@ -426,13 +479,63 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
                         key={size}
                         type="button"
                         className={currentSize === size ? "is-selected" : ""}
-                        onClick={() => setSelectedSize(size)}
+                        onClick={() => {
+                          setSelectedSize(size);
+                          setQuantity(1);
+                        }}
                       >
                         {size}
                       </button>
                     ))}
                   </div>
                 </fieldset>
+              )}
+
+              {selectedVariation && (
+                <div className="produto-detalhes-quantity">
+                  <div className="produto-detalhes-quantity-heading">
+                    <span>Quantidade</span>
+
+                    <span className="produto-detalhes-stock">
+                      {availableStock === 1
+                        ? "Última unidade"
+                        : `${availableStock} unidades disponíveis`}
+                    </span>
+                  </div>
+
+                  <div className="produto-detalhes-quantity-control">
+                    <button
+                      type="button"
+                      onClick={decreaseQuantity}
+                      disabled={quantity <= 1}
+                      aria-label="Diminuir quantidade"
+                    >
+                      −
+                    </button>
+
+                    <input
+                      type="number"
+                      min="1"
+                      max={availableStock}
+                      value={quantity}
+                      onChange={handleQuantityChange}
+                      aria-label="Quantidade do produto"
+                    />
+
+                    <button
+                      type="button"
+                      onClick={increaseQuantity}
+                      disabled={quantity >= availableStock}
+                      aria-label="Aumentar quantidade"
+                    >
+                      +
+                    </button>
+                  </div>
+
+                  <p className="produto-detalhes-total">
+                    Total: <strong>{formatPrice(totalPrice)}</strong>
+                  </p>
+                </div>
               )}
 
               <button
