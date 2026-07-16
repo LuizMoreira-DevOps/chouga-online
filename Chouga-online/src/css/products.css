@@ -611,7 +611,15 @@
   }
 
   .product-card-image {
+    aspect-ratio: auto;
+    overflow: hidden; /* telas menores podem ter imagens de produtos com proporção diferente */
+  }
+
+  .product-card-image img {
+    width: 100%;
+    height: auto;
     aspect-ratio: 4 / 5;
+    object-fit: cover;
   }
 
   .product-card-view {
