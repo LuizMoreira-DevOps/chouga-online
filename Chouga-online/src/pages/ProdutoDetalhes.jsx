@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
 import Layout from "../components/Layout";
@@ -6,6 +6,10 @@ import ProductZoomModal from "../components/ProductZoomModal";
 
 import useProductZoom from "../hooks/useProductZoom";
 import { getProdutoBySlug } from "../services/produtosServices";
+
+import SizeGuideDrawer from "../components/SizeGuideDrawer";
+
+import { defaultSizeGuide, sizeGuides } from "../constants/sizeGuides";
 
 import "../css/produtoDetalhes.css";
 
@@ -118,6 +122,7 @@ function getAvailableVariations(product) {
 function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
   const { slug } = useParams();
 
+  const sizeGuideTriggerRef = useRef(null);
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -129,6 +134,8 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
   const [selectedSize, setSelectedSize] = useState("");
 
   const [quantity, setQuantity] = useState(1);
+
+  const [isSizeGuideOpen, setIsSizeGuideOpen] = useState(false);
 
   const {
     selectedProduct,
@@ -158,6 +165,7 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
           setSelectedImage("");
           setSelectedColor("");
           setSelectedSize("");
+          setIsSizeGuideOpen(false);
           setQuantity(1);
         }
       } catch (loadError) {
@@ -284,15 +292,35 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
 
   const canBuy = Boolean(selectedVariation);
 
+  const sizeGuide = useMemo(() => {
+    const category = normalizeText(
+      product?.categoria_slug || product?.categoria,
+    );
+
+    if (category.includes("blusa")) {
+      return sizeGuides.blusas;
+    }
+
+    if (category.includes("cropped")) {
+      return sizeGuides.cropped;
+    }
+
+    if (category.includes("camiseta")) {
+      return sizeGuides.camisetas;
+    }
+
+    return defaultSizeGuide;
+  }, [product]);
+
   function decreaseQuantity() {
     setQuantity((currentQuantity) => Math.max(1, currentQuantity - 1));
-  } // Função para diminuir a quantidade, respeitando o limite máximo de pedido
+  }
 
   function increaseQuantity() {
     setQuantity((currentQuantity) =>
       Math.min(MAX_ORDER_QUANTITY, currentQuantity + 1),
     );
-  } // Função para aumentar a quantidade, respeitando o limite máximo de pedido
+  }
 
   function handleQuantityChange(event) {
     const nextQuantity = Number(event.target.value);
@@ -302,7 +330,7 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
     }
 
     setQuantity(Math.min(Math.max(nextQuantity, 1), MAX_ORDER_QUANTITY));
-  } // Função para lidar com a mudança de quantidade, respeitando o limite máximo de pedido
+  }
 
   function handleOpenZoom() {
     if (!currentImage) {
@@ -489,10 +517,24 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
 
               {sizes.length > 0 && (
                 <fieldset className="produto-detalhes-options">
-                  <legend>
-                    Tamanho
-                    {currentSize && <span>: {currentSize}</span>}
-                  </legend>
+                  <div className="produto-detalhes-options-heading">
+                    <legend>
+                      Tamanho
+                      {currentSize && <span>: {currentSize}</span>}
+                    </legend>
+
+                    <button
+                      ref={sizeGuideTriggerRef}
+                      type="button"
+                      className="produto-detalhes-size-guide-button"
+                      onClick={() => setIsSizeGuideOpen(true)}
+                      aria-haspopup="dialog"
+                      aria-expanded={isSizeGuideOpen}
+                      aria-controls="size-guide-drawer"
+                    >
+                      Guia de medidas
+                    </button>
+                  </div>
 
                   <div className="produto-detalhes-size-list">
                     {sizes.map((size) => (
@@ -618,6 +660,13 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
             </section>
           </div>
         </section>
+
+        <SizeGuideDrawer
+          isOpen={isSizeGuideOpen}
+          guide={sizeGuide}
+          triggerRef={sizeGuideTriggerRef}
+          onClose={() => setIsSizeGuideOpen(false)}
+        />
 
         <ProductZoomModal
           product={selectedProduct}
