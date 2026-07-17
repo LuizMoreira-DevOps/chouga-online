@@ -1,3 +1,11 @@
+# [1.5.0](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.4.5...v1.5.0) (2026-07-17)
+
+
+### Features
+
+* **size-guide:** adiciona estrutura de medidas por categoria ([#164](https://github.com/LuizMoreira-DevOps/chouga-online/issues/164)) ([bd00aa6](https://github.com/LuizMoreira-DevOps/chouga-online/commit/bd00aa61b78e2faa645bac0955c3e189966176e3))
+* **size-guide:** integra guia responsivo e acessível aos produtos ([#164](https://github.com/LuizMoreira-DevOps/chouga-online/issues/164)) ([f636ee4](https://github.com/LuizMoreira-DevOps/chouga-online/commit/f636ee4047a1baf99c56408fdefdb89e98e7f541))
+
 ## [1.4.5](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.4.4...v1.4.5) (2026-07-17)
 
 
