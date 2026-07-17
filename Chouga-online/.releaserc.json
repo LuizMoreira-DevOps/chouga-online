@@ -2,43 +2,63 @@
   "branches": ["main"],
   "plugins": [
     [
-      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
       {
         "preset": "conventionalcommits",
-        "releaseRules": [
-          {
-            "type": "feat",
-            "release": "minor"
-          },
-          {
-            "type": "fix",
-            "release": "patch"
-          },
-          {
-            "type": "perf",
-            "release": "patch"
-          },
-          {
-            "type": "refactor",
-            "release": "patch"
-          },
-          {
-            "type": "style",
-            "release": "patch"
-          },
-          {
-            "type": "docs",
-            "release": "patch"
-          },
-          {
-            "type": "build",
-            "release": "patch"
-          },
-          {
-            "type": "ci",
-            "release": "patch"
-          }
-        ]
+        "presetConfig": {
+          "types": [
+            {
+              "type": "feat",
+              "section": "Novas funcionalidades",
+              "hidden": false
+            },
+            {
+              "type": "fix",
+              "section": "Correções",
+              "hidden": false
+            },
+            {
+              "type": "perf",
+              "section": "Desempenho",
+              "hidden": false
+            },
+            {
+              "type": "refactor",
+              "section": "Refatorações",
+              "hidden": false
+            },
+            {
+              "type": "style",
+              "section": "Interface e estilos",
+              "hidden": false
+            },
+            {
+              "type": "docs",
+              "section": "Documentação",
+              "hidden": false
+            },
+            {
+              "type": "build",
+              "section": "Build e dependências",
+              "hidden": false
+            },
+            {
+              "type": "ci",
+              "section": "Integração contínua",
+              "hidden": false
+            },
+            {
+              "type": "test",
+              "section": "Testes",
+              "hidden": false
+            },
+            {
+              "type": "chore",
+              "section": "Manutenção",
+              "hidden": false
+            }
+          ]
+        }
       }
     ],
     [
