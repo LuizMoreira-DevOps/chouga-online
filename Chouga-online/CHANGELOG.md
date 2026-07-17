@@ -1,3 +1,10 @@
+## [1.4.5](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.4.4...v1.4.5) (2026-07-17)
+
+
+### Bug Fixes
+
+* restaura preset funcional das notas de release ([#174](https://github.com/LuizMoreira-DevOps/chouga-online/issues/174)) ([43152c3](https://github.com/LuizMoreira-DevOps/chouga-online/commit/43152c3391a0255a9445e37cdd51782a6f06045f))
+
 ## [1.4.4](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.4.3...v1.4.4) (2026-07-17)
 
 ## [1.4.3](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.4.2...v1.4.3) (2026-07-17)
