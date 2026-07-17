@@ -2,6 +2,46 @@
   "branches": ["main"],
   "plugins": [
     [
+      "@semantic-release/commit-analyzer",
+      {
+        "preset": "conventionalcommits",
+        "releaseRules": [
+          {
+            "type": "feat",
+            "release": "minor"
+          },
+          {
+            "type": "fix",
+            "release": "patch"
+          },
+          {
+            "type": "perf",
+            "release": "patch"
+          },
+          {
+            "type": "refactor",
+            "release": "patch"
+          },
+          {
+            "type": "style",
+            "release": "patch"
+          },
+          {
+            "type": "docs",
+            "release": "patch"
+          },
+          {
+            "type": "build",
+            "release": "patch"
+          },
+          {
+            "type": "ci",
+            "release": "patch"
+          }
+        ]
+      }
+    ],
+    [
       "@semantic-release/release-notes-generator",
       {
         "preset": "conventionalcommits",
@@ -56,48 +96,6 @@
               "type": "chore",
               "section": "Manutenção",
               "hidden": false
-            }
-          ]
-        }
-      }
-    ],
-    [
-      "@semantic-release/release-notes-generator",
-      {
-        "preset": "conventionalcommits",
-        "presetConfig": {
-          "types": [
-            {
-              "type": "feat",
-              "section": "Novas funcionalidades"
-            },
-            {
-              "type": "fix",
-              "section": "Correções"
-            },
-            {
-              "type": "perf",
-              "section": "Desempenho"
-            },
-            {
-              "type": "refactor",
-              "section": "Refatorações"
-            },
-            {
-              "type": "style",
-              "section": "Interface e estilos"
-            },
-            {
-              "type": "docs",
-              "section": "Documentação"
-            },
-            {
-              "type": "build",
-              "section": "Build e dependências"
-            },
-            {
-              "type": "ci",
-              "section": "Integração contínua"
             }
           ]
         }
