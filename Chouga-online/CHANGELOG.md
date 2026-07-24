@@ -1,3 +1,44 @@
+# [1.5.0](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.4.5...v1.5.0) (2026-07-17)
+
+
+### Features
+
+* **size-guide:** adiciona estrutura de medidas por categoria ([#164](https://github.com/LuizMoreira-DevOps/chouga-online/issues/164)) ([bd00aa6](https://github.com/LuizMoreira-DevOps/chouga-online/commit/bd00aa61b78e2faa645bac0955c3e189966176e3))
+* **size-guide:** integra guia responsivo e acessível aos produtos ([#164](https://github.com/LuizMoreira-DevOps/chouga-online/issues/164)) ([f636ee4](https://github.com/LuizMoreira-DevOps/chouga-online/commit/f636ee4047a1baf99c56408fdefdb89e98e7f541))
+
+## [1.4.5](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.4.4...v1.4.5) (2026-07-17)
+
+
+### Bug Fixes
+
+* restaura preset funcional das notas de release ([#174](https://github.com/LuizMoreira-DevOps/chouga-online/issues/174)) ([43152c3](https://github.com/LuizMoreira-DevOps/chouga-online/commit/43152c3391a0255a9445e37cdd51782a6f06045f))
+
+## [1.4.4](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.4.3...v1.4.4) (2026-07-17)
+
+## [1.4.3](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.4.2...v1.4.3) (2026-07-17)
+
+## [1.4.2](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.4.1...v1.4.2) (2026-07-17)
+
+## [1.4.1](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.4.0...v1.4.1) (2026-07-17)
+
+
+## [1.4.1](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.4.0...v1.4.1) (2026-07-17)
+
+## [1.4.0](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.3.0...v1.4.0) (2026-07-16)
+
+## [1.3.0](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.2.2...v1.3.0) (2026-07-16)
+
+## [1.2.2](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.2.1...v1.2.2) (2026-07-16)
+
+## [1.2.1](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.2.0...v1.2.1) (2026-07-15)
+
+# [1.2.0](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.1.1...v1.2.0) (2026-07-15)
+
+
+### Features
+
+* implementa nova experiência de catálogo e detalhes de produtos ([aaa9b47](https://github.com/LuizMoreira-DevOps/chouga-online/commit/aaa9b47a658d0afe620bfbd137faa352d346c3dd))
+
 ## [1.1.1](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.1.0...v1.1.1) (2026-07-14)
 
 
