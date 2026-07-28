@@ -38,6 +38,20 @@ function formatPrice(value) {
   });
 }
 
+function formatModelHeight(heightInCentimeters) {
+  const height = Number(heightInCentimeters);
+
+  if (!Number.isFinite(height) || height <= 0) {
+    return "";
+  }
+
+  if (height < 100) {
+    return `${height} cm`;
+  }
+
+  return `${(height / 100).toFixed(2).replace(".", ",")} m`;
+}
+
 function buildProductUrl(slug) {
   const configuredSiteUrl = import.meta.env.VITE_SITE_URL;
   const siteUrl = configuredSiteUrl || window.location.origin;
@@ -291,6 +305,23 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
   const totalPrice = unitPrice * quantity;
 
   const canBuy = Boolean(selectedVariation);
+
+  const hasModelInformation = Boolean(
+    product?.tipo_modelagem ||
+    product?.tamanho_modelo ||
+    product?.altura_modelo_cm ||
+    product?.medidas_modelo,
+  );
+
+  const hasEditorialContent = Boolean(
+    product?.descricao_detalhada ||
+    product?.inspiracao ||
+    product?.caracteristicas?.length ||
+    product?.composicao ||
+    product?.cuidados ||
+    hasModelInformation ||
+    product?.observacoes_adicionais,
+  );
 
   const sizeGuide = useMemo(() => {
     const category = normalizeText(
@@ -615,13 +646,54 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
               >
                 {canBuy ? "Comprar pelo WhatsApp" : "Selecione as opções"}
               </button>
+            </section>
+          </div>
+          {hasEditorialContent && (
+            <section
+              className="produto-detalhes-editorial"
+              aria-label="Informações sobre o produto"
+            >
+              <div className="produto-detalhes-editorial-heading">
+                <span>Conheça a peça</span>
+                <h2>Detalhes do produto</h2>
+              </div>
 
               <div className="produto-detalhes-sections">
+                {product.descricao_detalhada && (
+                  <details>
+                    <summary>Sobre a peça</summary>
+
+                    <div className="produto-detalhes-section-content">
+                      <p>{product.descricao_detalhada}</p>
+                    </div>
+                  </details>
+                )}
+
                 {product.inspiracao && (
                   <details>
                     <summary>Inspiração</summary>
 
-                    <p>{product.inspiracao}</p>
+                    <div className="produto-detalhes-section-content">
+                      <p>{product.inspiracao}</p>
+                    </div>
+                  </details>
+                )}
+
+                {product.caracteristicas.length > 0 && (
+                  <details>
+                    <summary>Características</summary>
+
+                    <div className="produto-detalhes-section-content">
+                      <ul className="produto-detalhes-feature-list">
+                        {product.caracteristicas.map(
+                          (caracteristica, index) => (
+                            <li key={`${caracteristica}-${index}`}>
+                              {caracteristica}
+                            </li>
+                          ),
+                        )}
+                      </ul>
+                    </div>
                   </details>
                 )}
 
@@ -629,36 +701,75 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
                   <details>
                     <summary>Composição</summary>
 
-                    <p>{product.composicao}</p>
-                  </details>
-                )}
-
-                {product.modelagem && (
-                  <details>
-                    <summary>Modelagem</summary>
-
-                    <p>{product.modelagem}</p>
-                  </details>
-                )}
-
-                {product.medidas && (
-                  <details>
-                    <summary>Medidas</summary>
-
-                    <p>{product.medidas}</p>
+                    <div className="produto-detalhes-section-content">
+                      <p>{product.composicao}</p>
+                    </div>
                   </details>
                 )}
 
                 {product.cuidados && (
                   <details>
-                    <summary>Cuidados</summary>
+                    <summary>Cuidados com a peça</summary>
 
-                    <p>{product.cuidados}</p>
+                    <div className="produto-detalhes-section-content">
+                      <p>{product.cuidados}</p>
+                    </div>
+                  </details>
+                )}
+
+                {hasModelInformation && (
+                  <details>
+                    <summary>Modelagem</summary>
+
+                    <div className="produto-detalhes-section-content">
+                      {product.tipo_modelagem && (
+                        <p>{product.tipo_modelagem}</p>
+                      )}
+
+                      {(product.tamanho_modelo ||
+                        product.altura_modelo_cm ||
+                        product.medidas_modelo) && (
+                        <dl className="produto-detalhes-model-data">
+                          {product.tamanho_modelo && (
+                            <div>
+                              <dt>Tamanho utilizado</dt>
+                              <dd>{product.tamanho_modelo}</dd>
+                            </div>
+                          )}
+
+                          {product.altura_modelo_cm && (
+                            <div>
+                              <dt>Altura do modelo</dt>
+                              <dd>
+                                {formatModelHeight(product.altura_modelo_cm)}
+                              </dd>
+                            </div>
+                          )}
+
+                          {product.medidas_modelo && (
+                            <div>
+                              <dt>Outras medidas</dt>
+                              <dd>{product.medidas_modelo}</dd>
+                            </div>
+                          )}
+                        </dl>
+                      )}
+                    </div>
+                  </details>
+                )}
+
+                {product.observacoes_adicionais && (
+                  <details>
+                    <summary>Informações adicionais</summary>
+
+                    <div className="produto-detalhes-section-content">
+                      <p>{product.observacoes_adicionais}</p>
+                    </div>
                   </details>
                 )}
               </div>
             </section>
-          </div>
+          )}
         </section>
 
         <SizeGuideDrawer
