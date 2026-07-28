@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.5.0...v1.6.0) (2026-07-28)
+
+
+### Features
+
+* adicionar conteúdo editorial à página do produto [#165](https://github.com/LuizMoreira-DevOps/chouga-online/issues/165) ([327cdf1](https://github.com/LuizMoreira-DevOps/chouga-online/commit/327cdf115833cdbc3a3f48929ca1a6b2b65756f1))
+
 # [1.5.0](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.4.5...v1.5.0) (2026-07-17)
 
 
