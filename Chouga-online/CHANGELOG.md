@@ -1,3 +1,10 @@
+# [1.7.0](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.6.0...v1.7.0) (2026-07-29)
+
+
+### Features
+
+* **catalog:** evoluir tipos de produto e guias de medidas [#217](https://github.com/LuizMoreira-DevOps/chouga-online/issues/217) ([5db4991](https://github.com/LuizMoreira-DevOps/chouga-online/commit/5db4991d97abd6631bc8025ac099f3a47887d03e))
+
 # [1.6.0](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.5.0...v1.6.0) (2026-07-28)
 
 
