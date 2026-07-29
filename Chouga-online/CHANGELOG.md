@@ -1,3 +1,10 @@
+# [1.8.0](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.7.0...v1.8.0) (2026-07-29)
+
+
+### Features
+
+* **product:** sincronizar galeria com cor selecionada [#168](https://github.com/LuizMoreira-DevOps/chouga-online/issues/168) ([7c749dc](https://github.com/LuizMoreira-DevOps/chouga-online/commit/7c749dc001e0b7e72e863242bedb0973a442a176))
+
 # [1.7.0](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.6.0...v1.7.0) (2026-07-29)
 
 
