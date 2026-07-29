@@ -1,3 +1,10 @@
+# [1.9.0](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.8.0...v1.9.0) (2026-07-29)
+
+
+### Features
+
+* **database:** relacionar imagens às cores [#168](https://github.com/LuizMoreira-DevOps/chouga-online/issues/168) ([97a4ea7](https://github.com/LuizMoreira-DevOps/chouga-online/commit/97a4ea7f6ca68aba6e00295b87d61f46a1d567d8))
+
 # [1.8.0](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.7.0...v1.8.0) (2026-07-29)
 
 
