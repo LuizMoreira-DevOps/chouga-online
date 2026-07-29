@@ -19,6 +19,8 @@ import "../css/produtoDetalhes.css";
 
 import ProductReviewsList from "../components/ProductReviewsList";
 
+import ProductReviewForm from "../components/ProductReviewForm";
+
 const legacyImages = import.meta.glob(
   "../assets/images/**/*.{avif,gif,jpeg,jpg,png,svg,webp}",
   {
@@ -875,6 +877,12 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
         <ProductReviewsSummary productId={product.id} />
 
         <ProductReviewsList productId={product.id} />
+
+        <ProductReviewForm
+          product={product}
+          availableColors={colors}
+          availableSizes={sizes}
+        />
 
         {product && <RelatedProducts currentProduct={product} />}
 
