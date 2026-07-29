@@ -1,25 +1,17 @@
 import { useState } from "react";
 
-import {
-  FaEnvelope,
-  FaLock,
-  FaShoppingBag,
-  FaUsers,
-} from "react-icons/fa";
-import {
-  useLocation,
-  useNavigate,
-} from "react-router-dom";
+import { FaEnvelope, FaLock, FaShoppingBag, FaUsers } from "react-icons/fa";
+
+import { FaShirt } from "react-icons/fa6";
+
+import { IoShirtSharp } from "react-icons/io5";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import homeWheels1 from "../assets/images/homeWheels-1.png";
 import homeWheels2 from "../assets/images/homeWheels-2.png";
 import homeWheels3 from "../assets/images/homeWheels-3.png";
 
-const wheels = [
-  homeWheels1,
-  homeWheels2,
-  homeWheels3,
-];
+const wheels = [homeWheels1, homeWheels2, homeWheels3];
 
 const PAGE_LOAD_ID = crypto.randomUUID();
 
@@ -27,7 +19,7 @@ const menuItems = [
   {
     id: "produtos",
     label: "PRODUTOS",
-    icon: <FaShoppingBag />,
+    icon: <FaShirt />,
     path: "/produtos",
     className: "top",
   },
@@ -83,13 +75,9 @@ const menuItems = [
 ];
 
 function selectNextWheel(visitId) {
-  const savedVisitId = sessionStorage.getItem(
-    "chouga-home-visit",
-  );
+  const savedVisitId = sessionStorage.getItem("chouga-home-visit");
 
-  const savedWheelIndex = Number(
-    sessionStorage.getItem("chouga-wheel-index"),
-  );
+  const savedWheelIndex = Number(sessionStorage.getItem("chouga-wheel-index"));
 
   /*
    * O React StrictMode pode inicializar o componente
@@ -99,29 +87,21 @@ function selectNextWheel(visitId) {
    * para a mesma visita.
    */
   if (
-    savedVisitId === visitId
-    && Number.isInteger(savedWheelIndex)
-    && savedWheelIndex >= 0
-    && savedWheelIndex < wheels.length
+    savedVisitId === visitId &&
+    Number.isInteger(savedWheelIndex) &&
+    savedWheelIndex >= 0 &&
+    savedWheelIndex < wheels.length
   ) {
     return savedWheelIndex;
   }
 
-  const currentIndex = Number.isInteger(savedWheelIndex)
-    ? savedWheelIndex
-    : -1;
+  const currentIndex = Number.isInteger(savedWheelIndex) ? savedWheelIndex : -1;
 
   const nextIndex = (currentIndex + 1) % wheels.length;
 
-  sessionStorage.setItem(
-    "chouga-home-visit",
-    visitId,
-  );
+  sessionStorage.setItem("chouga-home-visit", visitId);
 
-  sessionStorage.setItem(
-    "chouga-wheel-index",
-    String(nextIndex),
-  );
+  sessionStorage.setItem("chouga-wheel-index", String(nextIndex));
 
   return nextIndex;
 }
@@ -168,13 +148,9 @@ function WheelMenu() {
           className={`wheel-item ${item.className}`}
           onClick={() => handleClick(item.path)}
         >
-          <span className="wheel-icon">
-            {item.icon}
-          </span>
+          <span className="wheel-icon">{item.icon}</span>
 
-          <span className="wheel-label">
-            {item.label}
-          </span>
+          <span className="wheel-label">{item.label}</span>
         </button>
       ))}
     </div>

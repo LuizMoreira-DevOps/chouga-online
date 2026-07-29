@@ -9,7 +9,7 @@ import { getProdutoBySlug } from "../services/produtosServices";
 
 import SizeGuideDrawer from "../components/SizeGuideDrawer";
 
-import { defaultSizeGuide, sizeGuides } from "../constants/sizeGuides";
+import { sizeGuides } from "../constants/sizeGuides";
 
 import "../css/produtoDetalhes.css";
 
@@ -67,12 +67,20 @@ function normalizeText(value) {
     .toLowerCase();
 }
 
+function isLongSleeveCategory(category) {
+  return (
+    category.includes("manga longa") ||
+    category.includes("manga-longa") ||
+    category.includes("blusa")
+  );
+}
+
 function getAssetFolder(product) {
   const category = normalizeText(
     product?.categoria_slug || product?.categoria || product?.category,
   );
 
-  if (category.includes("blusa")) {
+  if (isLongSleeveCategory(category)) {
     return "blusas";
   }
 
@@ -328,19 +336,19 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
       product?.categoria_slug || product?.categoria,
     );
 
-    if (category.includes("blusa")) {
-      return sizeGuides.blusas;
+    if (isLongSleeveCategory(category)) {
+      return sizeGuides.camiseta_manga_longa;
     }
 
     if (category.includes("cropped")) {
-      return sizeGuides.cropped;
+      return sizeGuides.baby_look;
     }
 
     if (category.includes("camiseta")) {
-      return sizeGuides.camisetas;
+      return sizeGuides.camiseta_unissex;
     }
 
-    return defaultSizeGuide;
+    return null;
   }, [product]);
 
   function decreaseQuantity() {
@@ -554,17 +562,19 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
                       {currentSize && <span>: {currentSize}</span>}
                     </legend>
 
-                    <button
-                      ref={sizeGuideTriggerRef}
-                      type="button"
-                      className="produto-detalhes-size-guide-button"
-                      onClick={() => setIsSizeGuideOpen(true)}
-                      aria-haspopup="dialog"
-                      aria-expanded={isSizeGuideOpen}
-                      aria-controls="size-guide-drawer"
-                    >
-                      Guia de medidas
-                    </button>
+                    {sizeGuide && (
+                      <button
+                        ref={sizeGuideTriggerRef}
+                        type="button"
+                        className="produto-detalhes-size-guide-button"
+                        onClick={() => setIsSizeGuideOpen(true)}
+                        aria-haspopup="dialog"
+                        aria-expanded={isSizeGuideOpen}
+                        aria-controls="size-guide-drawer"
+                      >
+                        Guia de medidas
+                      </button>
+                    )}
                   </div>
 
                   <div className="produto-detalhes-size-list">

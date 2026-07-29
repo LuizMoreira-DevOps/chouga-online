@@ -32,8 +32,13 @@ const categoryAliases = {
   camisetas: "camisetas",
   cropped: "cropped",
   croppeds: "cropped",
+
+  // Compatibilidade temporária com dados antigos
   blusa: "blusas",
   blusas: "blusas",
+
+  // Nova nomenclatura
+  "manga-longa": "manga-longa",
 };
 
 function normalizeText(value) {
@@ -63,9 +68,14 @@ function getProductCategorySlug(product) {
 function getAssetFolder(product) {
   const categorySlug = getProductCategorySlug(product);
 
-  const categoryParts = categorySlug.split("-");
+  const isLongSleeve =
+    categorySlug.includes("camisetas-manga-longa") ||
+    categorySlug.includes("manga-longa") ||
+    categorySlug.includes("blusas");
 
-  if (categoryParts.includes("blusas")) {
+  if (isLongSleeve) {
+    // A pasta física ainda se chama "blusas".
+    // Ela será renomeada em uma etapa separada.
     return "blusas";
   }
 
@@ -160,7 +170,7 @@ function normalizeProduct(product) {
 }
 
 function Produtos({
-  categoryGroups = ["camisetas", "cropped", "blusas"],
+  categoryGroups = ["camisetas", "cropped", "camisetas-manga-longa", "blusas"],
   pageClass = "camisetas",
   title = "Produtos",
   path = "/produtos",
