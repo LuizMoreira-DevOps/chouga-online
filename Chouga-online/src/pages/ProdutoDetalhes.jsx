@@ -127,12 +127,23 @@ function getProductImages(product) {
       url: getProductImage(image.url, assetFolder),
       alt: image.alt_text || product.nome || "Produto Chouga",
       principal: Boolean(image.principal),
+      ordem: Number(image.ordem ?? index + 1),
+      corId: image.cor_id ?? null,
+      cor: String(image.cor ?? "").trim(),
+      corSlug: normalizeText(image.cor_slug || image.cor),
+      hexadecimal: image.hexadecimal ?? null,
     }))
     .filter((image) => image.url)
-    .sort(
-      (firstImage, secondImage) =>
-        Number(secondImage.principal) - Number(firstImage.principal),
-    );
+    .sort((firstImage, secondImage) => {
+      const principalDifference =
+        Number(secondImage.principal) - Number(firstImage.principal);
+
+      if (principalDifference !== 0) {
+        return principalDifference;
+      }
+
+      return firstImage.ordem - secondImage.ordem;
+    });
 }
 
 function getAvailableVariations(product) {
@@ -216,7 +227,37 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
 
   const images = useMemo(() => getProductImages(product), [product]);
 
-  const currentImage = selectedImage || images[0]?.url || "";
+  const colorImages = useMemo(() => {
+    if (!selectedColor) {
+      return images;
+    }
+
+    const selectedColorNormalized = normalizeText(selectedColor);
+
+    const specificImages = images.filter(
+      (image) => image.corSlug && image.corSlug === selectedColorNormalized,
+    );
+
+    if (specificImages.length > 0) {
+      return specificImages;
+    }
+
+    const generalImages = images.filter((image) => !image.corId);
+
+    if (generalImages.length > 0) {
+      return generalImages;
+    }
+
+    return images;
+  }, [images, selectedColor]);
+
+  const currentImageData =
+    colorImages.find((image) => image.url === selectedImage) ??
+    colorImages[0] ??
+    images[0] ??
+    null;
+
+  const currentImage = currentImageData?.url ?? "";
 
   const availableVariations = useMemo(
     () => getAvailableVariations(product),
@@ -371,6 +412,39 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
     setQuantity(Math.min(Math.max(nextQuantity, 1), MAX_ORDER_QUANTITY));
   }
 
+  function handleColorSelect(color) {
+    const normalizedColor = normalizeText(color);
+
+    const firstImageForColor = images.find(
+      (image) => image.corSlug === normalizedColor,
+    );
+
+    const firstGeneralImage = images.find((image) => !image.corId);
+
+    setSelectedColor(color);
+    setSelectedImage(
+      firstImageForColor?.url ?? firstGeneralImage?.url ?? images[0]?.url ?? "",
+    );
+    setSelectedSize("");
+    setQuantity(1);
+  }
+
+  function handleThumbnailSelect(image) {
+    setSelectedImage(image.url);
+
+    if (image.cor) {
+      const matchingColor = colors.find(
+        (color) => normalizeText(color) === normalizeText(image.cor),
+      );
+
+      if (matchingColor) {
+        setSelectedColor(matchingColor);
+        setSelectedSize("");
+        setQuantity(1);
+      }
+    }
+  }
+
   function handleOpenZoom() {
     if (!currentImage) {
       return;
@@ -482,13 +556,17 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
           <div className="produto-detalhes-content">
             <section className="produto-detalhes-gallery">
               <div className="produto-detalhes-thumbnails">
-                {images.map((image) => (
+                {colorImages.map((image) => (
                   <button
                     key={image.id}
                     type="button"
                     className={currentImage === image.url ? "is-active" : ""}
-                    onClick={() => setSelectedImage(image.url)}
-                    aria-label={`Visualizar ${image.alt}`}
+                    onClick={() => handleThumbnailSelect(image)}
+                    aria-label={
+                      image.cor
+                        ? `Visualizar ${image.alt} na cor ${image.cor}`
+                        : `Visualizar ${image.alt}`
+                    }
                   >
                     <img src={image.url} alt={image.alt} />
                   </button>
@@ -541,11 +619,7 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
                         key={color}
                         type="button"
                         className={selectedColor === color ? "is-selected" : ""}
-                        onClick={() => {
-                          setSelectedColor(color);
-                          setSelectedSize("");
-                          setQuantity(1);
-                        }}
+                        onClick={() => handleColorSelect(color)}
                       >
                         {color}
                       </button>
