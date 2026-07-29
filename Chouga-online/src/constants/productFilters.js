@@ -12,6 +12,25 @@ function formatLabel(value) {
   return text ? text.charAt(0).toUpperCase() + text.slice(1) : "";
 }
 
+function formatCategoryLabel(category) {
+  const normalizedValue = normalizeText(category.value)
+    .replace(/[\s_]+/g, "-")
+    .replace(/-+/g, "-");
+
+  const labels = {
+    "camisetas-manga-longa": "Manga longa",
+    "camisetas-manga-longa-basicas": "Manga longa básicas",
+    "camisetas-manga-longa-estampadas": "Manga longa estampadas",
+
+    // Compatibilidade temporária
+    blusas: "Manga longa",
+    "blusas-basicas": "Manga longa básicas",
+    "blusas-estampadas": "Manga longa estampadas",
+  };
+
+  return labels[normalizedValue] ?? category.label;
+}
+
 const sizeOrder = ["RN", "PP", "P", "M", "G", "GG", "XG", "XGG", "XXG", "XXXG"];
 
 export const colorOptions = {
@@ -64,7 +83,10 @@ export function getDynamicCategories(products, fallbackLabel = "Produtos") {
     new Map(
       categories.map((category) => [normalizeText(category.value), category]),
     ).values(),
-  );
+  ).map((category) => ({
+    ...category,
+    label: formatCategoryLabel(category),
+  }));
 
   return [{ label: "Todas", value: "todos" }, ...uniqueCategories];
 }

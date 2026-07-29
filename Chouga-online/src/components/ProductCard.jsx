@@ -1,7 +1,16 @@
 import { useNavigate } from "react-router-dom";
 
+function formatProductCardTitle(productName) {
+  return String(productName ?? "")
+    .replace(/^Camiseta de Manga Longa\s+/i, "Manga Longa ")
+    .trim();
+}
+
 function ProductCard({ product }) {
   const navigate = useNavigate();
+
+  const productTitle = product?.title || product?.nome || "Produto Chouga";
+  const cardTitle = formatProductCardTitle(productTitle);
 
   function openProductDetails() {
     if (!product?.slug) {
@@ -27,13 +36,13 @@ function ProductCard({ product }) {
       className="product-card"
       role="link"
       tabIndex={0}
-      aria-label={`Ver detalhes de ${product.title}`}
+      aria-label={`Ver detalhes de ${productTitle}`}
       onClick={openProductDetails}
       onKeyDown={handleKeyDown}
     >
       <div className="product-card-image">
         {product.image ? (
-          <img src={product.image} alt={product.imageAlt || product.title} />
+          <img src={product.image} alt={product.imageAlt || productTitle} />
         ) : (
           <div className="product-card-image-fallback">Imagem indisponível</div>
         )}
@@ -44,7 +53,7 @@ function ProductCard({ product }) {
       </div>
 
       <div className="product-card-content">
-        <h3>{product.title}</h3>
+        <h3 title={productTitle}>{cardTitle}</h3>
         <p>{product.price}</p>
       </div>
     </article>

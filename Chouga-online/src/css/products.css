@@ -298,14 +298,17 @@
 
 .product-card-content {
   display: grid;
-  gap: 0.3rem;
-  min-height: 84px;
+  align-content: start;
+  gap: 0.45rem;
+  min-height: 102px;
   padding: 0.9rem 1rem 1rem;
   border-top: 1px solid var(--color-border-soft);
   background: var(--color-bg-soft);
 }
 
 .product-card-content h3 {
+  display: -webkit-box;
+  min-height: 2.4em;
   overflow: hidden;
   margin: 0;
   color: var(--color-text-strong);
@@ -314,9 +317,11 @@
   font-weight: 600;
   line-height: 1.2;
   letter-spacing: 0.06em;
-  text-overflow: ellipsis;
   text-transform: uppercase;
-  white-space: nowrap;
+  overflow-wrap: anywhere;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
 }
 
 .product-card-content p {
@@ -637,8 +642,10 @@
   }
 
   .product-card-content h3 {
+    min-height: auto;
     font-size: var(--text-sm);
-    white-space: normal;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
   }
 
   .product-card-content p {

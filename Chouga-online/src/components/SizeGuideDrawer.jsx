@@ -3,7 +3,6 @@ import { useEffect, useRef } from "react";
 import "../css/sizeGuideDrawer.css";
 
 function SizeGuideDrawer({ guide, isOpen, onClose, triggerRef }) {
-  const closeButtonRef = useRef(null);
   const drawerRef = useRef(null);
   const titleRef = useRef(null);
 
@@ -111,7 +110,7 @@ function SizeGuideDrawer({ guide, isOpen, onClose, triggerRef }) {
     };
   }, [isOpen, onClose, triggerRef]);
 
-  if (!isOpen) {
+  if (!isOpen || !guide) {
     return null;
   }
 
@@ -120,6 +119,14 @@ function SizeGuideDrawer({ guide, isOpen, onClose, triggerRef }) {
       onClose();
     }
   }
+
+  const columns = Array.isArray(guide.columns) ? guide.columns : [];
+  const measurements = Array.isArray(guide.measurements)
+    ? guide.measurements
+    : [];
+  const instructions = Array.isArray(guide.instructions)
+    ? guide.instructions
+    : [];
 
   return (
     <div
@@ -144,12 +151,11 @@ function SizeGuideDrawer({ guide, isOpen, onClose, triggerRef }) {
             </p>
 
             <h2 ref={titleRef} id="size-guide-title" tabIndex={-1}>
-              {guide?.title || "Guia de medidas"}
+              {guide.title}
             </h2>
           </div>
 
           <button
-            ref={closeButtonRef}
             type="button"
             className="size-guide-drawer__close"
             onClick={onClose}
@@ -164,68 +170,91 @@ function SizeGuideDrawer({ guide, isOpen, onClose, triggerRef }) {
             id="size-guide-description"
             className="size-guide-drawer__description"
           >
-            {guide?.description ||
-              "Consulte as medidas disponíveis para escolher o tamanho ideal."}
+            {guide.description}
           </p>
 
-          <section className="size-guide-drawer__section">
-            <h3>Tabela de medidas</h3>
+          {columns.length > 0 && measurements.length > 0 && (
+            <section className="size-guide-drawer__section">
+              <h3>Tabela de medidas</h3>
 
-            <div className="size-guide-drawer__table-wrapper">
-              <table className="size-guide-drawer__table">
-                <thead>
-                  <tr>
-                    <th scope="col">Tamanho</th>
-                    <th scope="col">Largura</th>
-                    <th scope="col">Comprimento</th>
-                    <th scope="col">Manga</th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  {(guide?.measurements ?? []).map((measurement) => (
-                    <tr key={measurement.size}>
-                      <th scope="row">{measurement.size}</th>
-                      <td>{measurement.width}</td>
-                      <td>{measurement.length}</td>
-                      <td>{measurement.sleeve}</td>
+              <div className="size-guide-drawer__table-wrapper">
+                <table className="size-guide-drawer__table">
+                  <thead>
+                    <tr>
+                      {columns.map((column) => (
+                        <th key={column.key} scope="col">
+                          {column.label}
+                        </th>
+                      ))}
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </section>
+                  </thead>
+
+                  <tbody>
+                    {measurements.map((measurement) => (
+                      <tr key={measurement.size}>
+                        {columns.map((column, columnIndex) => {
+                          const value = measurement[column.key];
+
+                          if (columnIndex === 0) {
+                            return (
+                              <th key={column.key} scope="row">
+                                {value}
+                              </th>
+                            );
+                          }
+
+                          return (
+                            <td key={column.key}>
+                              {value !== undefined && value !== null
+                                ? `${value} cm`
+                                : "—"}
+                            </td>
+                          );
+                        })}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </section>
+          )}
 
           <section className="size-guide-drawer__section">
             <h3>Como medir a peça</h3>
 
-            <div
-              className="size-guide-drawer__illustration"
-              aria-label="Ilustração de medição será adicionada posteriormente"
-            >
-              <span>Guia visual em preparação</span>
-            </div>
+            {guide.image ? (
+              <div className="size-guide-drawer__illustration">
+                <img
+                  src={guide.image}
+                  alt={
+                    guide.imageAlt ||
+                    `Ilustração de como medir ${guide.title.toLowerCase()}`
+                  }
+                />
+              </div>
+            ) : (
+              <div
+                className="size-guide-drawer__illustration"
+                aria-label="Ilustração de medição será adicionada posteriormente"
+              >
+                <span>Guia visual em preparação</span>
+              </div>
+            )}
 
-            <ol className="size-guide-drawer__instructions">
-              <li>
-                <strong>Largura:</strong> meça de uma axila à outra.
-              </li>
-
-              <li>
-                <strong>Comprimento:</strong> meça do ponto mais alto do ombro
-                até a barra.
-              </li>
-
-              <li>
-                <strong>Manga:</strong> meça da costura do ombro até o punho.
-              </li>
-            </ol>
+            {instructions.length > 0 && (
+              <ol className="size-guide-drawer__instructions">
+                {instructions.map((instruction) => (
+                  <li key={instruction.label}>
+                    <strong>{instruction.label}:</strong> {instruction.text}
+                  </li>
+                ))}
+              </ol>
+            )}
           </section>
 
-          <p className="size-guide-drawer__notice">
-            As medidas oficiais serão adicionadas assim que estiverem
-            disponíveis.
-          </p>
+          {guide.tolerance && (
+            <p className="size-guide-drawer__notice">{guide.tolerance}</p>
+          )}
         </div>
       </aside>
     </div>
