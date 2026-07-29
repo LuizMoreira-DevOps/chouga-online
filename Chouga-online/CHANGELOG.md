@@ -1,3 +1,31 @@
+# [1.9.0](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.8.0...v1.9.0) (2026-07-29)
+
+
+### Features
+
+* **database:** relacionar imagens às cores [#168](https://github.com/LuizMoreira-DevOps/chouga-online/issues/168) ([97a4ea7](https://github.com/LuizMoreira-DevOps/chouga-online/commit/97a4ea7f6ca68aba6e00295b87d61f46a1d567d8))
+
+# [1.8.0](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.7.0...v1.8.0) (2026-07-29)
+
+
+### Features
+
+* **product:** sincronizar galeria com cor selecionada [#168](https://github.com/LuizMoreira-DevOps/chouga-online/issues/168) ([7c749dc](https://github.com/LuizMoreira-DevOps/chouga-online/commit/7c749dc001e0b7e72e863242bedb0973a442a176))
+
+# [1.7.0](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.6.0...v1.7.0) (2026-07-29)
+
+
+### Features
+
+* **catalog:** evoluir tipos de produto e guias de medidas [#217](https://github.com/LuizMoreira-DevOps/chouga-online/issues/217) ([5db4991](https://github.com/LuizMoreira-DevOps/chouga-online/commit/5db4991d97abd6631bc8025ac099f3a47887d03e))
+
+# [1.6.0](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.5.0...v1.6.0) (2026-07-28)
+
+
+### Features
+
+* adicionar conteúdo editorial à página do produto [#165](https://github.com/LuizMoreira-DevOps/chouga-online/issues/165) ([327cdf1](https://github.com/LuizMoreira-DevOps/chouga-online/commit/327cdf115833cdbc3a3f48929ca1a6b2b65756f1))
+
 # [1.5.0](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.4.5...v1.5.0) (2026-07-17)
 
 
