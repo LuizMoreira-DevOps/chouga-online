@@ -1,3 +1,10 @@
+# [1.10.0](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.9.0...v1.10.0) (2026-07-29)
+
+
+### Features
+
+* **product:** adicionar produtos relacionados [#167](https://github.com/LuizMoreira-DevOps/chouga-online/issues/167) ([482ea03](https://github.com/LuizMoreira-DevOps/chouga-online/commit/482ea03712bd158fc38ff7ef10d62a47fffefac8))
+
 # [1.9.0](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.8.0...v1.9.0) (2026-07-29)
 
 
