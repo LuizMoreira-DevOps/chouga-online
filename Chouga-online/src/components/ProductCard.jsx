@@ -42,7 +42,12 @@ function ProductCard({ product }) {
     >
       <div className="product-card-image">
         {product.image ? (
-          <img src={product.image} alt={product.imageAlt || productTitle} />
+          <img
+            src={product.image}
+            alt={product.imageAlt || productTitle}
+            loading="lazy"
+            decoding="async"
+          />
         ) : (
           <div className="product-card-image-fallback">Imagem indisponível</div>
         )}
