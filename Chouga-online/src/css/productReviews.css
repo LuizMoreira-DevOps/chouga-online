@@ -190,6 +190,124 @@
 }
 
 /* =========================================================
+   LISTA DE COMENTÁRIOS
+========================================================= */
+
+.product-reviews-list {
+  width: min(100% - 2rem, 1200px);
+  margin: 2rem auto 0;
+}
+
+.product-reviews-list-heading {
+  margin-bottom: 1.5rem;
+}
+
+.product-reviews-list h2 {
+  margin: 0;
+  color: #f4dcc8;
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  line-height: 1.15;
+}
+
+.product-reviews-list-content {
+  display: grid;
+  gap: 1rem;
+}
+
+.product-review-card {
+  padding: 1.75rem;
+  background: #151515;
+  border: 1px solid #332d29;
+  border-left: 3px solid #f23816;
+}
+
+.product-review-card-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.product-review-card-header > div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.product-review-card-header strong {
+  color: #f4dcc8;
+  font-size: 1rem;
+}
+
+.product-review-card time {
+  color: #8f837b;
+  font-size: 0.8rem;
+}
+
+.product-review-verified {
+  padding: 0.35rem 0.6rem;
+  color: #f23816;
+  background: rgba(242, 56, 22, 0.1);
+  border: 1px solid rgba(242, 56, 22, 0.35);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.product-review-card h3 {
+  margin: 1rem 0 0.65rem;
+  color: #f4dcc8;
+  font-size: 1.15rem;
+}
+
+.product-review-card > p {
+  max-width: 820px;
+  margin: 0;
+  color: #b9ada4;
+  line-height: 1.7;
+}
+
+.product-review-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin: 1.25rem 0 0;
+}
+
+.product-review-details div {
+  display: flex;
+  gap: 0.35rem;
+  padding: 0.45rem 0.65rem;
+  background: #201d1b;
+  border: 1px solid #332d29;
+}
+
+.product-review-details dt {
+  color: #8f837b;
+  font-size: 0.8rem;
+}
+
+.product-review-details dd {
+  margin: 0;
+  color: #d7c9bf;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.product-reviews-feedback {
+  margin: 0;
+  padding: 1rem;
+  border: 1px solid #332d29;
+}
+
+.product-reviews-feedback.is-error {
+  color: #ff8b77;
+  background: rgba(242, 56, 22, 0.08);
+}
+
+/* =========================================================
    TABLET E MOBILE
 ========================================================= */
 
@@ -233,6 +351,22 @@
   .product-reviews-summary-empty {
     min-height: 200px;
   }
+
+  .product-reviews-list {
+    width: calc(100% - 1.5rem);
+  }
+
+  .product-review-card {
+    padding: 1.35rem;
+  }
+
+  .product-review-card-header {
+    flex-direction: column;
+  }
+
+  .product-review-verified {
+    align-self: flex-start;
+  }
 }
 
 /* =========================================================
@@ -260,5 +394,17 @@
 
   .product-reviews-summary-empty {
     min-height: 180px;
+  }
+
+  .product-reviews-list {
+    width: calc(100% - 1rem);
+  }
+
+  .product-review-card {
+    padding: 1.15rem;
+  }
+
+  .product-review-details {
+    gap: 0.5rem;
   }
 }
