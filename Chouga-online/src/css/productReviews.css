@@ -1,0 +1,264 @@
+/* =========================================================
+   ESTRELAS
+========================================================= */
+
+.product-rating-stars {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  color: #5f5a56;
+  line-height: 1;
+}
+
+.product-rating-stars span {
+  font-size: 1.35rem;
+}
+
+.product-rating-stars .is-filled {
+  color: #f23816;
+}
+
+/* =========================================================
+   RESUMO COMPACTO PRÓXIMO AO NOME DO PRODUTO
+========================================================= */
+
+.product-rating-compact {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.65rem;
+  font-size: 0.875rem;
+}
+
+.product-rating-compact strong {
+  color: #f4dcc8;
+  font-size: 0.95rem;
+}
+
+.product-rating-compact > span:last-child {
+  color: #b6aaa0;
+}
+
+.product-rating-compact.is-empty {
+  color: #b6aaa0;
+}
+
+/* =========================================================
+   BLOCO PRINCIPAL DE AVALIAÇÕES
+========================================================= */
+
+.product-reviews-summary {
+  width: min(100% - 2rem, 1200px);
+  margin: 4rem auto 0;
+  padding: 2.5rem;
+
+  background:
+    linear-gradient(135deg, rgba(242, 56, 22, 0.08), rgba(242, 56, 22, 0) 45%),
+    #151515;
+
+  border: 1px solid #332d29;
+}
+
+.product-reviews-summary-heading {
+  margin-bottom: 2rem;
+}
+
+.product-reviews-eyebrow {
+  display: block;
+  margin-bottom: 0.4rem;
+
+  color: #f23816;
+
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.product-reviews-summary h2 {
+  margin: 0;
+
+  color: #f4dcc8;
+
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  line-height: 1.1;
+}
+
+/* =========================================================
+   CONTEÚDO DO RESUMO
+========================================================= */
+
+.product-reviews-summary-content {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.8fr) minmax(320px, 1.4fr);
+  gap: 3rem;
+  align-items: center;
+}
+
+/* =========================================================
+   NOTA MÉDIA
+========================================================= */
+
+.product-reviews-average {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.product-reviews-average > strong {
+  color: #f4dcc8;
+
+  font-size: clamp(3rem, 8vw, 5rem);
+  line-height: 1;
+}
+
+.product-reviews-average .product-rating-stars span {
+  font-size: 1.65rem;
+}
+
+.product-reviews-average > span:last-child {
+  color: #b9ada4;
+}
+
+/* =========================================================
+   DISTRIBUIÇÃO DAS NOTAS
+========================================================= */
+
+.product-reviews-distribution {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.product-reviews-distribution-row {
+  display: grid;
+  grid-template-columns: 2.5rem minmax(120px, 1fr) 2rem;
+  gap: 0.75rem;
+  align-items: center;
+
+  color: #d0c1b5;
+
+  font-size: 0.875rem;
+}
+
+.product-reviews-distribution-row > span:last-child {
+  text-align: right;
+}
+
+.product-reviews-progress {
+  height: 0.5rem;
+
+  overflow: hidden;
+
+  background: #332d29;
+  border-radius: 999px;
+}
+
+.product-reviews-progress span {
+  display: block;
+  height: 100%;
+
+  background: #f23816;
+  border-radius: inherit;
+}
+
+/* =========================================================
+   ESTADO VAZIO
+========================================================= */
+
+.product-reviews-summary-empty {
+  display: flex;
+  min-height: 220px;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+}
+
+.product-reviews-summary-empty > div {
+  width: min(100%, 680px);
+}
+
+.product-reviews-summary-empty p {
+  max-width: 620px;
+  margin: 1rem auto 0;
+
+  color: #b9ada4;
+
+  line-height: 1.7;
+}
+
+/* =========================================================
+   TABLET E MOBILE
+========================================================= */
+
+@media (max-width: 720px) {
+  .product-reviews-summary {
+    width: calc(100% - 1.5rem);
+    margin-top: 3rem;
+    padding: 2rem 1.25rem;
+  }
+
+  .product-reviews-summary-heading {
+    margin-bottom: 1.5rem;
+  }
+
+  .product-reviews-summary-content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .product-rating-compact {
+    gap: 0.4rem;
+  }
+
+  .product-rating-stars span {
+    font-size: 1.15rem;
+  }
+
+  .product-reviews-average {
+    align-items: center;
+    text-align: center;
+  }
+
+  .product-reviews-average .product-rating-stars span {
+    font-size: 1.5rem;
+  }
+
+  .product-reviews-distribution-row {
+    grid-template-columns: 2.25rem minmax(100px, 1fr) 1.5rem;
+  }
+
+  .product-reviews-summary-empty {
+    min-height: 200px;
+  }
+}
+
+/* =========================================================
+   TELAS PEQUENAS
+========================================================= */
+
+@media (max-width: 480px) {
+  .product-reviews-summary {
+    width: calc(100% - 1rem);
+    padding: 1.75rem 1rem;
+  }
+
+  .product-reviews-summary h2 {
+    font-size: 1.75rem;
+  }
+
+  .product-reviews-average > strong {
+    font-size: 3.5rem;
+  }
+
+  .product-reviews-distribution-row {
+    grid-template-columns: 2rem minmax(80px, 1fr) 1.25rem;
+    gap: 0.5rem;
+  }
+
+  .product-reviews-summary-empty {
+    min-height: 180px;
+  }
+}

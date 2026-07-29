@@ -13,6 +13,8 @@ import { sizeGuides } from "../constants/sizeGuides";
 
 import RelatedProducts from "../components/RelatedProducts";
 
+import ProductReviewsSummary from "../components/ProductReviewsSummary";
+
 import "../css/produtoDetalhes.css";
 
 const legacyImages = import.meta.glob(
@@ -604,6 +606,8 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
 
                 <h1>{product.nome}</h1>
 
+                <ProductReviewsSummary productId={product.id} compact />
+
                 <p className="produto-detalhes-price">
                   <strong>{formatPrice(unitPrice)}</strong>
                   <span>por unidade</span>
@@ -865,6 +869,8 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
             </section>
           )}
         </section>
+
+        <ProductReviewsSummary productId={product.id} />
 
         {product && <RelatedProducts currentProduct={product} />}
 
