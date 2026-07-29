@@ -1,0 +1,683 @@
+/* =========================================================
+   ESTRELAS
+========================================================= */
+
+.product-rating-stars {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  color: #5f5a56;
+  line-height: 1;
+}
+
+.product-rating-stars span {
+  font-size: 1.35rem;
+}
+
+.product-rating-stars .is-filled {
+  color: #f23816;
+}
+
+/* =========================================================
+   RESUMO COMPACTO PRÓXIMO AO NOME DO PRODUTO
+========================================================= */
+
+.product-rating-compact {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.65rem;
+  font-size: 0.875rem;
+}
+
+.product-rating-compact strong {
+  color: #f4dcc8;
+  font-size: 0.95rem;
+}
+
+.product-rating-compact > span:last-child {
+  color: #b6aaa0;
+}
+
+.product-rating-compact.is-empty {
+  color: #b6aaa0;
+}
+
+/* =========================================================
+   BLOCO PRINCIPAL DE AVALIAÇÕES
+========================================================= */
+
+.product-reviews-summary {
+  width: min(100% - 2rem, 1200px);
+  margin: 4rem auto 0;
+  padding: 2.5rem;
+
+  background:
+    linear-gradient(135deg, rgba(242, 56, 22, 0.08), rgba(242, 56, 22, 0) 45%),
+    #151515;
+
+  border: 1px solid #332d29;
+}
+
+.product-reviews-summary-heading {
+  margin-bottom: 2rem;
+}
+
+.product-reviews-eyebrow {
+  display: block;
+  margin-bottom: 0.4rem;
+
+  color: #f23816;
+
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.product-reviews-summary h2 {
+  margin: 0;
+
+  color: #f4dcc8;
+
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  line-height: 1.1;
+}
+
+/* =========================================================
+   CONTEÚDO DO RESUMO
+========================================================= */
+
+.product-reviews-summary-content {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.8fr) minmax(320px, 1.4fr);
+  gap: 3rem;
+  align-items: center;
+}
+
+/* =========================================================
+   NOTA MÉDIA
+========================================================= */
+
+.product-reviews-average {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.product-reviews-average > strong {
+  color: #f4dcc8;
+
+  font-size: clamp(3rem, 8vw, 5rem);
+  line-height: 1;
+}
+
+.product-reviews-average .product-rating-stars span {
+  font-size: 1.65rem;
+}
+
+.product-reviews-average > span:last-child {
+  color: #b9ada4;
+}
+
+/* =========================================================
+   DISTRIBUIÇÃO DAS NOTAS
+========================================================= */
+
+.product-reviews-distribution {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.product-reviews-distribution-row {
+  display: grid;
+  grid-template-columns: 2.5rem minmax(120px, 1fr) 2rem;
+  gap: 0.75rem;
+  align-items: center;
+
+  color: #d0c1b5;
+
+  font-size: 0.875rem;
+}
+
+.product-reviews-distribution-row > span:last-child {
+  text-align: right;
+}
+
+.product-reviews-progress {
+  height: 0.5rem;
+
+  overflow: hidden;
+
+  background: #332d29;
+  border-radius: 999px;
+}
+
+.product-reviews-progress span {
+  display: block;
+  height: 100%;
+
+  background: #f23816;
+  border-radius: inherit;
+}
+
+/* =========================================================
+   ESTADO VAZIO
+========================================================= */
+
+.product-reviews-summary-empty {
+  display: flex;
+  min-height: 220px;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+}
+
+.product-reviews-summary-empty > div {
+  width: min(100%, 680px);
+}
+
+.product-reviews-summary-empty p {
+  max-width: 620px;
+  margin: 1rem auto 0;
+
+  color: #b9ada4;
+
+  line-height: 1.7;
+}
+
+/* =========================================================
+   LISTA DE COMENTÁRIOS
+========================================================= */
+
+.product-reviews-list {
+  width: min(100% - 2rem, 1200px);
+  margin: 2rem auto 0;
+}
+
+.product-reviews-list-heading {
+  margin-bottom: 1.5rem;
+}
+
+.product-reviews-list h2 {
+  margin: 0;
+  color: #f4dcc8;
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  line-height: 1.15;
+}
+
+.product-reviews-list-content {
+  display: grid;
+  gap: 1rem;
+}
+
+.product-review-card {
+  padding: 1.75rem;
+  background: #151515;
+  border: 1px solid #332d29;
+  border-left: 3px solid #f23816;
+}
+
+.product-review-card-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.product-review-card-header > div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.product-review-card-header strong {
+  color: #f4dcc8;
+  font-size: 1rem;
+}
+
+.product-review-card time {
+  color: #8f837b;
+  font-size: 0.8rem;
+}
+
+.product-review-verified {
+  padding: 0.35rem 0.6rem;
+  color: #f23816;
+  background: rgba(242, 56, 22, 0.1);
+  border: 1px solid rgba(242, 56, 22, 0.35);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.product-review-card h3 {
+  margin: 1rem 0 0.65rem;
+  color: #f4dcc8;
+  font-size: 1.15rem;
+}
+
+.product-review-card > p {
+  max-width: 820px;
+  margin: 0;
+  color: #b9ada4;
+  line-height: 1.7;
+}
+
+.product-review-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin: 1.25rem 0 0;
+}
+
+.product-review-details div {
+  display: flex;
+  gap: 0.35rem;
+  padding: 0.45rem 0.65rem;
+  background: #201d1b;
+  border: 1px solid #332d29;
+}
+
+.product-review-details dt {
+  color: #8f837b;
+  font-size: 0.8rem;
+}
+
+.product-review-details dd {
+  margin: 0;
+  color: #d7c9bf;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.product-reviews-feedback {
+  margin: 0;
+  padding: 1rem;
+  border: 1px solid #332d29;
+}
+
+.product-reviews-feedback.is-error {
+  color: #ff8b77;
+  background: rgba(242, 56, 22, 0.08);
+}
+
+/* =========================================================
+   FORMULÁRIO DE AVALIAÇÃO
+========================================================= */
+
+.product-review-form-section {
+  width: min(100% - 2rem, 1200px);
+  margin: 2rem auto 0;
+  padding: 2.5rem;
+
+  background:
+    linear-gradient(135deg, rgba(242, 56, 22, 0.1), rgba(242, 56, 22, 0) 42%),
+    #151515;
+
+  border: 1px solid #44332d;
+  border-top: 3px solid #f23816;
+}
+
+.product-review-form-heading {
+  max-width: 680px;
+  margin-bottom: 2rem;
+}
+
+.product-review-form-heading h2 {
+  margin: 0;
+  color: #f4dcc8;
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  line-height: 1.1;
+}
+
+.product-review-form-heading p {
+  margin: 0.75rem 0 0;
+  color: #b9ada4;
+  line-height: 1.6;
+}
+
+.product-review-form {
+  display: grid;
+  gap: 1.75rem;
+}
+
+.product-review-rating-fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.product-review-rating-fieldset legend {
+  margin-bottom: 0.75rem;
+  color: #f4dcc8;
+  font-weight: 700;
+}
+
+.product-review-rating-fieldset legend span,
+.product-review-form label > span strong {
+  margin-left: 0.25rem;
+  color: #f23816;
+}
+
+.product-review-rating-input {
+  display: inline-flex;
+  gap: 0.35rem;
+}
+
+.product-review-rating-input button {
+  padding: 0;
+
+  color: #5f5a56;
+  background: transparent;
+  border: 0;
+
+  font-size: 2rem;
+  line-height: 1;
+
+  cursor: pointer;
+
+  transition:
+    color 160ms ease,
+    transform 160ms ease;
+}
+
+.product-review-rating-input button:hover,
+.product-review-rating-input button:focus-visible,
+.product-review-rating-input button.is-selected {
+  color: #f23816;
+}
+
+.product-review-rating-input button:hover,
+.product-review-rating-input button:focus-visible {
+  transform: translateY(-2px) scale(1.05);
+}
+
+.product-review-rating-input button:focus-visible {
+  outline: 2px solid #f4dcc8;
+  outline-offset: 4px;
+}
+
+.product-review-rating-description {
+  display: block;
+  margin-top: 0.65rem;
+  color: #8f837b;
+  font-size: 0.8rem;
+}
+
+.product-review-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.product-review-form label {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.product-review-form label > span {
+  color: #d7c9bf;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.product-review-form input,
+.product-review-form select,
+.product-review-form textarea {
+  width: 100%;
+  padding: 0.9rem 1rem;
+
+  color: #f4dcc8;
+  background: #0e0e0e;
+  border: 1px solid #443c37;
+  border-radius: 0;
+
+  font: inherit;
+
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.product-review-form textarea {
+  min-height: 150px;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+.product-review-form input:focus,
+.product-review-form select:focus,
+.product-review-form textarea:focus {
+  border-color: #f23816;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(242, 56, 22, 0.14);
+}
+
+.product-review-form input:disabled,
+.product-review-form select:disabled,
+.product-review-form textarea:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.product-review-comment-field small {
+  justify-self: end;
+  color: #7f746d;
+  font-size: 0.75rem;
+}
+
+.product-review-form-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.product-review-form-footer p {
+  max-width: 520px;
+  margin: 0;
+  color: #8f837b;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.product-review-form-footer button {
+  min-width: 190px;
+  padding: 1rem 1.4rem;
+
+  color: #111;
+  background: #f23816;
+  border: 1px solid #f23816;
+
+  font: inherit;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+
+  cursor: pointer;
+
+  transition:
+    background 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+}
+
+.product-review-form-footer button:hover:not(:disabled) {
+  color: #f23816;
+  background: transparent;
+  transform: translateY(-1px);
+}
+
+.product-review-form-footer button:focus-visible {
+  outline: 2px solid #f4dcc8;
+  outline-offset: 4px;
+}
+
+.product-review-form-footer button:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+.product-review-form-feedback {
+  margin: 0;
+  padding: 1rem 1.1rem;
+
+  border: 1px solid;
+
+  line-height: 1.5;
+}
+
+.product-review-form-feedback.is-success {
+  color: #bfe8c3;
+  background: rgba(66, 160, 85, 0.1);
+  border-color: rgba(66, 160, 85, 0.45);
+}
+
+.product-review-form-feedback.is-error {
+  color: #ff9d8b;
+  background: rgba(242, 56, 22, 0.08);
+  border-color: rgba(242, 56, 22, 0.4);
+}
+
+/* =========================================================
+   TABLET E MOBILE
+========================================================= */
+
+@media (max-width: 720px) {
+  .product-reviews-summary {
+    width: calc(100% - 1.5rem);
+    margin-top: 3rem;
+    padding: 2rem 1.25rem;
+  }
+
+  .product-reviews-summary-heading {
+    margin-bottom: 1.5rem;
+  }
+
+  .product-reviews-summary-content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .product-rating-compact {
+    gap: 0.4rem;
+  }
+
+  .product-rating-stars span {
+    font-size: 1.15rem;
+  }
+
+  .product-reviews-average {
+    align-items: center;
+    text-align: center;
+  }
+
+  .product-reviews-average .product-rating-stars span {
+    font-size: 1.5rem;
+  }
+
+  .product-reviews-distribution-row {
+    grid-template-columns: 2.25rem minmax(100px, 1fr) 1.5rem;
+  }
+
+  .product-reviews-summary-empty {
+    min-height: 200px;
+  }
+
+  .product-reviews-list {
+    width: calc(100% - 1.5rem);
+  }
+
+  .product-review-card {
+    padding: 1.35rem;
+  }
+
+  .product-review-card-header {
+    flex-direction: column;
+  }
+
+  .product-review-verified {
+    align-self: flex-start;
+  }
+
+  .product-review-form-section {
+    width: calc(100% - 1.5rem);
+    padding: 2rem 1.25rem;
+  }
+
+  .product-review-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .product-review-form-footer {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .product-review-form-footer button {
+    width: 100%;
+  }
+
+  .product-review-rating-input button {
+    font-size: 1.8rem;
+  }
+}
+
+/* =========================================================
+   TELAS PEQUENAS
+========================================================= */
+
+@media (max-width: 480px) {
+  .product-reviews-summary {
+    width: calc(100% - 1rem);
+    padding: 1.75rem 1rem;
+  }
+
+  .product-reviews-summary h2 {
+    font-size: 1.75rem;
+  }
+
+  .product-reviews-average > strong {
+    font-size: 3.5rem;
+  }
+
+  .product-reviews-distribution-row {
+    grid-template-columns: 2rem minmax(80px, 1fr) 1.25rem;
+    gap: 0.5rem;
+  }
+
+  .product-reviews-summary-empty {
+    min-height: 180px;
+  }
+
+  .product-reviews-list {
+    width: calc(100% - 1rem);
+  }
+
+  .product-review-card {
+    padding: 1.15rem;
+  }
+
+  .product-review-details {
+    gap: 0.5rem;
+  }
+
+  .product-review-form-section {
+    width: calc(100% - 1rem);
+    padding: 1.75rem 1rem;
+  }
+
+  .product-review-rating-input {
+    gap: 0.25rem;
+  }
+
+  .product-review-rating-input button {
+    font-size: 1.65rem;
+  }
+}
