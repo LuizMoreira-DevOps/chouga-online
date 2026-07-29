@@ -164,10 +164,7 @@ function hasAvailableVariation(product) {
     return true;
   }
 
-  return variations.some(
-    (variation) =>
-      variation.ativo !== false && Number(variation.estoque ?? 0) > 0,
-  );
+  return variations.some((variation) => variation.ativo !== false);
 }
 
 export function getRelatedProducts(
