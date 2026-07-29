@@ -11,6 +11,8 @@ import SizeGuideDrawer from "../components/SizeGuideDrawer";
 
 import { sizeGuides } from "../constants/sizeGuides";
 
+import RelatedProducts from "../components/RelatedProducts";
+
 import "../css/produtoDetalhes.css";
 
 const legacyImages = import.meta.glob(
@@ -169,6 +171,14 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
   const [quantity, setQuantity] = useState(1);
 
   const [isSizeGuideOpen, setIsSizeGuideOpen] = useState(false);
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "auto",
+    });
+  }, [slug]);
 
   const {
     selectedProduct,
@@ -855,6 +865,8 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
             </section>
           )}
         </section>
+
+        {product && <RelatedProducts currentProduct={product} />}
 
         <SizeGuideDrawer
           isOpen={isSizeGuideOpen}
