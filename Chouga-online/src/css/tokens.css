@@ -63,6 +63,14 @@
   --spacing-9: 4rem; /* 64px */
 
   /* =========================
+     LAYOUT
+  ========================= */
+  --container-max: 1500px;
+  --page-padding-x: clamp(18px, 5vw, 80px);
+  --page-padding-top: 96px;
+  --page-padding-bottom: 48px;
+
+  /* =========================
      ALIASES EXISTENTES
   ========================= */
   --gap-xs: var(--spacing-3);
@@ -138,3 +146,17 @@
    Acessibilidade:
    - prefers-reduced-motion: redução de animações
 ========================= */
+
+@media (max-width: 900px) {
+  :root {
+    --page-padding-top: 88px;
+    --page-padding-bottom: 48px;
+  }
+}
+
+@media (max-width: 520px) {
+  :root {
+    --page-padding-top: 82px;
+    --page-padding-bottom: 40px;
+  }
+}

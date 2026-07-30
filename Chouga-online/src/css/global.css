@@ -200,19 +200,7 @@ select:focus-visible {
 ========================= */
 
 @media (max-width: 900px) {
-  :root {
-    --page-padding-top: 88px;
-    --page-padding-bottom: 48px;
-  }
-
   .page-section {
     min-height: auto;
-  }
-}
-
-@media (max-width: 520px) {
-  :root {
-    --page-padding-top: 82px;
-    --page-padding-bottom: 40px;
   }
 }
