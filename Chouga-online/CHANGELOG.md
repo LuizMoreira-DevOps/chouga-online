@@ -1,3 +1,5 @@
+## [1.11.1](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.11.0...v1.11.1) (2026-07-30)
+
 # [1.11.0](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.10.1...v1.11.0) (2026-07-29)
 
 
