@@ -70,4 +70,49 @@
   --gap-md: var(--spacing-5);
   --gap-lg: var(--spacing-7);
   --gap-xl: var(--spacing-9);
+
+  /* =========================
+     FONTES
+  ========================= */
+  --font-base: "Oswald", arial, helvetica, sans-serif;
+  --font-title: "Oswald", arial, helvetica, sans-serif;
+  --font-display: "Bangers", sans-serif;
+  --font-street: "Sedgwick", cursive;
+  --font-marker: "PermanentMarker", cursive;
+  --font-black-ops: "BlackOps", sans-serif;
+  --font-glitch: "RubikGlitch", sans-serif;
+
+  /* =========================
+     TIPOGRAFIA
+  ========================= */
+  --text-xs: 0.8rem;
+  --text-sm: 0.9rem;
+  --text-md: 1rem;
+  --text-lg: 1.15rem;
+  --text-xl: 1.35rem;
+  --title-lg: clamp(4rem, 6vw, 7rem);
+  --title-md: clamp(3.5rem, 5vw, 6rem);
+  --title-sm: clamp(2.4rem, 8vw, 4rem);
+
+  /* =========================
+     PESOS TIPOGRÁFICOS
+  ========================= */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* =========================
+     ALTURA DE LINHA
+  ========================= */
+  --line-height-tight: 1.1;
+  --line-height-base: 1.5;
+  --line-height-relaxed: 1.7;
+
+  /* =========================
+     ESPAÇAMENTO ENTRE LETRAS
+  ========================= */
+  --letter-spacing-tight: -0.02em;
+  --letter-spacing-normal: 0;
+  --letter-spacing-wide: 0.04em;
 }
