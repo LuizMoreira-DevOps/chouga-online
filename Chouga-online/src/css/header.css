@@ -1,305 +1,310 @@
 .header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 999;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
 
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
-    width: 100%;
-    padding: 24px var(--page-padding-x);
+  width: 100%;
+  padding: var(--spacing-5) var(--page-padding-x);
 
-    background: linear-gradient(to bottom,
-            rgba(13, 13, 13, 0.75),
-            rgba(13, 13, 13, 0));
+  background: linear-gradient(to bottom, rgb(13 13 13 / 75%), transparent);
 }
 
 .logo {
-    display: flex;
-    align-items: center;
-    width: clamp(120px, 12vw, 190px);
+  display: flex;
+  align-items: center;
+  width: clamp(120px, 12vw, 190px);
 }
 
 .logo img {
-    width: 100%;
-    height: auto;
-    object-fit: contain;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
 }
 
 .logo-wrapper {
-    position: relative;
-    width: 100%;
+  position: relative;
+  width: 100%;
 }
 
 .logo-mark {
-    position: absolute;
-    top: -2px;
-    right: -12px;
+  position: absolute;
+  top: -2px;
+  right: -12px;
 
-    color: var(--color-text-strong);
+  color: var(--color-text-strong);
 
-    font-size: 0.75rem;
-    font-weight: 700;
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-bold);
 
-    opacity: 0.82;
+  opacity: 0.82;
 }
 
 .header-actions {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
 }
-
-/* Botões de ícone e menu toggle */
 
 .header-icon-button,
 .menu-toggle {
-    width: 58px;
-    height: 58px;
+  width: 58px;
+  height: 58px;
 
-    border: 1px solid rgba(243, 215, 191, 0.18);
-    border-radius: 50%;
+  border: 1px solid var(--color-border-soft);
+  border-radius: 50%;
 
-    background: rgba(13, 13, 13, 0.55);
-    backdrop-filter: blur(8px);
+  background: rgb(13 13 13 / 55%);
+  backdrop-filter: blur(8px);
 
-    transition:
-        border-color var(--transition-fast),
-        color var(--transition-fast),
-        transform var(--transition-fast),
-        box-shadow var(--transition-fast);
+  transition:
+    border-color var(--transition-fast),
+    color var(--transition-fast),
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast);
 }
 
 .header-icon-button {
-    position: relative;
-    display: grid;
-    place-items: center;
-    color: var(--color-text-strong);
-    font-size: 1.55rem;
+  position: relative;
+
+  display: grid;
+  place-items: center;
+
+  color: var(--color-text-strong);
+  font-size: 1.55rem;
 }
 
 .header-icon-button:hover,
 .menu-toggle:hover {
-    border-color: var(--color-red-strong);
-    color: var(--color-red-strong);
-    transform: translateY(-2px);
-    box-shadow: 0 0 18px rgba(255, 42, 0, 0.18);
+  border-color: var(--color-red-strong);
+  color: var(--color-red-strong);
+  transform: translateY(-2px);
+  box-shadow: 0 0 18px var(--color-red-glow-soft);
 }
 
-/* Ícone de cadeado para indicar que a conta é privada */
-
 .lock-icon {
-    position: absolute;
-    right: 1px;
-    bottom: 1px;
-    width: 20px;
-    height: 20px;
-    padding: 3px;
-    border-radius: 50%;
-    color: var(--color-bg);
-    background: var(--color-text-strong);
-    font-size: 0.82rem;
+  position: absolute;
+  right: 1px;
+  bottom: 1px;
+
+  width: 20px;
+  height: 20px;
+  padding: 3px;
+
+  border-radius: 50%;
+
+  background: var(--color-text-strong);
+  color: var(--color-bg);
+
+  font-size: 0.82rem;
 }
 
 .nav {
-    position: absolute;
-    top: calc(100% + 10px);
-    right: var(--page-padding-x);
+  position: absolute;
+  top: calc(100% + var(--spacing-3));
+  right: var(--page-padding-x);
 
-    display: flex;
-    align-items: center;
-    gap: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-5);
 
-    padding: 1rem 1.25rem;
+  padding: var(--spacing-4) var(--spacing-5);
 
-    border: 1px solid rgba(243, 215, 191, 0.2);
-    border-radius: 18px;
+  border: 1px solid var(--color-border-medium);
+  border-radius: 18px;
 
-    background: rgba(13, 13, 13, 0.985);
-    backdrop-filter: blur(12px);
+  background: rgb(13 13 13 / 98.5%);
+  backdrop-filter: blur(12px);
 
-    box-shadow:
-        0 18px 38px rgba(0, 0, 0, 0.65),
-        0 0 22px rgba(255, 42, 0, 0.1),
-        inset 0 0 18px rgba(243, 215, 191, 0.035);
+  box-shadow:
+    0 18px 38px rgb(0 0 0 / 65%),
+    0 0 22px var(--color-red-glow-soft),
+    inset 0 0 18px var(--color-gradient-light);
 
-    opacity: 0;
-    transform: translateY(-12px);
-    pointer-events: none;
+  opacity: 0;
+  transform: translateY(-12px);
+  pointer-events: none;
 
-    transition:
-        opacity var(--transition-base),
-        transform var(--transition-base),
-        box-shadow var(--transition-fast);
+  transition:
+    opacity var(--transition-base),
+    transform var(--transition-base),
+    box-shadow var(--transition-fast);
 }
 
 .nav.nav-open {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
 }
 
 .nav a,
 .nav-badge {
-    color: var(--color-text);
-    font-size: var(--text-xs);
-    text-transform: uppercase;
-    letter-spacing: 1.4px;
-    opacity: 0.85;
+  color: var(--color-text);
 
-    transition:
-        color var(--transition-base),
-        opacity var(--transition-base);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-wide);
+
+  opacity: 0.85;
+
+  transition:
+    color var(--transition-base),
+    opacity var(--transition-base);
 }
 
 .nav a:hover {
-    color: var(--color-red);
-    opacity: 1;
+  color: var(--color-red);
+  opacity: 1;
 }
 
 .nav-badge {
-    color: var(--color-red);
+  color: var(--color-red);
 }
 
 .menu-toggle {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    padding: 0;
-    cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
+  padding: var(--spacing-0);
+  cursor: pointer;
 }
 
 .menu-toggle span {
-    width: 24px;
-    height: 2.5px;
-    border-radius: 999px;
-    background: var(--color-text-strong);
+  width: 24px;
+  height: 2.5px;
 
-    transition:
-        transform var(--transition-base),
-        opacity var(--transition-fast),
-        background var(--transition-fast);
+  border-radius: 999px;
+
+  background: var(--color-text-strong);
+
+  transition:
+    transform var(--transition-base),
+    opacity var(--transition-fast),
+    background var(--transition-fast);
 }
 
 .menu-toggle:hover span {
-    background: var(--color-red-strong);
+  background: var(--color-red-strong);
 }
 
 .menu-toggle.is-open span:nth-child(1) {
-    transform: translateY(8.5px) rotate(45deg);
+  transform: translateY(8.5px) rotate(45deg);
 }
 
 .menu-toggle.is-open span:nth-child(2) {
-    opacity: 0;
+  opacity: 0;
 }
 
 .menu-toggle.is-open span:nth-child(3) {
-    transform: translateY(-8.5px) rotate(-45deg);
+  transform: translateY(-8.5px) rotate(-45deg);
 }
-
-/* MOBILE MÉDIO */
 
 @media (max-width: 900px) {
-    .header {
-        padding: 16px 20px;
-    }
+  .header {
+    padding: var(--spacing-4) var(--spacing-5);
+  }
 
-    .logo {
-        width: 114px;
-    }
+  .logo {
+    width: 114px;
+  }
 
-    .header-actions {
-        gap: 0.55rem;
-    }
+  .header-actions {
+    gap: var(--spacing-2);
+  }
 
-    .header-icon-button,
-    .menu-toggle {
-        width: 48px;
-        height: 48px;
-    }
+  .header-icon-button,
+  .menu-toggle {
+    width: 48px;
+    height: 48px;
+  }
 
-    .nav {
-        right: 20px;
-        left: 20px;
-        flex-direction: column;
-        align-items: center;
-        gap: 18px;
-        padding: 22px;
+  .nav {
+    right: var(--spacing-5);
+    left: var(--spacing-5);
 
-        border-color: rgba(243, 215, 191, 0.2);
-        border-radius: 20px;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-5);
 
-        background: rgba(13, 13, 13, 0.985);
+    padding: var(--spacing-5);
 
-        box-shadow:
-            0 20px 42px rgba(0, 0, 0, 0.7),
-            0 0 20px rgba(255, 42, 0, 0.1);
-    }
+    border-color: var(--color-border-medium);
+    border-radius: 20px;
 
-    .nav a,
-    .nav-badge {
-        font-size: var(--text-sm);
-    }
+    background: rgb(13 13 13 / 98.5%);
+
+    box-shadow:
+      0 20px 42px rgb(0 0 0 / 70%),
+      0 0 20px var(--color-red-glow-soft);
+  }
+
+  .nav a,
+  .nav-badge {
+    font-size: var(--text-sm);
+  }
 }
 
-/* MOBILE PEQUENO */
-
 @media (max-width: 520px) {
-    .header {
-        padding: 14px 16px;
-    }
+  .header {
+    padding: var(--spacing-3) var(--spacing-4);
+  }
 
-    .logo {
-        width: 104px;
-    }
+  .logo {
+    width: 104px;
+  }
 
-    .logo-mark {
-        top: -1px;
-        right: -9px;
-        font-size: 0.62rem;
-    }
+  .logo-mark {
+    top: -1px;
+    right: -9px;
+    font-size: 0.62rem;
+  }
 
-    .header-actions {
-        gap: 0.4rem;
-    }
+  .header-actions {
+    gap: var(--spacing-1);
+  }
 
-    .header-icon-button,
-    .menu-toggle {
-        width: 40px;
-        height: 40px;
-    }
+  .header-icon-button,
+  .menu-toggle {
+    width: 40px;
+    height: 40px;
+  }
 
-    .header-icon-button {
-        font-size: 1rem;
-    }
+  .header-icon-button {
+    font-size: var(--text-md);
+  }
 
-    .menu-toggle {
-        gap: 4px;
-    }
+  .menu-toggle {
+    gap: var(--spacing-1);
+  }
 
-    .menu-toggle span {
-        width: 18px;
-        height: 2px;
-    }
+  .menu-toggle span {
+    width: 18px;
+    height: 2px;
+  }
 
-    .menu-toggle.is-open span:nth-child(1) {
-        transform: translateY(6px) rotate(45deg);
-    }
+  .menu-toggle.is-open span:nth-child(1) {
+    transform: translateY(6px) rotate(45deg);
+  }
 
-    .menu-toggle.is-open span:nth-child(3) {
-        transform: translateY(-6px) rotate(-45deg);
-    }
+  .menu-toggle.is-open span:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg);
+  }
 
-    .lock-icon {
-        right: 0;
-        bottom: 0;
-        width: 13px;
-        height: 13px;
-        padding: 2px;
-        font-size: 0.68rem;
-    }
+  .lock-icon {
+    right: 0;
+    bottom: 0;
+
+    width: 13px;
+    height: 13px;
+    padding: 2px;
+
+    font-size: 0.68rem;
+  }
 }
