@@ -1,0 +1,73 @@
+:root {
+  /* =========================
+     CORES DE FUNDO
+  ========================= */
+  --color-bg: #0d0d0d;
+  --color-bg-soft: #141414;
+  --color-bg-elevated: #151515;
+  --color-bg-image: #111;
+  --color-bg-status: #121212;
+
+  /* =========================
+     CORES DE TEXTO
+  ========================= */
+  --color-text: #f1d6bd;
+  --color-text-strong: #f3d7bf;
+  --color-text-white: #fff;
+  --color-muted: #8f8177;
+  --color-text-55: rgb(241 214 189 / 55%);
+  --color-text-72: rgb(241 214 189 / 72%);
+  --color-text-78: rgb(241 214 189 / 78%);
+
+  /* =========================
+     CORES DA MARCA
+  ========================= */
+  --color-red: #e93612;
+  --color-red-strong: #f02a00;
+  --color-red-dark: #7a2b2e;
+  --color-red-dark-hover: #96363a;
+  --color-gold: #d6a54c;
+
+  /* =========================
+     BORDAS
+  ========================= */
+  --color-border: rgb(243 215 191 / 45%);
+  --color-border-soft: rgb(241 214 189 / 16%);
+  --color-border-subtle: rgb(241 214 189 / 10%);
+  --color-border-medium: rgb(241 214 189 / 25%);
+  --color-border-status: rgb(241 214 189 / 14%);
+
+  /* =========================
+     SOBREPOSIÇÕES E GRADIENTES
+  ========================= */
+  --color-overlay-dark: rgb(13 13 13 / 82%);
+  --color-overlay-focus: rgb(13 13 13 / 95%);
+  --color-gradient-light: rgb(255 255 255 / 4%);
+  --color-gradient-subtle: rgb(255 255 255 / 1%);
+  --color-red-glow-soft: rgb(122 43 46 / 18%);
+  --color-red-focus-glow: rgb(255 42 0 / 38%);
+  --color-red-shadow: rgb(233 54 18 / 45%);
+
+  /* =========================
+     ESCALA DE ESPAÇAMENTOS
+  ========================= */
+  --spacing-0: 0;
+  --spacing-1: 0.25rem; /* 4px */
+  --spacing-2: 0.5rem; /* 8px */
+  --spacing-3: 0.75rem; /* 12px */
+  --spacing-4: 1rem; /* 16px */
+  --spacing-5: 1.5rem; /* 24px */
+  --spacing-6: 2rem; /* 32px */
+  --spacing-7: 2.5rem; /* 40px */
+  --spacing-8: 3rem; /* 48px */
+  --spacing-9: 4rem; /* 64px */
+
+  /* =========================
+     ALIASES EXISTENTES
+  ========================= */
+  --gap-xs: var(--spacing-3);
+  --gap-sm: var(--spacing-4);
+  --gap-md: var(--spacing-5);
+  --gap-lg: var(--spacing-7);
+  --gap-xl: var(--spacing-9);
+}

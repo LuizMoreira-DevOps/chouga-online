@@ -72,63 +72,8 @@
 
 :root {
   /* =========================
-     CORES DE FUNDO
+     FONTES
   ========================= */
-
-  --color-bg: #0d0d0d;
-  --color-bg-soft: #141414;
-  --color-bg-elevated: #151515;
-  --color-bg-image: #111;
-  --color-bg-status: #121212;
-
-  /* =========================
-     CORES DE TEXTO
-  ========================= */
-
-  --color-text: #f1d6bd;
-  --color-text-strong: #f3d7bf;
-  --color-text-white: #fff;
-  --color-muted: #8f8177;
-  --color-text-55: rgba(241, 214, 189, 0.55);
-  --color-text-72: rgba(241, 214, 189, 0.72);
-  --color-text-78: rgba(241, 214, 189, 0.78);
-
-  /* =========================
-     CORES DA MARCA
-  ========================= */
-
-  --color-red: #e93612;
-  --color-red-strong: #f02a00;
-  --color-red-dark: #7a2b2e;
-  --color-red-dark-hover: #96363a;
-  --color-gold: #d6a54c;
-
-  /* =========================
-     BORDAS
-  ========================= */
-
-  --color-border: rgba(243, 215, 191, 0.45);
-  --color-border-soft: rgba(241, 214, 189, 0.16);
-  --color-border-subtle: rgba(241, 214, 189, 0.1);
-  --color-border-medium: rgba(241, 214, 189, 0.25);
-  --color-border-status: rgba(241, 214, 189, 0.14);
-
-  /* =========================
-     SOBREPOSIÇÕES E GRADIENTES
-  ========================= */
-
-  --color-overlay-dark: rgba(13, 13, 13, 0.82);
-  --color-overlay-focus: rgba(13, 13, 13, 0.95);
-  --color-gradient-light: rgba(255, 255, 255, 0.04);
-  --color-gradient-subtle: rgba(255, 255, 255, 0.01);
-  --color-red-glow-soft: rgba(122, 43, 46, 0.18);
-  --color-red-focus-glow: rgba(255, 42, 0, 0.38);
-  --color-red-shadow: rgba(233, 54, 18, 0.45);
-
-  /* =========================
-    FONTES
-  ========================= */
-
   --font-base: "Oswald", arial, helvetica, sans-serif;
   --font-title: "Oswald", arial, helvetica, sans-serif;
   --font-display: "Bangers", sans-serif;
@@ -140,26 +85,14 @@
   /* =========================
      LAYOUT
   ========================= */
-
   --container-max: 1500px;
   --page-padding-x: clamp(18px, 5vw, 80px);
   --page-padding-top: 96px;
   --page-padding-bottom: 48px;
 
   /* =========================
-     ESPAÇAMENTOS
-  ========================= */
-
-  --gap-xs: 0.75rem;
-  --gap-sm: 1rem;
-  --gap-md: 1.5rem;
-  --gap-lg: 2.5rem;
-  --gap-xl: 4rem;
-
-  /* =========================
      TIPOGRAFIA
   ========================= */
-
   --text-xs: 0.8rem;
   --text-sm: 0.9rem;
   --text-md: 1rem;
@@ -172,7 +105,6 @@
   /* =========================
      TRANSIÇÕES E EFEITOS
   ========================= */
-
   --transition-fast: 0.25s ease;
   --transition-base: 0.3s ease;
   --shadow-red: 0 0 30px var(--color-red-shadow);
