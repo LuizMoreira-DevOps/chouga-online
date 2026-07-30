@@ -70,23 +70,6 @@
   font-display: swap;
 }
 
-:root {
-  /* =========================
-     LAYOUT
-  ========================= */
-  --container-max: 1500px;
-  --page-padding-x: clamp(18px, 5vw, 80px);
-  --page-padding-top: 96px;
-  --page-padding-bottom: 48px;
-
-  /* =========================
-     TRANSIÇÕES E EFEITOS
-  ========================= */
-  --transition-fast: 0.25s ease;
-  --transition-base: 0.3s ease;
-  --shadow-red: 0 0 30px var(--color-red-shadow);
-}
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -156,42 +139,6 @@ svg {
   opacity: var(--page-bg-opacity, 0.38);
 }
 
-.home.page-bg {
-  --page-bg-opacity: 0.99;
-  --bg-overlay-start: 0.78;
-  --bg-overlay-end: 0.92;
-  --page-bg-position: center;
-}
-
-.camisetas-page.page-bg,
-.blusas-page.page-bg {
-  --page-bg-opacity: 0.99;
-  --bg-overlay-start: 0.82;
-  --bg-overlay-end: 0.94;
-  --page-bg-position: center;
-}
-
-.sobre-page.page-bg {
-  --page-bg-opacity: 0.99;
-  --bg-overlay-start: 0.8;
-  --bg-overlay-end: 0.93;
-  --page-bg-position: center;
-}
-
-.contato-page.page-bg {
-  --page-bg-opacity: 0.99;
-  --bg-overlay-start: 0.86;
-  --bg-overlay-end: 0.96;
-  --page-bg-position: center;
-}
-
-.coming-page.page-bg {
-  --page-bg-opacity: 0.99;
-  --bg-overlay-start: 0.84;
-  --bg-overlay-end: 0.96;
-  --page-bg-position: center;
-}
-
 .page-section {
   position: relative;
   z-index: 1;
@@ -214,23 +161,14 @@ a,
 input,
 textarea,
 select,
-[role="button"],
-.product-card,
-.filter-button,
-.color-dot {
+[role="button"] {
   -webkit-tap-highlight-color: transparent;
 }
 
 button:focus,
 button:active,
 a:focus,
-a:active,
-.product-card:focus,
-.product-card:active,
-.filter-button:focus,
-.filter-button:active,
-.color-dot:focus,
-.color-dot:active {
+a:active {
   outline: none;
 }
 
@@ -243,10 +181,7 @@ a:focus-visible,
 input:focus-visible,
 textarea:focus-visible,
 select:focus-visible,
-[role="button"]:focus-visible,
-.product-card:focus-visible,
-.filter-button:focus-visible,
-.color-dot:focus-visible {
+[role="button"]:focus-visible {
   outline: 2px solid var(--color-red-strong);
   outline-offset: 4px;
   box-shadow:
