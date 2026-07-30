@@ -116,3 +116,25 @@
   --letter-spacing-normal: 0;
   --letter-spacing-wide: 0.04em;
 }
+
+/* =========================
+   BREAKPOINTS RESPONSIVOS
+
+   Breakpoints principais:
+   - 1400px: desktop reduzido
+   - 900px: tablet e navegação compacta
+   - 700px: mobile amplo
+   - 520px: mobile pequeno
+
+   Exceções específicas:
+   - 1100px: grade de produtos
+   - 1024px: detalhes e produtos relacionados
+   - 760px: modal de detalhes do produto
+   - 720px: avaliações, detalhes e guia de medidas
+   - 640px: produtos relacionados
+   - 600px: zoom do produto
+   - 480px: ajustes para telas muito pequenas
+
+   Acessibilidade:
+   - prefers-reduced-motion: redução de animações
+========================= */
