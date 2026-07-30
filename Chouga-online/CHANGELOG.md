@@ -1,3 +1,34 @@
+## [1.11.3](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.11.2...v1.11.3) (2026-07-30)
+
+## [1.11.2](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.11.1...v1.11.2) (2026-07-30)
+
+## [1.11.1](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.11.0...v1.11.1) (2026-07-30)
+
+# [1.11.0](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.10.1...v1.11.0) (2026-07-29)
+
+
+### Features
+
+* **database:** criar avaliações moderadas de produtos [#166](https://github.com/LuizMoreira-DevOps/chouga-online/issues/166) ([6c7e471](https://github.com/LuizMoreira-DevOps/chouga-online/commit/6c7e4716ffda56308e3a4199076c40ef863d54d3))
+* **product:** adicionar comentários aprovados [#166](https://github.com/LuizMoreira-DevOps/chouga-online/issues/166) ([a4dd60d](https://github.com/LuizMoreira-DevOps/chouga-online/commit/a4dd60d8efd9474e7eeec2954df96c486a5bbd87))
+* **product:** adicionar formulário de avaliações [#166](https://github.com/LuizMoreira-DevOps/chouga-online/issues/166) ([5c413ed](https://github.com/LuizMoreira-DevOps/chouga-online/commit/5c413ed9be4a1137156a8b0d05fd70701f174b20))
+* **product:** adicionar resumo visual de avaliações [#166](https://github.com/LuizMoreira-DevOps/chouga-online/issues/166) ([da58fac](https://github.com/LuizMoreira-DevOps/chouga-online/commit/da58fac30b525af08f77135817f1fe27bdb47cc6))
+* **product:** criar serviço de avaliações [#166](https://github.com/LuizMoreira-DevOps/chouga-online/issues/166) ([182ce2e](https://github.com/LuizMoreira-DevOps/chouga-online/commit/182ce2e7801845ce83c20e1b91c3a9c4f3914d3a))
+
+## [1.10.1](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.10.0...v1.10.1) (2026-07-29)
+
+
+### Bug Fixes
+
+* **product:** considerar produtos sob encomenda nos relacionados [#167](https://github.com/LuizMoreira-DevOps/chouga-online/issues/167) ([a16d573](https://github.com/LuizMoreira-DevOps/chouga-online/commit/a16d57320d8e02812aa55fa46c190e78fec12bcb))
+
+# [1.10.0](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.9.0...v1.10.0) (2026-07-29)
+
+
+### Features
+
+* **product:** adicionar produtos relacionados [#167](https://github.com/LuizMoreira-DevOps/chouga-online/issues/167) ([482ea03](https://github.com/LuizMoreira-DevOps/chouga-online/commit/482ea03712bd158fc38ff7ef10d62a47fffefac8))
+
 # [1.9.0](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.8.0...v1.9.0) (2026-07-29)
 
 
