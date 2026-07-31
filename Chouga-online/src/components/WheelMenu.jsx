@@ -7,11 +7,30 @@ import { FaShirt } from "react-icons/fa6";
 import { IoShirtSharp } from "react-icons/io5";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import homeWheels1 from "../assets/images/homeWheels-1.png";
-import homeWheels2 from "../assets/images/homeWheels-2.png";
-import homeWheels3 from "../assets/images/homeWheels-3.png";
+import homeWheels1Small from "../assets/images/optimized/homeWheels-1-640.webp";
+import homeWheels1Large from "../assets/images/optimized/homeWheels-1-960.webp";
+import homeWheels2Small from "../assets/images/optimized/homeWheels-2-640.webp";
+import homeWheels2Large from "../assets/images/optimized/homeWheels-2-960.webp";
+import homeWheels3Small from "../assets/images/optimized/homeWheels-3-640.webp";
+import homeWheels3Large from "../assets/images/optimized/homeWheels-3-960.webp";
 
-const wheels = [homeWheels1, homeWheels2, homeWheels3];
+const wheels = [
+  {
+    src: homeWheels1Small,
+    srcSet: `${homeWheels1Small} 640w, ${homeWheels1Large} 960w`,
+    alt: "Wheel Chouga Skateboard 1",
+  },
+  {
+    src: homeWheels2Small,
+    srcSet: `${homeWheels2Small} 640w, ${homeWheels2Large} 960w`,
+    alt: "Wheel Chouga Skateboard 2",
+  },
+  {
+    src: homeWheels3Small,
+    srcSet: `${homeWheels3Small} 640w, ${homeWheels3Large} 960w`,
+    alt: "Wheel Chouga Skateboard 3",
+  },
+];
 
 const PAGE_LOAD_ID = crypto.randomUUID();
 
@@ -136,8 +155,15 @@ function WheelMenu() {
     <div className={`wheel-menu ${closing ? "closing" : ""}`}>
       <div className="wheel-center">
         <img
-          src={currentWheel}
-          alt={`Wheel Chouga Skateboard ${wheelIndex + 1}`}
+          src={currentWheel.src}
+          srcSet={currentWheel.srcSet}
+          sizes="(max-width: 480px) 315px, 520px"
+          alt={currentWheel.alt}
+          width="960"
+          height="972"
+          loading="eager"
+          fetchPriority="high"
+          decoding="async"
         />
       </div>
 
