@@ -133,7 +133,7 @@ svg {
       rgba(0, 0, 0, var(--bg-overlay-start, 0.78)),
       rgba(0, 0, 0, var(--bg-overlay-end, 0.92))
     ),
-    var(--page-bg-image, url("../assets/images/bg-home.png"));
+    var(--page-bg-image, url("../assets/images/optimized/bg-home-1920.webp"));
   background-position: var(--page-bg-position, center);
   background-size: cover;
   opacity: var(--page-bg-opacity, 0.38);

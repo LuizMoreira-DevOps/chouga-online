@@ -22,7 +22,10 @@ import ProductReviewsList from "../components/ProductReviewsList";
 import ProductReviewForm from "../components/ProductReviewForm";
 
 const legacyImages = import.meta.glob(
-  "../assets/images/**/*.{avif,gif,jpeg,jpg,png,svg,webp}",
+  [
+    "../assets/images/camisetas/*.{avif,gif,jpeg,jpg,png,svg,webp}",
+    "../assets/images/blusas/*.{avif,gif,jpeg,jpg,png,svg,webp}",
+  ],
   {
     eager: true,
     import: "default",
