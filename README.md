@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🛹 Chouga Online
+# 🛹 Chouga Skateboard
 
 ### Vitrine virtual e experiência digital da Chouga Skateboard
 
