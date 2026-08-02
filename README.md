@@ -21,7 +21,7 @@ Uma aplicação web criada para apresentar os produtos, a identidade e a cultura
 
 ## 📖 Sobre o projeto
 
-O **Chouga Online** é a plataforma digital da Chouga Skateboard, uma marca independente ligada à cultura urbana, ao skate e à comunidade local.
+O **Chouga Skateboard** é a plataforma digital da Chouga Skateboard, uma marca independente ligada à cultura urbana, ao skate e à comunidade local.
 
 O projeto foi desenvolvido com foco em:
 
