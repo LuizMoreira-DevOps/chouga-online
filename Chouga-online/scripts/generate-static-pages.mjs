@@ -1,8 +1,4 @@
-import {
-  mkdir,
-  readFile,
-  writeFile,
-} from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, isAbsolute, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { fetchActiveProducts } from "./lib/fetch-active-products.mjs";
@@ -76,9 +72,7 @@ function replaceRequired(html, pattern, replacement, label) {
 function applyMetadata(sourceHtml, page) {
   const title = escapeHtmlAttribute(page.title);
   const description = escapeHtmlAttribute(page.description);
-  const canonicalUrl = escapeHtmlAttribute(
-    buildAbsoluteUrl(page.route),
-  );
+  const canonicalUrl = escapeHtmlAttribute(buildAbsoluteUrl(page.route));
   const ogType = escapeHtmlAttribute(page.ogType);
 
   let html = sourceHtml;
@@ -140,10 +134,7 @@ function resolveRouteDirectory(route) {
   const targetDirectory = resolve(distDirectory, ...routeSegments);
   const relativeTarget = relative(distDirectory, targetDirectory);
 
-  if (
-    relativeTarget.startsWith("..") ||
-    isAbsolute(relativeTarget)
-  ) {
+  if (relativeTarget.startsWith("..") || isAbsolute(relativeTarget)) {
     throw new Error(`Rota fora do diretorio dist: ${route}`);
   }
 
@@ -155,9 +146,7 @@ async function generateStaticPages() {
   const fetchedProducts = await fetchActiveProducts(projectDirectory);
   const activeProducts = validateProductSlugs(fetchedProducts);
 
-  console.log(
-    `[SSG] ${activeProducts.length} produtos ativos encontrados.`,
-  );
+  console.log(`[SSG] ${activeProducts.length} produtos ativos encontrados.`);
 
   for (const page of staticPages) {
     const targetDirectory = resolveRouteDirectory(page.route);
@@ -179,8 +168,19 @@ async function generateStaticPages() {
     const targetDirectory = resolveRouteDirectory(productRoute);
     const targetHtmlPath = resolve(targetDirectory, "index.html");
 
+    const productPage = {
+      route: productRoute,
+      title: `${product.nome} | Chouga Skateboard`,
+      description:
+        product.descricao ||
+        `Conheça ${product.nome}, uma peça da Chouga Skateboard.`,
+      ogType: "product",
+    };
+
+    const productHtml = applyMetadata(sourceHtml, productPage);
+
     await mkdir(targetDirectory, { recursive: true });
-    await writeFile(targetHtmlPath, sourceHtml, "utf-8");
+    await writeFile(targetHtmlPath, productHtml, "utf-8");
 
     console.log(`[SSG] Produto gerado: ${productRoute}`);
   }
