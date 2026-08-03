@@ -6,6 +6,7 @@ import {
 import { dirname, isAbsolute, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { fetchActiveProducts } from "./lib/fetch-active-products.mjs";
+import { validateProductSlugs } from "./lib/validate-product-slugs.mjs";
 
 const scriptDirectory = dirname(fileURLToPath(import.meta.url));
 const projectDirectory = resolve(scriptDirectory, "..");
@@ -151,7 +152,8 @@ function resolveRouteDirectory(route) {
 
 async function generateStaticPages() {
   const sourceHtml = await readFile(sourceHtmlPath, "utf-8");
-  const activeProducts = await fetchActiveProducts(projectDirectory);
+  const fetchedProducts = await fetchActiveProducts(projectDirectory);
+  const activeProducts = validateProductSlugs(fetchedProducts);
 
   console.log(
     `[SSG] ${activeProducts.length} produtos ativos encontrados.`,
