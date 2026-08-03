@@ -16,8 +16,6 @@ import useProductFilters from "../hooks/useProductFilters";
 import { getProdutosCatalogo } from "../services/produtosServices";
 
 import "../css/products.css";
-import "../css/camisetas.css";
-import "../css/blusas.css";
 
 const legacyImages = import.meta.glob(
   [
@@ -174,7 +172,6 @@ function normalizeProduct(product) {
 
 function Produtos({
   categoryGroups = ["camisetas", "cropped", "camisetas-manga-longa", "blusas"],
-  pageClass = "camisetas",
   title = "Produtos",
   path = "/produtos",
 }) {
@@ -294,11 +291,10 @@ function Produtos({
 
   return (
     <Layout>
-      <main className={`${pageClass}-page page-bg`}>
-        <section className={`${pageClass}-section page-section`}>
-          <div className={`${pageClass}-container page-container`}>
+      <main className="produtos-page page-bg">
+        <section className="produtos-section page-section">
+          <div className="produtos-container page-container">
             <ProductFilters
-              page={pageClass}
               breadcrumbLabel={title}
               breadcrumbPath={path}
               categories={categories}
@@ -312,7 +308,7 @@ function Produtos({
               onColorToggle={toggleColorFilter}
             />
 
-            <section className={`${pageClass}-content`}>
+            <section className="produtos-content">
               {loading && <p>Carregando produtos...</p>}
 
               {error && <p>Erro ao carregar produtos: {error}</p>}

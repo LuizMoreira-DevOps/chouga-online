@@ -7,12 +7,8 @@ import logoImg from "../assets/logo/Logo.png";
 
 const navLinks = [
   {
-    label: "Camisetas",
-    path: "/camisetas",
-  },
-  {
-    label: "Blusas",
-    path: "/blusas",
+    label: "Produtos",
+    path: "/produtos",
   },
   {
     label: "Sobre",

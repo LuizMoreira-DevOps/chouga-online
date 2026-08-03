@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
 import Contato from "./pages/Contato";
 import EmBreve from "./pages/EmBreve";
@@ -10,9 +10,7 @@ import NotFound from "./pages/NotFound";
 
 const productsPage = {
   path: "/produtos",
-  groupSlug: "produtos",
   categoryGroups: ["camisetas", "cropped", "blusas"],
-  pageClass: "camisetas",
   title: "Produtos",
 };
 
@@ -27,16 +25,6 @@ function App() {
       />
 
       <Route path="/produtos/:slug" element={<ProdutoDetalhes />} />
-
-      <Route
-        path="/camisetas"
-        element={<Navigate to="/produtos?categoria=camisetas" replace />}
-      />
-
-      <Route
-        path="/blusas"
-        element={<Navigate to="/produtos?categoria=blusas" replace />}
-      />
 
       <Route path="/sobre" element={<Sobre />} />
       <Route path="/contato" element={<Contato />} />
