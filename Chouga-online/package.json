@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npm run build:client && npm run build:ssg",
+    "build": "npm run build:client && npm run build:ssg && npm run build:validate",
     "preview": "vite preview",
     "lint": "npm run lint:js && npm run lint:css && npm run lint:html",
     "lint:js": "eslint .",
@@ -14,7 +14,8 @@
     "release": "semantic-release",
     "optimize:images": "node scripts/optimize-images.mjs",
     "build:client": "vite build",
-    "build:ssg": "node scripts/generate-static-pages.mjs"
+    "build:ssg": "node scripts/generate-static-pages.mjs",
+    "build:validate": "node scripts/validate-ssg-output.mjs"
   },
   "dependencies": {
     "@fontsource/oswald": "^5.2.8",
