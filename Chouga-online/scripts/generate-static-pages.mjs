@@ -173,6 +173,21 @@ async function generateStaticPages() {
   console.log(
     `[SSG] ${staticPages.length} rotas estaticas geradas com sucesso.`,
   );
+
+  for (const product of activeProducts) {
+    const productRoute = `/produtos/${product.slug}`;
+    const targetDirectory = resolveRouteDirectory(productRoute);
+    const targetHtmlPath = resolve(targetDirectory, "index.html");
+
+    await mkdir(targetDirectory, { recursive: true });
+    await writeFile(targetHtmlPath, sourceHtml, "utf-8");
+
+    console.log(`[SSG] Produto gerado: ${productRoute}`);
+  }
+
+  console.log(
+    `[SSG] ${activeProducts.length} paginas de produto geradas com sucesso.`,
+  );
 }
 
 generateStaticPages().catch((error) => {
