@@ -8,6 +8,7 @@ const scriptDirectory = dirname(fileURLToPath(import.meta.url));
 const projectDirectory = resolve(scriptDirectory, "..");
 const distDirectory = resolve(projectDirectory, "dist");
 const sourceHtmlPath = resolve(distDirectory, "index.html");
+const manifestPath = resolve(distDirectory, "ssg-manifest.json");
 
 const siteUrl = "https://www.chouga.com.br";
 
@@ -188,6 +189,26 @@ async function generateStaticPages() {
   console.log(
     `[SSG] ${activeProducts.length} paginas de produto geradas com sucesso.`,
   );
+
+  const staticRoutes = staticPages.map((page) => page.route);
+  const productRoutes = activeProducts.map(
+    (product) => `/produtos/${product.slug}`,
+  );
+
+  const manifest = {
+    generatedAt: new Date().toISOString(),
+    totalRoutes: staticRoutes.length + productRoutes.length,
+    staticRoutes,
+    productRoutes,
+  };
+
+  await writeFile(
+    manifestPath,
+    `${JSON.stringify(manifest, null, 2)}\n`,
+    "utf-8",
+  );
+
+  console.log(`[SSG] Manifesto gerado com ${manifest.totalRoutes} rotas.`);
 }
 
 generateStaticPages().catch((error) => {
