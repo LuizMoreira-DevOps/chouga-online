@@ -5,6 +5,7 @@ import {
 } from "node:fs/promises";
 import { dirname, isAbsolute, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { fetchActiveProducts } from "./lib/fetch-active-products.mjs";
 
 const scriptDirectory = dirname(fileURLToPath(import.meta.url));
 const projectDirectory = resolve(scriptDirectory, "..");
@@ -150,6 +151,11 @@ function resolveRouteDirectory(route) {
 
 async function generateStaticPages() {
   const sourceHtml = await readFile(sourceHtmlPath, "utf-8");
+  const activeProducts = await fetchActiveProducts(projectDirectory);
+
+  console.log(
+    `[SSG] ${activeProducts.length} produtos ativos encontrados.`,
+  );
 
   for (const page of staticPages) {
     const targetDirectory = resolveRouteDirectory(page.route);
