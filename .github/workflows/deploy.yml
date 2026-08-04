@@ -67,9 +67,9 @@ jobs:
             exit 1
           fi
 
-          STATIC_ROUTES=$(node -p "require('./$MANIFEST_PATH').staticRoutes")
-          PRODUCT_ROUTES=$(node -p "require('./$MANIFEST_PATH').productRoutes")
-          TOTAL_ROUTES=$(node -p "require('./$MANIFEST_PATH').routes.length")
+          STATIC_ROUTES=$(node -p "require('./$MANIFEST_PATH').staticRoutes.length")
+          PRODUCT_ROUTES=$(node -p "require('./$MANIFEST_PATH').productRoutes.length")
+          TOTAL_ROUTES=$(node -p "require('./$MANIFEST_PATH').totalRoutes")
 
           {
             echo "## Build estático da Chouga"
