@@ -1,4 +1,60 @@
 /* =========================
+   PRODUCTS PAGE
+========================= */
+
+.produtos-page.page-bg {
+  --page-bg-opacity: 0.99;
+  --bg-overlay-start: 0.82;
+  --bg-overlay-end: 0.94;
+  --page-bg-position: center;
+}
+
+.produtos-section {
+  min-height: 100vh;
+  overflow: visible;
+}
+
+.produtos-container {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  align-items: start;
+  gap: clamp(40px, 5vw, 80px);
+}
+
+.produtos-content {
+  min-width: 0;
+  padding-right: 0;
+}
+
+@media (max-width: 1400px) {
+  .produtos-container {
+    grid-template-columns: 240px minmax(0, 1fr);
+    gap: 48px;
+  }
+}
+
+@media (max-width: 900px) {
+  .produtos-section {
+    min-height: auto;
+  }
+
+  .produtos-container {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 520px) {
+  .produtos-container {
+    gap: 1rem;
+  }
+
+  .produtos-content {
+    padding-bottom: 5.5rem;
+  }
+}
+
+/* =========================
    PRODUCT FILTERS
 ========================= */
 

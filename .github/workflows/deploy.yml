@@ -57,6 +57,30 @@ jobs:
           VITE_CLARITY_PROJECT_ID: ${{ vars.VITE_CLARITY_PROJECT_ID }}
           VITE_GA_MEASUREMENT_ID: ${{ vars.VITE_GA_MEASUREMENT_ID }}
 
+      - name: Registrar resumo do SSG
+        shell: bash
+        run: |
+          MANIFEST_PATH="dist/ssg-manifest.json"
+
+          if [ ! -f "$MANIFEST_PATH" ]; then
+            echo "::error::Manifesto do SSG não encontrado em $MANIFEST_PATH"
+            exit 1
+          fi
+
+          STATIC_ROUTES=$(node -p "require('./$MANIFEST_PATH').staticRoutes")
+          PRODUCT_ROUTES=$(node -p "require('./$MANIFEST_PATH').productRoutes")
+          TOTAL_ROUTES=$(node -p "require('./$MANIFEST_PATH').routes.length")
+
+          {
+            echo "## Build estático da Chouga"
+            echo ""
+            echo "| Tipo | Quantidade |"
+            echo "| --- | ---: |"
+            echo "| Rotas fixas | $STATIC_ROUTES |"
+            echo "| Rotas de produtos | $PRODUCT_ROUTES |"
+            echo "| Total de rotas | $TOTAL_ROUTES |"
+          } >> "$GITHUB_STEP_SUMMARY"
+
       - name: Configurar GitHub Pages
         uses: actions/configure-pages@v5
 

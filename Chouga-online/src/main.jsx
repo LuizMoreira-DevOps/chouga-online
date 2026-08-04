@@ -11,13 +11,6 @@ import CookieConsentBanner from "./components/CookieConsentBanner.jsx";
 import "./css/index.css";
 import "@fontsource/oswald";
 
-const redirectPath = sessionStorage.getItem("redirectPath");
-
-if (redirectPath) {
-  sessionStorage.removeItem("redirectPath");
-  window.history.replaceState(null, "", redirectPath);
-}
-
 initializeClarity();
 initializeGoogleAnalytics();
 

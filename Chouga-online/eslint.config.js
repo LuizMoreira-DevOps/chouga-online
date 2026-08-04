@@ -32,4 +32,14 @@ export default [
       "no-unused-vars": ["warn", { varsIgnorePattern: "^[A-Z_]" }],
     },
   },
+  {
+    files: ["scripts/**/*.mjs"],
+    languageOptions: {
+      ecmaVersion: "latest",
+      globals: globals.node,
+      parserOptions: {
+        sourceType: "module",
+      },
+    },
+  },
 ];
