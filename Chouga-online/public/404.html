@@ -2,20 +2,96 @@
 <html lang="pt-BR">
 
 <head>
-    <meta charset="utf-8" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <script>
-        const redirectPath =
-            window.location.pathname +
-            window.location.search +
-            window.location.hash;
+    <title>Página não encontrada | Chouga Skateboard</title>
 
-        sessionStorage.setItem("redirectPath", redirectPath);
+    <meta name="description" content="A página que você tentou acessar não foi encontrada." />
+    <meta name="robots" content="noindex, nofollow" />
 
-        window.location.replace("/");
-    </script>
+    <style>
+        :root {
+            color-scheme: dark;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #111;
+            color: #fff;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            margin: 0;
+            display: grid;
+            place-items: center;
+            padding: 24px;
+            text-align: center;
+            background: #111;
+        }
+
+        main {
+            width: min(100%, 560px);
+        }
+
+        h1 {
+            margin: 0 0 16px;
+            font-size: clamp(2rem, 8vw, 4rem);
+        }
+
+        p {
+            margin: 0 0 32px;
+            line-height: 1.6;
+            color: #d7d7d7;
+        }
+
+        nav {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        a {
+            display: inline-flex;
+            min-height: 44px;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 20px;
+            border: 2px solid #fff;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        a:hover,
+        a:focus-visible {
+            background: #fff;
+            color: #111;
+        }
+
+        a:focus-visible {
+            outline: 3px solid #fff;
+            outline-offset: 4px;
+        }
+    </style>
 </head>
 
-<body></body>
+<body>
+    <main>
+        <h1>404</h1>
+
+        <p>
+            Esta página não existe, foi removida ou mudou de endereço.
+        </p>
+
+        <nav aria-label="Opções para continuar navegando">
+            <a href="/">Voltar para a página inicial</a>
+            <a href="/produtos">Ver produtos</a>
+        </nav>
+    </main>
+</body>
 
 </html>
