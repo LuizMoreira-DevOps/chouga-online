@@ -39,9 +39,14 @@ jobs:
       - name: Rodar linters do projeto
         run: npm run lint
 
-      - name: Build do projeto
+      - name: Build completo do projeto
+        if: github.actor != 'dependabot[bot]'
         run: npm run build
         env:
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
           VITE_SITE_URL: https://chouga.com.br
+
+      - name: Build do cliente para o Dependabot
+        if: github.actor == 'dependabot[bot]'
+        run: npm run build:client
