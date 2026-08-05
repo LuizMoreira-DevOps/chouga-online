@@ -167,6 +167,13 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
   const { slug } = useParams();
 
   const sizeGuideTriggerRef = useRef(null);
+
+  const galleryRef = useRef(null);
+  const purchaseFlowRef = useRef(null);
+
+  const [showStartPurchase, setShowStartPurchase] = useState(false);
+  const [hasStartedPurchase, setHasStartedPurchase] = useState(false);
+
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -219,6 +226,8 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
           setSelectedSize("");
           setIsSizeGuideOpen(false);
           setQuantity(1);
+          setHasStartedPurchase(false);
+          setShowStartPurchase(false);
         }
       } catch (loadError) {
         console.error("Erro ao carregar produto:", loadError);
@@ -243,6 +252,30 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
       isMounted = false;
     };
   }, [slug]);
+
+  useEffect(() => {
+    const galleryElement = galleryRef.current;
+
+    if (!galleryElement) {
+      return undefined;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setShowStartPurchase(entry.isIntersecting && !hasStartedPurchase);
+      },
+      {
+        root: null,
+        threshold: 0.15,
+      },
+    );
+
+    observer.observe(galleryElement);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [product, hasStartedPurchase]);
 
   const images = useMemo(() => getProductImages(product), [product]);
 
@@ -448,22 +481,6 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
     setQuantity(1);
   }
 
-  function handleThumbnailSelect(image) {
-    setSelectedImage(image.url);
-
-    if (image.cor) {
-      const matchingColor = colors.find(
-        (color) => normalizeText(color) === normalizeText(image.cor),
-      );
-
-      if (matchingColor) {
-        setSelectedColor(matchingColor);
-        setSelectedSize("");
-        setQuantity(1);
-      }
-    }
-  }
-
   function handleOpenZoom() {
     if (!currentImage) {
       return;
@@ -474,6 +491,35 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
       image: currentImage,
       imageAlt: product.nome,
       title: product.nome,
+    });
+  }
+
+  function handleStartPurchase() {
+    const purchaseFlow = purchaseFlowRef.current;
+
+    if (!purchaseFlow) {
+      return;
+    }
+
+    setHasStartedPurchase(true);
+    setShowStartPurchase(false);
+
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    const headerOffset = 92;
+
+    const targetPosition =
+      purchaseFlow.getBoundingClientRect().top + window.scrollY - headerOffset;
+
+    window.scrollTo({
+      top: targetPosition,
+      behavior: prefersReducedMotion ? "auto" : "smooth",
+    });
+
+    purchaseFlow.focus({
+      preventScroll: true,
     });
   }
 
@@ -494,7 +540,6 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
       `Preço unitário: ${formatPrice(unitPrice)}`,
       `Quantidade: ${quantity}`,
       `Total do pedido: ${formatPrice(totalPrice)}`,
-      selectedVariation.sku ? `SKU: ${selectedVariation.sku}` : "",
       "Tipo de pedido: Produção sob encomenda",
       "",
       `Link: ${productPageUrl}`,
@@ -573,308 +618,307 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
           </nav>
 
           <div className="produto-detalhes-content">
-            <section className="produto-detalhes-gallery">
-              <div className="produto-detalhes-thumbnails">
-                {colorImages.map((image) => (
-                  <button
-                    key={image.id}
-                    type="button"
-                    className={currentImage === image.url ? "is-active" : ""}
-                    onClick={() => handleThumbnailSelect(image)}
-                    aria-label={
-                      image.cor
-                        ? `Visualizar ${image.alt} na cor ${image.cor}`
-                        : `Visualizar ${image.alt}`
-                    }
-                  >
-                    <img src={image.url} alt={image.alt} />
-                  </button>
-                ))}
-              </div>
+            <div className="produto-detalhes-gallery-wrapper">
+              <section ref={galleryRef} className="produto-detalhes-gallery">
+                <button
+                  type="button"
+                  className="produto-detalhes-main-image"
+                  onClick={handleOpenZoom}
+                  disabled={!currentImage}
+                  aria-label="Ampliar imagem do produto"
+                >
+                  {currentImage ? (
+                    <img src={currentImage} alt={product.nome} />
+                  ) : (
+                    <span>Imagem indisponível</span>
+                  )}
+                </button>
+              </section>
 
-              <button
-                type="button"
-                className="produto-detalhes-main-image"
-                onClick={handleOpenZoom}
-                disabled={!currentImage}
-                aria-label="Ampliar imagem do produto"
+              <section
+                ref={purchaseFlowRef}
+                id="produto-fluxo-compra"
+                className="produto-detalhes-info"
+                tabIndex={-1}
               >
-                {currentImage ? (
-                  <img src={currentImage} alt={product.nome} />
-                ) : (
-                  <span>Imagem indisponível</span>
+                <div className="produto-detalhes-heading">
+                  <p className="produto-detalhes-category">
+                    {product.categoria}
+                  </p>
+
+                  <h1>{product.nome}</h1>
+
+                  <ProductReviewsSummary productId={product.id} compact />
+
+                  <p className="produto-detalhes-price">
+                    <strong>{formatPrice(unitPrice)}</strong>
+                    <span>por unidade</span>
+                  </p>
+                </div>
+
+                {product.descricao && (
+                  <p className="produto-detalhes-description">
+                    {product.descricao}
+                  </p>
                 )}
-              </button>
-            </section>
 
-            <section className="produto-detalhes-info">
-              <div className="produto-detalhes-heading">
-                <p className="produto-detalhes-category">{product.categoria}</p>
+                <section
+                  id="produto-configuracao-pedido"
+                  className="produto-detalhes-purchase"
+                  aria-label="Configuração do pedido"
+                  tabIndex={-1}
+                >
+                  {colors.length > 0 && (
+                    <fieldset className="produto-detalhes-options">
+                      <legend>Cor</legend>
 
-                <h1>{product.nome}</h1>
+                      <div className="produto-detalhes-option-list">
+                        {colors.map((color) => (
+                          <button
+                            key={color}
+                            type="button"
+                            className={
+                              selectedColor === color ? "is-selected" : ""
+                            }
+                            onClick={() => handleColorSelect(color)}
+                          >
+                            {color}
+                          </button>
+                        ))}
+                      </div>
+                    </fieldset>
+                  )}
 
-                <ProductReviewsSummary productId={product.id} compact />
+                  {sizes.length > 0 && (
+                    <fieldset className="produto-detalhes-options">
+                      <div className="produto-detalhes-options-heading">
+                        <legend>Tamanho</legend>
 
-                <p className="produto-detalhes-price">
-                  <strong>{formatPrice(unitPrice)}</strong>
-                  <span>por unidade</span>
-                </p>
-              </div>
+                        {sizeGuide && (
+                          <button
+                            ref={sizeGuideTriggerRef}
+                            type="button"
+                            className="produto-detalhes-size-guide-button"
+                            onClick={() => setIsSizeGuideOpen(true)}
+                            aria-haspopup="dialog"
+                            aria-expanded={isSizeGuideOpen}
+                            aria-controls="size-guide-drawer"
+                          >
+                            Guia de medidas
+                          </button>
+                        )}
+                      </div>
 
-              {product.descricao && (
-                <p className="produto-detalhes-description">
-                  {product.descricao}
-                </p>
-              )}
+                      <div className="produto-detalhes-size-list">
+                        {sizes.map((size) => (
+                          <button
+                            key={size}
+                            type="button"
+                            className={
+                              currentSize === size ? "is-selected" : ""
+                            }
+                            onClick={() => {
+                              setSelectedSize(size);
+                              setQuantity(1);
+                            }}
+                          >
+                            {size}
+                          </button>
+                        ))}
+                      </div>
+                    </fieldset>
+                  )}
 
-              {colors.length > 0 && (
-                <fieldset className="produto-detalhes-options">
-                  <legend>
-                    Cor
-                    {selectedColor && <span>: {selectedColor}</span>}
-                  </legend>
+                  {selectedVariation && (
+                    <>
+                      <div className="produto-detalhes-quantity">
+                        <div className="produto-detalhes-quantity-heading">
+                          <span>Quantidade</span>
+                        </div>
 
-                  <div className="produto-detalhes-option-list">
-                    {colors.map((color) => (
-                      <button
-                        key={color}
-                        type="button"
-                        className={selectedColor === color ? "is-selected" : ""}
-                        onClick={() => handleColorSelect(color)}
-                      >
-                        {color}
-                      </button>
-                    ))}
-                  </div>
-                </fieldset>
-              )}
+                        <div className="produto-detalhes-quantity-control">
+                          <button
+                            type="button"
+                            onClick={decreaseQuantity}
+                            disabled={quantity <= 1}
+                            aria-label="Diminuir quantidade"
+                          >
+                            −
+                          </button>
 
-              {sizes.length > 0 && (
-                <fieldset className="produto-detalhes-options">
-                  <div className="produto-detalhes-options-heading">
-                    <legend>
-                      Tamanho
-                      {currentSize && <span>: {currentSize}</span>}
-                    </legend>
+                          <input
+                            type="number"
+                            min="1"
+                            max={MAX_ORDER_QUANTITY}
+                            value={quantity}
+                            onChange={handleQuantityChange}
+                            aria-label="Quantidade do produto"
+                          />
 
-                    {sizeGuide && (
-                      <button
-                        ref={sizeGuideTriggerRef}
-                        type="button"
-                        className="produto-detalhes-size-guide-button"
-                        onClick={() => setIsSizeGuideOpen(true)}
-                        aria-haspopup="dialog"
-                        aria-expanded={isSizeGuideOpen}
-                        aria-controls="size-guide-drawer"
-                      >
-                        Guia de medidas
-                      </button>
-                    )}
-                  </div>
+                          <button
+                            type="button"
+                            onClick={increaseQuantity}
+                            disabled={quantity >= MAX_ORDER_QUANTITY}
+                            aria-label="Aumentar quantidade"
+                          >
+                            +
+                          </button>
+                        </div>
 
-                  <div className="produto-detalhes-size-list">
-                    {sizes.map((size) => (
-                      <button
-                        key={size}
-                        type="button"
-                        className={currentSize === size ? "is-selected" : ""}
-                        onClick={() => {
-                          setSelectedSize(size);
-                          setQuantity(1);
-                        }}
-                      >
-                        {size}
-                      </button>
-                    ))}
-                  </div>
-                </fieldset>
-              )}
-
-              {selectedVariation && (
-                <>
-                  <div className="produto-detalhes-quantity">
-                    <div className="produto-detalhes-quantity-heading">
-                      <span>Quantidade</span>
-                    </div>
-
-                    <div className="produto-detalhes-quantity-control">
-                      <button
-                        type="button"
-                        onClick={decreaseQuantity}
-                        disabled={quantity <= 1}
-                        aria-label="Diminuir quantidade"
-                      >
-                        −
-                      </button>
-
-                      <input
-                        type="number"
-                        min="1"
-                        max={MAX_ORDER_QUANTITY}
-                        value={quantity}
-                        onChange={handleQuantityChange}
-                        aria-label="Quantidade do produto"
-                      />
-
-                      <button
-                        type="button"
-                        onClick={increaseQuantity}
-                        disabled={quantity >= MAX_ORDER_QUANTITY}
-                        aria-label="Aumentar quantidade"
-                      >
-                        +
-                      </button>
-                    </div>
-
-                    <p className="produto-detalhes-total" aria-live="polite">
-                      Total para {quantity}{" "}
-                      {quantity === 1 ? "unidade" : "unidades"}:
-                      <strong>{formatPrice(totalPrice)}</strong>
-                    </p>
-                  </div>
+                        <p
+                          className="produto-detalhes-total"
+                          aria-live="polite"
+                        >
+                          Total para {quantity}{" "}
+                          {quantity === 1 ? "unidade" : "unidades"}:
+                          <strong>{formatPrice(totalPrice)}</strong>
+                        </p>
+                      </div>
+                    </>
+                  )}
+                  <button
+                    type="button"
+                    className="produto-detalhes-buy-button"
+                    disabled={!canBuy}
+                    onClick={handleWhatsApp}
+                  >
+                    {canBuy
+                      ? "Comprar pelo WhatsApp"
+                      : "Selecione cor e tamanho"}
+                  </button>
 
                   <div className="produto-detalhes-order-note">
                     <strong>Sob encomenda</strong>
-
                     <span>
                       O prazo de produção será confirmado pelo WhatsApp.
                     </span>
                   </div>
-                </>
-              )}
-
-              <button
-                type="button"
-                className="produto-detalhes-buy-button"
-                disabled={!canBuy}
-                onClick={handleWhatsApp}
+                </section>
+              </section>
+            </div>
+            {hasEditorialContent && (
+              <section
+                className="produto-detalhes-editorial"
+                aria-label="Informações sobre o produto"
               >
-                {canBuy ? "Comprar pelo WhatsApp" : "Selecione as opções"}
-              </button>
-            </section>
-          </div>
-          {hasEditorialContent && (
-            <section
-              className="produto-detalhes-editorial"
-              aria-label="Informações sobre o produto"
-            >
-              <div className="produto-detalhes-editorial-heading">
-                <span>Conheça a peça</span>
-                <h2>Detalhes do produto</h2>
-              </div>
+                <div className="produto-detalhes-editorial-heading">
+                  <span>Conheça a peça</span>
+                  <h2>Detalhes do produto</h2>
+                </div>
 
-              <div className="produto-detalhes-sections">
-                {product.descricao_detalhada && (
-                  <details>
-                    <summary>Sobre a peça</summary>
+                <div className="produto-detalhes-sections">
+                  {product.descricao_detalhada && (
+                    <details>
+                      <summary>Sobre a peça</summary>
 
-                    <div className="produto-detalhes-section-content">
-                      <p>{product.descricao_detalhada}</p>
-                    </div>
-                  </details>
-                )}
+                      <div className="produto-detalhes-section-content">
+                        <p>{product.descricao_detalhada}</p>
+                      </div>
+                    </details>
+                  )}
 
-                {product.inspiracao && (
-                  <details>
-                    <summary>Inspiração</summary>
+                  {product.inspiracao && (
+                    <details>
+                      <summary>Inspiração</summary>
 
-                    <div className="produto-detalhes-section-content">
-                      <p>{product.inspiracao}</p>
-                    </div>
-                  </details>
-                )}
+                      <div className="produto-detalhes-section-content">
+                        <p>{product.inspiracao}</p>
+                      </div>
+                    </details>
+                  )}
 
-                {product.caracteristicas.length > 0 && (
-                  <details>
-                    <summary>Características</summary>
+                  {product.caracteristicas.length > 0 && (
+                    <details>
+                      <summary>Características</summary>
 
-                    <div className="produto-detalhes-section-content">
-                      <ul className="produto-detalhes-feature-list">
-                        {product.caracteristicas.map(
-                          (caracteristica, index) => (
-                            <li key={`${caracteristica}-${index}`}>
-                              {caracteristica}
-                            </li>
-                          ),
+                      <div className="produto-detalhes-section-content">
+                        <ul className="produto-detalhes-feature-list">
+                          {product.caracteristicas.map(
+                            (caracteristica, index) => (
+                              <li key={`${caracteristica}-${index}`}>
+                                {caracteristica}
+                              </li>
+                            ),
+                          )}
+                        </ul>
+                      </div>
+                    </details>
+                  )}
+
+                  {product.composicao && (
+                    <details>
+                      <summary>Composição</summary>
+
+                      <div className="produto-detalhes-section-content">
+                        <p>{product.composicao}</p>
+                      </div>
+                    </details>
+                  )}
+
+                  {product.cuidados && (
+                    <details>
+                      <summary>Cuidados com a peça</summary>
+
+                      <div className="produto-detalhes-section-content">
+                        <p>{product.cuidados}</p>
+                      </div>
+                    </details>
+                  )}
+
+                  {hasModelInformation && (
+                    <details>
+                      <summary>Modelagem</summary>
+
+                      <div className="produto-detalhes-section-content">
+                        {product.tipo_modelagem && (
+                          <p>{product.tipo_modelagem}</p>
                         )}
-                      </ul>
-                    </div>
-                  </details>
-                )}
 
-                {product.composicao && (
-                  <details>
-                    <summary>Composição</summary>
+                        {(product.tamanho_modelo ||
+                          product.altura_modelo_cm ||
+                          product.medidas_modelo) && (
+                          <dl className="produto-detalhes-model-data">
+                            {product.tamanho_modelo && (
+                              <div>
+                                <dt>Tamanho utilizado</dt>
+                                <dd>{product.tamanho_modelo}</dd>
+                              </div>
+                            )}
 
-                    <div className="produto-detalhes-section-content">
-                      <p>{product.composicao}</p>
-                    </div>
-                  </details>
-                )}
+                            {product.altura_modelo_cm && (
+                              <div>
+                                <dt>Altura do modelo</dt>
+                                <dd>
+                                  {formatModelHeight(product.altura_modelo_cm)}
+                                </dd>
+                              </div>
+                            )}
 
-                {product.cuidados && (
-                  <details>
-                    <summary>Cuidados com a peça</summary>
+                            {product.medidas_modelo && (
+                              <div>
+                                <dt>Outras medidas</dt>
+                                <dd>{product.medidas_modelo}</dd>
+                              </div>
+                            )}
+                          </dl>
+                        )}
+                      </div>
+                    </details>
+                  )}
 
-                    <div className="produto-detalhes-section-content">
-                      <p>{product.cuidados}</p>
-                    </div>
-                  </details>
-                )}
+                  {product.observacoes_adicionais && (
+                    <details>
+                      <summary>Informações adicionais</summary>
 
-                {hasModelInformation && (
-                  <details>
-                    <summary>Modelagem</summary>
-
-                    <div className="produto-detalhes-section-content">
-                      {product.tipo_modelagem && (
-                        <p>{product.tipo_modelagem}</p>
-                      )}
-
-                      {(product.tamanho_modelo ||
-                        product.altura_modelo_cm ||
-                        product.medidas_modelo) && (
-                        <dl className="produto-detalhes-model-data">
-                          {product.tamanho_modelo && (
-                            <div>
-                              <dt>Tamanho utilizado</dt>
-                              <dd>{product.tamanho_modelo}</dd>
-                            </div>
-                          )}
-
-                          {product.altura_modelo_cm && (
-                            <div>
-                              <dt>Altura do modelo</dt>
-                              <dd>
-                                {formatModelHeight(product.altura_modelo_cm)}
-                              </dd>
-                            </div>
-                          )}
-
-                          {product.medidas_modelo && (
-                            <div>
-                              <dt>Outras medidas</dt>
-                              <dd>{product.medidas_modelo}</dd>
-                            </div>
-                          )}
-                        </dl>
-                      )}
-                    </div>
-                  </details>
-                )}
-
-                {product.observacoes_adicionais && (
-                  <details>
-                    <summary>Informações adicionais</summary>
-
-                    <div className="produto-detalhes-section-content">
-                      <p>{product.observacoes_adicionais}</p>
-                    </div>
-                  </details>
-                )}
-              </div>
-            </section>
-          )}
+                      <div className="produto-detalhes-section-content">
+                        <p>{product.observacoes_adicionais}</p>
+                      </div>
+                    </details>
+                  )}
+                </div>
+              </section>
+            )}
+          </div>
         </section>
 
         <ProductReviewsSummary productId={product.id} />
@@ -895,6 +939,18 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
           triggerRef={sizeGuideTriggerRef}
           onClose={() => setIsSizeGuideOpen(false)}
         />
+
+        {showStartPurchase && !selectedProduct && !isSizeGuideOpen && (
+          <button
+            type="button"
+            className="produto-detalhes-floating-purchase"
+            onClick={handleStartPurchase}
+            aria-controls="produto-fluxo-compra"
+          >
+            <span>Começar a compra</span>
+            <span aria-hidden="true">↓</span>
+          </button>
+        )}
 
         <ProductZoomModal
           product={selectedProduct}
