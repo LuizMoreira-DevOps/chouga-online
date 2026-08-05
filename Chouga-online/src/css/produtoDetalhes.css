@@ -67,11 +67,9 @@
 
 .produto-detalhes-content {
   display: grid;
-  grid-template-columns:
-    minmax(0, 1.35fr)
-    minmax(320px, 0.65fr);
-  gap: 56px;
+  grid-template-columns: minmax(0, 1.1fr) minmax(360px, 0.9fr);
   align-items: start;
+  gap: clamp(40px, 6vw, 96px);
 }
 
 /* =========================
@@ -80,9 +78,11 @@
 
 .produto-detalhes-gallery {
   display: grid;
+  grid-column: 1;
   grid-template-columns: 110px minmax(0, 1fr);
   gap: 22px;
   align-items: start;
+  min-width: 0;
 }
 
 /* =========================
@@ -188,9 +188,11 @@
 .produto-detalhes-info {
   position: sticky;
   top: 110px;
+  grid-column: 2;
   display: flex;
   flex-direction: column;
   gap: 28px;
+  min-width: 0;
 }
 
 .produto-detalhes-heading {
@@ -488,7 +490,7 @@
   right: 24px;
   bottom: 24px;
   z-index: 1200;
-  display: inline-flex;
+  display: none;
   align-items: center;
   justify-content: center;
   gap: 14px;
@@ -530,7 +532,7 @@
 ========================= */
 
 .produto-detalhes-gallery-wrapper {
-  display: grid;
+  display: contents;
   gap: 22px;
   min-width: 0;
 }
@@ -835,6 +837,11 @@
     gap: 38px;
   }
 
+  .produto-detalhes-gallery,
+  .produto-detalhes-info {
+    grid-column: 1;
+  }
+
   .produto-detalhes-info {
     position: static;
   }
@@ -866,18 +873,16 @@
   }
 
   .produto-detalhes-gallery {
-    display: flex;
-    flex-direction: column-reverse;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .produto-detalhes-thumbnails {
-    position: static;
-    flex-direction: row;
-    overflow-x: auto;
-    padding: 2px 0 6px;
+    display: none;
   }
 
   .produto-detalhes-gallery-wrapper {
+    display: grid;
     gap: 18px;
   }
 
@@ -887,21 +892,35 @@
   }
 
   .produto-detalhes-floating-purchase {
+    position: fixed;
     right: 12px;
     bottom: 16px;
     left: 12px;
+    z-index: 1200;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+
     width: calc(100% - 24px);
     min-height: 56px;
     padding: 12px 18px;
+
+    border: 1px solid var(--color-red);
+    background: var(--color-red);
+    color: var(--color-bg);
+
+    font: inherit;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
   }
 
   .produto-detalhes-purchase {
     gap: 26px;
     scroll-margin-top: 88px;
-  }
-
-  .produto-detalhes-thumbnails button {
-    flex: 0 0 76px;
   }
 
   .produto-detalhes-main-image,
