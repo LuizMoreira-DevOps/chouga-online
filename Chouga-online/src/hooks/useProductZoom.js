@@ -1,26 +1,37 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
+
+const DEFAULT_ZOOM = 1;
+const CLICK_ZOOM = 2;
+const MAX_ZOOM = 2.4;
+const ZOOM_STEP = 0.2;
+const DRAG_THRESHOLD = 6;
 
 function useProductZoom() {
   const [selectedProduct, setSelectedProduct] = useState(null);
-
-  const [zoomLevel, setZoomLevel] = useState(1);
-
+  const [zoomLevel, setZoomLevel] = useState(DEFAULT_ZOOM);
   const [dragPosition, setDragPosition] = useState({
     x: 0,
     y: 0,
   });
-
   const [dragStart, setDragStart] = useState(null);
 
-  function resetZoom() {
-    setZoomLevel(1);
+  const pointerStartRef = useRef(null);
+  const hasDraggedRef = useRef(false);
 
+  function resetPosition() {
     setDragPosition({
       x: 0,
       y: 0,
     });
 
     setDragStart(null);
+    pointerStartRef.current = null;
+    hasDraggedRef.current = false;
+  }
+
+  function resetZoom() {
+    setZoomLevel(DEFAULT_ZOOM);
+    resetPosition();
   }
 
   function openProduct(product) {
@@ -34,21 +45,57 @@ function useProductZoom() {
   }
 
   function decreaseZoom() {
-    setZoomLevel((currentZoom) =>
-      Math.max(1, Number((currentZoom - 0.2).toFixed(1))),
-    );
+    setZoomLevel((currentZoom) => {
+      const nextZoom = Math.max(
+        DEFAULT_ZOOM,
+        Number((currentZoom - ZOOM_STEP).toFixed(1)),
+      );
+
+      if (nextZoom === DEFAULT_ZOOM) {
+        resetPosition();
+      }
+
+      return nextZoom;
+    });
   }
 
   function increaseZoom() {
     setZoomLevel((currentZoom) =>
-      Math.min(2.4, Number((currentZoom + 0.2).toFixed(1))),
+      Math.min(MAX_ZOOM, Number((currentZoom + ZOOM_STEP).toFixed(1))),
     );
   }
 
-  function handlePointerDown(event) {
-    event.preventDefault();
+  function toggleZoom() {
+    if (hasDraggedRef.current) {
+      hasDraggedRef.current = false;
+      return;
+    }
 
+    setZoomLevel((currentZoom) => {
+      const nextZoom = currentZoom > DEFAULT_ZOOM ? DEFAULT_ZOOM : CLICK_ZOOM;
+
+      if (nextZoom === DEFAULT_ZOOM) {
+        resetPosition();
+      }
+
+      return nextZoom;
+    });
+  }
+
+  function handlePointerDown(event) {
+    if (zoomLevel <= DEFAULT_ZOOM) {
+      return;
+    }
+
+    event.preventDefault();
     event.currentTarget.setPointerCapture(event.pointerId);
+
+    pointerStartRef.current = {
+      x: event.clientX,
+      y: event.clientY,
+    };
+
+    hasDraggedRef.current = false;
 
     setDragStart({
       x: event.clientX - dragPosition.x,
@@ -57,8 +104,15 @@ function useProductZoom() {
   }
 
   function handlePointerMove(event) {
-    if (!dragStart) {
+    if (!dragStart || !pointerStartRef.current) {
       return;
+    }
+
+    const movedX = Math.abs(event.clientX - pointerStartRef.current.x);
+    const movedY = Math.abs(event.clientY - pointerStartRef.current.y);
+
+    if (movedX > DRAG_THRESHOLD || movedY > DRAG_THRESHOLD) {
+      hasDraggedRef.current = true;
     }
 
     setDragPosition({
@@ -73,6 +127,7 @@ function useProductZoom() {
     }
 
     setDragStart(null);
+    pointerStartRef.current = null;
   }
 
   return {
@@ -83,6 +138,7 @@ function useProductZoom() {
     closeProduct,
     decreaseZoom,
     increaseZoom,
+    toggleZoom,
     handlePointerDown,
     handlePointerMove,
     stopDragging,

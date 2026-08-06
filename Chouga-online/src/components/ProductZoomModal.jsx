@@ -9,6 +9,7 @@ function ProductZoomModal({
   onClose,
   onDecreaseZoom,
   onIncreaseZoom,
+  onToggleZoom,
   onPointerDown,
   onPointerMove,
   onPointerUp,
@@ -21,7 +22,6 @@ function ProductZoomModal({
     }
 
     const previousBodyOverflow = document.body.style.overflow;
-
     const previousHtmlOverflow = document.documentElement.style.overflow;
 
     document.body.style.overflow = "hidden";
@@ -37,9 +37,7 @@ function ProductZoomModal({
 
     return () => {
       document.body.style.overflow = previousBodyOverflow;
-
       document.documentElement.style.overflow = previousHtmlOverflow;
-
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [product, onClose]);
@@ -49,10 +47,9 @@ function ProductZoomModal({
   }
 
   const productTitle = product.title || product.nome || "Produto Chouga";
-
   const productImageAlt = product.imageAlt || productTitle;
-
   const zoomPercentage = Math.round(zoomLevel * 100);
+  const isZoomed = zoomLevel > 1;
 
   return (
     <div className="product-zoom-overlay" role="presentation" onClick={onClose}>
@@ -61,19 +58,26 @@ function ProductZoomModal({
         role="dialog"
         aria-modal="true"
         aria-label={`Imagem ampliada de ${productTitle}`}
+        aria-describedby="product-zoom-hint"
         onClick={(event) => event.stopPropagation()}
       >
         <button
           className="zoom-close"
           type="button"
           onClick={onClose}
-          aria-label="Fechar zoom"
+          aria-label="Fechar visualização ampliada"
         >
-          ×
+          <span className="zoom-close-label">Fechar</span>
+          <span className="zoom-close-icon" aria-hidden="true">
+            ×
+          </span>
         </button>
 
         <div
-          className="zoom-image-wrapper is-draggable"
+          className={`zoom-image-wrapper ${
+            isZoomed ? "is-draggable is-zoomed" : ""
+          }`}
+          onClick={onToggleZoom}
           onPointerDown={onPointerDown}
           onPointerMove={onPointerMove}
           onPointerUp={onPointerUp}
@@ -88,6 +92,12 @@ function ProductZoomModal({
               transform: `translate3d(${dragPosition.x}px, ${dragPosition.y}px, 0) scale(${zoomLevel})`,
             }}
           />
+
+          <p id="product-zoom-hint" className="product-zoom-hint">
+            {isZoomed
+              ? "Arraste para explorar • Clique para reduzir"
+              : "Clique na imagem para ampliar"}
+          </p>
         </div>
 
         <footer className="product-zoom-footer">
@@ -112,6 +122,7 @@ function ProductZoomModal({
             <button
               type="button"
               onClick={onIncreaseZoom}
+              disabled={zoomLevel >= 2.4}
               aria-label="Aumentar zoom"
             >
               +
