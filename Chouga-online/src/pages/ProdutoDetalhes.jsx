@@ -170,6 +170,7 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
 
   const galleryRef = useRef(null);
   const purchaseFlowRef = useRef(null);
+  const productHeadingRef = useRef(null);
 
   const [showStartPurchase, setShowStartPurchase] = useState(false);
   const [hasStartedPurchase, setHasStartedPurchase] = useState(false);
@@ -204,6 +205,7 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
     closeProduct,
     decreaseZoom,
     increaseZoom,
+    toggleZoom,
     handlePointerDown,
     handlePointerMove,
     stopDragging,
@@ -255,25 +257,43 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
 
   useEffect(() => {
     const galleryElement = galleryRef.current;
+    const headingElement = productHeadingRef.current;
 
-    if (!galleryElement) {
+    if (!galleryElement || !headingElement) {
       return undefined;
     }
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setShowStartPurchase(entry.isIntersecting && !hasStartedPurchase);
-      },
-      {
-        root: null,
-        threshold: 0.15,
-      },
-    );
+    const mobileMedia = window.matchMedia("(max-width: 720px)");
+    const headerOffset = 92;
 
-    observer.observe(galleryElement);
+    function updateStartPurchaseButton() {
+      if (!mobileMedia.matches || hasStartedPurchase) {
+        setShowStartPurchase(false);
+        return;
+      }
+
+      const galleryRect = galleryElement.getBoundingClientRect();
+      const headingRect = headingElement.getBoundingClientRect();
+
+      const galleryReachedTop = galleryRect.top <= headerOffset;
+      const headingNotReached = headingRect.top > window.innerHeight * 0.72;
+
+      setShowStartPurchase(galleryReachedTop && headingNotReached);
+    }
+
+    updateStartPurchaseButton();
+
+    window.addEventListener("scroll", updateStartPurchaseButton, {
+      passive: true,
+    });
+
+    window.addEventListener("resize", updateStartPurchaseButton);
+    mobileMedia.addEventListener("change", updateStartPurchaseButton);
 
     return () => {
-      observer.disconnect();
+      window.removeEventListener("scroll", updateStartPurchaseButton);
+      window.removeEventListener("resize", updateStartPurchaseButton);
+      mobileMedia.removeEventListener("change", updateStartPurchaseButton);
     };
   }, [product, hasStartedPurchase]);
 
@@ -676,7 +696,7 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
               className="produto-detalhes-info"
               tabIndex={-1}
             >
-              <div className="produto-detalhes-heading">
+              <div ref={productHeadingRef} className="produto-detalhes-heading">
                 <p className="produto-detalhes-category">{product.categoria}</p>
 
                 <h1>{product.nome}</h1>
@@ -984,6 +1004,7 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
           onClose={closeProduct}
           onDecreaseZoom={decreaseZoom}
           onIncreaseZoom={increaseZoom}
+          onToggleZoom={toggleZoom}
           onPointerDown={handlePointerDown}
           onPointerMove={handlePointerMove}
           onPointerUp={stopDragging}
