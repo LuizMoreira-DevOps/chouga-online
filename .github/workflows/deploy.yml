@@ -1,4 +1,4 @@
-name: CD - Chouga Online
+name: Continuous Deploy
 
 on:
   push:
@@ -16,25 +16,23 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages
+  group: github-pages
   cancel-in-progress: true
 
 jobs:
-  deploy:
-    name: Continuous Deploy
+  build:
+    name: Build
     runs-on: ubuntu-latest
 
     defaults:
       run:
         working-directory: Chouga-online
 
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
     steps:
-      - name: Baixar repositório
+      - name: Baixar o repositório
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Configurar Node.js
         uses: actions/setup-node@v4
@@ -46,10 +44,10 @@ jobs:
       - name: Instalar dependências
         run: npm ci
 
-      - name: Rodar linters
+      - name: Executar lint
         run: npm run lint
 
-      - name: Build do projeto
+      - name: Executar build
         run: npm run build
         env:
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
@@ -87,8 +85,21 @@ jobs:
       - name: Enviar artefato
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ${{ github.workspace }}/Chouga-online/dist
+          path: Chouga-online/dist
 
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
       - name: Publicar no GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
+        with:
+          timeout: 900000
