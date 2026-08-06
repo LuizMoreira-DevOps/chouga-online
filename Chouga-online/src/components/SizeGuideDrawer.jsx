@@ -154,15 +154,6 @@ function SizeGuideDrawer({ guide, isOpen, onClose, triggerRef }) {
               {guide.title}
             </h2>
           </div>
-
-          <button
-            type="button"
-            className="size-guide-drawer__close"
-            onClick={onClose}
-            aria-label="Fechar guia de medidas"
-          >
-            ×
-          </button>
         </header>
 
         <div className="size-guide-drawer__body">
@@ -256,6 +247,18 @@ function SizeGuideDrawer({ guide, isOpen, onClose, triggerRef }) {
             <p className="size-guide-drawer__notice">{guide.tolerance}</p>
           )}
         </div>
+
+        <footer className="size-guide-drawer__footer">
+          <button
+            type="button"
+            className="size-guide-drawer__close"
+            onClick={onClose}
+            aria-label="Voltar ao produto"
+          >
+            <span aria-hidden="true">←</span>
+            <span>Voltar ao produto</span>
+          </button>
+        </footer>
       </aside>
     </div>
   );

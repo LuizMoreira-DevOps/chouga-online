@@ -11,6 +11,8 @@ import SizeGuideDrawer from "../components/SizeGuideDrawer";
 
 import { sizeGuides } from "../constants/sizeGuides";
 
+import { getColorOption } from "../constants/productFilters";
+
 import RelatedProducts from "../components/RelatedProducts";
 
 import ProductReviewsSummary from "../components/ProductReviewsSummary";
@@ -733,18 +735,30 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
                     <legend>Cor</legend>
 
                     <div className="produto-detalhes-option-list">
-                      {colors.map((color) => (
-                        <button
-                          key={color}
-                          type="button"
-                          className={
-                            selectedColor === color ? "is-selected" : ""
-                          }
-                          onClick={() => handleColorSelect(color)}
-                        >
-                          {color}
-                        </button>
-                      ))}
+                      {colors.map((color) => {
+                        const colorOption = getColorOption(color);
+                        const isSelected = selectedColor === color;
+
+                        return (
+                          <button
+                            key={color}
+                            type="button"
+                            className={`produto-detalhes-color-option ${
+                              isSelected ? "is-selected" : ""
+                            }`}
+                            onClick={() => handleColorSelect(color)}
+                            aria-pressed={isSelected}
+                            aria-label={`Selecionar cor ${colorOption.label}`}
+                          >
+                            <span
+                              className={`produto-detalhes-color-swatch ${colorOption.className}`}
+                              aria-hidden="true"
+                            />
+
+                            <span>{colorOption.label}</span>
+                          </button>
+                        );
+                      })}
                     </div>
                   </fieldset>
                 )}
@@ -764,7 +778,22 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
                           aria-expanded={isSizeGuideOpen}
                           aria-controls="size-guide-drawer"
                         >
-                          Guia de medidas
+                          <svg
+                            className="produto-detalhes-size-guide-icon"
+                            viewBox="0 0 24 24"
+                            aria-hidden="true"
+                          >
+                            <path
+                              d="M4 7.5 7.5 4 20 16.5 16.5 20 4 7.5Zm5.25-.25-2 2m5-1-2 2m5-1-2 2m5-1-2 2"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="1.8"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>
+
+                          <span>Guia de medidas</span>
                         </button>
                       )}
                     </div>

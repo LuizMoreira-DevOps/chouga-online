@@ -29,6 +29,16 @@
   --color-gold: #d6a54c;
 
   /* =========================
+     CORES DE PRODUTO
+  ========================= */
+  --color-product-black: #090909;
+  --color-product-gray: #303030;
+  --color-product-white: #f7f7f7;
+  --color-product-red: var(--color-red-strong);
+  --color-product-beige: var(--color-text-strong);
+  --color-product-blue: #1f5eff;
+
+  /* =========================
      BORDAS
   ========================= */
   --color-border: rgb(243 215 191 / 45%);
