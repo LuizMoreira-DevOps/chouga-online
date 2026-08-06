@@ -170,7 +170,7 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
 
   const galleryRef = useRef(null);
   const purchaseFlowRef = useRef(null);
-  const productHeadingRef = useRef(null);
+  const purchaseSectionRef = useRef(null);
 
   const [showStartPurchase, setShowStartPurchase] = useState(false);
   const [hasStartedPurchase, setHasStartedPurchase] = useState(false);
@@ -256,29 +256,40 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
   }, [slug]);
 
   useEffect(() => {
-    const galleryElement = galleryRef.current;
-    const headingElement = productHeadingRef.current;
+    const purchaseSectionElement = purchaseSectionRef.current;
 
-    if (!galleryElement || !headingElement) {
+    if (!purchaseSectionElement) {
       return undefined;
     }
 
     const mobileMedia = window.matchMedia("(max-width: 720px)");
-    const headerOffset = 92;
 
     function updateStartPurchaseButton() {
-      if (!mobileMedia.matches || hasStartedPurchase) {
+      if (!mobileMedia.matches) {
         setShowStartPurchase(false);
         return;
       }
 
-      const galleryRect = galleryElement.getBoundingClientRect();
-      const headingRect = headingElement.getBoundingClientRect();
+      const purchaseSectionRect =
+        purchaseSectionElement.getBoundingClientRect();
 
-      const galleryReachedTop = galleryRect.top <= headerOffset;
-      const headingNotReached = headingRect.top > window.innerHeight * 0.72;
+      const reachedPageTop = window.scrollY <= 8;
+      const purchaseWasReset = reachedPageTop && hasStartedPurchase;
 
-      setShowStartPurchase(galleryReachedTop && headingNotReached);
+      if (purchaseWasReset) {
+        setHasStartedPurchase(false);
+      }
+
+      const effectiveHasStartedPurchase = purchaseWasReset
+        ? false
+        : hasStartedPurchase;
+
+      const purchaseSectionHasNotEnteredScreen =
+        purchaseSectionRect.top > window.innerHeight;
+
+      setShowStartPurchase(
+        purchaseSectionHasNotEnteredScreen && !effectiveHasStartedPurchase,
+      );
     }
 
     updateStartPurchaseButton();
@@ -544,7 +555,7 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
       "(prefers-reduced-motion: reduce)",
     ).matches;
 
-    const headerOffset = 92;
+    const headerOffset = 54;
 
     const targetPosition =
       purchaseFlow.getBoundingClientRect().top + window.scrollY - headerOffset;
@@ -696,7 +707,7 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
               className="produto-detalhes-info"
               tabIndex={-1}
             >
-              <div ref={productHeadingRef} className="produto-detalhes-heading">
+              <div className="produto-detalhes-heading">
                 <p className="produto-detalhes-category">{product.categoria}</p>
 
                 <h1>{product.nome}</h1>
@@ -716,6 +727,7 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
               )}
 
               <section
+                ref={purchaseSectionRef}
                 id="produto-configuracao-pedido"
                 className="produto-detalhes-purchase"
                 aria-label="Configuração do pedido"
