@@ -11,6 +11,8 @@ import SizeGuideDrawer from "../components/SizeGuideDrawer";
 
 import { sizeGuides } from "../constants/sizeGuides";
 
+import { getColorOption } from "../constants/productFilters";
+
 import RelatedProducts from "../components/RelatedProducts";
 
 import ProductReviewsSummary from "../components/ProductReviewsSummary";
@@ -167,6 +169,14 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
   const { slug } = useParams();
 
   const sizeGuideTriggerRef = useRef(null);
+
+  const galleryRef = useRef(null);
+  const purchaseFlowRef = useRef(null);
+  const purchaseSectionRef = useRef(null);
+
+  const [showStartPurchase, setShowStartPurchase] = useState(false);
+  const [hasStartedPurchase, setHasStartedPurchase] = useState(false);
+
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -197,6 +207,7 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
     closeProduct,
     decreaseZoom,
     increaseZoom,
+    toggleZoom,
     handlePointerDown,
     handlePointerMove,
     stopDragging,
@@ -219,6 +230,8 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
           setSelectedSize("");
           setIsSizeGuideOpen(false);
           setQuantity(1);
+          setHasStartedPurchase(false);
+          setShowStartPurchase(false);
         }
       } catch (loadError) {
         console.error("Erro ao carregar produto:", loadError);
@@ -243,6 +256,69 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
       isMounted = false;
     };
   }, [slug]);
+
+  useEffect(() => {
+    const purchaseSectionElement = purchaseSectionRef.current;
+
+    if (!purchaseSectionElement) {
+      return undefined;
+    }
+
+    const mobileMedia = window.matchMedia("(max-width: 720px)");
+
+    function updateStartPurchaseButton() {
+      if (!mobileMedia.matches) {
+        setShowStartPurchase(false);
+        return;
+      }
+
+      const firstPurchaseControl = purchaseSectionElement.querySelector(
+        ".produto-detalhes-options, .produto-detalhes-buy-button",
+      );
+
+      const purchaseContentRect =
+        firstPurchaseControl?.getBoundingClientRect() ??
+        purchaseSectionElement.getBoundingClientRect();
+
+      const reachedPageTop = window.scrollY <= 8;
+      const purchaseWasReset = reachedPageTop && hasStartedPurchase;
+
+      if (purchaseWasReset) {
+        setHasStartedPurchase(false);
+      }
+
+      const effectiveHasStartedPurchase = purchaseWasReset
+        ? false
+        : hasStartedPurchase;
+
+      const viewportHeight =
+        window.visualViewport?.height ?? window.innerHeight;
+
+      const guideReservedSpace = 88;
+
+      const purchaseContentIsClearlyVisible =
+        purchaseContentRect.bottom <= viewportHeight - guideReservedSpace;
+
+      setShowStartPurchase(
+        !purchaseContentIsClearlyVisible && !effectiveHasStartedPurchase,
+      );
+    }
+
+    updateStartPurchaseButton();
+
+    window.addEventListener("scroll", updateStartPurchaseButton, {
+      passive: true,
+    });
+
+    window.addEventListener("resize", updateStartPurchaseButton);
+    mobileMedia.addEventListener("change", updateStartPurchaseButton);
+
+    return () => {
+      window.removeEventListener("scroll", updateStartPurchaseButton);
+      window.removeEventListener("resize", updateStartPurchaseButton);
+      mobileMedia.removeEventListener("change", updateStartPurchaseButton);
+    };
+  }, [product, hasStartedPurchase]);
 
   const images = useMemo(() => getProductImages(product), [product]);
 
@@ -477,6 +553,35 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
     });
   }
 
+  function handleStartPurchase() {
+    const purchaseFlow = purchaseFlowRef.current;
+
+    if (!purchaseFlow) {
+      return;
+    }
+
+    setHasStartedPurchase(true);
+    setShowStartPurchase(false);
+
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    const headerOffset = 54;
+
+    const targetPosition =
+      purchaseFlow.getBoundingClientRect().top + window.scrollY - headerOffset;
+
+    window.scrollTo({
+      top: targetPosition,
+      behavior: prefersReducedMotion ? "auto" : "smooth",
+    });
+
+    purchaseFlow.focus({
+      preventScroll: true,
+    });
+  }
+
   function handleWhatsApp() {
     if (!canBuy || !selectedVariation) {
       return;
@@ -494,7 +599,6 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
       `Preço unitário: ${formatPrice(unitPrice)}`,
       `Quantidade: ${quantity}`,
       `Total do pedido: ${formatPrice(totalPrice)}`,
-      selectedVariation.sku ? `SKU: ${selectedVariation.sku}` : "",
       "Tipo de pedido: Produção sob encomenda",
       "",
       `Link: ${productPageUrl}`,
@@ -557,57 +661,49 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
         }`}
       >
         <section className="produto-detalhes-container">
-          <nav
-            className="produto-detalhes-breadcrumb"
-            aria-label="Navegação estrutural"
-          >
-            <Link to="/">Home</Link>
-
-            <span aria-hidden="true">/</span>
-
-            <Link to="/produtos">Produtos</Link>
-
-            <span aria-hidden="true">/</span>
-
-            <span>{product.nome}</span>
-          </nav>
-
           <div className="produto-detalhes-content">
-            <section className="produto-detalhes-gallery">
-              <div className="produto-detalhes-thumbnails">
-                {colorImages.map((image) => (
-                  <button
-                    key={image.id}
-                    type="button"
-                    className={currentImage === image.url ? "is-active" : ""}
-                    onClick={() => handleThumbnailSelect(image)}
-                    aria-label={
-                      image.cor
-                        ? `Visualizar ${image.alt} na cor ${image.cor}`
-                        : `Visualizar ${image.alt}`
-                    }
-                  >
-                    <img src={image.url} alt={image.alt} />
-                  </button>
-                ))}
-              </div>
+            <div className="produto-detalhes-gallery-wrapper">
+              <section ref={galleryRef} className="produto-detalhes-gallery">
+                <div className="produto-detalhes-thumbnails">
+                  {colorImages.map((image) => (
+                    <button
+                      key={image.id}
+                      type="button"
+                      className={currentImage === image.url ? "is-active" : ""}
+                      onClick={() => handleThumbnailSelect(image)}
+                      aria-label={
+                        image.cor
+                          ? `Visualizar ${image.alt} na cor ${image.cor}`
+                          : `Visualizar ${image.alt}`
+                      }
+                    >
+                      <img src={image.url} alt={image.alt} />
+                    </button>
+                  ))}
+                </div>
 
-              <button
-                type="button"
-                className="produto-detalhes-main-image"
-                onClick={handleOpenZoom}
-                disabled={!currentImage}
-                aria-label="Ampliar imagem do produto"
-              >
-                {currentImage ? (
-                  <img src={currentImage} alt={product.nome} />
-                ) : (
-                  <span>Imagem indisponível</span>
-                )}
-              </button>
-            </section>
+                <button
+                  type="button"
+                  className="produto-detalhes-main-image"
+                  onClick={handleOpenZoom}
+                  disabled={!currentImage}
+                  aria-label="Ampliar imagem do produto"
+                >
+                  {currentImage ? (
+                    <img src={currentImage} alt={product.nome} />
+                  ) : (
+                    <span>Imagem indisponível</span>
+                  )}
+                </button>
+              </section>
+            </div>
 
-            <section className="produto-detalhes-info">
+            <section
+              ref={purchaseFlowRef}
+              id="produto-fluxo-compra"
+              className="produto-detalhes-info"
+              tabIndex={-1}
+            >
               <div className="produto-detalhes-heading">
                 <p className="produto-detalhes-category">{product.categoria}</p>
 
@@ -627,71 +723,100 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
                 </p>
               )}
 
-              {colors.length > 0 && (
-                <fieldset className="produto-detalhes-options">
-                  <legend>
-                    Cor
-                    {selectedColor && <span>: {selectedColor}</span>}
-                  </legend>
+              <section
+                ref={purchaseSectionRef}
+                id="produto-configuracao-pedido"
+                className="produto-detalhes-purchase"
+                aria-label="Configuração do pedido"
+                tabIndex={-1}
+              >
+                {colors.length > 0 && (
+                  <fieldset className="produto-detalhes-options">
+                    <legend>Cor</legend>
 
-                  <div className="produto-detalhes-option-list">
-                    {colors.map((color) => (
-                      <button
-                        key={color}
-                        type="button"
-                        className={selectedColor === color ? "is-selected" : ""}
-                        onClick={() => handleColorSelect(color)}
-                      >
-                        {color}
-                      </button>
-                    ))}
-                  </div>
-                </fieldset>
-              )}
+                    <div className="produto-detalhes-option-list">
+                      {colors.map((color) => {
+                        const colorOption = getColorOption(color);
+                        const isSelected = selectedColor === color;
 
-              {sizes.length > 0 && (
-                <fieldset className="produto-detalhes-options">
-                  <div className="produto-detalhes-options-heading">
-                    <legend>
-                      Tamanho
-                      {currentSize && <span>: {currentSize}</span>}
-                    </legend>
+                        return (
+                          <button
+                            key={color}
+                            type="button"
+                            className={`produto-detalhes-color-option ${
+                              isSelected ? "is-selected" : ""
+                            }`}
+                            onClick={() => handleColorSelect(color)}
+                            aria-pressed={isSelected}
+                            aria-label={`Selecionar cor ${colorOption.label}`}
+                          >
+                            <span
+                              className={`produto-detalhes-color-swatch ${colorOption.className}`}
+                              aria-hidden="true"
+                            />
 
-                    {sizeGuide && (
-                      <button
-                        ref={sizeGuideTriggerRef}
-                        type="button"
-                        className="produto-detalhes-size-guide-button"
-                        onClick={() => setIsSizeGuideOpen(true)}
-                        aria-haspopup="dialog"
-                        aria-expanded={isSizeGuideOpen}
-                        aria-controls="size-guide-drawer"
-                      >
-                        Guia de medidas
-                      </button>
-                    )}
-                  </div>
+                            <span>{colorOption.label}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </fieldset>
+                )}
 
-                  <div className="produto-detalhes-size-list">
-                    {sizes.map((size) => (
-                      <button
-                        key={size}
-                        type="button"
-                        className={currentSize === size ? "is-selected" : ""}
-                        onClick={() => {
-                          setSelectedSize(size);
-                          setQuantity(1);
-                        }}
-                      >
-                        {size}
-                      </button>
-                    ))}
-                  </div>
-                </fieldset>
-              )}
+                {sizes.length > 0 && (
+                  <fieldset className="produto-detalhes-options">
+                    <div className="produto-detalhes-options-heading">
+                      <legend>Tamanho</legend>
 
-              {selectedVariation && (
-                <>
+                      {sizeGuide && (
+                        <button
+                          ref={sizeGuideTriggerRef}
+                          type="button"
+                          className="produto-detalhes-size-guide-button"
+                          onClick={() => setIsSizeGuideOpen(true)}
+                          aria-haspopup="dialog"
+                          aria-expanded={isSizeGuideOpen}
+                          aria-controls="size-guide-drawer"
+                        >
+                          <svg
+                            className="produto-detalhes-size-guide-icon"
+                            viewBox="0 0 24 24"
+                            aria-hidden="true"
+                          >
+                            <path
+                              d="M4 7.5 7.5 4 20 16.5 16.5 20 4 7.5Zm5.25-.25-2 2m5-1-2 2m5-1-2 2m5-1-2 2"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="1.8"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>
+
+                          <span>Guia de medidas</span>
+                        </button>
+                      )}
+                    </div>
+
+                    <div className="produto-detalhes-size-list">
+                      {sizes.map((size) => (
+                        <button
+                          key={size}
+                          type="button"
+                          className={currentSize === size ? "is-selected" : ""}
+                          onClick={() => {
+                            setSelectedSize(size);
+                            setQuantity(1);
+                          }}
+                        >
+                          {size}
+                        </button>
+                      ))}
+                    </div>
+                  </fieldset>
+                )}
+
+                {selectedVariation && (
                   <div className="produto-detalhes-quantity">
                     <div className="produto-detalhes-quantity-heading">
                       <span>Quantidade</span>
@@ -732,27 +857,27 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
                       <strong>{formatPrice(totalPrice)}</strong>
                     </p>
                   </div>
+                )}
 
-                  <div className="produto-detalhes-order-note">
-                    <strong>Sob encomenda</strong>
+                <button
+                  type="button"
+                  className="produto-detalhes-buy-button"
+                  disabled={!canBuy}
+                  onClick={handleWhatsApp}
+                >
+                  {canBuy ? "Comprar pelo WhatsApp" : "Selecione cor e tamanho"}
+                </button>
 
-                    <span>
-                      O prazo de produção será confirmado pelo WhatsApp.
-                    </span>
-                  </div>
-                </>
-              )}
-
-              <button
-                type="button"
-                className="produto-detalhes-buy-button"
-                disabled={!canBuy}
-                onClick={handleWhatsApp}
-              >
-                {canBuy ? "Comprar pelo WhatsApp" : "Selecione as opções"}
-              </button>
+                <div className="produto-detalhes-order-note">
+                  <strong>Sob encomenda</strong>
+                  <span>
+                    O prazo de produção será confirmado pelo WhatsApp.
+                  </span>
+                </div>
+              </section>
             </section>
           </div>
+
           {hasEditorialContent && (
             <section
               className="produto-detalhes-editorial"
@@ -784,7 +909,7 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
                   </details>
                 )}
 
-                {product.caracteristicas.length > 0 && (
+                {product.caracteristicas?.length > 0 && (
                   <details>
                     <summary>Características</summary>
 
@@ -896,6 +1021,18 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
           onClose={() => setIsSizeGuideOpen(false)}
         />
 
+        {showStartPurchase && !selectedProduct && !isSizeGuideOpen && (
+          <button
+            type="button"
+            className="produto-detalhes-floating-purchase"
+            onClick={handleStartPurchase}
+            aria-controls="produto-fluxo-compra"
+          >
+            <span>Começar a compra</span>
+            <span aria-hidden="true">↓</span>
+          </button>
+        )}
+
         <ProductZoomModal
           product={selectedProduct}
           zoomLevel={zoomLevel}
@@ -903,6 +1040,7 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
           onClose={closeProduct}
           onDecreaseZoom={decreaseZoom}
           onIncreaseZoom={increaseZoom}
+          onToggleZoom={toggleZoom}
           onPointerDown={handlePointerDown}
           onPointerMove={handlePointerMove}
           onPointerUp={stopDragging}
