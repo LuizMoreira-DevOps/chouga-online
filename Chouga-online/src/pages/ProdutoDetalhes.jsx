@@ -270,7 +270,12 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
         return;
       }
 
-      const purchaseSectionRect =
+      const firstPurchaseControl = purchaseSectionElement.querySelector(
+        ".produto-detalhes-options, .produto-detalhes-buy-button",
+      );
+
+      const purchaseContentRect =
+        firstPurchaseControl?.getBoundingClientRect() ??
         purchaseSectionElement.getBoundingClientRect();
 
       const reachedPageTop = window.scrollY <= 8;
@@ -284,11 +289,16 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
         ? false
         : hasStartedPurchase;
 
-      const purchaseSectionHasNotEnteredScreen =
-        purchaseSectionRect.top > window.innerHeight;
+      const viewportHeight =
+        window.visualViewport?.height ?? window.innerHeight;
+
+      const guideReservedSpace = 88;
+
+      const purchaseContentIsClearlyVisible =
+        purchaseContentRect.bottom <= viewportHeight - guideReservedSpace;
 
       setShowStartPurchase(
-        purchaseSectionHasNotEnteredScreen && !effectiveHasStartedPurchase,
+        !purchaseContentIsClearlyVisible && !effectiveHasStartedPurchase,
       );
     }
 
@@ -649,21 +659,6 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
         }`}
       >
         <section className="produto-detalhes-container">
-          <nav
-            className="produto-detalhes-breadcrumb"
-            aria-label="Navegação estrutural"
-          >
-            <Link to="/">Home</Link>
-
-            <span aria-hidden="true">/</span>
-
-            <Link to="/produtos">Produtos</Link>
-
-            <span aria-hidden="true">/</span>
-
-            <span>{product.nome}</span>
-          </nav>
-
           <div className="produto-detalhes-content">
             <div className="produto-detalhes-gallery-wrapper">
               <section ref={galleryRef} className="produto-detalhes-gallery">
