@@ -5,7 +5,12 @@ import { fileURLToPath } from "node:url";
 const scriptDirectory = dirname(fileURLToPath(import.meta.url));
 const projectDirectory = resolve(scriptDirectory, "..");
 const distDirectory = resolve(projectDirectory, "dist");
+
 const manifestPath = resolve(distDirectory, "ssg-manifest.json");
+const sitemapPath = resolve(distDirectory, "sitemap.xml");
+const robotsPath = resolve(distDirectory, "robots.txt");
+
+const siteUrl = "https://www.chouga.com.br";
 
 async function assertFileExists(filePath, label) {
   try {
@@ -16,7 +21,9 @@ async function assertFileExists(filePath, label) {
     }
   } catch (error) {
     if (error.code === "ENOENT") {
-      throw new Error(`${label} nao encontrado: ${filePath}`, { cause: error });
+      throw new Error(`${label} nao encontrado: ${filePath}`, {
+        cause: error,
+      });
     }
 
     throw error;
@@ -70,6 +77,58 @@ function assertRequiredMetadata(html, route) {
   }
 }
 
+async function validateSitemap(routes) {
+  await assertFileExists(sitemapPath, "Sitemap");
+
+  const sitemap = await readFile(sitemapPath, "utf-8");
+
+  if (
+    !sitemap.includes(
+      '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+    )
+  ) {
+    throw new Error("Sitemap possui estrutura XML invalida.");
+  }
+
+  const expectedRoutes = routes.filter((route) => route !== "/em-breve");
+
+  for (const route of expectedRoutes) {
+    const absoluteUrl = route === "/" ? `${siteUrl}/` : `${siteUrl}${route}`;
+
+    if (!sitemap.includes(`<loc>${absoluteUrl}</loc>`)) {
+      throw new Error(`URL ausente no sitemap: ${absoluteUrl}`);
+    }
+  }
+
+  if (sitemap.includes(`${siteUrl}/em-breve`)) {
+    throw new Error("A rota /em-breve nao deve estar presente no sitemap.");
+  }
+
+  console.log(
+    `[SSG Validate] Sitemap valido com ${expectedRoutes.length} URLs esperadas.`,
+  );
+}
+
+async function validateRobots() {
+  await assertFileExists(robotsPath, "robots.txt");
+
+  const robots = await readFile(robotsPath, "utf-8");
+
+  if (!robots.includes("User-agent: *")) {
+    throw new Error("robots.txt nao possui User-agent: *.");
+  }
+
+  if (!robots.includes("Allow: /")) {
+    throw new Error("robots.txt nao permite rastreamento da raiz.");
+  }
+
+  if (!robots.includes(`Sitemap: ${siteUrl}/sitemap.xml`)) {
+    throw new Error("robots.txt nao referencia o sitemap oficial.");
+  }
+
+  console.log("[SSG Validate] robots.txt valido.");
+}
+
 async function validateRoute(route) {
   const htmlPath = resolveRouteHtmlPath(route);
 
@@ -110,6 +169,9 @@ async function validateSsgOutput() {
     await validateRoute(route);
     console.log(`[SSG Validate] Rota valida: ${route}`);
   }
+
+  await validateSitemap(routes);
+  await validateRobots();
 
   console.log(`[SSG Validate] Artefato validado com ${routes.length} rotas.`);
 }
