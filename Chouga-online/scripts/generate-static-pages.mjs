@@ -9,6 +9,7 @@ const projectDirectory = resolve(scriptDirectory, "..");
 const distDirectory = resolve(projectDirectory, "dist");
 const sourceHtmlPath = resolve(distDirectory, "index.html");
 const manifestPath = resolve(distDirectory, "ssg-manifest.json");
+const sitemapPath = resolve(distDirectory, "sitemap.xml");
 
 const siteUrl = "https://www.chouga.com.br";
 
@@ -56,6 +57,33 @@ function escapeHtmlAttribute(value) {
     .replaceAll('"', "&quot;")
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;");
+}
+
+function escapeXml(value) {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&apos;");
+}
+
+function generateSitemap(routes) {
+  const urls = routes
+    .map((route) => {
+      const absoluteUrl = escapeXml(buildAbsoluteUrl(route));
+
+      return `  <url>
+    <loc>${absoluteUrl}</loc>
+  </url>`;
+    })
+    .join("\n");
+
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${urls}
+</urlset>
+`;
 }
 
 function buildAbsoluteUrl(route) {
@@ -194,6 +222,17 @@ async function generateStaticPages() {
   const productRoutes = activeProducts.map(
     (product) => `/produtos/${product.slug}`,
   );
+
+  const sitemapRoutes = [
+    ...staticRoutes.filter((route) => route !== "/em-breve"),
+    ...productRoutes,
+  ];
+
+  const sitemap = generateSitemap(sitemapRoutes);
+
+  await writeFile(sitemapPath, sitemap, "utf-8");
+
+  console.log(`[SSG] Sitemap gerado com ${sitemapRoutes.length} URLs.`);
 
   const manifest = {
     generatedAt: new Date().toISOString(),
