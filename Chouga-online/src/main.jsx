@@ -9,7 +9,6 @@ import { initializeGoogleAnalytics } from "./services/googleAnalytics.js";
 import CookieConsentBanner from "./components/CookieConsentBanner.jsx";
 
 import "./css/index.css";
-import "@fontsource/oswald";
 
 initializeClarity();
 initializeGoogleAnalytics();
