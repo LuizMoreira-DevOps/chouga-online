@@ -9,26 +9,9 @@ import { initializeGoogleAnalytics } from "./services/googleAnalytics.js";
 import CookieConsentBanner from "./components/CookieConsentBanner.jsx";
 
 import "./css/index.css";
+import { applyTheme, getSavedTheme } from "./services/theme.js";
 
-const THEME_STORAGE_KEY = "chouga-theme";
-
-function getPreferredTheme() {
-  const savedTheme = localStorage.getItem(THEME_STORAGE_KEY);
-
-  if (savedTheme === "light" || savedTheme === "dark") {
-    return savedTheme;
-  }
-
-  return window.matchMedia("(prefers-color-scheme: light)").matches
-    ? "light"
-    : "dark";
-}
-
-function applyTheme(theme) {
-  document.documentElement.dataset.theme = theme;
-}
-
-applyTheme(getPreferredTheme());
+applyTheme(getSavedTheme());
 
 initializeClarity();
 initializeGoogleAnalytics();
