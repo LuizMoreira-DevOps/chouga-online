@@ -1,3 +1,16 @@
+## [1.20.0](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.19.0...v1.20.0) (2026-08-07)
+
+### Features
+
+* adicionar sitemap e robots para indexacao ([#285](https://github.com/LuizMoreira-DevOps/chouga-online/issues/285)) ([#286](https://github.com/LuizMoreira-DevOps/chouga-online/issues/286)) ([c061143](https://github.com/LuizMoreira-DevOps/chouga-online/commit/c061143424b5b2429110cfe034c65d8a3bc04dec))
+
+### Bug Fixes
+
+* corrigir geração das notas de release ([#279](https://github.com/LuizMoreira-DevOps/chouga-online/issues/279)) ([#281](https://github.com/LuizMoreira-DevOps/chouga-online/issues/281)) ([9277454](https://github.com/LuizMoreira-DevOps/chouga-online/commit/9277454efc31a9e6a814e0c8c9e8878d5f57e1fb))
+* corrigir geração das notas de release ([#279](https://github.com/LuizMoreira-DevOps/chouga-online/issues/279)) ([#282](https://github.com/LuizMoreira-DevOps/chouga-online/issues/282)) ([b7f2284](https://github.com/LuizMoreira-DevOps/chouga-online/commit/b7f228406bd0ac4e5b57ef959b7877267a144f52))
+* corrigir geração das notas de release ([#279](https://github.com/LuizMoreira-DevOps/chouga-online/issues/279)) ([#283](https://github.com/LuizMoreira-DevOps/chouga-online/issues/283)) ([d889093](https://github.com/LuizMoreira-DevOps/chouga-online/commit/d889093cb33c8599e539d385c21ebe32c30e2f9d))
+* corrigir geração das notas de release ([#279](https://github.com/LuizMoreira-DevOps/chouga-online/issues/279)) ([#284](https://github.com/LuizMoreira-DevOps/chouga-online/issues/284)) ([0b438ae](https://github.com/LuizMoreira-DevOps/chouga-online/commit/0b438aef39712bc2cd1cecda7a257127ffa68628))
+
 ## [1.19.0](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.18.0...v1.19.0) (2026-08-06)
 
 ## [1.18.0](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.17.2...v1.18.0) (2026-08-04)
