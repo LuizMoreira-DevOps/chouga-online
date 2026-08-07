@@ -1,10 +1,7 @@
-import { Link } from "react-router-dom";
 import { getColorOption } from "../constants/productFilters";
 
 function ProductFilters({
   page,
-  breadcrumbLabel,
-  breadcrumbPath,
   categories,
   categoryFilter,
   onCategoryChange,
@@ -21,14 +18,6 @@ function ProductFilters({
 
   return (
     <aside className={`${page}-sidebar`}>
-      <nav className={`${page}-breadcrumb`} aria-label="Breadcrumb">
-        <Link to="/">Home</Link>
-
-        <span>/</span>
-
-        <Link to={breadcrumbPath}>{breadcrumbLabel}</Link>
-      </nav>
-
       {hasCategories && (
         <>
           <div className="filter-group">
@@ -50,9 +39,7 @@ function ProductFilters({
             </div>
           </div>
 
-          {(hasSizes || hasColors) && (
-            <div className="filter-divider"></div>
-          )}
+          {(hasSizes || hasColors) && <div className="filter-divider"></div>}
         </>
       )}
 
