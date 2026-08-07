@@ -161,6 +161,22 @@
 }
 
 /* =========================
+   TEMA LIGHT
+========================= */
+
+:root[data-theme="light"] {
+  --color-background: #fff9f3;
+  --color-surface: #fff;
+  --color-surface-elevated: #f1f1ee;
+
+  --color-text-primary: #0e0e0e;
+  --color-text-secondary: #5c5c58;
+  --color-text-muted: #777773;
+
+  --color-border: #d6d6d2;
+}
+
+/* =========================
    BREAKPOINTS RESPONSIVOS
 
    Breakpoints principais:
