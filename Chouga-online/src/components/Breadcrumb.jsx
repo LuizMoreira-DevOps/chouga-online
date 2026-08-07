@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import "../css/breadcrumb.css";
 
 function Breadcrumb({ items = [] }) {
   if (!items.length) {
