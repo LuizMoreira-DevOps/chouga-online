@@ -158,6 +158,12 @@
   --letter-spacing-tight: -0.02em;
   --letter-spacing-normal: 0;
   --letter-spacing-wide: 0.04em;
+
+  /* =========================
+   TRANSIÇÕES
+========================= */
+  --transition-fast: 160ms ease;
+  --transition-base: 280ms ease;
 }
 
 /* =========================
