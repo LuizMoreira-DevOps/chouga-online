@@ -1,32 +1,45 @@
 :root {
   /* =========================
-     CORES DE FUNDO
+     CORES DA MARCA
   ========================= */
-  --color-bg: #0d0d0d;
-  --color-bg-soft: #141414;
-  --color-bg-elevated: #151515;
-  --color-bg-image: #111;
+  --brand-red: #d91a20;
+  --brand-black: #000000;
+  --brand-white: #ffffff;
+  --brand-gray: #b9b9b9;
+  --brand-red-deep: #7a2b2e;
+
+  /* =========================
+     CORES SEMÂNTICAS DO DARK MODE
+   ========================= */
+  --color-background: #0e0e0e;
+  --color-surface: #181818;
+  --color-surface-elevated: #242424;
+
+  --color-text-primary: #fff9f3;
+  --color-text-secondary: #b8b8b3;
+  --color-text-muted: #8a8a86;
+
+  /* =========================
+   CORES DE FUNDO
+========================= */
+  --color-bg: var(--color-background);
+  --color-bg-soft: var(--color-surface);
+  --color-bg-elevated: var(--color-surface-elevated);
+  --color-bg-image: #111111;
   --color-bg-status: #121212;
 
   /* =========================
-     CORES DE TEXTO
-  ========================= */
-  --color-text: #f1d6bd;
-  --color-text-strong: #f3d7bf;
-  --color-text-white: #fff;
-  --color-muted: #8f8177;
-  --color-text-55: rgb(241 214 189 / 55%);
-  --color-text-72: rgb(241 214 189 / 72%);
-  --color-text-78: rgb(241 214 189 / 78%);
+   CORES DE TEXTO
+========================= */
+  --color-text: var(--color-text-primary);
+  --color-text-strong: var(--color-text-primary);
+  --color-text-white: var(--brand-white);
+  --color-muted: var(--color-text-muted);
 
-  /* =========================
-     CORES DA MARCA
-  ========================= */
-  --color-red: #e93612;
-  --color-red-strong: #f02a00;
-  --color-red-dark: #7a2b2e;
-  --color-red-dark-hover: #96363a;
-  --color-gold: #d6a54c;
+  /* Compatibilidade temporária com transparências existentes */
+  --color-text-55: rgb(255 249 243 / 55%);
+  --color-text-72: rgb(255 249 243 / 72%);
+  --color-text-78: rgb(255 249 243 / 78%);
 
   /* =========================
      CORES DE PRODUTO
@@ -89,15 +102,27 @@
   --gap-lg: var(--spacing-7);
   --gap-xl: var(--spacing-9);
 
+  --color-red: var(--brand-red);
+  --color-red-strong: var(--brand-red);
+  --color-red-dark: var(--brand-red-deep);
+  --color-red-dark-hover: #96363a;
+  --color-gold: #d6a54c;
+
   /* =========================
-     FONTES
-  ========================= */
-  --font-base: "Oswald", arial, helvetica, sans-serif;
-  --font-title: "Oswald", arial, helvetica, sans-serif;
-  --font-display: "Bangers", sans-serif;
-  --font-street: "Sedgwick", cursive;
+   FONTES
+========================= */
+  --font-base: "Oswald", Arial, Helvetica, sans-serif;
+  --font-title: "Oswald", Arial, Helvetica, sans-serif;
+
+  /* Papéis oficiais */
+  --font-display: "BlackOps", sans-serif;
+  --font-accent: "Bangers", sans-serif;
+  --font-editorial: "Sedgwick", cursive;
+
+  /* Fontes complementares / compatibilidade */
+  --font-street: var(--font-editorial);
   --font-marker: "PermanentMarker", cursive;
-  --font-black-ops: "BlackOps", sans-serif;
+  --font-black-ops: var(--font-display);
   --font-glitch: "RubikGlitch", sans-serif;
 
   /* =========================
