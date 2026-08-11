@@ -204,3 +204,20 @@ select:focus-visible {
     min-height: auto;
   }
 }
+
+/* =========================
+   ESTRUTURA PADRÃO DAS PÁGINAS
+========================= */
+
+.app-layout {
+  min-height: 100svh;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.app-content {
+  flex: 1;
+
+  min-height: 0;
+}

@@ -1,6 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { FiHome, FiLock, FiShoppingCart, FiUser } from "react-icons/fi";
 
 import "../css/header.css";
 import logoImg from "../assets/logo/Logo.png";
@@ -15,97 +14,130 @@ const navLinks = [
     path: "/sobre",
   },
   {
-    label: "Contato",
+    label: "Fale com a gente",
     path: "/contato",
   },
 ];
 
+function getCurrentSection(pathname) {
+  if (pathname.startsWith("/produtos")) {
+    return "Produtos";
+  }
+
+  if (pathname === "/sobre") {
+    return "Sobre";
+  }
+
+  if (pathname === "/contato") {
+    return "Fale com a gente";
+  }
+
+  return "Menu";
+}
+
+function isCurrentSection(pathname, path) {
+  if (path === "/produtos") {
+    return pathname.startsWith("/produtos");
+  }
+
+  return pathname === path;
+}
+
 function Header() {
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [menuOpenPath, setMenuOpenPath] = useState(null);
   const location = useLocation();
 
   const isHome = location.pathname === "/";
 
-  const visibleNavLinks = navLinks.filter(
-    (link) => link.path !== location.pathname,
-  );
+  const currentSection = getCurrentSection(location.pathname);
+  const menuOpen = menuOpenPath === location.pathname;
 
   function closeMenu() {
-    setMenuOpen(false);
+    setMenuOpenPath(null);
   }
 
   function toggleMenu() {
-    setMenuOpen((currentState) => !currentState);
+    setMenuOpenPath((currentPath) =>
+      currentPath === location.pathname ? null : location.pathname,
+    );
   }
+
+  useEffect(() => {
+    if (!menuOpen) {
+      return undefined;
+    }
+
+    function handleEscape(event) {
+      if (event.key === "Escape") {
+        setMenuOpenPath(null);
+      }
+    }
+
+    window.addEventListener("keydown", handleEscape);
+
+    return () => {
+      window.removeEventListener("keydown", handleEscape);
+    };
+  }, [menuOpen]);
 
   return (
     <header className="header">
-      <Link to="/" className="logo" onClick={closeMenu}>
+      <Link
+        to="/"
+        className="logo"
+        onClick={closeMenu}
+        aria-label="Chouga - Página inicial"
+      >
         <div className="logo-wrapper">
-          <img src={logoImg} alt="Logo Chouga Skateboard" />
+          <img src={logoImg} alt="Chouga Skateboard" />
 
-          <span className="logo-mark">®</span>
+          <span className="logo-mark" aria-hidden="true">
+            ®
+          </span>
         </div>
       </Link>
 
-      <div className="header-actions">
-        {!isHome && (
-          <Link
-            to="/"
-            className="header-icon-button"
-            onClick={closeMenu}
-            aria-label="Página inicial"
-            title="Página inicial"
-          >
-            <FiHome aria-hidden="true" />
-          </Link>
-        )}
-
-        <Link
-          to="/em-breve"
-          className="header-icon-button is-locked"
-          title="Login em breve"
-          aria-label="Login em breve"
-          onClick={closeMenu}
-        >
-          <FiUser aria-hidden="true" />
-          <FiLock className="lock-icon" aria-hidden="true" />
-        </Link>
-
-        <Link
-          to="/em-breve"
-          className="header-icon-button is-locked"
-          title="Carrinho em breve"
-          aria-label="Carrinho em breve"
-          onClick={closeMenu}
-        >
-          <FiShoppingCart aria-hidden="true" />
-          <FiLock className="lock-icon" aria-hidden="true" />
-        </Link>
-
-        {!isHome && (
+      {!isHome && (
+        <div className="header-navigation">
           <button
-            className={`menu-toggle ${menuOpen ? "is-open" : ""}`}
+            className={`header-menu-trigger ${menuOpen ? "is-open" : ""}`}
             type="button"
             aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
             aria-expanded={menuOpen}
+            aria-controls="header-navigation-menu"
             onClick={toggleMenu}
           >
-            <span></span>
-            <span></span>
-            <span></span>
-          </button>
-        )}
-      </div>
+            <span className="header-current-section">{currentSection}</span>
 
-      {!isHome && (
-        <nav className={`nav ${menuOpen ? "nav-open" : ""}`}>
-          {visibleNavLinks.map((link) => (
-            <Link key={link.path} to={link.path} onClick={closeMenu}>
-              {link.label}
-            </Link>
-          ))}
-        </nav>
+            <span className="menu-toggle-icon" aria-hidden="true">
+              <span />
+              <span />
+              <span />
+            </span>
+          </button>
+
+          <nav
+            id="header-navigation-menu"
+            className={`nav ${menuOpen ? "nav-open" : ""}`}
+            aria-label="Navegação principal"
+          >
+            {navLinks.map((link) => {
+              const isCurrent = isCurrentSection(location.pathname, link.path);
+
+              return (
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  className={isCurrent ? "is-current" : ""}
+                  aria-current={isCurrent ? "page" : undefined}
+                  onClick={closeMenu}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
+          </nav>
+        </div>
       )}
     </header>
   );
