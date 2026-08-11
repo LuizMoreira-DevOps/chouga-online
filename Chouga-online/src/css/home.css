@@ -13,8 +13,10 @@
   min-height: auto;
 }
 
-.home-section {
+.home-section,
+.home-section.page-section {
   min-height: 0;
+
   height: calc(100svh - var(--header-height-desktop));
 
   display: grid;
@@ -27,11 +29,6 @@
   padding: 0 var(--page-padding-x);
 
   overflow: hidden;
-}
-
-.home-section.page-section {
-  min-height: 0;
-  padding: 0 var(--page-padding-x);
 }
 
 /* =========================
@@ -63,6 +60,7 @@
   text-transform: uppercase;
 
   font-family: var(--font-display);
+
   letter-spacing: 0.06em;
 }
 
@@ -183,6 +181,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
   gap: 8px;
 
   overflow: visible;
@@ -190,6 +189,7 @@
   color: var(--color-text);
 
   background: transparent;
+
   border: none;
   outline: none;
 
@@ -212,6 +212,7 @@
 .wheel-item:active,
 .wheel-item:focus-visible {
   outline: none;
+
   box-shadow: none;
 }
 
@@ -265,6 +266,7 @@
 .wheel-label,
 .wheel-sub-label {
   pointer-events: none;
+
   user-select: none;
 }
 
@@ -377,7 +379,8 @@
   .home-section,
   .home-section.page-section {
     height: auto;
-    min-height: calc(100svh - 72px);
+
+    min-height: calc(100svh - var(--header-height-tablet));
 
     display: flex;
     flex-direction: column;
@@ -480,7 +483,7 @@
 
   .home-section,
   .home-section.page-section {
-    min-height: calc(100svh - 64px);
+    min-height: calc(100svh - var(--header-height-mobile));
 
     justify-content: center;
 
@@ -530,6 +533,10 @@
   }
 }
 
+/* =========================
+   MOBILE EXTREMO
+========================= */
+
 @media (max-width: 320px) {
   .home-section,
   .home-section.page-section {
@@ -537,7 +544,7 @@
   }
 
   .wheel-menu {
-    --wheel-size: min(76vw, 240px);
+    --wheel-size: min(78vw, 250px);
     --wheel-radius: calc(var(--wheel-size) * 0.47);
   }
 
@@ -549,6 +556,7 @@
   .wheel-item {
     width: 54px;
     height: 54px;
+
     gap: 3px;
   }
 
@@ -557,10 +565,11 @@
   }
 
   .wheel-label {
-    max-width: 68px;
+    max-width: 72px;
 
-    font-size: 0.66rem;
+    font-size: 0.68rem;
     line-height: 1.05;
+
     letter-spacing: 0.8px;
 
     white-space: normal;

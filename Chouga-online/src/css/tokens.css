@@ -1,8 +1,10 @@
 :root {
   /* =========================
-     ALTURA DO HEADER
-   ========================= */
+     ALTURAS DO HEADER
+  ========================= */
   --header-height-desktop: 96px;
+  --header-height-tablet: 72px;
+  --header-height-mobile: 64px;
 
   /* =========================
      CORES DE FUNDO
@@ -78,6 +80,12 @@
   --spacing-9: 4rem; /* 64px */
 
   /* =========================
+     TRANSIÇÕES
+  ========================= */
+  --transition-fast: 160ms ease;
+  --transition-base: 280ms ease;
+
+  /* =========================
      LAYOUT
   ========================= */
   --container-max: 1500px;
@@ -143,7 +151,7 @@
 /* =========================
    BREAKPOINTS RESPONSIVOS
 
-   Breakpoints principais:
+   Principais:
    - 1400px: desktop reduzido
    - 900px: tablet e navegação compacta
    - 700px: mobile amplo
@@ -159,7 +167,7 @@
    - 480px: ajustes para telas muito pequenas
 
    Acessibilidade:
-   - prefers-reduced-motion: redução de animações
+   - prefers-reduced-motion
 ========================= */
 
 @media (max-width: 900px) {
