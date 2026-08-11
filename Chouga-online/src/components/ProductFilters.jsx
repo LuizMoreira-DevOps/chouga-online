@@ -1,7 +1,6 @@
 import { getColorOption } from "../constants/productFilters";
 
 function ProductFilters({
-  page,
   categories,
   categoryFilter,
   onCategoryChange,
@@ -17,12 +16,11 @@ function ProductFilters({
   const hasColors = availableColors.length > 0;
 
   return (
-    <aside className={`${page}-sidebar`}>
+    <aside className="product-filters">
       {hasCategories && (
         <>
           <div className="filter-group">
             <h2>Categorias</h2>
-
             <div className="category-list">
               {categories.map((category) => (
                 <button
