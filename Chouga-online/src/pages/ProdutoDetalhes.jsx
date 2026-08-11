@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
 import Layout from "../components/Layout";
+import Breadcrumb from "../components/Breadcrumb";
 import ProductZoomModal from "../components/ProductZoomModal";
 
 import useProductZoom from "../hooks/useProductZoom";
@@ -660,6 +661,13 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
           selectedProduct ? "is-zoom-open" : ""
         }`}
       >
+        <Breadcrumb
+          items={[
+            { label: "Produtos", path: "/produtos" },
+            { label: product.nome },
+          ]}
+        />
+
         <section className="produto-detalhes-container">
           <div className="produto-detalhes-content">
             <div className="produto-detalhes-gallery-wrapper">

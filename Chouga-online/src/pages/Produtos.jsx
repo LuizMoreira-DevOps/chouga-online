@@ -5,7 +5,6 @@ import BackToTop from "../components/BackToTop";
 import Layout from "../components/Layout";
 import ProductFilters from "../components/ProductFilters";
 import ProductGrid from "../components/ProductGrid";
-import Breadcrumb from "../components/Breadcrumb";
 
 import {
   getAvailableColors,
@@ -293,10 +292,6 @@ function Produtos({
     <Layout>
       <main className="produtos-page page-bg">
         <section className="produtos-section page-section">
-          <Breadcrumb
-            items={[{ label: "Home", path: "/" }, { label: title }]}
-          />
-
           <div className="produtos-container page-container">
             <ProductFilters
               categories={categories}
