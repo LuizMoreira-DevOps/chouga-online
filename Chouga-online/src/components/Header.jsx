@@ -46,6 +46,7 @@ function isCurrentSection(pathname, path) {
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
 
+  const headerRef = useRef(null);
   const triggerRef = useRef(null);
   const location = useLocation();
 
@@ -71,21 +72,36 @@ function Header() {
       return undefined;
     }
 
-    function handleEscape(event) {
-      if (event.key === "Escape") {
-        closeMenu({ restoreFocus: true });
+    function handlePointerDown(event) {
+      if (!headerRef.current?.contains(event.target)) {
+        setMenuOpen(false);
       }
     }
 
-    window.addEventListener("keydown", handleEscape);
+    function handleKeyDown(event) {
+      if (event.key === "Escape") {
+        setMenuOpen(false);
+
+        requestAnimationFrame(() => {
+          triggerRef.current?.focus();
+        });
+      }
+    }
+
+    document.addEventListener("pointerdown", handlePointerDown);
+    window.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      window.removeEventListener("keydown", handleEscape);
+      document.removeEventListener("pointerdown", handlePointerDown);
+      window.removeEventListener("keydown", handleKeyDown);
     };
   }, [menuOpen]);
 
   return (
-    <header className={`header ${menuOpen ? "is-expanded" : ""}`}>
+    <header
+      ref={headerRef}
+      className={`header ${menuOpen ? "is-expanded" : ""}`}
+    >
       <div className="header-main">
         <Link
           to="/"
