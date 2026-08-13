@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 import "../css/header.css";
@@ -44,22 +44,26 @@ function isCurrentSection(pathname, path) {
 }
 
 function Header() {
-  const [menuOpenPath, setMenuOpenPath] = useState(null);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const triggerRef = useRef(null);
   const location = useLocation();
 
   const isHome = location.pathname === "/";
-
   const currentSection = getCurrentSection(location.pathname);
-  const menuOpen = menuOpenPath === location.pathname;
 
-  function closeMenu() {
-    setMenuOpenPath(null);
+  function closeMenu({ restoreFocus = false } = {}) {
+    setMenuOpen(false);
+
+    if (restoreFocus) {
+      requestAnimationFrame(() => {
+        triggerRef.current?.focus();
+      });
+    }
   }
 
   function toggleMenu() {
-    setMenuOpenPath((currentPath) =>
-      currentPath === location.pathname ? null : location.pathname,
-    );
+    setMenuOpen((current) => !current);
   }
 
   useEffect(() => {
@@ -69,7 +73,7 @@ function Header() {
 
     function handleEscape(event) {
       if (event.key === "Escape") {
-        setMenuOpenPath(null);
+        closeMenu({ restoreFocus: true });
       }
     }
 
@@ -81,46 +85,52 @@ function Header() {
   }, [menuOpen]);
 
   return (
-    <header className="header">
-      <Link
-        to="/"
-        className="logo"
-        onClick={closeMenu}
-        aria-label="Chouga - Página inicial"
-      >
-        <div className="logo-wrapper">
-          <img src={logoImg} alt="Chouga Skateboard" />
+    <header className={`header ${menuOpen ? "is-expanded" : ""}`}>
+      <div className="header-main">
+        <Link
+          to="/"
+          className="logo"
+          onClick={() => closeMenu()}
+          aria-label="Chouga - Página inicial"
+        >
+          <div className="logo-wrapper">
+            <img src={logoImg} alt="Chouga Skateboard" />
 
-          <span className="logo-mark" aria-hidden="true">
-            ®
-          </span>
-        </div>
-      </Link>
+            <span className="logo-mark" aria-hidden="true">
+              ®
+            </span>
+          </div>
+        </Link>
+
+        {!isHome && (
+          <div className="header-navigation">
+            <button
+              ref={triggerRef}
+              className={`header-menu-trigger ${menuOpen ? "is-open" : ""}`}
+              type="button"
+              aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
+              aria-expanded={menuOpen}
+              aria-controls="header-navigation-menu"
+              onClick={toggleMenu}
+            >
+              <span className="header-current-section">{currentSection}</span>
+
+              <span className="menu-toggle-icon" aria-hidden="true">
+                <span />
+                <span />
+                <span />
+              </span>
+            </button>
+          </div>
+        )}
+      </div>
 
       {!isHome && (
-        <div className="header-navigation">
-          <button
-            className={`header-menu-trigger ${menuOpen ? "is-open" : ""}`}
-            type="button"
-            aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
-            aria-expanded={menuOpen}
-            aria-controls="header-navigation-menu"
-            onClick={toggleMenu}
-          >
-            <span className="header-current-section">{currentSection}</span>
-
-            <span className="menu-toggle-icon" aria-hidden="true">
-              <span />
-              <span />
-              <span />
-            </span>
-          </button>
-
-          <nav
-            id="header-navigation-menu"
-            className={`nav ${menuOpen ? "nav-open" : ""}`}
-            aria-label="Navegação principal"
-          >
+        <div
+          id="header-navigation-menu"
+          className={`header-menu-panel ${menuOpen ? "is-open" : ""}`}
+        >
+          <nav className="nav" aria-label="Navegação principal">
             {navLinks.map((link) => {
               const isCurrent = isCurrentSection(location.pathname, link.path);
 
@@ -130,7 +140,7 @@ function Header() {
                   to={link.path}
                   className={isCurrent ? "is-current" : ""}
                   aria-current={isCurrent ? "page" : undefined}
-                  onClick={closeMenu}
+                  onClick={() => closeMenu()}
                 >
                   {link.label}
                 </Link>

@@ -70,6 +70,10 @@
   font-display: swap;
 }
 
+/* =========================
+   RESET GLOBAL
+========================= */
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -115,13 +119,30 @@ svg {
 }
 
 /* =========================
+   ESTRUTURA GLOBAL DO LAYOUT
+========================= */
+
+.app-layout {
+  min-height: 100svh;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.app-content {
+  flex: 1;
+
+  min-height: 0;
+}
+
+/* =========================
    ESTRUTURA PADRÃO DAS PÁGINAS
 ========================= */
 
 .page-bg {
   position: relative;
 
-  min-height: 100vh;
+  min-height: 100%;
 
   overflow-x: hidden;
 
@@ -153,8 +174,6 @@ svg {
   position: relative;
   z-index: 1;
 
-  min-height: 100vh;
-
   padding: var(--page-padding-top) var(--page-padding-x)
     var(--page-padding-bottom);
 }
@@ -166,20 +185,11 @@ svg {
 }
 
 /* =========================
-   ESTRUTURA GLOBAL DO LAYOUT
+   ALTURA ÚTIL DAS PÁGINAS
 ========================= */
 
-.app-layout {
-  min-height: 100svh;
-
-  display: flex;
-  flex-direction: column;
-}
-
-.app-content {
-  flex: 1;
-
-  min-height: 0;
+.page-viewport {
+  min-height: calc(100svh - var(--header-height-desktop));
 }
 
 /* =========================
@@ -227,11 +237,21 @@ select:focus-visible {
 }
 
 /* =========================
-   RESPONSIVIDADE
+   TABLET
 ========================= */
 
 @media (max-width: 900px) {
-  .page-section {
-    min-height: auto;
+  .page-viewport {
+    min-height: calc(100svh - var(--header-height-tablet));
+  }
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 520px) {
+  .page-viewport {
+    min-height: calc(100svh - var(--header-height-mobile));
   }
 }

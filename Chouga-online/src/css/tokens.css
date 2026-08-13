@@ -90,7 +90,7 @@
   ========================= */
   --container-max: 1500px;
   --page-padding-x: clamp(18px, 5vw, 80px);
-  --page-padding-top: 96px;
+  --page-padding-top: var(--spacing-5);
   --page-padding-bottom: 48px;
 
   /* =========================
@@ -172,14 +172,14 @@
 
 @media (max-width: 900px) {
   :root {
-    --page-padding-top: 88px;
+    --page-padding-top: var(--spacing-4);
     --page-padding-bottom: 48px;
   }
 }
 
 @media (max-width: 520px) {
   :root {
-    --page-padding-top: 82px;
+    --page-padding-top: var(--spacing-3);
     --page-padding-bottom: 40px;
   }
 }
