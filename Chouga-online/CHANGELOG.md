@@ -1,3 +1,9 @@
+## [1.21.0](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.20.0...v1.21.0) (2026-08-14)
+
+### Features
+
+* finalizar navegação global com header e breadcrumb ([#294](https://github.com/LuizMoreira-DevOps/chouga-online/issues/294)) ([f35a4f8](https://github.com/LuizMoreira-DevOps/chouga-online/commit/f35a4f8d308922223b8ff3b0b2b90cd77fbf936b)), closes [#288](https://github.com/LuizMoreira-DevOps/chouga-online/issues/288) [#288](https://github.com/LuizMoreira-DevOps/chouga-online/issues/288) [#288](https://github.com/LuizMoreira-DevOps/chouga-online/issues/288) [#288](https://github.com/LuizMoreira-DevOps/chouga-online/issues/288) [#288](https://github.com/LuizMoreira-DevOps/chouga-online/issues/288) [#288](https://github.com/LuizMoreira-DevOps/chouga-online/issues/288) [#288](https://github.com/LuizMoreira-DevOps/chouga-online/issues/288) [#288](https://github.com/LuizMoreira-DevOps/chouga-online/issues/288) [#288](https://github.com/LuizMoreira-DevOps/chouga-online/issues/288)
+
 ## [1.20.0](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.19.0...v1.20.0) (2026-08-07)
 
 ### Features
