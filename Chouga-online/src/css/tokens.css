@@ -48,11 +48,12 @@
   /* =========================
      BORDAS
   ========================= */
-  --color-border: rgb(243 215 191 / 45%);
-  --color-border-soft: rgb(241 214 189 / 16%);
   --color-border-subtle: rgb(241 214 189 / 10%);
-  --color-border-medium: rgb(241 214 189 / 25%);
   --color-border-status: rgb(241 214 189 / 14%);
+  --color-border-soft: rgb(241 214 189 / 16%);
+  --color-border-medium: rgb(241 214 189 / 25%);
+  --color-border: rgb(243 215 191 / 45%);
+  --color-border-strong: rgb(243 215 191 / 80%);
 
   /* =========================
      SOBREPOSIÇÕES E GRADIENTES

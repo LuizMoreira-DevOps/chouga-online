@@ -2,18 +2,13 @@
    CONTATO PAGE
 ========================= */
 
-.contato-page {
-  background: var(--color-bg);
-}
-
 .contato-content {
   display: grid;
-  margin-top: clamp(3rem, 6vh, 5rem);
   grid-template-columns: minmax(320px, 0.78fr) minmax(560px, 1.35fr);
 
   align-items: center;
 
-  gap: clamp(40px, 6vw, 90px);
+  gap: clamp(var(--spacing-7), 6vw, 5.625rem);
 }
 
 .contato-page.page-bg {
@@ -28,14 +23,13 @@
 }
 
 /* =========================
-   TITULO
+   TÍTULO
 ========================= */
 
 .contato-info h1 {
-  margin-bottom: 2rem;
+  margin-bottom: var(--spacing-6);
 
   font-family: var(--font-display);
-
   font-size: var(--title-lg);
   line-height: 0.82;
   letter-spacing: 0.05em;
@@ -49,12 +43,14 @@
 
 .contato-info h1 span:nth-child(1) {
   color: var(--color-text-strong);
+
   transform: rotate(-7deg);
 }
 
 .contato-info h1 span:nth-child(2),
 .contato-info h1 span:nth-child(3) {
   color: var(--color-red-strong);
+
   transform: rotate(-9deg);
 }
 
@@ -69,21 +65,22 @@
 
   font-size: var(--text-lg);
   line-height: 1.4;
-  letter-spacing: 0.04em;
+  letter-spacing: var(--letter-spacing-wide);
 
   text-transform: uppercase;
 }
 
 /* =========================
-   LISTA
+   LISTA DE CONTATOS
 ========================= */
 
 .contato-list {
   display: grid;
-  gap: 1rem;
 
+  gap: var(--spacing-4);
+
+  margin: 0 0 var(--spacing-5);
   padding: 0;
-  margin: 0 0 1.5rem;
 
   list-style: none;
 }
@@ -91,6 +88,7 @@
 .contato-list li {
   display: flex;
   align-items: center;
+
   gap: 0.85rem;
 
   font-size: var(--text-md);
@@ -104,33 +102,44 @@
 
   width: 1.25rem;
 
-  font-size: 1.2rem;
   color: var(--color-text-strong);
+
+  font-size: 1.2rem;
 }
 
-.contato-list span {
+.contato-list span,
+.contato-list a {
   line-height: 1.25;
 }
 
+.contato-list a {
+  transition: color var(--transition-fast);
+}
+
+.contato-list a:hover {
+  color: var(--color-red-strong);
+}
+
 /* =========================
-   SOCIAL
+   REDES SOCIAIS
 ========================= */
 
 .contato-social {
   display: flex;
-  gap: 1rem;
+
+  gap: var(--spacing-4);
 }
 
 .contato-social a {
-  width: 2.4rem;
-  height: 2.4rem;
-
   display: grid;
   place-items: center;
 
-  color: var(--color-text-strong);
+  width: 2.4rem;
+  height: 2.4rem;
 
-  border: 1px solid rgba(243, 215, 191, 0.8);
+  border: 1px solid var(--color-border-strong);
+
+  color: var(--color-text-strong);
 
   transition:
     color var(--transition-fast),
@@ -150,16 +159,18 @@
 }
 
 /* =========================
-   FORM
+   FORMULÁRIO
 ========================= */
 
 .contato-form {
   display: grid;
+
   gap: 1.05rem;
 }
 
 .contato-form label {
   position: relative;
+
   display: block;
 }
 
@@ -189,14 +200,11 @@
 
   border: 1px solid var(--color-border);
 
-  background-color: rgba(12, 12, 12, 0.88);
-
+  background-color: var(--color-overlay-dark);
   color: var(--color-text-strong);
 
   font: inherit;
   font-size: 1.05rem;
-
-  outline: none;
 
   transition:
     border-color var(--transition-fast),
@@ -206,6 +214,7 @@
 
 .contato-form input {
   height: 4.15rem;
+
   padding: 2rem 1.3rem 0.6rem;
 }
 
@@ -221,33 +230,38 @@
 .contato-form textarea:focus {
   border-color: var(--color-red-strong);
 
-  background-color: rgba(10, 10, 10, 0.98);
+  background-color: var(--color-overlay-focus);
 
-  box-shadow: 0 0 22px rgba(240, 42, 0, 0.22);
+  box-shadow: 0 0 22px var(--color-red-focus-glow);
 }
 
-.contato-form-status {
-  padding: 0.85rem 1rem;
+/* =========================
+   STATUS DO FORMULÁRIO
+========================= */
 
-  border: 1px solid rgba(243, 215, 191, 0.28);
+.contato-form-status {
+  padding: 0.85rem var(--spacing-4);
+
+  border: 1px solid var(--color-border-medium);
 
   color: var(--color-text-strong);
+
   background: linear-gradient(
     145deg,
-    rgba(255, 42, 0, 0.12),
-    rgba(13, 13, 13, 0.82)
+    rgb(255 42 0 / 12%),
+    var(--color-overlay-dark)
   );
 
   font-family: "Courier New", monospace;
   font-size: 0.86rem;
   line-height: 1.35;
-  letter-spacing: 0.04em;
+  letter-spacing: var(--letter-spacing-wide);
 
   text-transform: uppercase;
 
   box-shadow:
-    0 12px 28px rgba(0, 0, 0, 0.32),
-    inset 0 0 18px rgba(243, 215, 191, 0.035);
+    0 12px 28px rgb(0 0 0 / 32%),
+    inset 0 0 18px rgb(243 215 191 / 3.5%);
 }
 
 /* =========================
@@ -255,17 +269,16 @@
 ========================= */
 
 .contato-form button {
-  height: 4rem;
+  height: var(--spacing-9);
 
   border: 0;
 
   background-color: var(--color-red-strong);
-
-  color: #050505;
+  color: var(--color-bg);
 
   font-size: var(--text-lg);
-  font-weight: 800;
-  letter-spacing: 0.04em;
+  font-weight: var(--font-weight-bold);
+  letter-spacing: var(--letter-spacing-wide);
 
   text-transform: uppercase;
 
@@ -280,7 +293,7 @@
 
   filter: brightness(1.05);
 
-  box-shadow: var(--shadow-red);
+  box-shadow: 0 0 24px var(--color-red-shadow);
 }
 
 /* =========================
@@ -297,6 +310,7 @@
   overflow: hidden;
 
   opacity: 0;
+
   pointer-events: none;
 }
 
@@ -306,7 +320,6 @@
 
 @media (max-width: 1400px) {
   .contato-content {
-    margin-top: clamp(3.5rem, 7vh, 5.5rem);
     grid-template-columns: minmax(300px, 0.75fr) minmax(520px, 1.2fr);
 
     gap: 52px;
@@ -327,9 +340,9 @@
 
 @media (max-width: 900px) {
   .contato-content {
-    margin-top: 1.5rem;
     grid-template-columns: 1fr;
-    gap: 3rem;
+
+    gap: var(--spacing-8);
   }
 
   .contato-info {
@@ -346,11 +359,13 @@
 
   .contato-list {
     width: fit-content;
+
     margin-inline: auto;
   }
 
   .contato-list li {
     justify-content: flex-start;
+
     text-align: left;
   }
 
@@ -365,11 +380,11 @@
 
 @media (max-width: 520px) {
   .contato-content {
-    gap: 2.4rem;
+    gap: var(--spacing-7);
   }
 
   .contato-info h1 {
-    margin-bottom: 1.6rem;
+    margin-bottom: var(--spacing-5);
 
     font-size: clamp(3.3rem, 16vw, 4.7rem);
   }
@@ -377,13 +392,13 @@
   .contato-info p {
     max-width: 320px;
 
-    margin-bottom: 2rem;
+    margin-bottom: var(--spacing-6);
 
     font-size: var(--text-md);
   }
 
   .contato-list li {
-    gap: 0.8rem;
+    gap: var(--spacing-3);
 
     font-size: var(--text-sm);
     letter-spacing: 0.1em;
@@ -391,7 +406,8 @@
 
   .contato-list li svg {
     width: 1.1rem;
-    font-size: 1rem;
+
+    font-size: var(--text-md);
   }
 
   .contato-social a {
@@ -400,8 +416,8 @@
   }
 
   /* =========================
-   MOBILE PEQUENO - FORM
-========================= */
+     MOBILE PEQUENO - FORM
+  ========================= */
 
   .contato-form {
     gap: 0.85rem;
@@ -409,28 +425,33 @@
 
   .contato-form input {
     height: 3.65rem;
+
     padding: 1.75rem 1.1rem 0.55rem;
   }
 
   .contato-form textarea {
     min-height: 145px;
+
     padding: 2.35rem 1.1rem 0.8rem;
   }
 
   .contato-form label span {
     top: 0.58rem;
     left: 1.1rem;
+
     font-size: 0.66rem;
     letter-spacing: 0.1em;
   }
 
   .contato-form button {
     height: 3.55rem;
+
     font-size: var(--text-sm);
   }
 
   .contato-form-status {
+    padding: var(--spacing-3) 0.85rem;
+
     font-size: 0.74rem;
-    padding: 0.75rem 0.85rem;
   }
 }
