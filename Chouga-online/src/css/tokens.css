@@ -1,5 +1,12 @@
 :root {
   /* =========================
+     ALTURAS DO HEADER
+  ========================= */
+  --header-height-desktop: 96px;
+  --header-height-tablet: 72px;
+  --header-height-mobile: 64px;
+
+  /* =========================
      CORES DE FUNDO
   ========================= */
   --color-bg: #0d0d0d;
@@ -73,11 +80,17 @@
   --spacing-9: 4rem; /* 64px */
 
   /* =========================
+     TRANSIÇÕES
+  ========================= */
+  --transition-fast: 160ms ease;
+  --transition-base: 280ms ease;
+
+  /* =========================
      LAYOUT
   ========================= */
   --container-max: 1500px;
   --page-padding-x: clamp(18px, 5vw, 80px);
-  --page-padding-top: 96px;
+  --page-padding-top: var(--spacing-5);
   --page-padding-bottom: 48px;
 
   /* =========================
@@ -138,7 +151,7 @@
 /* =========================
    BREAKPOINTS RESPONSIVOS
 
-   Breakpoints principais:
+   Principais:
    - 1400px: desktop reduzido
    - 900px: tablet e navegação compacta
    - 700px: mobile amplo
@@ -154,19 +167,19 @@
    - 480px: ajustes para telas muito pequenas
 
    Acessibilidade:
-   - prefers-reduced-motion: redução de animações
+   - prefers-reduced-motion
 ========================= */
 
 @media (max-width: 900px) {
   :root {
-    --page-padding-top: 88px;
+    --page-padding-top: var(--spacing-4);
     --page-padding-bottom: 48px;
   }
 }
 
 @media (max-width: 520px) {
   :root {
-    --page-padding-top: 82px;
+    --page-padding-top: var(--spacing-3);
     --page-padding-bottom: 40px;
   }
 }

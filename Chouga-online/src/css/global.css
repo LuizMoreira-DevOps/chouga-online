@@ -70,6 +70,10 @@
   font-display: swap;
 }
 
+/* =========================
+   RESET GLOBAL
+========================= */
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -85,13 +89,16 @@ body,
 
 body {
   overflow-x: hidden;
+
   background: var(--color-bg);
   color: var(--color-text);
+
   font-family: var(--font-base);
 }
 
 a {
   color: inherit;
+
   text-decoration: none;
 }
 
@@ -112,44 +119,77 @@ svg {
 }
 
 /* =========================
+   ESTRUTURA GLOBAL DO LAYOUT
+========================= */
+
+.app-layout {
+  min-height: 100svh;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.app-content {
+  flex: 1;
+
+  min-height: 0;
+}
+
+/* =========================
    ESTRUTURA PADRÃO DAS PÁGINAS
 ========================= */
 
 .page-bg {
   position: relative;
-  min-height: 100vh;
+
+  min-height: 100%;
+
   overflow-x: hidden;
+
   background: var(--color-bg);
   color: var(--color-text);
 }
 
 .page-bg::before {
   content: "";
+
   position: absolute;
   inset: 0;
   z-index: 0;
+
   background-image:
     linear-gradient(
       rgba(0, 0, 0, var(--bg-overlay-start, 0.78)),
       rgba(0, 0, 0, var(--bg-overlay-end, 0.92))
     ),
     var(--page-bg-image, url("../assets/images/optimized/bg-home-1920.webp"));
+
   background-position: var(--page-bg-position, center);
   background-size: cover;
+
   opacity: var(--page-bg-opacity, 0.38);
 }
 
 .page-section {
   position: relative;
   z-index: 1;
-  min-height: 100vh;
+
   padding: var(--page-padding-top) var(--page-padding-x)
     var(--page-padding-bottom);
 }
 
 .page-container {
   width: min(100%, var(--container-max));
+
   margin-inline: auto;
+}
+
+/* =========================
+   ALTURA ÚTIL DAS PÁGINAS
+========================= */
+
+.page-viewport {
+  min-height: calc(100svh - var(--header-height-desktop));
 }
 
 /* =========================
@@ -184,6 +224,7 @@ select:focus-visible,
 [role="button"]:focus-visible {
   outline: 2px solid var(--color-red-strong);
   outline-offset: 4px;
+
   box-shadow:
     0 0 0 4px var(--color-overlay-focus),
     0 0 18px var(--color-red-focus-glow);
@@ -196,11 +237,21 @@ select:focus-visible {
 }
 
 /* =========================
-   RESPONSIVIDADE
+   TABLET
 ========================= */
 
 @media (max-width: 900px) {
-  .page-section {
-    min-height: auto;
+  .page-viewport {
+    min-height: calc(100svh - var(--header-height-tablet));
+  }
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 520px) {
+  .page-viewport {
+    min-height: calc(100svh - var(--header-height-mobile));
   }
 }

@@ -1,6 +1,5 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { FiHome, FiLock, FiShoppingCart, FiUser } from "react-icons/fi";
 
 import "../css/header.css";
 import logoImg from "../assets/logo/Logo.png";
@@ -15,97 +14,158 @@ const navLinks = [
     path: "/sobre",
   },
   {
-    label: "Contato",
+    label: "Fale com a gente",
     path: "/contato",
   },
 ];
 
+function getCurrentSection(pathname) {
+  if (pathname.startsWith("/produtos")) {
+    return "Produtos";
+  }
+
+  if (pathname === "/sobre") {
+    return "Sobre";
+  }
+
+  if (pathname === "/contato") {
+    return "Fale com a gente";
+  }
+
+  return "Menu";
+}
+
+function isCurrentSection(pathname, path) {
+  if (path === "/produtos") {
+    return pathname.startsWith("/produtos");
+  }
+
+  return pathname === path;
+}
+
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const headerRef = useRef(null);
+  const triggerRef = useRef(null);
   const location = useLocation();
 
   const isHome = location.pathname === "/";
+  const currentSection = getCurrentSection(location.pathname);
 
-  const visibleNavLinks = navLinks.filter(
-    (link) => link.path !== location.pathname,
-  );
-
-  function closeMenu() {
+  function closeMenu({ restoreFocus = false } = {}) {
     setMenuOpen(false);
+
+    if (restoreFocus) {
+      requestAnimationFrame(() => {
+        triggerRef.current?.focus();
+      });
+    }
   }
 
   function toggleMenu() {
-    setMenuOpen((currentState) => !currentState);
+    setMenuOpen((current) => !current);
   }
 
+  useEffect(() => {
+    if (!menuOpen) {
+      return undefined;
+    }
+
+    function handlePointerDown(event) {
+      if (!headerRef.current?.contains(event.target)) {
+        setMenuOpen(false);
+      }
+    }
+
+    function handleKeyDown(event) {
+      if (event.key === "Escape") {
+        setMenuOpen(false);
+
+        requestAnimationFrame(() => {
+          triggerRef.current?.focus();
+        });
+      }
+    }
+
+    document.addEventListener("pointerdown", handlePointerDown);
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("pointerdown", handlePointerDown);
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [menuOpen]);
+
   return (
-    <header className="header">
-      <Link to="/" className="logo" onClick={closeMenu}>
-        <div className="logo-wrapper">
-          <img src={logoImg} alt="Logo Chouga Skateboard" />
-
-          <span className="logo-mark">®</span>
-        </div>
-      </Link>
-
-      <div className="header-actions">
-        {!isHome && (
-          <Link
-            to="/"
-            className="header-icon-button"
-            onClick={closeMenu}
-            aria-label="Página inicial"
-            title="Página inicial"
-          >
-            <FiHome aria-hidden="true" />
-          </Link>
-        )}
-
+    <header
+      ref={headerRef}
+      className={`header ${menuOpen ? "is-expanded" : ""}`}
+    >
+      <div className="header-main">
         <Link
-          to="/em-breve"
-          className="header-icon-button is-locked"
-          title="Login em breve"
-          aria-label="Login em breve"
-          onClick={closeMenu}
+          to="/"
+          className="logo"
+          onClick={() => closeMenu()}
+          aria-label="Chouga - Página inicial"
         >
-          <FiUser aria-hidden="true" />
-          <FiLock className="lock-icon" aria-hidden="true" />
-        </Link>
+          <div className="logo-wrapper">
+            <img src={logoImg} alt="Chouga Skateboard" />
 
-        <Link
-          to="/em-breve"
-          className="header-icon-button is-locked"
-          title="Carrinho em breve"
-          aria-label="Carrinho em breve"
-          onClick={closeMenu}
-        >
-          <FiShoppingCart aria-hidden="true" />
-          <FiLock className="lock-icon" aria-hidden="true" />
+            <span className="logo-mark" aria-hidden="true">
+              ®
+            </span>
+          </div>
         </Link>
 
         {!isHome && (
-          <button
-            className={`menu-toggle ${menuOpen ? "is-open" : ""}`}
-            type="button"
-            aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
-            aria-expanded={menuOpen}
-            onClick={toggleMenu}
-          >
-            <span></span>
-            <span></span>
-            <span></span>
-          </button>
+          <div className="header-navigation">
+            <button
+              ref={triggerRef}
+              className={`header-menu-trigger ${menuOpen ? "is-open" : ""}`}
+              type="button"
+              aria-label={`${currentSection}, ${
+                menuOpen ? "fechar menu" : "abrir menu"
+              }`}
+              aria-expanded={menuOpen}
+              aria-controls="header-navigation-menu"
+              onClick={toggleMenu}
+            >
+              <span className="header-current-section">{currentSection}</span>
+
+              <span className="menu-toggle-icon" aria-hidden="true">
+                <span />
+                <span />
+                <span />
+              </span>
+            </button>
+          </div>
         )}
       </div>
 
       {!isHome && (
-        <nav className={`nav ${menuOpen ? "nav-open" : ""}`}>
-          {visibleNavLinks.map((link) => (
-            <Link key={link.path} to={link.path} onClick={closeMenu}>
-              {link.label}
-            </Link>
-          ))}
-        </nav>
+        <div
+          id="header-navigation-menu"
+          className={`header-menu-panel ${menuOpen ? "is-open" : ""}`}
+        >
+          <nav className="nav" aria-label="Navegação principal">
+            {navLinks.map((link) => {
+              const isCurrent = isCurrentSection(location.pathname, link.path);
+
+              return (
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  className={isCurrent ? "is-current" : ""}
+                  aria-current={isCurrent ? "page" : undefined}
+                  onClick={() => closeMenu()}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
+          </nav>
+        </div>
       )}
     </header>
   );

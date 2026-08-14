@@ -1,0 +1,126 @@
+/* =========================
+   BREADCRUMB
+========================= */
+
+.breadcrumb {
+  width: min(100%, var(--container-max));
+  margin: 0 auto var(--spacing-5);
+  padding-inline: 0;
+
+  font-family: var(--font-base);
+
+  animation: breadcrumb-enter 320ms ease both;
+}
+
+.breadcrumb-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--spacing-2);
+
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+}
+
+.breadcrumb-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2);
+
+  color: var(--color-text-72);
+
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-wide);
+  text-transform: uppercase;
+}
+
+.breadcrumb-item:not(:last-child)::after {
+  content: "›";
+
+  color: var(--color-red);
+  font-size: 1.1em;
+  font-weight: var(--font-weight-bold);
+}
+
+.breadcrumb-item a {
+  position: relative;
+
+  color: inherit;
+
+  transition:
+    color 160ms ease,
+    transform 160ms ease;
+}
+
+.breadcrumb-item a::after {
+  content: "";
+
+  position: absolute;
+  right: 0;
+  bottom: -4px;
+  left: 0;
+
+  height: 2px;
+
+  background: var(--color-red);
+
+  transform: scaleX(0);
+  transform-origin: left;
+
+  transition: transform 160ms ease;
+}
+
+.breadcrumb-item a:hover {
+  color: var(--color-text-strong);
+}
+
+.breadcrumb-item a:hover::after,
+.breadcrumb-item a:focus-visible::after {
+  transform: scaleX(1);
+}
+
+.breadcrumb-item a:focus-visible {
+  color: var(--color-text-strong);
+}
+
+.breadcrumb-item[aria-current="page"] {
+  color: var(--color-text-strong);
+  font-weight: var(--font-weight-semibold);
+}
+
+@keyframes breadcrumb-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 520px) {
+  .breadcrumb {
+    margin-bottom: var(--spacing-4);
+  }
+
+  .breadcrumb-item {
+    font-size: var(--text-xs);
+    letter-spacing: 0.03em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .breadcrumb {
+    animation: none;
+  }
+
+  .breadcrumb-item a,
+  .breadcrumb-item a::after {
+    transition: none;
+  }
+}

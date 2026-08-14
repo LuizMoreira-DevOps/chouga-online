@@ -173,7 +173,6 @@ function normalizeProduct(product) {
 function Produtos({
   categoryGroups = ["camisetas", "cropped", "camisetas-manga-longa", "blusas"],
   title = "Produtos",
-  path = "/produtos",
 }) {
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -295,8 +294,6 @@ function Produtos({
         <section className="produtos-section page-section">
           <div className="produtos-container page-container">
             <ProductFilters
-              breadcrumbLabel={title}
-              breadcrumbPath={path}
               categories={categories}
               categoryFilter={categoryFilter}
               onCategoryChange={handleCategoryChange}

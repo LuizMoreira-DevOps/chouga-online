@@ -3,11 +3,13 @@ import Footer from "./Footer";
 
 function Layout({ children, hideFooter = false }) {
   return (
-    <>
+    <div className="app-layout">
       <Header />
-      {children}
+
+      <div className="app-content">{children}</div>
+
       {!hideFooter && <Footer />}
-    </>
+    </div>
   );
 }
 

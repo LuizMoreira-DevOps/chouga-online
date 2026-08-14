@@ -3,25 +3,31 @@
 ========================= */
 
 .home.page-bg {
-  height: 100svh;
-  overflow: hidden;
-
   --page-bg-opacity: 0.99;
   --bg-overlay-start: 0.78;
-  --bg-overlay-end: 0.92;
+  --bg-overlay-end: 0.94;
   --page-bg-position: center;
 }
 
-.home-section {
-  height: 100svh;
+.home {
+  min-height: auto;
+}
+
+.home-section,
+.home-section.page-section {
   min-height: 0;
+
+  height: calc(100svh - var(--header-height-desktop));
+
   display: grid;
   grid-template-columns: minmax(220px, 270px) minmax(0, 1fr);
   align-items: center;
   justify-content: center;
+
   column-gap: clamp(32px, 4vw, 56px);
-  padding: var(--page-padding-top) var(--page-padding-x)
-    var(--page-padding-bottom);
+
+  padding: 0 var(--page-padding-x);
+
   overflow: hidden;
 }
 
@@ -54,6 +60,7 @@
   text-transform: uppercase;
 
   font-family: var(--font-display);
+
   letter-spacing: 0.06em;
 }
 
@@ -87,11 +94,15 @@
   top: 50%;
   left: 50%;
   z-index: 2;
+
   width: min(100%, var(--container-max));
+
   display: flex;
   align-items: center;
   justify-content: center;
-  transform: translate(-50%, -46%);
+
+  transform: translate(-50%, calc(-50% - 12px));
+
   pointer-events: none;
 }
 
@@ -129,6 +140,7 @@
 
 .wheel-center::after {
   content: "";
+
   position: absolute;
   top: 50%;
   left: 50%;
@@ -169,6 +181,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
   gap: 8px;
 
   overflow: visible;
@@ -176,11 +189,13 @@
   color: var(--color-text);
 
   background: transparent;
+
   border: none;
   outline: none;
 
   cursor: pointer;
   user-select: none;
+
   -webkit-tap-highlight-color: transparent;
 
   transform: translate(-50%, -50%) rotate(var(--angle))
@@ -197,6 +212,7 @@
 .wheel-item:active,
 .wheel-item:focus-visible {
   outline: none;
+
   box-shadow: none;
 }
 
@@ -209,6 +225,7 @@
 .wheel-item:hover .wheel-icon,
 .wheel-item:hover .wheel-label {
   color: var(--color-red);
+
   text-shadow: 0 0 12px rgba(233, 54, 18, 0.45);
 }
 
@@ -249,6 +266,7 @@
 .wheel-label,
 .wheel-sub-label {
   pointer-events: none;
+
   user-select: none;
 }
 
@@ -320,7 +338,9 @@
 
 .wheel-menu.closing .wheel-item {
   opacity: 0;
+
   pointer-events: none;
+
   filter: blur(3px);
 
   transform: translate(-50%, -50%) rotate(var(--angle)) translateY(-24px)
@@ -356,48 +376,66 @@
 ========================= */
 
 @media (max-width: 900px) {
-  .home-section {
-    height: 100svh;
-    min-height: 0;
+  .home-section,
+  .home-section.page-section {
+    height: auto;
+
+    min-height: calc(100svh - var(--header-height-tablet));
+
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
     gap: clamp(12px, 3vw, 22px);
-    padding: 82px 20px 24px;
+
+    padding: 0 20px 24px;
+
     overflow: hidden;
+
     margin-top: 0;
   }
 
   .hero-left {
     order: 2;
+
     max-width: 340px;
+
     align-items: center;
+
     margin-top: 1.8rem;
     margin-bottom: 0;
+
     text-align: center;
+
     transform: none;
   }
 
   .hero-left h1 {
     margin-bottom: 4px;
+
     font-size: clamp(2.35rem, 11vw, 3.25rem);
     line-height: 0.9;
   }
 
   .hero-left p {
     margin-bottom: 0;
+
     font-size: var(--text-xl);
     line-height: 1.15;
   }
 
   .hero-center {
     order: 1;
+
     position: relative;
     top: auto;
     left: auto;
+
     width: 100%;
-    margin-top: 0.75rem;
+
+    margin-top: 0;
+
     transform: none;
   }
 
@@ -414,6 +452,7 @@
   .wheel-item {
     width: 68px;
     height: 68px;
+
     gap: 4px;
   }
 
@@ -442,22 +481,28 @@
     background-size: auto 125%;
   }
 
-  .home-section {
-    justify-content: flex-start;
+  .home-section,
+  .home-section.page-section {
+    min-height: calc(100svh - var(--header-height-mobile));
+
+    justify-content: center;
+
     gap: 8px;
-    padding: 108px 12px 18px;
+
+    padding: 0 12px 18px;
   }
 
   .hero-center {
-    margin-top: 120px;
+    margin-top: 0;
   }
 
   .hero-left {
-    margin-top: 1.25rem;
+    margin-top: 5.75rem;
   }
 
   .hero-left h1 {
-    margin-top: 100px;
+    margin-top: 0;
+
     font-size: clamp(1.95rem, 10.5vw, 2.55rem);
   }
 
@@ -469,6 +514,7 @@
   .wheel-item {
     width: 64px;
     height: 64px;
+
     gap: 4px;
   }
 
@@ -484,5 +530,60 @@
   .wheel-sub-label {
     font-size: 0.5rem;
     letter-spacing: 0.6px;
+  }
+}
+
+/* =========================
+   MOBILE EXTREMO
+========================= */
+
+@media (max-width: 320px) {
+  .home-section,
+  .home-section.page-section {
+    padding-inline: 6px;
+  }
+
+  .wheel-menu {
+    --wheel-size: min(78vw, 250px);
+    --wheel-radius: calc(var(--wheel-size) * 0.47);
+  }
+
+  .wheel-center {
+    width: calc(var(--wheel-size) * 0.56);
+    height: calc(var(--wheel-size) * 0.56);
+  }
+
+  .wheel-item {
+    width: 54px;
+    height: 54px;
+
+    gap: 3px;
+  }
+
+  .wheel-icon {
+    font-size: 30px;
+  }
+
+  .wheel-label {
+    max-width: 72px;
+
+    font-size: 0.68rem;
+    line-height: 1.05;
+
+    letter-spacing: 0.8px;
+
+    white-space: normal;
+  }
+
+  .hero-left {
+    margin-top: 4.5rem;
+  }
+
+  .hero-left h1 {
+    font-size: clamp(1.7rem, 10vw, 2.1rem);
+  }
+
+  .hero-left p {
+    font-size: 1rem;
   }
 }
