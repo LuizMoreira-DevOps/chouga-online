@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { sortProductSizes } from "../constants/productFilters";
 
+import { buildWhatsAppUrl } from "../constants/siteContacts";
+
 import "../css/productDetailsModal.css";
 
 function formatLabel(value) {
@@ -21,7 +23,7 @@ function getProductInspiration(product) {
   return product.inspiracao || product.inspiration || "";
 }
 
-function ProductDetailsModal({ product, onClose, whatsappPhone }) {
+function ProductDetailsModal({ product, onClose }) {
   const description = getProductDescription(product);
   const inspiration = getProductInspiration(product);
 
@@ -67,8 +69,8 @@ function ProductDetailsModal({ product, onClose, whatsappPhone }) {
     "Pode me ajudar com a compra?",
   ].filter(Boolean);
 
-  const whatsappMessage = encodeURIComponent(whatsappLines.join("\n"));
-  const whatsappLink = `https://wa.me/${whatsappPhone}?text=${whatsappMessage}`;
+  const whatsappMessage = whatsappLines.join("\n");
+  const whatsappLink = buildWhatsAppUrl(whatsappMessage);
 
   return (
     <div
@@ -190,7 +192,7 @@ function ProductDetailsModal({ product, onClose, whatsappPhone }) {
             className="product-details-whatsapp"
             href={whatsappLink}
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
           >
             Comprar pelo WhatsApp
           </a>

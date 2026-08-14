@@ -24,6 +24,8 @@ import ProductReviewsList from "../components/ProductReviewsList";
 
 import ProductReviewForm from "../components/ProductReviewForm";
 
+import { buildWhatsAppUrl, siteContacts } from "../constants/siteContacts";
+
 const legacyImages = import.meta.glob(
   [
     "../assets/images/camisetas/*.{avif,gif,jpeg,jpg,png,svg,webp}",
@@ -166,7 +168,7 @@ function getAvailableVariations(product) {
   );
 }
 
-function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
+function ProdutoDetalhes() {
   const { slug } = useParams();
 
   const sizeGuideTriggerRef = useRef(null);
@@ -592,7 +594,7 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
 
     // Monta a mensagem para o WhatsApp
     const message = [
-      "Olá! Tenho interesse neste produto da Chouga:",
+      siteContacts.whatsappMessages.product,
       "",
       `Produto: ${product.nome}`,
       selectedColor ? `Cor: ${selectedColor}` : "",
@@ -607,9 +609,7 @@ function ProdutoDetalhes({ whatsappPhone = "5541997485063" }) {
       .filter(Boolean)
       .join("\n");
 
-    // Monta a URL do WhatsApp com a mensagem codificada
-    const whatsappUrl =
-      `https://wa.me/${whatsappPhone}` + `?text=${encodeURIComponent(message)}`;
+    const whatsappUrl = buildWhatsAppUrl(message);
 
     window.open(whatsappUrl, "_blank", "noopener,noreferrer");
   }

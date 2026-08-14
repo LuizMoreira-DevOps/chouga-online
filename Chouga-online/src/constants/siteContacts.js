@@ -13,6 +13,16 @@ export const siteContacts = {
   },
 
   location: "Curitiba - PR / Brasil",
+
+  whatsappMessages: {
+    contact:
+      "Salve, Chouga! Vim pela página Fale com a gente e queria trocar uma ideia.",
+
+    footer:
+      "Salve, Chouga! Vim pelo site e queria saber mais sobre os produtos.",
+
+    product: "Olá! Tenho interesse neste produto da Chouga:",
+  },
 };
 
 export function buildWhatsAppUrl(message = "") {

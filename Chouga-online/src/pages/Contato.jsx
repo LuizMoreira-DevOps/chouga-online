@@ -78,7 +78,13 @@ ${mensagem}`;
                 <li>
                   <FaPhoneAlt aria-hidden="true" />
 
-                  <a href={`tel:${siteContacts.phone.international}`}>
+                  <a
+                    href={buildWhatsAppUrl(
+                      siteContacts.whatsappMessages.contact,
+                    )}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     {siteContacts.phone.display}
                   </a>
                 </li>
@@ -100,7 +106,7 @@ ${mensagem}`;
                 </a>
 
                 <a
-                  href={buildWhatsAppUrl()}
+                  href={buildWhatsAppUrl(siteContacts.whatsappMessages.contact)}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="WhatsApp da Chouga Skateboard"
