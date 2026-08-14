@@ -124,7 +124,9 @@ function Header() {
               ref={triggerRef}
               className={`header-menu-trigger ${menuOpen ? "is-open" : ""}`}
               type="button"
-              aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
+              aria-label={`${currentSection}, ${
+                menuOpen ? "fechar menu" : "abrir menu"
+              }`}
               aria-expanded={menuOpen}
               aria-controls="header-navigation-menu"
               onClick={toggleMenu}
