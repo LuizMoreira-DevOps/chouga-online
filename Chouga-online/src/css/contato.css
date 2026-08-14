@@ -8,8 +8,6 @@
 
   align-items: center;
 
-  margin-top: clamp(var(--spacing-8), 6vh, 5rem);
-
   gap: clamp(var(--spacing-7), 6vw, 5.625rem);
 }
 
@@ -324,8 +322,6 @@
   .contato-content {
     grid-template-columns: minmax(300px, 0.75fr) minmax(520px, 1.2fr);
 
-    margin-top: clamp(3.5rem, 7vh, 5.5rem);
-
     gap: 52px;
   }
 
@@ -345,8 +341,6 @@
 @media (max-width: 900px) {
   .contato-content {
     grid-template-columns: 1fr;
-
-    margin-top: var(--spacing-5);
 
     gap: var(--spacing-8);
   }

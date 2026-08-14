@@ -52,7 +52,7 @@ ${mensagem}`;
 
   return (
     <Layout>
-      <main className="contato-page page-bg">
+      <main className="contato-page page-bg page-viewport">
         <section className="contato-section page-section">
           <div className="contato-content page-container">
             <aside className="contato-info">
