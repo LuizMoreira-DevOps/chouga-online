@@ -1,3 +1,9 @@
+## [1.21.1](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.21.0...v1.21.1) (2026-08-14)
+
+### Bug Fixes
+
+* normalizar geração das notas de release ([#296](https://github.com/LuizMoreira-DevOps/chouga-online/issues/296)) ([3bfc7c1](https://github.com/LuizMoreira-DevOps/chouga-online/commit/3bfc7c135d0a689d59a46d2ecc65a38c7ab0e817))
+
 ## [1.21.0](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.20.0...v1.21.0) (2026-08-14)
 
 ### Features
