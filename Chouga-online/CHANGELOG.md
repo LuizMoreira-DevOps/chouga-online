@@ -1,3 +1,9 @@
+## [1.21.3](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.21.2...v1.21.3) (2026-08-14)
+
+### Bug Fixes
+
+* alinhar tipos das notas de release ([#299](https://github.com/LuizMoreira-DevOps/chouga-online/issues/299)) ([816247a](https://github.com/LuizMoreira-DevOps/chouga-online/commit/816247a32bbd0045e16d887816cf577855930d87))
+
 ## [1.21.2](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.21.1...v1.21.2) (2026-08-14)
 
 ## [1.21.1](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.21.0...v1.21.1) (2026-08-14)
