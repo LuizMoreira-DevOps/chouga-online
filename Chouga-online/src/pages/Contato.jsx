@@ -10,6 +10,8 @@ import {
   FaWhatsapp,
 } from "react-icons/fa";
 
+import { buildWhatsAppUrl, siteContacts } from "../constants/siteContacts";
+
 function Contato() {
   const [formStatus, setFormStatus] = useState("");
 
@@ -37,9 +39,7 @@ Assunto: ${assunto}
 Mensagem:
 ${mensagem}`;
 
-    const whatsappUrl = `https://wa.me/5541997485063?text=${encodeURIComponent(
-      texto,
-    )}`;
+    const whatsappUrl = buildWhatsAppUrl(texto);
 
     window.open(whatsappUrl, "_blank", "noopener,noreferrer");
 
@@ -63,41 +63,46 @@ ${mensagem}`;
               </h1>
 
               <p>
-                Dúvidas, parcerias, ideias ou só chegar junto?
-                Cola com nóis.
+                Dúvidas, parcerias, ideias ou só chegar junto? Cola com nóis.
               </p>
 
               <ul className="contato-list">
                 <li>
                   <FaEnvelope aria-hidden="true" />
-                  <span>chougaskateboard@gmail.com</span>
+
+                  <a href={`mailto:${siteContacts.email}`}>
+                    {siteContacts.email}
+                  </a>
                 </li>
 
                 <li>
                   <FaPhoneAlt aria-hidden="true" />
-                  <span>(41) 99748-5063</span>
+
+                  <a href={`tel:${siteContacts.phone.international}`}>
+                    {siteContacts.phone.display}
+                  </a>
                 </li>
 
                 <li>
                   <FaMapMarkerAlt aria-hidden="true" />
-                  <span>Curitiba - PR / Brasil</span>
+                  <span>{siteContacts.location}</span>
                 </li>
               </ul>
 
               <div className="contato-social">
                 <a
-                  href="https://instagram.com/chougaskateboard_/"
+                  href={siteContacts.instagram.url}
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                   aria-label="Instagram da Chouga Skateboard"
                 >
                   <FaInstagram aria-hidden="true" />
                 </a>
 
                 <a
-                  href="https://wa.me/5541997485063"
+                  href={buildWhatsAppUrl()}
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                   aria-label="WhatsApp da Chouga Skateboard"
                 >
                   <FaWhatsapp aria-hidden="true" />
@@ -120,12 +125,17 @@ ${mensagem}`;
 
               <label>
                 <span>Nome</span>
-                <input type="text" name="nome" required />
+                <input type="text" name="nome" autoComplete="name" required />
               </label>
 
               <label>
                 <span>E-mail</span>
-                <input type="email" name="email" required />
+                <input
+                  type="email"
+                  name="email"
+                  autoComplete="email"
+                  required
+                />
               </label>
 
               <label>
