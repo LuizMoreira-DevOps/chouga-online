@@ -18,7 +18,7 @@ jobs:
         run: |
           SQL="SELECT timestamp, event_message
           FROM logs
-          WHERE source_name = 'edge_logs'
+          WHERE source = 'edge_logs'
           ORDER BY timestamp DESC
           LIMIT 10"
 
