@@ -211,7 +211,7 @@ Variáveis necessárias:
 
 ```text
 VITE_SUPABASE_URL
-VITE_SUPABASE_ANON_KEY
+VITE_SUPABASE_PUBLISHABLE_KEY
 ```
 
 A chave `service_role` nunca deve ser utilizada.
@@ -462,7 +462,7 @@ Exemplo de nomes:
 
 ```text
 VITE_SUPABASE_URL
-VITE_SUPABASE_ANON_KEY
+VITE_SUPABASE_PUBLISHABLE_KEY
 VITE_CLARITY_PROJECT_ID
 VITE_GA_MEASUREMENT_ID
 ```
