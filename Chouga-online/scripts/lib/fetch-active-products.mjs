@@ -9,16 +9,16 @@ function getSupabaseBuildClient(projectDirectory) {
 
   const supabaseUrl = process.env.VITE_SUPABASE_URL || env.VITE_SUPABASE_URL;
 
-  const supabaseAnonKey =
-    process.env.VITE_SUPABASE_ANON_KEY || env.VITE_SUPABASE_ANON_KEY;
+  const supabasePublishableKey =
+    process.env.VITE_SUPABASE_PUBLISHABLE_KEY || env.VITE_SUPABASE_PUBLISHABLE_KEY;
 
-  if (!supabaseUrl || !supabaseAnonKey) {
+  if (!supabaseUrl || !supabasePublishableKey) {
     throw new Error(
-      "Variaveis VITE_SUPABASE_URL e VITE_SUPABASE_ANON_KEY sao obrigatorias para o SSG.",
+      "Variaveis VITE_SUPABASE_URL e VITE_SUPABASE_PUBLISHABLE_KEY sao obrigatorias para o SSG.",
     );
   }
 
-  return createClient(supabaseUrl, supabaseAnonKey, {
+  return createClient(supabaseUrl, supabasePublishableKey, {
     auth: {
       autoRefreshToken: false,
       persistSession: false,
