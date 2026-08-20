@@ -3,6 +3,8 @@ name: Security Monitoring
 on:
   workflow_dispatch:
 
+permissions: {}
+
 jobs:
   test-supabase-logs:
     runs-on: ubuntu-latest
