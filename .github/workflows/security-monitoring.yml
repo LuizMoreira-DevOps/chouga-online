@@ -18,9 +18,8 @@ jobs:
         run: |
           SQL="SELECT timestamp, event_message
           FROM logs
-          WHERE source = 'edge_logs'
           ORDER BY timestamp DESC
-          LIMIT 10"
+          LIMIT 1"
 
           curl --fail-with-body --get \
             "https://api.supabase.com/v1/projects/${SUPABASE_PROJECT_REF}/analytics/endpoints/logs" \
