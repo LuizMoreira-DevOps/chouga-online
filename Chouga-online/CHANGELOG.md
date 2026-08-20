@@ -1,3 +1,9 @@
+## [1.22.0](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.21.3...v1.22.0) (2026-08-20)
+
+### Features
+
+* migrar chave pública do Supabase ([b77c557](https://github.com/LuizMoreira-DevOps/chouga-online/commit/b77c557a8a320a2cd0df13d691f03acaaa84f4b2))
+
 ## [1.21.3](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.21.2...v1.21.3) (2026-08-14)
 
 ### Bug Fixes
