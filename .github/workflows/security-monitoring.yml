@@ -10,6 +10,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Validar acesso ao projeto Supabase
+        shell: bash
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+          SUPABASE_PROJECT_REF: ${{ secrets.SUPABASE_PROJECT_REF }}
+        run: |
+          curl --fail-with-body \
+            "https://api.supabase.com/v1/projects/${SUPABASE_PROJECT_REF}" \
+            --header "Authorization: Bearer ${SUPABASE_ACCESS_TOKEN}"
       - name: Consultar logs recentes do Supabase
         shell: bash
         env:
