@@ -26,15 +26,23 @@ jobs:
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
           SUPABASE_PROJECT_REF: ${{ secrets.SUPABASE_PROJECT_REF }}
         run: |
+          END_TIME=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          START_TIME=$(date -u -d "1 hour ago" +"%Y-%m-%dT%H:%M:%SZ")
+
           SQL="SELECT
             timestamp,
+            log_attributes['response.status_code'] AS status_code,
+            log_attributes['request.method'] AS method,
+            log_attributes['request.path'] AS path,
             event_message
           FROM logs
           WHERE source = 'edge_logs'
           ORDER BY timestamp DESC
-          LIMIT 10"
+          LIMIT 20"
 
           curl --fail-with-body --get \
             "https://api.supabase.com/v1/projects/${SUPABASE_PROJECT_REF}/analytics/endpoints/logs" \
             --header "Authorization: Bearer ${SUPABASE_ACCESS_TOKEN}" \
-            --data-urlencode "sql=${SQL}"
+            --data-urlencode "sql=${SQL}" \
+            --data-urlencode "iso_timestamp_start=${START_TIME}" \
+            --data-urlencode "iso_timestamp_end=${END_TIME}"
