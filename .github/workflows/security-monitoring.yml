@@ -20,6 +20,15 @@ jobs:
             "https://api.supabase.com/v1/projects/${SUPABASE_PROJECT_REF}" \
             --header "Authorization: Bearer ${SUPABASE_ACCESS_TOKEN}"
 
+      - name: Gerar 401 controlado para teste
+        shell: bash
+        env:
+          SUPABASE_PROJECT_REF: ${{ secrets.SUPABASE_PROJECT_REF }}
+        run: |
+          curl \
+            "https://${SUPABASE_PROJECT_REF}.supabase.co/rest/v1/" \
+            || true
+
       - name: Testar endpoint atual de logs
         shell: bash
         env:
