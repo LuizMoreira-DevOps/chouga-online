@@ -2,11 +2,13 @@ name: Security Monitoring
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: "*/5 * * * *"
 
 permissions: {}
 
 jobs:
-  test-supabase-logs:
+  monitor-supabase-security:
     runs-on: ubuntu-latest
 
     steps:
@@ -20,20 +22,8 @@ jobs:
             "https://api.supabase.com/v1/projects/${SUPABASE_PROJECT_REF}" \
             --header "Authorization: Bearer ${SUPABASE_ACCESS_TOKEN}"
 
-      - name: Gerar 401 controlado para teste
-        shell: bash
-        env:
-          SUPABASE_PROJECT_REF: ${{ secrets.SUPABASE_PROJECT_REF }}
-        run: |
-          curl \
-            "https://${SUPABASE_PROJECT_REF}.supabase.co/rest/v1/" \
-            || true
-
-      - name: Aguardar ingestão do log
-        shell: bash
-        run: sleep 30
-
-      - name: Classificar eventos de segurança
+      - name: Consultar e classificar eventos de segurança
+        id: security
         shell: bash
         env:
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
@@ -83,18 +73,167 @@ jobs:
             ] | length
           ')
 
-          echo "Warnings encontrados: $WARNING_COUNT"
-          echo "Criticals encontrados: $CRITICAL_COUNT"
+          TOTAL_COUNT=$(echo "$RESPONSE" | jq '.result | length')
 
           if [ "$CRITICAL_COUNT" -gt 0 ]; then
-            echo "severity=critical" >> "$GITHUB_ENV"
+            SEVERITY="critical"
           elif [ "$WARNING_COUNT" -gt 0 ]; then
-            echo "severity=warning" >> "$GITHUB_ENV"
+            SEVERITY="warning"
           else
-            echo "severity=none" >> "$GITHUB_ENV"
+            SEVERITY="none"
           fi
 
-      - name: Exibir severidade detectada
+          LAST_STATUS=$(echo "$RESPONSE" | jq -r '.result[0].status_code // "N/A"')
+          LAST_METHOD=$(echo "$RESPONSE" | jq -r '.result[0].method // "N/A"')
+          LAST_PATH=$(echo "$RESPONSE" | jq -r '.result[0].path // "N/A"')
+          LAST_TIMESTAMP=$(echo "$RESPONSE" | jq -r '.result[0].timestamp // "N/A"')
+
+          echo "severity=$SEVERITY" >> "$GITHUB_OUTPUT"
+          echo "warning_count=$WARNING_COUNT" >> "$GITHUB_OUTPUT"
+          echo "critical_count=$CRITICAL_COUNT" >> "$GITHUB_OUTPUT"
+          echo "total_count=$TOTAL_COUNT" >> "$GITHUB_OUTPUT"
+          echo "last_status=$LAST_STATUS" >> "$GITHUB_OUTPUT"
+          echo "last_method=$LAST_METHOD" >> "$GITHUB_OUTPUT"
+          echo "last_path=$LAST_PATH" >> "$GITHUB_OUTPUT"
+          echo "last_timestamp=$LAST_TIMESTAMP" >> "$GITHUB_OUTPUT"
+
+          echo "Severidade: $SEVERITY"
+          echo "Warnings: $WARNING_COUNT"
+          echo "Criticals: $CRITICAL_COUNT"
+
+      - name: Enviar alerta WARNING para Discord
+        if: steps.security.outputs.severity == 'warning'
+        shell: bash
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_SECURITY_WEBHOOK }}
+          TOTAL_COUNT: ${{ steps.security.outputs.total_count }}
+          WARNING_COUNT: ${{ steps.security.outputs.warning_count }}
+          LAST_STATUS: ${{ steps.security.outputs.last_status }}
+          LAST_METHOD: ${{ steps.security.outputs.last_method }}
+          LAST_PATH: ${{ steps.security.outputs.last_path }}
+          LAST_TIMESTAMP: ${{ steps.security.outputs.last_timestamp }}
+        run: |
+          PAYLOAD=$(jq -n \
+            --arg total "$TOTAL_COUNT" \
+            --arg warnings "$WARNING_COUNT" \
+            --arg status "$LAST_STATUS" \
+            --arg method "$LAST_METHOD" \
+            --arg path "$LAST_PATH" \
+            --arg timestamp "$LAST_TIMESTAMP" \
+            '{
+              username: "Chouga Security",
+              embeds: [
+                {
+                  title: "🟡 Security Warning",
+                  description: "Foram detectados eventos de segurança no Supabase.",
+                  color: 16776960,
+                  fields: [
+                    {
+                      name: "Eventos",
+                      value: $total,
+                      inline: true
+                    },
+                    {
+                      name: "Warnings",
+                      value: $warnings,
+                      inline: true
+                    },
+                    {
+                      name: "Último status",
+                      value: $status,
+                      inline: true
+                    },
+                    {
+                      name: "Última requisição",
+                      value: ($method + " " + $path),
+                      inline: false
+                    },
+                    {
+                      name: "Timestamp",
+                      value: $timestamp,
+                      inline: false
+                    }
+                  ]
+                }
+              ]
+            }')
+
+          curl --fail-with-body \
+            -H "Content-Type: application/json" \
+            -d "$PAYLOAD" \
+            "$DISCORD_WEBHOOK"
+
+      - name: Enviar alerta CRITICAL para Discord
+        if: steps.security.outputs.severity == 'critical'
+        shell: bash
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_SECURITY_WEBHOOK }}
+          TOTAL_COUNT: ${{ steps.security.outputs.total_count }}
+          WARNING_COUNT: ${{ steps.security.outputs.warning_count }}
+          CRITICAL_COUNT: ${{ steps.security.outputs.critical_count }}
+          LAST_STATUS: ${{ steps.security.outputs.last_status }}
+          LAST_METHOD: ${{ steps.security.outputs.last_method }}
+          LAST_PATH: ${{ steps.security.outputs.last_path }}
+          LAST_TIMESTAMP: ${{ steps.security.outputs.last_timestamp }}
+        run: |
+          PAYLOAD=$(jq -n \
+            --arg total "$TOTAL_COUNT" \
+            --arg warnings "$WARNING_COUNT" \
+            --arg criticals "$CRITICAL_COUNT" \
+            --arg status "$LAST_STATUS" \
+            --arg method "$LAST_METHOD" \
+            --arg path "$LAST_PATH" \
+            --arg timestamp "$LAST_TIMESTAMP" \
+            '{
+              username: "Chouga Security",
+              embeds: [
+                {
+                  title: "🔴 Security Critical",
+                  description: "Foi detectado pelo menos um evento crítico no Supabase.",
+                  color: 15158332,
+                  fields: [
+                    {
+                      name: "Eventos",
+                      value: $total,
+                      inline: true
+                    },
+                    {
+                      name: "Warnings",
+                      value: $warnings,
+                      inline: true
+                    },
+                    {
+                      name: "Criticals",
+                      value: $criticals,
+                      inline: true
+                    },
+                    {
+                      name: "Último status",
+                      value: $status,
+                      inline: true
+                    },
+                    {
+                      name: "Última requisição",
+                      value: ($method + " " + $path),
+                      inline: false
+                    },
+                    {
+                      name: "Timestamp",
+                      value: $timestamp,
+                      inline: false
+                    }
+                  ]
+                }
+              ]
+            }')
+
+          curl --fail-with-body \
+            -H "Content-Type: application/json" \
+            -d "$PAYLOAD" \
+            "$DISCORD_WEBHOOK"
+
+      - name: Nenhum evento relevante
+        if: steps.security.outputs.severity == 'none'
         shell: bash
         run: |
-          echo "Severidade detectada: ${severity}"
+          echo "Nenhum evento de segurança relevante encontrado."
