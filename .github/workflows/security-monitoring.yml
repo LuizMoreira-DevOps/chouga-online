@@ -33,14 +33,14 @@ jobs:
         shell: bash
         run: sleep 30
 
-      - name: Testar logs potencialmente suspeitos
+      - name: Classificar eventos de segurança
         shell: bash
         env:
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
           SUPABASE_PROJECT_REF: ${{ secrets.SUPABASE_PROJECT_REF }}
         run: |
           END_TIME=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-          START_TIME=$(date -u -d "1 hour ago" +"%Y-%m-%dT%H:%M:%SZ")
+          START_TIME=$(date -u -d "5 minutes ago" +"%Y-%m-%dT%H:%M:%SZ")
 
           SQL="SELECT
             timestamp,
@@ -50,13 +50,51 @@ jobs:
             event_message
           FROM logs
           WHERE source = 'edge_logs'
-            AND toInt32OrZero(log_attributes['response.status_code']) >= 400
+            AND (
+              toInt32OrZero(log_attributes['response.status_code']) IN (401, 403)
+              OR toInt32OrZero(log_attributes['response.status_code']) >= 500
+            )
           ORDER BY timestamp DESC
           LIMIT 50"
 
-          curl --fail-with-body --get \
+          RESPONSE=$(curl --fail-with-body --get \
             "https://api.supabase.com/v1/projects/${SUPABASE_PROJECT_REF}/analytics/endpoints/logs" \
             --header "Authorization: Bearer ${SUPABASE_ACCESS_TOKEN}" \
             --data-urlencode "sql=${SQL}" \
             --data-urlencode "iso_timestamp_start=${START_TIME}" \
-            --data-urlencode "iso_timestamp_end=${END_TIME}"
+            --data-urlencode "iso_timestamp_end=${END_TIME}")
+
+          echo "$RESPONSE"
+
+          WARNING_COUNT=$(echo "$RESPONSE" | jq '
+            [.result[]
+              | select(
+                  (.status_code | tonumber) == 401
+                  or (.status_code | tonumber) == 403
+                )
+            ] | length
+          ')
+
+          CRITICAL_COUNT=$(echo "$RESPONSE" | jq '
+            [.result[]
+              | select(
+                  (.status_code | tonumber) >= 500
+                )
+            ] | length
+          ')
+
+          echo "Warnings encontrados: $WARNING_COUNT"
+          echo "Criticals encontrados: $CRITICAL_COUNT"
+
+          if [ "$CRITICAL_COUNT" -gt 0 ]; then
+            echo "severity=critical" >> "$GITHUB_ENV"
+          elif [ "$WARNING_COUNT" -gt 0 ]; then
+            echo "severity=warning" >> "$GITHUB_ENV"
+          else
+            echo "severity=none" >> "$GITHUB_ENV"
+          fi
+
+      - name: Exibir severidade detectada
+        shell: bash
+        run: |
+          echo "Severidade detectada: ${severity}"
