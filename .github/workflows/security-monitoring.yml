@@ -37,8 +37,9 @@ jobs:
             event_message
           FROM logs
           WHERE source = 'edge_logs'
+            AND toInt32OrZero(log_attributes['response.status_code']) >= 400
           ORDER BY timestamp DESC
-          LIMIT 20"
+          LIMIT 50"
 
           curl --fail-with-body --get \
             "https://api.supabase.com/v1/projects/${SUPABASE_PROJECT_REF}/analytics/endpoints/logs" \
