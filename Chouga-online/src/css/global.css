@@ -1,3 +1,7 @@
+/* =========================
+   FONTES
+========================= */
+
 @font-face {
   font-family: "Oswald";
   src: url("../assets/fonts/Oswald/Oswald-Regular.ttf") format("truetype");
@@ -123,10 +127,10 @@ svg {
 ========================= */
 
 .app-layout {
-  min-height: 100svh;
-
   display: flex;
   flex-direction: column;
+
+  min-height: 100svh;
 }
 
 .app-content {
@@ -159,8 +163,8 @@ svg {
 
   background-image:
     linear-gradient(
-      rgba(0, 0, 0, var(--bg-overlay-start, 0.78)),
-      rgba(0, 0, 0, var(--bg-overlay-end, 0.92))
+      rgb(0 0 0 / var(--bg-overlay-start, 78%)),
+      rgb(0 0 0 / var(--bg-overlay-end, 92%))
     ),
     var(--page-bg-image, url("../assets/images/optimized/bg-home-1920.webp"));
 
@@ -193,6 +197,222 @@ svg {
 }
 
 /* =========================
+   AÇÕES GLOBAIS
+========================= */
+
+/*
+ * .action = base oficial
+ */
+
+.action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: var(--spacing-2);
+
+  min-height: 52px;
+
+  padding: var(--spacing-3) var(--spacing-5);
+
+  border: 1px solid var(--action-border);
+  border-radius: 0;
+
+  background: var(--action-bg);
+  color: var(--action-text);
+
+  font: inherit;
+  font-weight: var(--font-weight-bold);
+
+  letter-spacing: var(--letter-spacing-wide);
+
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+
+  cursor: pointer;
+
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast),
+    color var(--transition-fast),
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast),
+    opacity var(--transition-fast);
+}
+
+.action:hover:not(:disabled, [aria-disabled="true"]) {
+  border-color: var(--action-hover-border);
+
+  background: var(--action-hover-bg);
+  color: var(--action-hover-text);
+
+  transform: translateY(-2px);
+}
+
+.action:active:not(:disabled, [aria-disabled="true"]) {
+  transform: translateY(0) scale(0.99);
+}
+
+.action:focus-visible {
+  border-color: var(--action-focus);
+
+  outline: 2px solid var(--action-focus);
+  outline-offset: 3px;
+
+  box-shadow: 0 0 18px var(--action-focus-glow);
+}
+
+.action:disabled,
+.action[aria-disabled="true"] {
+  cursor: not-allowed;
+
+  opacity: var(--action-disabled-opacity);
+}
+
+/* =========================
+   AÇÃO SECUNDÁRIA
+========================= */
+
+.action-secondary {
+  border-color: var(--color-border-medium);
+
+  background: transparent;
+  color: var(--color-text);
+}
+
+.action-secondary:hover:not(:disabled, [aria-disabled="true"]),
+.action-secondary:focus-visible {
+  border-color: var(--action-hover-border);
+
+  background: var(--action-hover-bg);
+  color: var(--action-hover-text);
+}
+
+/* =========================
+   AÇÃO DE ÍCONE
+========================= */
+
+.action-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 52px;
+  min-height: 52px;
+
+  border: 1px solid var(--color-border-medium);
+  border-radius: 0;
+
+  background: var(--color-bg);
+  color: var(--color-text);
+
+  cursor: pointer;
+
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast),
+    color var(--transition-fast),
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast),
+    opacity var(--transition-fast);
+}
+
+.action-icon:hover:not(:disabled, [aria-disabled="true"]) {
+  border-color: var(--action-hover-border);
+
+  background: var(--action-hover-bg);
+  color: var(--action-hover-text);
+
+  transform: translateY(-2px);
+}
+
+.action-icon:active:not(:disabled, [aria-disabled="true"]) {
+  transform: translateY(0) scale(0.98);
+}
+
+.action-icon:focus-visible {
+  border-color: var(--action-focus);
+
+  outline: 2px solid var(--action-focus);
+  outline-offset: 3px;
+
+  box-shadow: 0 0 18px var(--action-focus-glow);
+}
+
+.action-icon:disabled,
+.action-icon[aria-disabled="true"] {
+  cursor: not-allowed;
+
+  opacity: var(--action-disabled-opacity);
+}
+
+/* =========================
+   CONTROLES DE SELEÇÃO
+========================= */
+
+.choice {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 52px;
+
+  border: 1px solid var(--color-border-medium);
+  border-radius: 0;
+
+  background: transparent;
+  color: var(--color-text);
+
+  font: inherit;
+  font-weight: var(--font-weight-semibold);
+
+  cursor: pointer;
+
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast),
+    color var(--transition-fast),
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast),
+    opacity var(--transition-fast);
+}
+
+.choice:hover:not(:disabled) {
+  border-color: var(--action-hover-border);
+
+  color: var(--action-hover-text);
+}
+
+.choice.is-active,
+.choice.is-selected,
+.choice[aria-pressed="true"] {
+  border-color: var(--action-hover-border);
+
+  background: var(--color-accent-subtle);
+  color: var(--color-text-white);
+}
+
+.choice:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.choice:focus-visible {
+  border-color: var(--action-focus);
+
+  outline: 2px solid var(--action-focus);
+  outline-offset: 3px;
+
+  box-shadow: 0 0 18px var(--action-focus-glow);
+}
+
+.choice:disabled {
+  cursor: not-allowed;
+
+  opacity: 0.4;
+}
+
+/* =========================
    REMOÇÃO DO DESTAQUE DE TOQUE
 ========================= */
 
@@ -222,18 +442,44 @@ input:focus-visible,
 textarea:focus-visible,
 select:focus-visible,
 [role="button"]:focus-visible {
-  outline: 2px solid var(--color-red-strong);
+  outline: 2px solid var(--action-focus);
   outline-offset: 4px;
 
   box-shadow:
     0 0 0 4px var(--color-overlay-focus),
-    0 0 18px var(--color-red-focus-glow);
+    0 0 18px var(--action-focus-glow);
 }
 
 input:focus-visible,
 textarea:focus-visible,
 select:focus-visible {
-  border-color: var(--color-red-strong);
+  border-color: var(--action-focus);
+}
+
+/* =========================
+   REDUCED MOTION
+========================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .action,
+  .action-icon,
+  .choice {
+    transition:
+      background-color var(--transition-fast),
+      border-color var(--transition-fast),
+      color var(--transition-fast),
+      box-shadow var(--transition-fast),
+      opacity var(--transition-fast);
+  }
+
+  .action:hover:not(:disabled, [aria-disabled="true"]),
+  .action:active:not(:disabled, [aria-disabled="true"]),
+  .action-icon:hover:not(:disabled, [aria-disabled="true"]),
+  .action-icon:active:not(:disabled, [aria-disabled="true"]),
+  .choice:hover:not(:disabled),
+  .choice:active:not(:disabled) {
+    transform: none;
+  }
 }
 
 /* =========================
@@ -253,5 +499,16 @@ select:focus-visible {
 @media (max-width: 520px) {
   .page-viewport {
     min-height: calc(100svh - var(--header-height-mobile));
+  }
+
+  .action {
+    min-height: 50px;
+
+    padding-inline: var(--spacing-4);
+  }
+
+  .action-icon,
+  .choice {
+    min-height: 50px;
   }
 }
