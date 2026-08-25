@@ -10,11 +10,11 @@ function ProductGrid({ products }) {
   }
 
   return (
-    <div className="products-grid">
+    <section className="products-grid" aria-label="Lista de produtos">
       {products.map((product) => (
         <ProductCard key={product.id} product={product} />
       ))}
-    </div>
+    </section>
   );
 }
 
