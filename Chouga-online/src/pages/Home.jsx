@@ -4,7 +4,6 @@ import Layout from "../components/Layout";
 import WheelMenu from "../components/WheelMenu";
 
 import "../css/home.css";
-import "../css/embreve.css";
 
 function Home() {
   useEffect(() => {
