@@ -1,16 +1,18 @@
 import { useState } from "react";
-import Layout from "../components/Layout";
-import "../css/contato.css";
 
 import {
   FaEnvelope,
-  FaPhoneAlt,
-  FaMapMarkerAlt,
   FaInstagram,
+  FaMapMarkerAlt,
+  FaPhoneAlt,
   FaWhatsapp,
 } from "react-icons/fa";
 
+import Layout from "../components/Layout";
+
 import { buildWhatsAppUrl, siteContacts } from "../constants/siteContacts";
+
+import "../css/contato.css";
 
 function Contato() {
   const [formStatus, setFormStatus] = useState("");
@@ -34,9 +36,11 @@ function Contato() {
     const texto = `Olá, Chouga! Meu nome é ${nome}.
 
 E-mail: ${email}
+
 Assunto: ${assunto}
 
 Mensagem:
+
 ${mensagem}`;
 
     const whatsappUrl = buildWhatsAppUrl(texto);
@@ -91,6 +95,7 @@ ${mensagem}`;
 
                 <li>
                   <FaMapMarkerAlt aria-hidden="true" />
+
                   <span>{siteContacts.location}</span>
                 </li>
               </ul>
@@ -120,6 +125,7 @@ ${mensagem}`;
               <div className="contato-honeypot" aria-hidden="true">
                 <label>
                   <span>Website</span>
+
                   <input
                     type="text"
                     name="website"
@@ -131,11 +137,13 @@ ${mensagem}`;
 
               <label>
                 <span>Nome</span>
+
                 <input type="text" name="nome" autoComplete="name" required />
               </label>
 
               <label>
                 <span>E-mail</span>
+
                 <input
                   type="email"
                   name="email"
@@ -146,15 +154,19 @@ ${mensagem}`;
 
               <label>
                 <span>Assunto</span>
+
                 <input type="text" name="assunto" required />
               </label>
 
               <label>
                 <span>Mensagem</span>
+
                 <textarea name="mensagem" rows="5" required />
               </label>
 
-              <button type="submit">Enviar mensagem</button>
+              <button type="submit" className="action contato-submit">
+                Enviar mensagem
+              </button>
 
               {formStatus && (
                 <p className="contato-form-status" role="status">
