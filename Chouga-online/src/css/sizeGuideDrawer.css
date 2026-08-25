@@ -1,128 +1,144 @@
+/* =========================
+   DRAWER DO GUIA DE TAMANHOS
+========================= */
+
 .size-guide-drawer {
   position: fixed;
-  z-index: 1400;
   inset: 0;
+  z-index: 1400;
+
   display: flex;
   justify-content: flex-end;
+
   background: rgb(0 0 0 / 68%);
 }
 
 .size-guide-drawer__panel {
   display: flex;
   flex-direction: column;
+
   width: min(620px, 100%);
   height: 100dvh;
+
   overflow: hidden;
+
   border-left: 1px solid var(--color-border-medium);
+
   background: var(--color-bg-elevated);
   color: var(--color-text);
-  box-shadow: -24px 0 70px rgb(0 0 0 / 45%);
+
+  box-shadow: -24px 0 70px var(--color-shadow-medium);
+
   animation: size-guide-enter 220ms ease-out;
 }
+
+/* =========================
+   CABEÇALHO
+========================= */
 
 .size-guide-drawer__header {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
+
   gap: 22px;
-  padding: 24px;
+
+  padding: var(--spacing-5);
+
   border-bottom: 1px solid var(--color-border-soft);
 }
 
 .size-guide-drawer__eyebrow {
-  margin: 0 0 8px;
-  color: var(--color-red);
+  margin: 0 0 var(--spacing-2);
+
+  color: var(--color-accent);
+
   font-size: var(--text-xs);
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
+
   letter-spacing: 0.12em;
+
   text-transform: uppercase;
 }
 
 .size-guide-drawer__header h2 {
   margin: 0;
+
   color: var(--color-text);
+
   font-size: clamp(1.8rem, 5vw, 2.8rem);
   line-height: 1;
+
   text-transform: uppercase;
 }
 
-.size-guide-drawer__footer {
-  flex: 0 0 auto;
-  width: 100%;
-  padding: var(--spacing-3) var(--spacing-4);
-  border-top: 1px solid var(--color-border-soft);
-  background: var(--color-bg-elevated);
-}
-
-.size-guide-drawer__close {
-  display: inline-flex;
-  width: 100%;
-  min-height: 52px;
-  align-items: center;
-  justify-content: center;
-  gap: var(--spacing-2);
-  padding: var(--spacing-3) var(--spacing-4);
-  border: 1px solid var(--color-red);
-  background: var(--color-red-dark);
-  color: var(--color-text-white);
-  font: inherit;
-  font-size: var(--text-xs);
-  font-weight: var(--font-weight-bold);
-  letter-spacing: var(--letter-spacing-wide);
-  text-transform: uppercase;
-}
-
-.size-guide-drawer__close:hover,
-.size-guide-drawer__close:focus-visible {
-  border-color: var(--color-red-strong);
-  background: var(--color-red-dark-hover);
-  color: var(--color-text-white);
-  transform: translateY(-2px);
-}
+/* =========================
+   CORPO
+========================= */
 
 .size-guide-drawer__body {
   flex: 1;
+
   min-height: 0;
-  padding: 24px;
+
+  padding: var(--spacing-5);
+
   overflow-y: auto;
 }
 
 .size-guide-drawer__description {
-  margin: 0 0 24px;
-  color: var(--color-text-78);
-  line-height: 1.7;
+  margin: 0 0 var(--spacing-5);
+
+  color: var(--color-text-emphasis);
+
+  line-height: var(--line-height-relaxed);
 }
 
 .size-guide-drawer__section {
   display: grid;
-  gap: 16px;
+
+  gap: var(--spacing-4);
+
   margin-bottom: 28px;
 }
 
 .size-guide-drawer__section h3 {
   margin: 0;
+
   color: var(--color-text);
+
   font-size: var(--text-sm);
+
   letter-spacing: 0.08em;
+
   text-transform: uppercase;
 }
 
+/* =========================
+   TABELA
+========================= */
+
 .size-guide-drawer__table-wrapper {
   overflow-x: hidden;
+
   border: 1px solid var(--color-border-soft);
 }
 
 .size-guide-drawer__table {
   width: 100%;
   min-width: 0;
+
   border-collapse: collapse;
+
   table-layout: fixed;
+
   text-align: center;
 }
 
 .size-guide-drawer__table th,
 .size-guide-drawer__table td {
-  padding: 14px 8px;
+  padding: 14px var(--spacing-2);
+
   border-bottom: 1px solid var(--color-border-soft);
 }
 
@@ -147,19 +163,22 @@
 }
 
 .size-guide-drawer__table thead th {
-  background: var(--color-red-dark);
+  background: var(--color-accent-deep);
   color: var(--color-text-white);
+
   font-size: var(--text-xs);
+
   letter-spacing: 0.06em;
+
   text-transform: uppercase;
 }
 
 .size-guide-drawer__table tbody th {
-  color: var(--color-red);
+  color: var(--color-accent);
 }
 
 .size-guide-drawer__table tbody td {
-  color: var(--color-text-72);
+  color: var(--color-text-soft);
 }
 
 .size-guide-drawer__table tbody tr:last-child th,
@@ -167,30 +186,50 @@
   border-bottom: 0;
 }
 
+/* =========================
+   ILUSTRAÇÃO
+========================= */
+
 .size-guide-drawer__illustration {
   display: grid;
+
   place-items: center;
+
   overflow: hidden;
+
   border: 0;
+
   background: transparent;
 }
 
 .size-guide-drawer__illustration img {
   display: block;
+
   width: 100%;
-  max-height: 360px;
   height: auto;
+  max-height: 360px;
+
   object-fit: contain;
 }
 
+/* =========================
+   INSTRUÇÕES
+========================= */
+
 .size-guide-drawer__instructions {
   display: grid;
-  gap: 12px;
+
+  gap: var(--spacing-3);
+
   margin: 0;
+
   padding: 18px 18px 18px 38px;
-  border-left: 3px solid var(--color-red);
+
+  border-left: 3px solid var(--color-accent);
+
   background: var(--color-bg-soft);
-  color: var(--color-text-72);
+  color: var(--color-text-soft);
+
   line-height: 1.55;
 }
 
@@ -200,22 +239,68 @@
 
 .size-guide-drawer__notice {
   margin: 0;
-  color: var(--color-text-55);
+
+  color: var(--color-text-subtle);
+
   font-size: var(--text-xs);
-  line-height: 1.5;
+  line-height: var(--line-height-base);
 }
+
+/* =========================
+   RODAPÉ
+========================= */
+
+.size-guide-drawer__footer {
+  flex: 0 0 auto;
+
+  width: 100%;
+
+  padding: var(--spacing-3) var(--spacing-4);
+
+  border-top: 1px solid var(--color-border-soft);
+
+  background: var(--color-bg-elevated);
+}
+
+/* =========================
+   BOTÃO FECHAR
+========================= */
+
+/* =========================
+   BOTÃO FECHAR
+========================= */
+
+.size-guide-drawer__close {
+  width: 100%;
+
+  min-height: 52px;
+
+  padding-inline: var(--spacing-4);
+
+  font-size: var(--text-xs);
+}
+
+/* =========================
+   ANIMAÇÃO
+========================= */
 
 @keyframes size-guide-enter {
   from {
     opacity: 0;
+
     transform: translateX(100%);
   }
 
   to {
     opacity: 1;
+
     transform: translateX(0);
   }
 }
+
+/* =========================
+   MOBILE
+========================= */
 
 @media (max-width: 720px) {
   .size-guide-drawer__panel {
@@ -223,7 +308,7 @@
   }
 
   .size-guide-drawer__body {
-    padding: 20px 16px 28px;
+    padding: 20px var(--spacing-4) 28px;
   }
 
   .size-guide-drawer__table-wrapper {
@@ -233,15 +318,19 @@
   .size-guide-drawer__table {
     width: 100%;
     min-width: 0;
+
     table-layout: fixed;
   }
 
   .size-guide-drawer__table th,
   .size-guide-drawer__table td {
     padding: var(--spacing-3) var(--spacing-1);
+
     font-size: var(--text-xs);
     line-height: var(--line-height-tight);
+
     white-space: normal;
+
     overflow-wrap: anywhere;
   }
 
@@ -263,6 +352,10 @@
     max-width: 100%;
   }
 }
+
+/* =========================
+   REDUCED MOTION
+========================= */
 
 @media (prefers-reduced-motion: reduce) {
   .size-guide-drawer__panel {
