@@ -33,14 +33,17 @@ const categoryAliases = {
   camisetas: "camisetas",
   cropped: "cropped",
   croppeds: "cropped",
-
-  // Compatibilidade temporária com dados antigos
   blusa: "blusas",
   blusas: "blusas",
-
-  // Nova nomenclatura
   "manga-longa": "manga-longa",
 };
+
+const DEFAULT_CATEGORY_GROUPS = [
+  "camisetas",
+  "cropped",
+  "camisetas-manga-longa",
+  "blusas",
+];
 
 function normalizeText(value) {
   return String(value ?? "")
@@ -116,7 +119,6 @@ function getProductImage(imageUrl, assetFolder) {
 
 function belongsToCategoryGroups(product, categoryGroups) {
   const categorySlug = getProductCategorySlug(product);
-
   const categoryParts = categorySlug.split("-");
 
   return categoryGroups.some((group) => {
@@ -151,7 +153,6 @@ function normalizeProduct(product) {
   ];
 
   const categorySlug = getProductCategorySlug(product);
-
   const assetFolder = getAssetFolder(product);
 
   return {
@@ -171,15 +172,13 @@ function normalizeProduct(product) {
 }
 
 function Produtos({
-  categoryGroups = ["camisetas", "cropped", "camisetas-manga-longa", "blusas"],
+  categoryGroups = DEFAULT_CATEGORY_GROUPS,
   title = "Produtos",
 }) {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [products, setProducts] = useState([]);
-
   const [loading, setLoading] = useState(true);
-
   const [error, setError] = useState("");
 
   const {
@@ -202,6 +201,11 @@ function Produtos({
   const categories = useMemo(
     () => getDynamicCategories(products, title),
     [products, title],
+  );
+
+  const requestedCategory = useMemo(
+    () => normalizeCategorySlug(searchParams.get("categoria")),
+    [searchParams],
   );
 
   useEffect(() => {
@@ -246,21 +250,12 @@ function Produtos({
   }, [categoryGroups]);
 
   useEffect(() => {
-    if (products.length === 0) {
-      return;
-    }
-
-    const requestedCategory = normalizeCategorySlug(
-      searchParams.get("categoria"),
-    );
-
-    if (!requestedCategory) {
+    if (products.length === 0 || !requestedCategory) {
       return;
     }
 
     const matchingCategory = categories.find((category) => {
       const categoryValue = normalizeCategorySlug(category.value);
-
       const categoryParts = categoryValue.split("-");
 
       return (
@@ -273,7 +268,7 @@ function Produtos({
     if (matchingCategory) {
       setCategoryFilter(matchingCategory.value);
     }
-  }, [categories, products, searchParams, setCategoryFilter]);
+  }, [categories, products.length, requestedCategory, setCategoryFilter]);
 
   function handleCategoryChange(category) {
     setCategoryFilter(category);
@@ -305,10 +300,14 @@ function Produtos({
               onColorToggle={toggleColorFilter}
             />
 
-            <section className="produtos-content">
-              {loading && <p>Carregando produtos...</p>}
+            <section
+              className="produtos-content"
+              aria-label="Catálogo de produtos"
+              aria-busy={loading}
+            >
+              {loading && <p role="status">Carregando produtos...</p>}
 
-              {error && <p>Erro ao carregar produtos: {error}</p>}
+              {error && <p role="alert">Erro ao carregar produtos: {error}</p>}
 
               {!loading && !error && (
                 <ProductGrid products={filteredProducts} />
