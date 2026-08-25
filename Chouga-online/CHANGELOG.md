@@ -1,3 +1,20 @@
+## [1.23.0](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.22.0...v1.23.0) (2026-08-25)
+
+### Features
+
+* adicionar base do monitoramento de segurança ([8221e1b](https://github.com/LuizMoreira-DevOps/chouga-online/commit/8221e1bda4169eb4f0a5b8b6a949b3c1ab68acf6))
+* adicionar monitoramento de segurança do Supabase ([db4b6b0](https://github.com/LuizMoreira-DevOps/chouga-online/commit/db4b6b0e68a2c9d7494a38bd986812289593c64a))
+
+### Bug Fixes
+
+* ajustar consulta de logs do Supabase ([7380f3e](https://github.com/LuizMoreira-DevOps/chouga-online/commit/7380f3e5a26a878580c960f006ed72b1e50fed9b))
+* corrigir filtro da consulta de logs do Supabase ([870cd14](https://github.com/LuizMoreira-DevOps/chouga-online/commit/870cd14d81d49f46a3d822c03fb3c39acac8cce4))
+* finalizar monitoramento de segurança e alertas do Discord ([#300](https://github.com/LuizMoreira-DevOps/chouga-online/issues/300)) ([52dff8f](https://github.com/LuizMoreira-DevOps/chouga-online/commit/52dff8fe61d1342156276e25205c3c408c41d83b))
+
+### Code Refactoring
+
+* estruturar design tokens e padronizar frontend ([#308](https://github.com/LuizMoreira-DevOps/chouga-online/issues/308)) ([326c1f0](https://github.com/LuizMoreira-DevOps/chouga-online/commit/326c1f0328bd7b593ba417f6462f8e79f3562d88))
+
 ## [1.22.0](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.21.3...v1.22.0) (2026-08-20)
 
 ### Features
