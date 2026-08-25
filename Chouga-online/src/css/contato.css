@@ -4,6 +4,7 @@
 
 .contato-content {
   display: grid;
+
   grid-template-columns: minmax(320px, 0.78fr) minmax(560px, 1.35fr);
 
   align-items: center;
@@ -32,6 +33,7 @@
   font-family: var(--font-display);
   font-size: var(--title-lg);
   line-height: 0.82;
+
   letter-spacing: 0.05em;
 
   text-transform: uppercase;
@@ -42,14 +44,14 @@
 }
 
 .contato-info h1 span:nth-child(1) {
-  color: var(--color-text-strong);
+  color: var(--color-text-white);
 
   transform: rotate(-7deg);
 }
 
 .contato-info h1 span:nth-child(2),
 .contato-info h1 span:nth-child(3) {
-  color: var(--color-red-strong);
+  color: var(--color-accent);
 
   transform: rotate(-9deg);
 }
@@ -63,8 +65,11 @@
 
   margin-bottom: 2.3rem;
 
+  color: var(--color-text);
+
   font-size: var(--text-lg);
   line-height: 1.4;
+
   letter-spacing: var(--letter-spacing-wide);
 
   text-transform: uppercase;
@@ -92,6 +97,7 @@
   gap: 0.85rem;
 
   font-size: var(--text-md);
+
   letter-spacing: 0.16em;
 
   text-transform: uppercase;
@@ -102,7 +108,7 @@
 
   width: 1.25rem;
 
-  color: var(--color-text-strong);
+  color: var(--color-text-white);
 
   font-size: 1.2rem;
 }
@@ -117,7 +123,7 @@
 }
 
 .contato-list a:hover {
-  color: var(--color-red-strong);
+  color: var(--color-accent);
 }
 
 /* =========================
@@ -132,18 +138,21 @@
 
 .contato-social a {
   display: grid;
+
   place-items: center;
 
   width: 2.4rem;
   height: 2.4rem;
 
-  border: 1px solid var(--color-border-strong);
+  border: 1px solid var(--color-border);
 
-  color: var(--color-text-strong);
+  background: transparent;
+  color: var(--color-text);
 
   transition:
-    color var(--transition-fast),
     background-color var(--transition-fast),
+    border-color var(--transition-fast),
+    color var(--transition-fast),
     transform var(--transition-fast);
 }
 
@@ -152,10 +161,24 @@
 }
 
 .contato-social a:hover {
-  color: var(--color-bg);
-  background-color: var(--color-text-strong);
+  border-color: var(--action-hover-border);
 
-  transform: translateY(-3px);
+  background: var(--action-hover-bg);
+  color: var(--action-hover-text);
+
+  transform: translateY(-2px);
+}
+
+.contato-social a:focus-visible {
+  border-color: var(--action-focus);
+
+  outline: 2px solid var(--action-focus);
+  outline-offset: 3px;
+
+  background: var(--action-hover-bg);
+  color: var(--action-hover-text);
+
+  box-shadow: 0 0 18px var(--action-focus-glow);
 }
 
 /* =========================
@@ -178,13 +201,13 @@
   position: absolute;
   top: 0.65rem;
   left: 1.3rem;
-
   z-index: 1;
 
-  color: var(--color-text-strong);
+  color: var(--color-text-white);
 
   font-size: 0.72rem;
   line-height: 1;
+
   letter-spacing: 0.12em;
 
   text-transform: uppercase;
@@ -201,7 +224,7 @@
   border: 1px solid var(--color-border);
 
   background-color: var(--color-overlay-dark);
-  color: var(--color-text-strong);
+  color: var(--color-text-white);
 
   font: inherit;
   font-size: 1.05rem;
@@ -228,11 +251,13 @@
 
 .contato-form input:focus,
 .contato-form textarea:focus {
-  border-color: var(--color-red-strong);
+  border-color: var(--action-focus);
 
   background-color: var(--color-overlay-focus);
 
-  box-shadow: 0 0 22px var(--color-red-focus-glow);
+  outline: none;
+
+  box-shadow: 0 0 22px var(--action-focus-glow);
 }
 
 /* =========================
@@ -244,56 +269,37 @@
 
   border: 1px solid var(--color-border-medium);
 
-  color: var(--color-text-strong);
-
   background: linear-gradient(
     145deg,
-    rgb(255 42 0 / 12%),
+    var(--color-accent-soft),
     var(--color-overlay-dark)
   );
 
-  font-family: "Courier New", monospace;
+  color: var(--color-text-white);
+
+  font-family: var(--font-base);
+
   font-size: 0.86rem;
   line-height: 1.35;
+
   letter-spacing: var(--letter-spacing-wide);
 
   text-transform: uppercase;
 
   box-shadow:
-    0 12px 28px rgb(0 0 0 / 32%),
-    inset 0 0 18px rgb(243 215 191 / 3.5%);
+    0 12px 28px rgb(0 0 0 / 28%),
+    inset 0 0 18px var(--color-gradient-light);
 }
 
 /* =========================
-   BOTÃO
+   CTA DO FORMULÁRIO
 ========================= */
 
-.contato-form button {
-  height: var(--spacing-9);
-
-  border: 0;
-
-  background-color: var(--color-red-strong);
-  color: var(--color-bg);
+.contato-submit {
+  width: 100%;
+  min-height: var(--spacing-9);
 
   font-size: var(--text-lg);
-  font-weight: var(--font-weight-bold);
-  letter-spacing: var(--letter-spacing-wide);
-
-  text-transform: uppercase;
-
-  transition:
-    transform var(--transition-fast),
-    box-shadow var(--transition-fast),
-    filter var(--transition-fast);
-}
-
-.contato-form button:hover {
-  transform: translateY(-3px);
-
-  filter: brightness(1.05);
-
-  box-shadow: 0 0 24px var(--color-red-shadow);
 }
 
 /* =========================
@@ -302,6 +308,7 @@
 
 .contato-honeypot {
   position: absolute;
+
   left: -9999px;
 
   width: 1px;
@@ -401,6 +408,7 @@
     gap: var(--spacing-3);
 
     font-size: var(--text-sm);
+
     letter-spacing: 0.1em;
   }
 
@@ -414,10 +422,6 @@
     width: 2.2rem;
     height: 2.2rem;
   }
-
-  /* =========================
-     MOBILE PEQUENO - FORM
-  ========================= */
 
   .contato-form {
     gap: 0.85rem;
@@ -440,11 +444,12 @@
     left: 1.1rem;
 
     font-size: 0.66rem;
+
     letter-spacing: 0.1em;
   }
 
-  .contato-form button {
-    height: 3.55rem;
+  .contato-submit {
+    min-height: 3.55rem;
 
     font-size: var(--text-sm);
   }
