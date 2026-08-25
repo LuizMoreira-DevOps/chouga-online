@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 import "../css/header.css";
+
 import logoImg from "../assets/logo/Logo.png";
 
 const navLinks = [
@@ -48,10 +49,11 @@ function Header() {
 
   const headerRef = useRef(null);
   const triggerRef = useRef(null);
-  const location = useLocation();
 
-  const isHome = location.pathname === "/";
-  const currentSection = getCurrentSection(location.pathname);
+  const { pathname } = useLocation();
+
+  const isHome = pathname === "/";
+  const currentSection = getCurrentSection(pathname);
 
   function closeMenu({ restoreFocus = false } = {}) {
     setMenuOpen(false);
@@ -74,17 +76,13 @@ function Header() {
 
     function handlePointerDown(event) {
       if (!headerRef.current?.contains(event.target)) {
-        setMenuOpen(false);
+        closeMenu();
       }
     }
 
     function handleKeyDown(event) {
       if (event.key === "Escape") {
-        setMenuOpen(false);
-
-        requestAnimationFrame(() => {
-          triggerRef.current?.focus();
-        });
+        closeMenu({ restoreFocus: true });
       }
     }
 
@@ -150,7 +148,7 @@ function Header() {
         >
           <nav className="nav" aria-label="Navegação principal">
             {navLinks.map((link) => {
-              const isCurrent = isCurrentSection(location.pathname, link.path);
+              const isCurrent = isCurrentSection(pathname, link.path);
 
               return (
                 <Link

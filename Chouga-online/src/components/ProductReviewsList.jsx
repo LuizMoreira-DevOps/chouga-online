@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 import { getAvaliacoesProduto } from "../services/avaliacoesServices";
+
 import { RatingStars } from "./ProductReviewsSummary";
 
 import "../css/productReviews.css";
@@ -77,8 +78,11 @@ function ProductReviewsList({ productId }) {
 
   if (error) {
     return (
-      <section className="product-reviews-list">
-        <p className="product-reviews-feedback is-error">
+      <section
+        className="product-reviews-list"
+        aria-label="Comentários dos clientes"
+      >
+        <p className="product-reviews-feedback is-error" role="status">
           Não foi possível carregar os comentários.
         </p>
       </section>
@@ -101,52 +105,56 @@ function ProductReviewsList({ productId }) {
       </div>
 
       <div className="product-reviews-list-content">
-        {reviews.map((review) => (
-          <article key={review.id} className="product-review-card">
-            <header className="product-review-card-header">
-              <div>
-                <strong>{review.nome}</strong>
+        {reviews.map((review) => {
+          const formattedDate = formatReviewDate(review.created_at);
 
-                <time dateTime={review.created_at}>
-                  {formatReviewDate(review.created_at)}
-                </time>
-              </div>
+          return (
+            <article key={review.id} className="product-review-card">
+              <header className="product-review-card-header">
+                <div>
+                  <strong>{review.nome}</strong>
 
-              {review.compra_verificada && (
-                <span className="product-review-verified">
-                  Compra verificada
-                </span>
+                  {formattedDate && (
+                    <time dateTime={review.created_at}>{formattedDate}</time>
+                  )}
+                </div>
+
+                {review.compra_verificada && (
+                  <span className="product-review-verified">
+                    Compra verificada
+                  </span>
+                )}
+              </header>
+
+              <RatingStars
+                rating={review.nota}
+                label={`${review.nota} de 5 estrelas`}
+              />
+
+              <h3>{review.titulo}</h3>
+
+              <p>{review.comentario}</p>
+
+              {(review.cor || review.tamanho) && (
+                <dl className="product-review-details">
+                  {review.cor && (
+                    <div>
+                      <dt>Cor</dt>
+                      <dd>{review.cor}</dd>
+                    </div>
+                  )}
+
+                  {review.tamanho && (
+                    <div>
+                      <dt>Tamanho</dt>
+                      <dd>{review.tamanho}</dd>
+                    </div>
+                  )}
+                </dl>
               )}
-            </header>
-
-            <RatingStars
-              rating={review.nota}
-              label={`${review.nota} de 5 estrelas`}
-            />
-
-            <h3>{review.titulo}</h3>
-
-            <p>{review.comentario}</p>
-
-            {(review.cor || review.tamanho) && (
-              <dl className="product-review-details">
-                {review.cor && (
-                  <div>
-                    <dt>Cor</dt>
-                    <dd>{review.cor}</dd>
-                  </div>
-                )}
-
-                {review.tamanho && (
-                  <div>
-                    <dt>Tamanho</dt>
-                    <dd>{review.tamanho}</dd>
-                  </div>
-                )}
-              </dl>
-            )}
-          </article>
-        ))}
+            </article>
+          );
+        })}
       </div>
     </section>
   );

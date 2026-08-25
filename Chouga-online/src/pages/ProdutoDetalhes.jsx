@@ -751,7 +751,7 @@ function ProdutoDetalhes() {
                           <button
                             key={color}
                             type="button"
-                            className={`produto-detalhes-color-option ${
+                            className={`produto-detalhes-color-option choice ${
                               isSelected ? "is-selected" : ""
                             }`}
                             onClick={() => handleColorSelect(color)}
@@ -807,19 +807,24 @@ function ProdutoDetalhes() {
                     </div>
 
                     <div className="produto-detalhes-size-list">
-                      {sizes.map((size) => (
-                        <button
-                          key={size}
-                          type="button"
-                          className={currentSize === size ? "is-selected" : ""}
-                          onClick={() => {
-                            setSelectedSize(size);
-                            setQuantity(1);
-                          }}
-                        >
-                          {size}
-                        </button>
-                      ))}
+                      {sizes.map((size) => {
+                        const isSelected = currentSize === size;
+
+                        return (
+                          <button
+                            key={size}
+                            type="button"
+                            className={`choice ${isSelected ? "is-selected" : ""}`}
+                            aria-pressed={isSelected}
+                            onClick={() => {
+                              setSelectedSize(size);
+                              setQuantity(1);
+                            }}
+                          >
+                            {size}
+                          </button>
+                        );
+                      })}
                     </div>
                   </fieldset>
                 )}
@@ -869,7 +874,7 @@ function ProdutoDetalhes() {
 
                 <button
                   type="button"
-                  className="produto-detalhes-buy-button"
+                  className="action produto-detalhes-buy-button"
                   disabled={!canBuy}
                   onClick={handleWhatsApp}
                 >
@@ -1032,7 +1037,7 @@ function ProdutoDetalhes() {
         {showStartPurchase && !selectedProduct && !isSizeGuideOpen && (
           <button
             type="button"
-            className="produto-detalhes-floating-purchase"
+            className="action produto-detalhes-floating-purchase"
             onClick={handleStartPurchase}
             aria-controls="produto-fluxo-compra"
           >

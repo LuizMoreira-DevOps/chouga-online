@@ -5,9 +5,18 @@ import { getResumoAvaliacoesProduto } from "../services/avaliacoesServices";
 import "../css/productReviews.css";
 
 const RATING_VALUES = [5, 4, 3, 2, 1];
+const STAR_VALUES = [1, 2, 3, 4, 5];
+
+function formatRating(value) {
+  return Number(value || 0)
+    .toFixed(1)
+    .replace(".", ",");
+}
 
 function RatingStars({ rating = 0, label }) {
   const normalizedRating = Math.min(Math.max(Number(rating) || 0, 0), 5);
+
+  const roundedRating = Math.round(normalizedRating);
 
   return (
     <span
@@ -15,17 +24,15 @@ function RatingStars({ rating = 0, label }) {
       role="img"
       aria-label={label || `Nota ${normalizedRating} de 5 estrelas`}
     >
-      {RATING_VALUES.slice()
-        .reverse()
-        .map((star) => (
-          <span
-            key={star}
-            className={star <= Math.round(normalizedRating) ? "is-filled" : ""}
-            aria-hidden="true"
-          >
-            ★
-          </span>
-        ))}
+      {STAR_VALUES.map((star) => (
+        <span
+          key={star}
+          className={star <= roundedRating ? "is-filled" : ""}
+          aria-hidden="true"
+        >
+          ★
+        </span>
+      ))}
     </span>
   );
 }
@@ -82,8 +89,8 @@ function ProductReviewsSummary({ productId, compact = false }) {
     return null;
   }
 
-  const totalReviews = Number(summary?.quantidade_avaliacoes ?? 0);
-  const averageRating = Number(summary?.nota_media ?? 0);
+  const totalReviews = Number(summary?.quantidade_avaliacoes) || 0;
+  const averageRating = Number(summary?.nota_media) || 0;
 
   if (compact) {
     if (totalReviews === 0) {
@@ -100,7 +107,7 @@ function ProductReviewsSummary({ productId, compact = false }) {
       <div className="product-rating-compact">
         <RatingStars rating={averageRating} />
 
-        <strong>{averageRating.toFixed(1).replace(".", ",")}</strong>
+        <strong>{formatRating(averageRating)}</strong>
 
         <span>
           {totalReviews} {totalReviews === 1 ? "avaliação" : "avaliações"}
@@ -142,7 +149,7 @@ function ProductReviewsSummary({ productId, compact = false }) {
 
       <div className="product-reviews-summary-content">
         <div className="product-reviews-average">
-          <strong>{averageRating.toFixed(1).replace(".", ",")}</strong>
+          <strong>{formatRating(averageRating)}</strong>
 
           <RatingStars rating={averageRating} />
 
@@ -157,25 +164,27 @@ function ProductReviewsSummary({ productId, compact = false }) {
           aria-label="Distribuição das avaliações"
         >
           {RATING_VALUES.map((rating) => {
-            const ratingCount = Number(
-              summary?.[`quantidade_nota_${rating}`] ?? 0,
-            );
+            const ratingCount =
+              Number(summary?.[`quantidade_nota_${rating}`]) || 0;
 
             const percentage =
               totalReviews > 0 ? (ratingCount / totalReviews) * 100 : 0;
 
             return (
-              <div key={rating} className="product-reviews-distribution-row">
-                <span>{rating} ★</span>
+              <div
+                key={rating}
+                className="product-reviews-distribution-row"
+                aria-label={`${rating} estrelas: ${ratingCount} ${
+                  ratingCount === 1 ? "avaliação" : "avaliações"
+                }`}
+              >
+                <span aria-hidden="true">{rating} ★</span>
 
-                <div className="product-reviews-progress">
-                  <span
-                    style={{ width: `${percentage}%` }}
-                    aria-hidden="true"
-                  />
+                <div className="product-reviews-progress" aria-hidden="true">
+                  <span style={{ width: `${percentage}%` }} />
                 </div>
 
-                <span>{ratingCount}</span>
+                <span aria-hidden="true">{ratingCount}</span>
               </div>
             );
           })}
@@ -186,4 +195,5 @@ function ProductReviewsSummary({ productId, compact = false }) {
 }
 
 export { RatingStars };
+
 export default ProductReviewsSummary;

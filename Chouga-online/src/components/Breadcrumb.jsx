@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+
 import "../css/breadcrumb.css";
 
 function Breadcrumb({ items = [] }) {
@@ -7,14 +8,16 @@ function Breadcrumb({ items = [] }) {
   }
 
   return (
-    <nav className="breadcrumb" aria-label="Breadcrumb">
+    <nav className="breadcrumb" aria-label="Navegação estrutural">
       <ol className="breadcrumb-list">
         {items.map((item, index) => {
           const isLast = index === items.length - 1;
 
+          const itemKey = item.path ?? `${item.label}-${index}`;
+
           return (
             <li
-              key={`${item.label}-${index}`}
+              key={itemKey}
               className="breadcrumb-item"
               aria-current={isLast ? "page" : undefined}
             >

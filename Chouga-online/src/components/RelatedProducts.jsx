@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import ProductCard from "./ProductCard";
 
 import { getProdutosCatalogo } from "../services/produtosServices";
+
 import { getRelatedProducts } from "../utils/productCatalog";
 
 import "../css/products.css";
@@ -50,14 +51,14 @@ function RelatedProducts({ currentProduct }) {
     return () => {
       isMounted = false;
     };
-  }, [currentProduct?.slug]);
+  }, []);
 
   const relatedProducts = useMemo(
     () => getRelatedProducts(currentProduct, catalog, MAX_RELATED_PRODUCTS),
-    [catalog, currentProduct],
+    [currentProduct, catalog],
   );
 
-  if (loading || error || relatedProducts.length === 0) {
+  if (loading || error || !currentProduct || relatedProducts.length === 0) {
     return null;
   }
 

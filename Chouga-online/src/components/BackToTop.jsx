@@ -8,13 +8,25 @@ function BackToTop() {
       setShowBackToTop(window.scrollY > 320);
     }
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
     handleScroll();
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  function handleBackToTop() {
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    window.scrollTo({
+      top: 0,
+      behavior: prefersReducedMotion ? "auto" : "smooth",
+    });
+  }
 
   if (!showBackToTop) {
     return null;
@@ -24,11 +36,9 @@ function BackToTop() {
     <button
       className="back-to-top"
       type="button"
-      onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+      onClick={handleBackToTop}
       aria-label="Voltar ao topo"
-    >
-      ↑
-    </button>
+    />
   );
 }
 

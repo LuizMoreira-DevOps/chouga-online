@@ -1,4 +1,5 @@
 import Layout from "../components/Layout";
+
 import "../css/sobre.css";
 
 import sobre1 from "../assets/images/sobre-1.jpeg";
@@ -35,7 +36,11 @@ function Sobre() {
               </div>
 
               <figure className="sobre-photo sobre-photo-main">
-                <img src={sobre2} alt="Skatista saltando sobre pista urbana" />
+                <img
+                  src={sobre2}
+                  alt="Skatista saltando sobre pista urbana"
+                  decoding="async"
+                />
               </figure>
             </header>
 
@@ -66,29 +71,46 @@ function Sobre() {
                   <img
                     src={sobre1}
                     alt="Skatista Chouga em manobra na pista"
+                    loading="lazy"
+                    decoding="async"
                   />
                 </figure>
 
                 <figure className="sobre-photo sobre-photo-memory sobre-photo-memory-two">
-                  <img src={sobre3} alt="Skatistas na pista Chouga" />
+                  <img
+                    src={sobre3}
+                    alt="Skatistas na pista Chouga"
+                    loading="lazy"
+                    decoding="async"
+                  />
                 </figure>
 
                 <figure className="sobre-photo sobre-photo-memory sobre-photo-memory-three">
-                  <img src={sobre4} alt="Registro da história Chouga Skateboard" />
+                  <img
+                    src={sobre4}
+                    alt="Registro da história Chouga Skateboard"
+                    loading="lazy"
+                    decoding="async"
+                  />
                 </figure>
 
                 <figure className="sobre-photo sobre-photo-memory sobre-photo-memory-four">
-                  <img src={sobre5} alt="Registro urbano da Chouga Skateboard" />
+                  <img
+                    src={sobre5}
+                    alt="Registro urbano da Chouga Skateboard"
+                    loading="lazy"
+                    decoding="async"
+                  />
                 </figure>
               </div>
             </section>
 
-            <div className="sobre-pill-list" aria-label="Pilares da marca">
-              <span>Skate</span>
-              <span>Rua</span>
-              <span>Liberdade</span>
-              <span>Família</span>
-            </div>
+            <ul className="sobre-pill-list" aria-label="Pilares da marca">
+              <li>Skate</li>
+              <li>Rua</li>
+              <li>Liberdade</li>
+              <li>Família</li>
+            </ul>
           </div>
         </section>
       </main>

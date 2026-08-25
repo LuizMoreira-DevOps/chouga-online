@@ -1,4 +1,5 @@
 import { getColorOption } from "../constants/productFilters";
+import "../css/productFilters.css";
 
 function ProductFilters({
   categories,
@@ -16,28 +17,34 @@ function ProductFilters({
   const hasColors = availableColors.length > 0;
 
   return (
-    <aside className="product-filters">
+    <aside className="product-filters" aria-label="Filtros de produtos">
       {hasCategories && (
         <>
           <div className="filter-group">
             <h2>Categorias</h2>
+
             <div className="category-list">
-              {categories.map((category) => (
-                <button
-                  key={category.value}
-                  className={`filter-button ${
-                    categoryFilter === category.value ? "is-active" : ""
-                  }`}
-                  type="button"
-                  onClick={() => onCategoryChange(category.value)}
-                >
-                  {category.label}
-                </button>
-              ))}
+              {categories.map((category) => {
+                const isActive = categoryFilter === category.value;
+
+                return (
+                  <button
+                    key={category.value}
+                    className={`filter-button ${isActive ? "is-active" : ""}`}
+                    type="button"
+                    aria-pressed={isActive}
+                    onClick={() => onCategoryChange(category.value)}
+                  >
+                    {category.label}
+                  </button>
+                );
+              })}
             </div>
           </div>
 
-          {(hasSizes || hasColors) && <div className="filter-divider"></div>}
+          {(hasSizes || hasColors) && (
+            <div className="filter-divider" aria-hidden="true" />
+          )}
         </>
       )}
 
@@ -46,16 +53,21 @@ function ProductFilters({
           <h2>Tamanhos</h2>
 
           <div className="size-list">
-            {sizes.map((size) => (
-              <button
-                key={size}
-                className={sizeFilter === size ? "is-active" : ""}
-                type="button"
-                onClick={() => onSizeToggle(size)}
-              >
-                {size}
-              </button>
-            ))}
+            {sizes.map((size) => {
+              const isActive = sizeFilter === size;
+
+              return (
+                <button
+                  key={size}
+                  className={isActive ? "is-active" : ""}
+                  type="button"
+                  aria-pressed={isActive}
+                  onClick={() => onSizeToggle(size)}
+                >
+                  {size}
+                </button>
+              );
+            })}
           </div>
         </div>
       )}
@@ -67,18 +79,20 @@ function ProductFilters({
           <div className="color-list">
             {availableColors.map((color) => {
               const option = getColorOption(color);
+              const isActive = colorFilter === color;
 
               return (
                 <button
                   key={color}
                   className={`color-dot ${option.className} ${
-                    colorFilter === color ? "is-active" : ""
+                    isActive ? "is-active" : ""
                   }`}
                   type="button"
                   aria-label={option.label}
+                  aria-pressed={isActive}
                   title={option.label}
                   onClick={() => onColorToggle(color)}
-                ></button>
+                />
               );
             })}
           </div>
