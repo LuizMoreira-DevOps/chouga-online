@@ -2,6 +2,23 @@ import { useEffect, useRef } from "react";
 
 import "../css/sizeGuideDrawer.css";
 
+const FOCUSABLE_SELECTOR = [
+  "a[href]",
+  "button:not([disabled])",
+  "input:not([disabled])",
+  "select:not([disabled])",
+  "textarea:not([disabled])",
+  '[tabindex]:not([tabindex="-1"])',
+].join(",");
+
+function getFocusableElements(element) {
+  if (!element) {
+    return [];
+  }
+
+  return Array.from(element.querySelectorAll(FOCUSABLE_SELECTOR));
+}
+
 function SizeGuideDrawer({ guide, isOpen, onClose, triggerRef }) {
   const drawerRef = useRef(null);
   const titleRef = useRef(null);
@@ -17,31 +34,12 @@ function SizeGuideDrawer({ guide, isOpen, onClose, triggerRef }) {
 
     document.body.style.overflow = "hidden";
 
-    function getFocusableElements() {
-      if (!drawerElement) {
-        return [];
-      }
-
-      return Array.from(
-        drawerElement.querySelectorAll(
-          [
-            "a[href]",
-            "button:not([disabled])",
-            "input:not([disabled])",
-            "select:not([disabled])",
-            "textarea:not([disabled])",
-            '[tabindex]:not([tabindex="-1"])',
-          ].join(","),
-        ),
-      );
-    }
-
     function keepFocusInsideDrawer(event) {
       if (drawerElement?.contains(event.target)) {
         return;
       }
 
-      const focusableElements = getFocusableElements();
+      const focusableElements = getFocusableElements(drawerElement);
 
       if (focusableElements.length > 0) {
         focusableElements[0].focus();
@@ -62,7 +60,7 @@ function SizeGuideDrawer({ guide, isOpen, onClose, triggerRef }) {
         return;
       }
 
-      const focusableElements = getFocusableElements();
+      const focusableElements = getFocusableElements(drawerElement);
 
       if (focusableElements.length === 0) {
         event.preventDefault();
@@ -121,12 +119,19 @@ function SizeGuideDrawer({ guide, isOpen, onClose, triggerRef }) {
   }
 
   const columns = Array.isArray(guide.columns) ? guide.columns : [];
+
   const measurements = Array.isArray(guide.measurements)
     ? guide.measurements
     : [];
+
   const instructions = Array.isArray(guide.instructions)
     ? guide.instructions
     : [];
+
+  const guideTitle = guide.title || "Guia de tamanhos";
+
+  const guideImageAlt =
+    guide.imageAlt || `Ilustração de como medir ${guideTitle.toLowerCase()}`;
 
   return (
     <div
@@ -151,7 +156,7 @@ function SizeGuideDrawer({ guide, isOpen, onClose, triggerRef }) {
             </p>
 
             <h2 ref={titleRef} id="size-guide-title" tabIndex={-1}>
-              {guide.title}
+              {guideTitle}
             </h2>
           </div>
         </header>
@@ -215,13 +220,7 @@ function SizeGuideDrawer({ guide, isOpen, onClose, triggerRef }) {
 
             {guide.image ? (
               <div className="size-guide-drawer__illustration">
-                <img
-                  src={guide.image}
-                  alt={
-                    guide.imageAlt ||
-                    `Ilustração de como medir ${guide.title.toLowerCase()}`
-                  }
-                />
+                <img src={guide.image} alt={guideImageAlt} />
               </div>
             ) : (
               <div
@@ -251,7 +250,7 @@ function SizeGuideDrawer({ guide, isOpen, onClose, triggerRef }) {
         <footer className="size-guide-drawer__footer">
           <button
             type="button"
-            className="size-guide-drawer__close"
+            className="action size-guide-drawer__close"
             onClick={onClose}
             aria-label="Voltar ao produto"
           >
