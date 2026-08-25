@@ -1,6 +1,7 @@
 import { FaInstagram, FaWhatsapp } from "react-icons/fa";
 
 import "../css/footer.css";
+
 import logoFooter from "../assets/logo/Logo-desfigurada-transparente.png";
 
 import { buildWhatsAppUrl, siteContacts } from "../constants/siteContacts";
@@ -17,7 +18,9 @@ function Footer() {
               alt="Logo Chouga Skateboard"
             />
 
-            <span className="footer-logo-mark">®</span>
+            <span className="footer-logo-mark" aria-hidden="true">
+              ®
+            </span>
           </div>
 
           <p>
@@ -51,7 +54,6 @@ function Footer() {
 
         <div className="footer-copy">
           <span>© 2026 Chouga</span>
-
           <small>Underground skatewear culture.</small>
         </div>
       </div>
