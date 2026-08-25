@@ -5,6 +5,7 @@ import {
   denyClarityConsent,
   grantClarityConsent,
 } from "../services/clarity.js";
+
 import {
   denyGoogleAnalytics,
   getCookiePreferences,
@@ -17,10 +18,13 @@ import "../css/CookieConsentBanner.css";
 
 export default function CookieConsentBanner() {
   const location = useLocation();
+
   const storedPreferences = getCookiePreferences();
 
   const [isVisible, setIsVisible] = useState(() => storedPreferences === null);
+
   const [isCustomizing, setIsCustomizing] = useState(false);
+
   const [analyticsEnabled, setAnalyticsEnabled] = useState(
     () => storedPreferences?.analytics ?? false,
   );
@@ -34,6 +38,7 @@ export default function CookieConsentBanner() {
   function handleAcceptAll() {
     grantGoogleAnalytics();
     grantClarityConsent();
+
     trackCurrentPage();
 
     setAnalyticsEnabled(true);
@@ -57,6 +62,7 @@ export default function CookieConsentBanner() {
     if (analyticsEnabled) {
       grantGoogleAnalytics();
       grantClarityConsent();
+
       trackCurrentPage();
     } else {
       denyGoogleAnalytics();
@@ -93,7 +99,7 @@ export default function CookieConsentBanner() {
 
             <div className="cookie-consent__actions">
               <button
-                className="cookie-consent__button cookie-consent__button--reject"
+                className="action action-secondary cookie-consent__button"
                 type="button"
                 onClick={handleRejectNonEssential}
               >
@@ -101,7 +107,7 @@ export default function CookieConsentBanner() {
               </button>
 
               <button
-                className="cookie-consent__button cookie-consent__button--customize"
+                className="action action-secondary cookie-consent__button"
                 type="button"
                 onClick={() => setIsCustomizing(true)}
               >
@@ -109,7 +115,7 @@ export default function CookieConsentBanner() {
               </button>
 
               <button
-                className="cookie-consent__button cookie-consent__button--accept"
+                className="action cookie-consent__button"
                 type="button"
                 onClick={handleAcceptAll}
               >
@@ -168,13 +174,14 @@ export default function CookieConsentBanner() {
                 />
 
                 <span className="cookie-consent__slider" aria-hidden="true" />
+
                 <span className="sr-only">Ativar cookies analíticos</span>
               </label>
             </div>
 
             <div className="cookie-consent__actions">
               <button
-                className="cookie-consent__button cookie-consent__button--reject"
+                className="action action-secondary cookie-consent__button"
                 type="button"
                 onClick={handleRejectNonEssential}
               >
@@ -182,7 +189,7 @@ export default function CookieConsentBanner() {
               </button>
 
               <button
-                className="cookie-consent__button cookie-consent__button--accept"
+                className="action cookie-consent__button"
                 type="button"
                 onClick={handleSavePreferences}
               >
