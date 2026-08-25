@@ -21,8 +21,6 @@ function formatCategoryLabel(category) {
     "camisetas-manga-longa": "Manga longa",
     "camisetas-manga-longa-basicas": "Manga longa básicas",
     "camisetas-manga-longa-estampadas": "Manga longa estampadas",
-
-    // Compatibilidade temporária
     blusas: "Manga longa",
     "blusas-basicas": "Manga longa básicas",
     "blusas-estampadas": "Manga longa estampadas",
