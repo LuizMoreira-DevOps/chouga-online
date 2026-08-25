@@ -312,7 +312,11 @@ function ProductReviewForm({
         <div className="product-review-form-footer">
           <p>Sua avaliação será analisada antes de aparecer publicamente.</p>
 
-          <button type="submit" disabled={submitting}>
+          <button
+            type="submit"
+            className="action product-review-submit"
+            disabled={submitting}
+          >
             {submitting ? "Enviando..." : "Enviar avaliação"}
           </button>
         </div>
