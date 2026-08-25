@@ -2,73 +2,152 @@
   /* =========================
      ALTURAS DO HEADER
   ========================= */
+
   --header-height-desktop: 96px;
   --header-height-tablet: 72px;
   --header-height-mobile: 64px;
 
   /* =========================
-     CORES DE FUNDO
+     CORES INSTITUCIONAIS
   ========================= */
-  --color-bg: #0d0d0d;
-  --color-bg-soft: #141414;
-  --color-bg-elevated: #151515;
-  --color-bg-image: #111;
-  --color-bg-status: #121212;
+
+  --chouga-red: #d91a20;
+  --chouga-black: #000;
+  --chouga-white: #fff;
+  --chouga-gray: #b9b9b9;
 
   /* =========================
-     CORES DE TEXTO
+     PALETA CHOUGA DARK
   ========================= */
-  --color-text: #f1d6bd;
-  --color-text-strong: #f3d7bf;
-  --color-text-white: #fff;
-  --color-muted: #8f8177;
-  --color-text-55: rgb(241 214 189 / 55%);
-  --color-text-72: rgb(241 214 189 / 72%);
-  --color-text-78: rgb(241 214 189 / 78%);
+
+  --dark-background: #0e0e0e;
+  --dark-surface: #181818;
+  --dark-surface-elevated: #242424;
+  --dark-text-primary: #fff9f3;
+  --dark-text-secondary: #b8b8b3;
+  --dark-accent: var(--chouga-red);
+  --dark-accent-deep: #7a2b2e;
 
   /* =========================
-     CORES DA MARCA
+     CORES SEMÂNTICAS - FUNDOS
   ========================= */
-  --color-red: #e93612;
-  --color-red-strong: #f02a00;
-  --color-red-dark: #7a2b2e;
-  --color-red-dark-hover: #96363a;
-  --color-gold: #d6a54c;
+
+  --color-bg: var(--dark-background);
+  --color-bg-soft: var(--dark-surface);
+  --color-bg-elevated: var(--dark-surface-elevated);
+  --color-bg-image: var(--dark-surface);
+  --color-bg-status: var(--dark-surface);
+
+  /* =========================
+   CORES SEMÂNTICAS - TEXTO
+========================= */
+
+  --color-text: var(--dark-text-primary);
+  --color-text-primary: var(--dark-text-primary);
+  --color-text-secondary: var(--dark-text-secondary);
+  --color-text-muted: var(--chouga-gray);
+  --color-text-detail: var(--dark-accent-deep);
+  --color-text-white: var(--chouga-white);
+  --color-text-subtle: rgb(255 249 243 / 55%);
+  --color-text-soft: rgb(255 249 243 / 72%);
+  --color-text-emphasis: rgb(255 249 243 / 78%);
+
+  /* =========================
+     CORES SEMÂNTICAS - MARCA
+  ========================= */
+
+  --color-accent: var(--dark-accent);
+  --color-accent-deep: var(--dark-accent-deep);
+
+  /* =========================
+     ESTADOS SEMÂNTICOS
+  ========================= */
+
+  --color-success-text: #bfe8c3;
+  --color-success-bg: rgb(66 160 85 / 10%);
+  --color-success-border: rgb(66 160 85 / 45%);
 
   /* =========================
      CORES DE PRODUTO
+
+     Representam produtos reais e não a
+     identidade visual da interface.
   ========================= */
+
   --color-product-black: #090909;
   --color-product-gray: #303030;
   --color-product-white: #f7f7f7;
-  --color-product-red: var(--color-red-strong);
-  --color-product-beige: var(--color-text-strong);
+  --color-product-red: var(--chouga-red);
+  --color-product-beige: #d8c4a8;
   --color-product-blue: #1f5eff;
+
+  /* =========================
+     AÇÕES / CONTROLES
+  ========================= */
+
+  --action-bg: var(--color-accent-deep);
+  --action-border: var(--color-accent-deep);
+  --action-text: var(--color-text-white);
+  --action-hover-bg: var(--color-bg);
+  --action-hover-border: var(--color-accent);
+  --action-hover-text: var(--color-accent);
+  --action-focus: var(--color-accent);
+  --action-focus-glow: var(--color-accent-focus-glow);
+  --action-disabled-opacity: 0.45;
 
   /* =========================
      BORDAS
   ========================= */
-  --color-border-subtle: rgb(241 214 189 / 10%);
-  --color-border-status: rgb(241 214 189 / 14%);
-  --color-border-soft: rgb(241 214 189 / 16%);
-  --color-border-medium: rgb(241 214 189 / 25%);
-  --color-border: rgb(243 215 191 / 45%);
-  --color-border-strong: rgb(243 215 191 / 80%);
+
+  --color-border-subtle: rgb(255 249 243 / 10%);
+  --color-border-status: rgb(255 249 243 / 14%);
+  --color-border-soft: rgb(255 249 243 / 16%);
+  --color-border-medium: rgb(255 249 243 / 25%);
+  --color-border: rgb(255 249 243 / 45%);
+  --color-border-strong: rgb(255 249 243 / 80%);
 
   /* =========================
-     SOBREPOSIÇÕES E GRADIENTES
+     SOBREPOSIÇÕES
   ========================= */
-  --color-overlay-dark: rgb(13 13 13 / 82%);
-  --color-overlay-focus: rgb(13 13 13 / 95%);
+
+  --color-overlay-soft: rgb(14 14 14 / 34%);
+  --color-overlay-surface: rgb(14 14 14 / 58%);
+  --color-overlay-dark: rgb(14 14 14 / 82%);
+  --color-overlay-strong: rgb(14 14 14 / 92%);
+  --color-overlay-focus: rgb(14 14 14 / 95%);
+
+  /* =========================
+     ACENTOS TRANSPARENTES
+  ========================= */
+
+  --color-accent-subtle: rgb(217 26 32 / 8%);
+  --color-accent-soft: rgb(217 26 32 / 16%);
+  --color-accent-medium: rgb(217 26 32 / 28%);
+  --color-accent-border: rgb(217 26 32 / 38%);
+  --color-accent-glow: rgb(217 26 32 / 55%);
+
+  /* =========================
+     SOMBRAS
+  ========================= */
+
+  --color-shadow-soft: rgb(0 0 0 / 32%);
+  --color-shadow-medium: rgb(0 0 0 / 45%);
+  --color-shadow-strong: rgb(0 0 0 / 65%);
+  --color-shadow-deep: rgb(0 0 0 / 75%);
+
+  /* =========================
+     GRADIENTES E EFEITOS
+  ========================= */
+
   --color-gradient-light: rgb(255 255 255 / 4%);
   --color-gradient-subtle: rgb(255 255 255 / 1%);
-  --color-red-glow-soft: rgb(122 43 46 / 18%);
-  --color-red-focus-glow: rgb(255 42 0 / 38%);
-  --color-red-shadow: rgb(233 54 18 / 45%);
+  --color-accent-focus-glow: rgb(217 26 32 / 38%);
+  --color-accent-shadow: rgb(217 26 32 / 45%);
 
   /* =========================
      ESCALA DE ESPAÇAMENTOS
   ========================= */
+
   --spacing-0: 0;
   --spacing-1: 0.25rem; /* 4px */
   --spacing-2: 0.5rem; /* 8px */
@@ -83,20 +162,23 @@
   /* =========================
      TRANSIÇÕES
   ========================= */
+
   --transition-fast: 160ms ease;
   --transition-base: 280ms ease;
 
   /* =========================
      LAYOUT
   ========================= */
+
   --container-max: 1500px;
   --page-padding-x: clamp(18px, 5vw, 80px);
   --page-padding-top: var(--spacing-5);
   --page-padding-bottom: 48px;
 
   /* =========================
-     ALIASES EXISTENTES
+     ALIASES DE ESPAÇAMENTO
   ========================= */
+
   --gap-xs: var(--spacing-3);
   --gap-sm: var(--spacing-4);
   --gap-md: var(--spacing-5);
@@ -106,6 +188,7 @@
   /* =========================
      FONTES
   ========================= */
+
   --font-base: "Oswald", arial, helvetica, sans-serif;
   --font-title: "Oswald", arial, helvetica, sans-serif;
   --font-display: "Bangers", sans-serif;
@@ -117,6 +200,7 @@
   /* =========================
      TIPOGRAFIA
   ========================= */
+
   --text-xs: 0.8rem;
   --text-sm: 0.9rem;
   --text-md: 1rem;
@@ -129,6 +213,7 @@
   /* =========================
      PESOS TIPOGRÁFICOS
   ========================= */
+
   --font-weight-regular: 400;
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
@@ -137,6 +222,7 @@
   /* =========================
      ALTURA DE LINHA
   ========================= */
+
   --line-height-tight: 1.1;
   --line-height-base: 1.5;
   --line-height-relaxed: 1.7;
@@ -144,6 +230,7 @@
   /* =========================
      ESPAÇAMENTO ENTRE LETRAS
   ========================= */
+
   --letter-spacing-tight: -0.02em;
   --letter-spacing-normal: 0;
   --letter-spacing-wide: 0.04em;
