@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 import "../css/productZoomModal.css";
 
@@ -16,6 +16,8 @@ function ProductZoomModal({
   onPointerCancel,
   onPointerLeave,
 }) {
+  const closeButtonRef = useRef(null);
+
   useEffect(() => {
     if (!product) {
       return undefined;
@@ -23,9 +25,14 @@ function ProductZoomModal({
 
     const previousBodyOverflow = document.body.style.overflow;
     const previousHtmlOverflow = document.documentElement.style.overflow;
+    const previouslyFocusedElement = document.activeElement;
 
     document.body.style.overflow = "hidden";
     document.documentElement.style.overflow = "hidden";
+
+    requestAnimationFrame(() => {
+      closeButtonRef.current?.focus();
+    });
 
     function handleKeyDown(event) {
       if (event.key === "Escape") {
@@ -38,7 +45,14 @@ function ProductZoomModal({
     return () => {
       document.body.style.overflow = previousBodyOverflow;
       document.documentElement.style.overflow = previousHtmlOverflow;
+
       window.removeEventListener("keydown", handleKeyDown);
+
+      requestAnimationFrame(() => {
+        if (previouslyFocusedElement instanceof HTMLElement) {
+          previouslyFocusedElement.focus();
+        }
+      });
     };
   }, [product, onClose]);
 
@@ -48,6 +62,7 @@ function ProductZoomModal({
 
   const productTitle = product.title || product.nome || "Produto Chouga";
   const productImageAlt = product.imageAlt || productTitle;
+
   const zoomPercentage = Math.round(zoomLevel * 100);
   const isZoomed = zoomLevel > 1;
 
@@ -62,12 +77,14 @@ function ProductZoomModal({
         onClick={(event) => event.stopPropagation()}
       >
         <button
-          className="zoom-close"
+          ref={closeButtonRef}
+          className="action zoom-close"
           type="button"
           onClick={onClose}
           aria-label="Fechar visualização ampliada"
         >
           <span className="zoom-close-label">Fechar</span>
+
           <span className="zoom-close-icon" aria-hidden="true">
             ×
           </span>
