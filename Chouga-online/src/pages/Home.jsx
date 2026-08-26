@@ -1,9 +1,25 @@
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 import Layout from "../components/Layout";
 import WheelMenu from "../components/WheelMenu";
 
 import "../css/home.css";
+
+const compactLinks = [
+  {
+    label: "Produtos",
+    path: "/produtos",
+  },
+  {
+    label: "Sobre",
+    path: "/sobre",
+  },
+  {
+    label: "Contato",
+    path: "/contato",
+  },
+];
 
 function Home() {
   useEffect(() => {
@@ -18,18 +34,43 @@ function Home() {
     <Layout>
       <main className="home page-bg">
         <section className="home-section page-section">
-          <div className="hero-left">
-            <h1>Streetwear</h1>
+          <div className="home-wheels-content">
+            <div className="hero-left">
+              <h1>Streetwear</h1>
 
-            <p>
-              não se veste.
-              <br />
-              Se vive.
-            </p>
+              <p>
+                não se veste.
+                <br />
+                Se vive.
+              </p>
+            </div>
+
+            <div className="hero-center">
+              <WheelMenu />
+            </div>
           </div>
 
-          <div className="hero-center">
-            <WheelMenu />
+          <div className="home-compact" aria-label="Navegação principal">
+            <div className="home-compact-brand">
+              <h1>Streetwear</h1>
+
+              <p>
+                não se veste.
+                <br />
+                Se vive.
+              </p>
+            </div>
+
+            <nav
+              className="home-compact-nav"
+              aria-label="Atalhos da página inicial"
+            >
+              {compactLinks.map((item) => (
+                <Link key={item.path} to={item.path}>
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
           </div>
         </section>
       </main>

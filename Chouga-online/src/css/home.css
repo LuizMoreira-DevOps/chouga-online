@@ -87,6 +87,18 @@
 }
 
 /* =========================
+   HOME MODES
+========================= */
+
+.home-wheels-content {
+  display: contents;
+}
+
+.home-compact {
+  display: none;
+}
+
+/* =========================
    HERO CENTER / ÁREA DA WHEEL
 ========================= */
 
@@ -442,7 +454,7 @@
   }
 
   .wheel-menu {
-    --wheel-size: min(90vw, 400px);
+    --wheel-size: min(90vw, 48svh, 400px);
     --wheel-radius: calc(var(--wheel-size) * 0.5);
   }
 
@@ -511,7 +523,7 @@
   }
 
   .wheel-menu {
-    --wheel-size: min(84vw, 300px);
+    --wheel-size: min(84vw, 46svh, 300px);
     --wheel-radius: calc(var(--wheel-size) * 0.5);
   }
 
