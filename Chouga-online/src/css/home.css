@@ -656,6 +656,127 @@
 }
 
 /* =========================
+   FALLBACK INSTITUCIONAL
+   LANDSCAPE EXTREMO
+========================= */
+
+@media (max-width: 900px) and (max-height: 280px) and (orientation: landscape) {
+  .home-section,
+  .home-section.page-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: calc(100svh - var(--header-height-tablet));
+    min-height: 0;
+
+    padding: 0 var(--spacing-4);
+
+    overflow: hidden;
+  }
+
+  .home-wheels-content {
+    display: none;
+  }
+
+  .home-compact {
+    position: relative;
+    z-index: 2;
+
+    display: grid;
+    grid-template-columns: minmax(150px, 220px) minmax(0, 1fr);
+
+    align-items: center;
+
+    gap: clamp(var(--spacing-3), 4vw, var(--spacing-6));
+
+    width: min(100%, 760px);
+  }
+
+  .home-compact-brand {
+    text-align: left;
+  }
+
+  .home-compact-brand h1 {
+    margin: 0 0 var(--spacing-1);
+
+    color: var(--color-accent);
+
+    font-family: var(--font-display);
+
+    font-size: clamp(1.7rem, 5vw, 2.6rem);
+    line-height: 0.9;
+
+    letter-spacing: 0.06em;
+
+    text-transform: uppercase;
+  }
+
+  .home-compact-brand p {
+    margin: 0;
+
+    color: var(--color-text);
+
+    font-family: var(--font-street);
+
+    font-size: clamp(0.9rem, 2vw, 1.15rem);
+    line-height: 1.05;
+
+    text-transform: uppercase;
+  }
+
+  .home-compact-nav {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    gap: var(--spacing-2);
+  }
+
+  .home-compact-nav a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 44px;
+
+    padding: var(--spacing-2) var(--spacing-3);
+
+    border: 1px solid var(--color-accent-soft);
+
+    background: var(--color-bg);
+    color: var(--color-text);
+
+    font-size: 0.78rem;
+    line-height: 1;
+
+    letter-spacing: 0.08em;
+
+    text-align: center;
+    text-transform: uppercase;
+
+    transition:
+      color var(--transition-base),
+      border-color var(--transition-base),
+      transform var(--transition-base);
+  }
+
+  .home-compact-nav a:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+
+    transform: translateY(-2px);
+  }
+
+  .home-compact-nav a:focus-visible {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+}
+
+/* =========================
    MOBILE EXTREMO
 ========================= */
 
@@ -707,5 +828,36 @@
 
   .hero-left p {
     font-size: var(--text-md);
+  }
+}
+
+/* =========================
+   REDUCED MOTION
+========================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .wheel-item {
+    transition: none;
+  }
+
+  .wheel-item:hover {
+    transform: translate(-50%, -50%) rotate(var(--angle))
+      translateY(calc(var(--wheel-radius) * -1)) rotate(calc(var(--angle) * -1));
+  }
+
+  .wheel-menu.closing .wheel-center img {
+    animation: none;
+  }
+
+  .wheel-menu.closing .wheel-item {
+    transition: none;
+  }
+
+  .home-compact-nav a {
+    transition: none;
+  }
+
+  .home-compact-nav a:hover {
+    transform: none;
   }
 }
