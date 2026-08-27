@@ -1,3 +1,9 @@
+## [1.23.1](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.23.0...v1.23.1) (2026-08-27)
+
+### Bug Fixes
+
+* **home:** concluir responsividade da HomeWheels e fallback extremo ([#310](https://github.com/LuizMoreira-DevOps/chouga-online/issues/310)) ([f5f662d](https://github.com/LuizMoreira-DevOps/chouga-online/commit/f5f662d3622e38dc72e9ad075554b49c5ac7543f))
+
 ## [1.23.0](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.22.0...v1.23.0) (2026-08-25)
 
 ### Features
