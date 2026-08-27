@@ -24,7 +24,7 @@ const jobs = [
   },
   {
     file: "bg-home.png",
-    widths: [1280, 1920],
+    widths: [1920],
     quality: 78,
   },
 ];
