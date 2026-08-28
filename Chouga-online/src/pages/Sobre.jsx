@@ -2,6 +2,11 @@ import Layout from "../components/Layout";
 
 import "../css/sobre.css";
 
+import sobre2_480 from "../assets/images/optimized/sobre/sobre-2-480.webp";
+import sobre2_768 from "../assets/images/optimized/sobre/sobre-2-768.webp";
+import sobre3_360 from "../assets/images/optimized/sobre/sobre-3-360.webp";
+import sobre3_640 from "../assets/images/optimized/sobre/sobre-3-640.webp";
+
 import sobre1 from "../assets/images/sobre-1.jpeg";
 import sobre2 from "../assets/images/optimized/sobre/sobre-2.webp";
 import sobre3 from "../assets/images/optimized/sobre/sobre-3.webp";
@@ -38,6 +43,8 @@ function Sobre() {
               <figure className="sobre-photo sobre-photo-main">
                 <img
                   src={sobre2}
+                  srcSet={`${sobre2_480} 480w, ${sobre2_768} 768w, ${sobre2} 1297w`}
+                  sizes="(max-width: 520px) 100vw, (max-width: 900px) 620px, (max-width: 1400px) 560px, 690px"
                   alt="Skatista saltando sobre pista urbana"
                   loading="eager"
                   fetchPriority="high"
@@ -84,6 +91,8 @@ function Sobre() {
                 <figure className="sobre-photo sobre-photo-memory sobre-photo-memory-two">
                   <img
                     src={sobre3}
+                    srcSet={`${sobre3_360} 360w, ${sobre3_640} 640w, ${sobre3} 1268w`}
+                    sizes="(max-width: 520px) 330px, (max-width: 900px) 300px, (max-width: 1400px) 230px, 260px"
                     alt="Skatistas na pista Chouga"
                     loading="lazy"
                     decoding="async"

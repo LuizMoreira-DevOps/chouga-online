@@ -6,6 +6,9 @@ import sharp from "sharp";
 const inputDir = path.resolve("src/assets/images");
 const outputDir = path.resolve("src/assets/images/optimized");
 
+const logoDir = path.resolve("src/assets/logo");
+const optimizedLogoDir = path.resolve("src/assets/logo/optimized");
+
 const DEFAULT_WEBP_QUALITY = 82;
 const MIN_SAVINGS_PERCENT = 10;
 
@@ -35,6 +38,27 @@ const responsiveJobs = [
     file: "bg-home.png",
     widths: [1920],
     quality: 78,
+  },
+];
+
+const logoJobs = [
+  {
+    file: "Logo-desfigurada-transparente.png",
+    width: 300,
+    quality: 82,
+  },
+];
+
+const sobreResponsiveJobs = [
+  {
+    source: "sobre/sobre-2.webp",
+    widths: [480, 768],
+    quality: 82,
+  },
+  {
+    source: "sobre/sobre-3.webp",
+    widths: [360, 640],
+    quality: 82,
   },
 ];
 
@@ -122,6 +146,98 @@ async function optimizeResponsiveImages() {
       const savings = calculateSavings(sourceStat.size, outputStat.size);
 
       console.log(`✓ ${job.file} → ${path.basename(outputPath)}`);
+      console.log(
+        `  ${formatKb(sourceStat.size)} → ${formatKb(outputStat.size)} ` +
+          `(${savings.toFixed(1)}% menor)`,
+      );
+    }
+  }
+}
+
+async function optimizeLogos() {
+  console.log("\n=== LOGOS ===\n");
+
+  for (const job of logoJobs) {
+    const sourcePath = path.join(logoDir, job.file);
+    const baseName = path.parse(job.file).name;
+    const outputPath = path.join(
+      optimizedLogoDir,
+      `${baseName}-${job.width}.webp`,
+    );
+
+    if (!(await fileExists(sourcePath))) {
+      console.warn(`Ignorado: ${job.file} não encontrado.`);
+      continue;
+    }
+
+    await fs.mkdir(optimizedLogoDir, {
+      recursive: true,
+    });
+
+    await sharp(sourcePath)
+      .resize({
+        width: job.width,
+        withoutEnlargement: true,
+      })
+      .webp({
+        quality: job.quality,
+        effort: 6,
+      })
+      .toFile(outputPath);
+
+    const sourceStat = await fs.stat(sourcePath);
+    const outputStat = await fs.stat(outputPath);
+
+    const savings = calculateSavings(sourceStat.size, outputStat.size);
+
+    console.log(`✓ ${job.file} → ${path.basename(outputPath)}`);
+    console.log(
+      `  ${formatKb(sourceStat.size)} → ${formatKb(outputStat.size)} ` +
+        `(${savings.toFixed(1)}% menor)`,
+    );
+  }
+}
+
+async function optimizeSobreResponsiveImages() {
+  console.log("\n=== SOBRE RESPONSIVO ===\n");
+
+  for (const job of sobreResponsiveJobs) {
+    const sourcePath = path.join(outputDir, job.source);
+    const parsedPath = path.parse(job.source);
+
+    if (!(await fileExists(sourcePath))) {
+      console.warn(`Ignorado: ${job.source} não encontrado.`);
+      continue;
+    }
+
+    for (const width of job.widths) {
+      const outputPath = path.join(
+        outputDir,
+        parsedPath.dir,
+        `${parsedPath.name}-${width}.webp`,
+      );
+
+      await fs.mkdir(path.dirname(outputPath), {
+        recursive: true,
+      });
+
+      await sharp(sourcePath)
+        .resize({
+          width,
+          withoutEnlargement: true,
+        })
+        .webp({
+          quality: job.quality,
+          effort: 6,
+        })
+        .toFile(outputPath);
+
+      const sourceStat = await fs.stat(sourcePath);
+      const outputStat = await fs.stat(outputPath);
+
+      const savings = calculateSavings(sourceStat.size, outputStat.size);
+
+      console.log(`✓ ${job.source} → ${path.basename(outputPath)}`);
       console.log(
         `  ${formatKb(sourceStat.size)} → ${formatKb(outputStat.size)} ` +
           `(${savings.toFixed(1)}% menor)`,
@@ -242,6 +358,8 @@ async function main() {
   });
 
   await optimizeResponsiveImages();
+  await optimizeLogos();
+  await optimizeSobreResponsiveImages();
   await optimizeRegularImages();
 
   console.log("\n=== OTIMIZAÇÃO CONCLUÍDA ===\n");

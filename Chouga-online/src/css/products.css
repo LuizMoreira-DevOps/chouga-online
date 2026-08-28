@@ -370,14 +370,13 @@
   }
 
   .product-card-image {
-    aspect-ratio: auto;
+    aspect-ratio: 4 / 5;
     overflow: hidden;
   }
 
   .product-card-image img {
     width: 100%;
-    height: auto;
-    aspect-ratio: 4 / 5;
+    height: 100%;
     object-fit: cover;
   }
 

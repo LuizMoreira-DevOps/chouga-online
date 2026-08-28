@@ -2,7 +2,7 @@ import { FaInstagram, FaWhatsapp } from "react-icons/fa";
 
 import "../css/footer.css";
 
-import logoFooter from "../assets/logo/Logo-desfigurada-transparente.png";
+import logoFooter from "../assets/logo/optimized/Logo-desfigurada-transparente-300.webp";
 
 import { buildWhatsAppUrl, siteContacts } from "../constants/siteContacts";
 

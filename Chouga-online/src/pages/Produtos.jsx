@@ -6,6 +6,8 @@ import Layout from "../components/Layout";
 import ProductFilters from "../components/ProductFilters";
 import ProductGrid from "../components/ProductGrid";
 
+import { normalizeCatalogProduct } from "../utils/productCatalog";
+
 import {
   getAvailableColors,
   getAvailableSizes,
@@ -16,17 +18,6 @@ import useProductFilters from "../hooks/useProductFilters";
 import { getProdutosCatalogo } from "../services/produtosServices";
 
 import "../css/products.css";
-
-const legacyImages = import.meta.glob(
-  [
-    "../assets/images/camisetas/*.{avif,gif,jpeg,jpg,png,svg,webp}",
-    "../assets/images/blusas/*.{avif,gif,jpeg,jpg,png,svg,webp}",
-  ],
-  {
-    eager: true,
-    import: "default",
-  },
-);
 
 const categoryAliases = {
   camiseta: "camisetas",
@@ -69,54 +60,6 @@ function getProductCategorySlug(product) {
   );
 }
 
-function getAssetFolder(product) {
-  const categorySlug = getProductCategorySlug(product);
-
-  const isLongSleeve =
-    categorySlug.includes("camisetas-manga-longa") ||
-    categorySlug.includes("manga-longa") ||
-    categorySlug.includes("blusas");
-
-  if (isLongSleeve) {
-    // A pasta física ainda se chama "blusas".
-    // Ela será renomeada em uma etapa separada.
-    return "blusas";
-  }
-
-  return "camisetas";
-}
-
-function getLegacyImage(imageUrl, assetFolder) {
-  const normalizedImageUrl = String(imageUrl ?? "").replace(/^\/+/, "");
-
-  const expectedSuffix = `/assets/images/${assetFolder}/${normalizedImageUrl}`;
-
-  const imageEntry = Object.entries(legacyImages).find(([imagePath]) =>
-    imagePath.endsWith(expectedSuffix),
-  );
-
-  return imageEntry?.[1] ?? "";
-}
-
-function getProductImage(imageUrl, assetFolder) {
-  if (!imageUrl) {
-    return "";
-  }
-
-  if (/^https?:\/\//i.test(imageUrl)) {
-    return imageUrl;
-  }
-
-  if (imageUrl.startsWith("/uploads")) {
-    const strapiUrl =
-      import.meta.env.VITE_STRAPI_URL || "http://localhost:1337";
-
-    return `${strapiUrl}${imageUrl}`;
-  }
-
-  return getLegacyImage(imageUrl, assetFolder);
-}
-
 function belongsToCategoryGroups(product, categoryGroups) {
   const categorySlug = getProductCategorySlug(product);
   const categoryParts = categorySlug.split("-");
@@ -130,45 +73,6 @@ function belongsToCategoryGroups(product, categoryGroups) {
       categoryParts.includes(normalizedGroup)
     );
   });
-}
-
-function normalizeProduct(product) {
-  const mainImage =
-    product.imagens?.find((image) => image.principal) ?? product.imagens?.[0];
-
-  const colors = [
-    ...new Set(
-      product.variacoes
-        ?.map((variation) => normalizeText(variation.cor))
-        .filter(Boolean),
-    ),
-  ];
-
-  const sizes = [
-    ...new Set(
-      product.variacoes
-        ?.map((variation) => String(variation.tamanho ?? "").trim())
-        .filter(Boolean),
-    ),
-  ];
-
-  const categorySlug = getProductCategorySlug(product);
-  const assetFolder = getAssetFolder(product);
-
-  return {
-    ...product,
-    title: product.nome,
-    price: Number(product.preco).toLocaleString("pt-BR", {
-      style: "currency",
-      currency: "BRL",
-    }),
-    category: categorySlug || "sem-categoria",
-    categoria_slug: categorySlug || "sem-categoria",
-    colors,
-    sizes,
-    image: mainImage ? getProductImage(mainImage.url, assetFolder) : "",
-    imageAlt: mainImage?.alt_text || product.nome,
-  };
 }
 
 function Produtos({
@@ -220,7 +124,7 @@ function Produtos({
 
         const normalizedProducts = catalog
           .filter((product) => belongsToCategoryGroups(product, categoryGroups))
-          .map(normalizeProduct);
+          .map(normalizeCatalogProduct);
 
         if (isMounted) {
           setProducts(normalizedProducts);

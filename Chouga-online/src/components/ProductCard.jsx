@@ -27,6 +27,8 @@ function ProductCard({ product }) {
           <img
             src={product.image}
             alt={product.imageAlt || productTitle}
+            width="800"
+            height="1000"
             loading="lazy"
             decoding="async"
           />
