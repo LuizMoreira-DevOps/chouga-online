@@ -1,11 +1,13 @@
 import Layout from "../components/Layout";
 
+import PageShell from "../components/PageShell";
+
 import "../css/embreve.css";
 
 function EmBreve() {
   return (
     <Layout>
-      <main className="coming-page page-bg">
+      <PageShell className="coming-page">
         <section className="coming-soon page-section">
           <div className="coming-soon-content page-container">
             <span className="coming-tag">CHOUGA SKATEBOARD</span>
@@ -26,7 +28,7 @@ function EmBreve() {
             </div>
           </div>
         </section>
-      </main>
+      </PageShell>
     </Layout>
   );
 }

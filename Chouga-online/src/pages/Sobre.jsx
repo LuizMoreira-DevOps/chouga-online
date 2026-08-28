@@ -1,5 +1,7 @@
 import Layout from "../components/Layout";
 
+import PageShell from "../components/PageShell";
+
 import "../css/sobre.css";
 
 import sobre2_480 from "../assets/images/optimized/sobre/sobre-2-480.webp";
@@ -16,7 +18,9 @@ import sobre5 from "../assets/images/sobre-5.jpeg";
 function Sobre() {
   return (
     <Layout>
-      <main className="sobre-page page-bg">
+      <PageShell className="sobre-page">
+        <section className="sobre-section page-section"></section>
+
         <section className="sobre-section page-section">
           <div className="sobre-container page-container">
             <header className="sobre-hero">
@@ -133,7 +137,7 @@ function Sobre() {
             </ul>
           </div>
         </section>
-      </main>
+      </PageShell>
     </Layout>
   );
 }

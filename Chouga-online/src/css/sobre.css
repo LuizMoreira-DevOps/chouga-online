@@ -25,6 +25,10 @@
   --page-bg-position: center;
 }
 
+.sobre-page.page-bg::before {
+  display: none;
+}
+
 /* =========================
    HERO
 ========================= */

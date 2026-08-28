@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
+import PageShell from "../components/PageShell";
+
 import Layout from "../components/Layout";
 import WheelMenu from "../components/WheelMenu";
 
@@ -32,7 +34,7 @@ function Home() {
 
   return (
     <Layout>
-      <main className="home page-bg">
+      <PageShell className="home">
         <section className="home-section page-section">
           <div className="home-wheels-content">
             <div className="hero-left">
@@ -73,7 +75,7 @@ function Home() {
             </nav>
           </div>
         </section>
-      </main>
+      </PageShell>
     </Layout>
   );
 }

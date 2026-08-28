@@ -1,12 +1,14 @@
 import { Link } from "react-router-dom";
 
+import PageShell from "../components/PageShell";
+
 import Layout from "../components/Layout";
 import "../css/notFound.css";
 
 function NotFound() {
   return (
     <Layout>
-      <main className="not-found-page page-bg">
+      <PageShell className="not-found-page">
         <section className="not-found-section page-section">
           <div className="not-found-content page-container">
             <span className="not-found-code">404</span>
@@ -29,7 +31,7 @@ function NotFound() {
             </div>
           </div>
         </section>
-      </main>
+      </PageShell>
     </Layout>
   );
 }

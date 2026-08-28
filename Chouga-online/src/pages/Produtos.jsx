@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
 import BackToTop from "../components/BackToTop";
+import PageShell from "../components/PageShell";
 import Layout from "../components/Layout";
 import ProductFilters from "../components/ProductFilters";
 import ProductGrid from "../components/ProductGrid";
@@ -189,7 +190,7 @@ function Produtos({
 
   return (
     <Layout>
-      <main className="produtos-page page-bg">
+      <PageShell className="produtos-page">
         <section className="produtos-section page-section">
           <div className="produtos-container page-container">
             <ProductFilters
@@ -221,7 +222,7 @@ function Produtos({
         </section>
 
         <BackToTop />
-      </main>
+      </PageShell>
     </Layout>
   );
 }
