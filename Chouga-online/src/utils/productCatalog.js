@@ -1,4 +1,15 @@
-const legacyImages = import.meta.glob(
+const optimizedImages = import.meta.glob(
+  [
+    "../assets/images/optimized/camisetas/*.{avif,jpeg,jpg,png,webp}",
+    "../assets/images/optimized/blusas/*.{avif,jpeg,jpg,png,webp}",
+  ],
+  {
+    eager: true,
+    import: "default",
+  },
+);
+
+const originalImages = import.meta.glob(
   [
     "../assets/images/camisetas/*.{avif,gif,jpeg,jpg,png,svg,webp}",
     "../assets/images/blusas/*.{avif,gif,jpeg,jpg,png,svg,webp}",
@@ -54,14 +65,57 @@ function getAssetFolder(product) {
   return isLongSleeve ? "blusas" : "camisetas";
 }
 
-function getLegacyImage(imageUrl, assetFolder) {
-  const normalizedImageUrl = String(imageUrl ?? "").replace(/^\/+/, "");
+function normalizeImageName(imageUrl) {
+  const fileName = String(imageUrl ?? "")
+    .split("/")
+    .pop()
+    ?.split("?")[0];
 
-  const expectedSuffix = `/assets/images/${assetFolder}/${normalizedImageUrl}`;
+  if (!fileName) {
+    return "";
+  }
 
-  const imageEntry = Object.entries(legacyImages).find(([imagePath]) =>
-    imagePath.endsWith(expectedSuffix),
-  );
+  return fileName
+    .replace(/\.[^.]+$/, "")
+    .replace(/_[a-f0-9]{8,}$/i, "")
+    .replace(/_/g, "-")
+    .toLowerCase();
+}
+
+function pathBaseName(imagePath) {
+  const fileName = imagePath.split("/").pop() ?? "";
+
+  return fileName.replace(/\.[^.]+$/, "").toLowerCase();
+}
+
+function findImageByBaseName(images, assetFolder, baseName) {
+  const folderSegment = `/assets/images/${assetFolder}/`;
+
+  const imageEntry = Object.entries(images).find(([imagePath]) => {
+    const normalizedPath = imagePath.replace(/\\/g, "/");
+
+    if (!normalizedPath.includes(folderSegment)) {
+      return false;
+    }
+
+    return pathBaseName(normalizedPath) === baseName;
+  });
+
+  return imageEntry?.[1] ?? "";
+}
+
+function findOptimizedImage(assetFolder, baseName) {
+  const folderSegment = `/assets/images/optimized/${assetFolder}/`;
+
+  const imageEntry = Object.entries(optimizedImages).find(([imagePath]) => {
+    const normalizedPath = imagePath.replace(/\\/g, "/");
+
+    if (!normalizedPath.includes(folderSegment)) {
+      return false;
+    }
+
+    return pathBaseName(normalizedPath) === baseName;
+  });
 
   return imageEntry?.[1] ?? "";
 }
@@ -71,18 +125,20 @@ export function getCatalogProductImage(imageUrl, product) {
     return "";
   }
 
-  if (/^https?:\/\//i.test(imageUrl)) {
-    return imageUrl;
+  const assetFolder = getAssetFolder(product);
+  const baseName = normalizeImageName(imageUrl);
+
+  if (!baseName) {
+    return "";
   }
 
-  if (imageUrl.startsWith("/uploads")) {
-    const strapiUrl =
-      import.meta.env.VITE_STRAPI_URL || "http://localhost:1337";
+  const optimizedImage = findOptimizedImage(assetFolder, baseName);
 
-    return `${strapiUrl}${imageUrl}`;
+  if (optimizedImage) {
+    return optimizedImage;
   }
 
-  return getLegacyImage(imageUrl, getAssetFolder(product));
+  return findImageByBaseName(originalImages, assetFolder, baseName);
 }
 
 export function normalizeCatalogProduct(product) {
@@ -118,6 +174,7 @@ export function normalizeCatalogProduct(product) {
 
   return {
     ...product,
+
     title: product?.nome || "Produto Chouga",
 
     price: Number(product?.preco).toLocaleString("pt-BR", {

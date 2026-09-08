@@ -836,23 +836,6 @@
 ========================= */
 
 @media (prefers-reduced-motion: reduce) {
-  .wheel-item {
-    transition: none;
-  }
-
-  .wheel-item:hover {
-    transform: translate(-50%, -50%) rotate(var(--angle))
-      translateY(calc(var(--wheel-radius) * -1)) rotate(calc(var(--angle) * -1));
-  }
-
-  .wheel-menu.closing .wheel-center img {
-    animation: none;
-  }
-
-  .wheel-menu.closing .wheel-item {
-    transition: none;
-  }
-
   .home-compact-nav a {
     transition: none;
   }

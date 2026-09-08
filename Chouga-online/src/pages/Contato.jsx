@@ -8,6 +8,8 @@ import {
   FaWhatsapp,
 } from "react-icons/fa";
 
+import PageShell from "../components/PageShell";
+
 import Layout from "../components/Layout";
 
 import { buildWhatsAppUrl, siteContacts } from "../constants/siteContacts";
@@ -56,7 +58,7 @@ ${mensagem}`;
 
   return (
     <Layout>
-      <main className="contato-page page-bg page-viewport">
+      <PageShell className="contato-page page-viewport">
         <section className="contato-section page-section">
           <div className="contato-content page-container">
             <aside className="contato-info">
@@ -176,7 +178,7 @@ ${mensagem}`;
             </form>
           </div>
         </section>
-      </main>
+      </PageShell>
     </Layout>
   );
 }

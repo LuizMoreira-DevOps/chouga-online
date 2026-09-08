@@ -30,3 +30,6 @@ supabase/snippets/
 .env
 .env.local
 .env.*.local
+
+# Temporary files
+.temp

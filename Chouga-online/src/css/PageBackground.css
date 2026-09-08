@@ -1,0 +1,31 @@
+.page-background {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+
+  overflow: hidden;
+
+  opacity: var(--page-bg-opacity, 0.38);
+
+  pointer-events: none;
+}
+
+.page-background-image {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: var(--page-bg-position, center);
+}
+
+.page-background-overlay {
+  position: absolute;
+  inset: 0;
+
+  background: linear-gradient(
+    rgb(0 0 0 / var(--bg-overlay-start, 78%)),
+    rgb(0 0 0 / var(--bg-overlay-end, 92%))
+  );
+}

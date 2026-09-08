@@ -14,6 +14,8 @@ import { sizeGuides } from "../constants/sizeGuides";
 
 import { getColorOption } from "../constants/productFilters";
 
+import { getCatalogProductImage } from "../utils/productCatalog";
+
 import RelatedProducts from "../components/RelatedProducts";
 
 import ProductReviewsSummary from "../components/ProductReviewsSummary";
@@ -25,17 +27,6 @@ import ProductReviewsList from "../components/ProductReviewsList";
 import ProductReviewForm from "../components/ProductReviewForm";
 
 import { buildWhatsAppUrl, siteContacts } from "../constants/siteContacts";
-
-const legacyImages = import.meta.glob(
-  [
-    "../assets/images/camisetas/*.{avif,gif,jpeg,jpg,png,svg,webp}",
-    "../assets/images/blusas/*.{avif,gif,jpeg,jpg,png,svg,webp}",
-  ],
-  {
-    eager: true,
-    import: "default",
-  },
-);
 
 const SIZE_ORDER = ["PP", "P", "M", "G", "GG", "XG", "XGG"];
 
@@ -91,56 +82,11 @@ function isLongSleeveCategory(category) {
   );
 }
 
-function getAssetFolder(product) {
-  const category = normalizeText(
-    product?.categoria_slug || product?.categoria || product?.category,
-  );
-
-  if (isLongSleeveCategory(category)) {
-    return "blusas";
-  }
-
-  return "camisetas";
-}
-
-function getLegacyImage(imageUrl, assetFolder) {
-  const normalizedUrl = String(imageUrl).replace(/^\/+/, "");
-
-  const expectedSuffix = `/assets/images/${assetFolder}/${normalizedUrl}`;
-
-  const imageEntry = Object.entries(legacyImages).find(([imagePath]) =>
-    imagePath.endsWith(expectedSuffix),
-  );
-
-  return imageEntry?.[1] ?? "";
-}
-
-function getProductImage(imageUrl, assetFolder) {
-  if (!imageUrl) {
-    return "";
-  }
-
-  if (/^https?:\/\//i.test(imageUrl)) {
-    return imageUrl;
-  }
-
-  if (imageUrl.startsWith("/uploads")) {
-    const strapiUrl =
-      import.meta.env.VITE_STRAPI_URL || "http://localhost:1337";
-
-    return `${strapiUrl}${imageUrl}`;
-  }
-
-  return getLegacyImage(imageUrl, assetFolder);
-}
-
 function getProductImages(product) {
-  const assetFolder = getAssetFolder(product);
-
   return (product?.imagens ?? [])
     .map((image, index) => ({
       id: image.id ?? `${image.url}-${index}`,
-      url: getProductImage(image.url, assetFolder),
+      url: getCatalogProductImage(image.url, product),
       alt: image.alt_text || product.nome || "Produto Chouga",
       principal: Boolean(image.principal),
       ordem: Number(image.ordem ?? index + 1),

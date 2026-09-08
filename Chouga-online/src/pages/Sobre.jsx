@@ -1,17 +1,26 @@
 import Layout from "../components/Layout";
 
+import PageShell from "../components/PageShell";
+
 import "../css/sobre.css";
 
+import sobre2_480 from "../assets/images/optimized/sobre/sobre-2-480.webp";
+import sobre2_768 from "../assets/images/optimized/sobre/sobre-2-768.webp";
+import sobre3_360 from "../assets/images/optimized/sobre/sobre-3-360.webp";
+import sobre3_640 from "../assets/images/optimized/sobre/sobre-3-640.webp";
+
 import sobre1 from "../assets/images/sobre-1.jpeg";
-import sobre2 from "../assets/images/sobre-2.jpeg";
-import sobre3 from "../assets/images/sobre-3.jpeg";
-import sobre4 from "../assets/images/sobre-4.jpeg";
+import sobre2 from "../assets/images/optimized/sobre/sobre-2.webp";
+import sobre3 from "../assets/images/optimized/sobre/sobre-3.webp";
+import sobre4 from "../assets/images/optimized/sobre/sobre-4.webp";
 import sobre5 from "../assets/images/sobre-5.jpeg";
 
 function Sobre() {
   return (
     <Layout>
-      <main className="sobre-page page-bg">
+      <PageShell className="sobre-page">
+        <section className="sobre-section page-section"></section>
+
         <section className="sobre-section page-section">
           <div className="sobre-container page-container">
             <header className="sobre-hero">
@@ -38,8 +47,13 @@ function Sobre() {
               <figure className="sobre-photo sobre-photo-main">
                 <img
                   src={sobre2}
+                  srcSet={`${sobre2_480} 480w, ${sobre2_768} 768w, ${sobre2} 1297w`}
+                  sizes="(max-width: 520px) 100vw, (max-width: 900px) 620px, (max-width: 1400px) 560px, 690px"
                   alt="Skatista saltando sobre pista urbana"
-                  decoding="async"
+                  loading="eager"
+                  fetchPriority="high"
+                  width={1297}
+                  height={1212}
                 />
               </figure>
             </header>
@@ -73,15 +87,21 @@ function Sobre() {
                     alt="Skatista Chouga em manobra na pista"
                     loading="lazy"
                     decoding="async"
+                    width={578}
+                    height={952}
                   />
                 </figure>
 
                 <figure className="sobre-photo sobre-photo-memory sobre-photo-memory-two">
                   <img
                     src={sobre3}
+                    srcSet={`${sobre3_360} 360w, ${sobre3_640} 640w, ${sobre3} 1268w`}
+                    sizes="(max-width: 520px) 330px, (max-width: 900px) 300px, (max-width: 1400px) 230px, 260px"
                     alt="Skatistas na pista Chouga"
                     loading="lazy"
                     decoding="async"
+                    width={1268}
+                    height={1241}
                   />
                 </figure>
 
@@ -91,6 +111,8 @@ function Sobre() {
                     alt="Registro da história Chouga Skateboard"
                     loading="lazy"
                     decoding="async"
+                    width={720}
+                    height={481}
                   />
                 </figure>
 
@@ -100,6 +122,8 @@ function Sobre() {
                     alt="Registro urbano da Chouga Skateboard"
                     loading="lazy"
                     decoding="async"
+                    width={960}
+                    height={1280}
                   />
                 </figure>
               </div>
@@ -113,7 +137,7 @@ function Sobre() {
             </ul>
           </div>
         </section>
-      </main>
+      </PageShell>
     </Layout>
   );
 }

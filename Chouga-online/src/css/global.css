@@ -144,34 +144,17 @@ svg {
 ========================= */
 
 .page-bg {
+  --page-bg-opacity: 0.38;
+  --bg-overlay-start: 78%;
+  --bg-overlay-end: 92%;
+  --page-bg-position: center;
+
   position: relative;
-
   min-height: 100%;
-
   overflow-x: hidden;
 
   background: var(--color-bg);
   color: var(--color-text);
-}
-
-.page-bg::before {
-  content: "";
-
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-
-  background-image:
-    linear-gradient(
-      rgb(0 0 0 / var(--bg-overlay-start, 78%)),
-      rgb(0 0 0 / var(--bg-overlay-end, 92%))
-    ),
-    var(--page-bg-image, url("../assets/images/optimized/bg-home-1920.webp"));
-
-  background-position: var(--page-bg-position, center);
-  background-size: cover;
-
-  opacity: var(--page-bg-opacity, 0.38);
 }
 
 .page-section {
