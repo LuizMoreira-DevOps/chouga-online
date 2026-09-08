@@ -128,17 +128,29 @@ export function getCatalogProductImage(imageUrl, product) {
   const assetFolder = getAssetFolder(product);
   const baseName = normalizeImageName(imageUrl);
 
-  if (!baseName) {
-    return "";
+  if (baseName) {
+    const optimizedImage = findOptimizedImage(assetFolder, baseName);
+
+    if (optimizedImage) {
+      return optimizedImage;
+    }
+
+    const originalImage = findImageByBaseName(
+      originalImages,
+      assetFolder,
+      baseName,
+    );
+
+    if (originalImage) {
+      return originalImage;
+    }
   }
 
-  const optimizedImage = findOptimizedImage(assetFolder, baseName);
-
-  if (optimizedImage) {
-    return optimizedImage;
+  if (/^https?:\/\//i.test(imageUrl)) {
+    return imageUrl;
   }
 
-  return findImageByBaseName(originalImages, assetFolder, baseName);
+  return "";
 }
 
 export function normalizeCatalogProduct(product) {
