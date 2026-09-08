@@ -1,3 +1,9 @@
+## [1.23.3](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.23.2...v1.23.3) (2026-09-08)
+
+### Bug Fixes
+
+* restaurar fallback de imagens do catálogo [#307](https://github.com/LuizMoreira-DevOps/chouga-online/issues/307) ([#316](https://github.com/LuizMoreira-DevOps/chouga-online/issues/316)) ([f994535](https://github.com/LuizMoreira-DevOps/chouga-online/commit/f994535cd190a118068a6961c837fe6f4757d642))
+
 ## [1.23.2](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.23.1...v1.23.2) (2026-09-08)
 
 ### Performance Improvements
