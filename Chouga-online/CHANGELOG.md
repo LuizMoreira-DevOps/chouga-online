@@ -1,3 +1,9 @@
+## [1.23.2](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.23.1...v1.23.2) (2026-09-08)
+
+### Performance Improvements
+
+* otimizar imagens e estrutura de background ([#315](https://github.com/LuizMoreira-DevOps/chouga-online/issues/315)) ([7292ed2](https://github.com/LuizMoreira-DevOps/chouga-online/commit/7292ed2174dbe1556c3992f0220c7cc03c88915c))
+
 ## [1.23.1](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.23.0...v1.23.1) (2026-08-27)
 
 ### Bug Fixes
