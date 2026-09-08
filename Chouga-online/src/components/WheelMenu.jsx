@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { FaEnvelope, FaLock, FaUsers } from "react-icons/fa";
+import { FaEnvelope, FaLock, FaUsers, FaCalendarAlt } from "react-icons/fa";
 import { FaShirt } from "react-icons/fa6";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -45,8 +45,8 @@ const menuItems = [
   {
     id: "eventos",
     label: "EVENTOS",
-    icon: <FaLock aria-hidden="true" />,
-    path: "/em-breve",
+    icon: <FaCalendarAlt aria-hidden="true" />,
+    path: "/eventos",
     className: "top-right",
   },
   {

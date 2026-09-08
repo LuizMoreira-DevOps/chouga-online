@@ -11,6 +11,10 @@ const navLinks = [
     path: "/produtos",
   },
   {
+    label: "Eventos",
+    path: "/eventos",
+  },
+  {
     label: "Sobre",
     path: "/sobre",
   },
@@ -23,6 +27,10 @@ const navLinks = [
 function getCurrentSection(pathname) {
   if (pathname.startsWith("/produtos")) {
     return "Produtos";
+  }
+
+  if (pathname === "/eventos") {
+    return "Eventos";
   }
 
   if (pathname === "/sobre") {
