@@ -6,7 +6,7 @@ function formatProductCardTitle(productName) {
     .trim();
 }
 
-function ProductCard({ product }) {
+function ProductCard({ product, priority = false }) {
   const productTitle = product?.title || product?.nome || "Produto Chouga";
   const cardTitle = formatProductCardTitle(productTitle);
 
@@ -29,7 +29,8 @@ function ProductCard({ product }) {
             alt={product.imageAlt || productTitle}
             width="800"
             height="1000"
-            loading="lazy"
+            loading={priority ? "eager" : "lazy"}
+            fetchPriority={priority ? "high" : "auto"}
             decoding="async"
           />
         ) : (

@@ -34,6 +34,28 @@ const staticPages = [
     description:
       "Conheça a história, a identidade e a essência da Chouga Skateboard.",
     ogType: "website",
+    criticalAssets: [
+      {
+        source: "src/assets/images/optimized/sobre/sobre-2.webp",
+        type: "image/webp",
+        sizes:
+          "(max-width: 520px) 100vw, (max-width: 900px) 620px, (max-width: 1400px) 560px, 690px",
+        variants: [
+          {
+            source: "src/assets/images/optimized/sobre/sobre-2-480.webp",
+            width: 480,
+          },
+          {
+            source: "src/assets/images/optimized/sobre/sobre-2-768.webp",
+            width: 768,
+          },
+          {
+            source: "src/assets/images/optimized/sobre/sobre-2.webp",
+            width: 1297,
+          },
+        ],
+      },
+    ],
   },
   {
     route: "/contato",
@@ -170,8 +192,80 @@ function resolveRouteDirectory(route) {
   return targetDirectory;
 }
 
+function applyCriticalAssets(html, page, assetManifest) {
+  const assets = page.criticalAssets ?? [];
+
+  if (assets.length === 0) {
+    return html;
+  }
+
+  function resolveAssetUrl(source) {
+    const entry = assetManifest[source];
+
+    if (!entry?.file) {
+      throw new Error(`Asset critico nao encontrado no manifesto: ${source}`);
+    }
+
+    return `/${entry.file}`;
+  }
+
+  const seen = new Set();
+
+  const links = assets.map((asset) => {
+    const href = resolveAssetUrl(asset.source);
+
+    if (seen.has(href)) {
+      throw new Error(`Preload duplicado na rota ${page.route}: ${href}`);
+    }
+
+    seen.add(href);
+
+    let responsiveAttributes = "";
+
+    if (asset.variants?.length) {
+      if (!asset.sizes) {
+        throw new Error(`Preload responsivo sem sizes na rota ${page.route}.`);
+      }
+
+      const srcSet = asset.variants
+        .map((variant) => {
+          if (!Number.isInteger(variant.width) || variant.width <= 0) {
+            throw new Error(`Largura invalida para o asset: ${variant.source}`);
+          }
+
+          return `${resolveAssetUrl(variant.source)} ${variant.width}w`;
+        })
+        .join(", ");
+
+      responsiveAttributes =
+        ` imagesrcset="${escapeHtmlAttribute(srcSet)}"` +
+        ` imagesizes="${escapeHtmlAttribute(asset.sizes)}"`;
+    }
+
+    return (
+      `<link rel="preload" as="image"` +
+      ` href="${escapeHtmlAttribute(href)}"` +
+      ` type="${escapeHtmlAttribute(asset.type)}"` +
+      responsiveAttributes +
+      ` fetchpriority="high" />`
+    );
+  });
+
+  return replaceRequired(
+    html,
+    /<\/head>/i,
+    `${links.join("\n")}\n</head>`,
+    "fechamento do head",
+  );
+}
+
 async function generateStaticPages() {
   const sourceHtml = await readFile(sourceHtmlPath, "utf-8");
+
+  const assetManifest = JSON.parse(
+    await readFile(resolve(distDirectory, ".vite", "manifest.json"), "utf-8"),
+  );
+
   const fetchedProducts = await fetchActiveProducts(projectDirectory);
   const activeProducts = validateProductSlugs(fetchedProducts);
 
@@ -180,7 +274,11 @@ async function generateStaticPages() {
   for (const page of staticPages) {
     const targetDirectory = resolveRouteDirectory(page.route);
     const targetHtmlPath = resolve(targetDirectory, "index.html");
-    const pageHtml = applyMetadata(sourceHtml, page);
+    const pageHtml = applyCriticalAssets(
+      applyMetadata(sourceHtml, page),
+      page,
+      assetManifest,
+    );
 
     await mkdir(targetDirectory, { recursive: true });
     await writeFile(targetHtmlPath, pageHtml, "utf-8");
@@ -206,7 +304,11 @@ async function generateStaticPages() {
       ogType: "product",
     };
 
-    const productHtml = applyMetadata(sourceHtml, productPage);
+    const productHtml = applyCriticalAssets(
+      applyMetadata(sourceHtml, productPage),
+      productPage,
+      assetManifest,
+    );
 
     await mkdir(targetDirectory, { recursive: true });
     await writeFile(targetHtmlPath, productHtml, "utf-8");

@@ -34,7 +34,7 @@ function Home() {
 
   return (
     <Layout>
-      <PageShell className="home">
+      <PageShell className="home" showBackground>
         <section className="home-section page-section">
           <div className="home-wheels-content">
             <div className="hero-left">

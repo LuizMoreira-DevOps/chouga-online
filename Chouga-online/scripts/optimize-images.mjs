@@ -37,7 +37,7 @@ const responsiveJobs = [
   {
     file: "bg-home.png",
     widths: [1920],
-    quality: 78,
+    quality: 65,
   },
 ];
 
