@@ -1,3 +1,9 @@
+## [1.24.0](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.23.3...v1.24.0) (2026-09-08)
+
+### Features
+
+* criar página de eventos [#181](https://github.com/LuizMoreira-DevOps/chouga-online/issues/181) ([#317](https://github.com/LuizMoreira-DevOps/chouga-online/issues/317)) ([022d1c9](https://github.com/LuizMoreira-DevOps/chouga-online/commit/022d1c9e07dd32d2b2d2483285384a8286d51336))
+
 ## [1.23.3](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.23.2...v1.23.3) (2026-09-08)
 
 ### Bug Fixes
