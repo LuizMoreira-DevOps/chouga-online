@@ -9,8 +9,9 @@ export const eventsPageContent = Object.freeze({
 });
 
 /*
- * Contrato esperado para a futura integração com WordPress:
+ * Conteúdo local usado como fallback quando o CMS estiver indisponível.
  *
+ * Contrato consumido pela página:
  * {
  *   id: string,
  *   title: string,

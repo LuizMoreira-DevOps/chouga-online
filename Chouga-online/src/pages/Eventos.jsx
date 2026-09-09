@@ -1,13 +1,50 @@
+import { useEffect, useState } from "react";
 import { FaCalendarAlt, FaMapMarkerAlt } from "react-icons/fa";
 
 import Layout from "../components/Layout";
 import PageShell from "../components/PageShell";
 
-import { events, eventsPageContent } from "../data/events";
+import { events as fallbackEvents, eventsPageContent } from "../data/events";
 
 import "../css/eventos.css";
 
 function Eventos() {
+  const [events, setEvents] = useState(fallbackEvents);
+  const [loading, setLoading] = useState(true);
+  const [loadFailed, setLoadFailed] = useState(false);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    async function loadEvents() {
+      try {
+        const { getUpcomingEvents } = await import("../services/eventsService");
+        const cmsEvents = await getUpcomingEvents();
+
+        if (isMounted) {
+          setEvents(cmsEvents.length > 0 ? cmsEvents : fallbackEvents);
+        }
+      } catch (error) {
+        console.error("Erro ao carregar eventos do Sanity:", error);
+
+        if (isMounted) {
+          setEvents(fallbackEvents);
+          setLoadFailed(true);
+        }
+      } finally {
+        if (isMounted) {
+          setLoading(false);
+        }
+      }
+    }
+
+    loadEvents();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
   return (
     <Layout>
       <PageShell className="events-page">
@@ -29,6 +66,7 @@ function Eventos() {
             <section
               className="events-agenda"
               aria-labelledby="events-agenda-title"
+              aria-busy={loading}
             >
               <div className="events-section-heading">
                 <span>Agenda</span>
@@ -37,7 +75,16 @@ function Eventos() {
                 </h2>
               </div>
 
-              {events.length > 0 ? (
+              {loading ? (
+                <div className="events-empty" role="status">
+                  <FaCalendarAlt aria-hidden="true" />
+
+                  <div>
+                    <h3>Carregando agenda</h3>
+                    <p>Buscando os próximos eventos da Chouga.</p>
+                  </div>
+                </div>
+              ) : events.length > 0 ? (
                 <div className="events-grid">
                   {events.map((event) => (
                     <article className="event-card" key={event.id}>
@@ -67,8 +114,16 @@ function Eventos() {
                   <FaCalendarAlt aria-hidden="true" />
 
                   <div>
-                    <h3>{eventsPageContent.emptyTitle}</h3>
-                    <p>{eventsPageContent.emptyText}</p>
+                    <h3>
+                      {loadFailed
+                        ? "Agenda temporariamente indisponível"
+                        : eventsPageContent.emptyTitle}
+                    </h3>
+                    <p>
+                      {loadFailed
+                        ? "Não foi possível atualizar os eventos agora. Tente novamente mais tarde."
+                        : eventsPageContent.emptyText}
+                    </p>
                   </div>
                 </div>
               )}

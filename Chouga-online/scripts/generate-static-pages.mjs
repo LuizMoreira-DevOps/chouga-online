@@ -65,6 +65,13 @@ const staticPages = [
     ogType: "website",
   },
   {
+    route: "/eventos",
+    title: "Eventos | Chouga Skateboard",
+    description:
+      "Confira sessões, campeonatos e encontros da Chouga Skateboard.",
+    ogType: "website",
+  },
+  {
     route: "/em-breve",
     title: "Em breve | Chouga Skateboard",
     description:
