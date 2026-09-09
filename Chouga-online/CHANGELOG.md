@@ -1,3 +1,9 @@
+## [1.26.0](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.25.0...v1.26.0) (2026-09-09)
+
+### Features
+
+* exibir eventos por período ([#322](https://github.com/LuizMoreira-DevOps/chouga-online/issues/322)) ([a260cbb](https://github.com/LuizMoreira-DevOps/chouga-online/commit/a260cbbd21aa57ebfb9a5d7176deb0466f562e2c))
+
 ## [1.25.0](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.24.0...v1.25.0) (2026-09-09)
 
 ### Features
