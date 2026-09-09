@@ -1,3 +1,9 @@
+## [1.25.0](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.24.0...v1.25.0) (2026-09-09)
+
+### Features
+
+* integrar Sanity como CMS headless ([#318](https://github.com/LuizMoreira-DevOps/chouga-online/issues/318)) ([f0fb92b](https://github.com/LuizMoreira-DevOps/chouga-online/commit/f0fb92be36bb6f389888ea4097e706f7e3e4b3de))
+
 ## [1.24.0](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.23.3...v1.24.0) (2026-09-08)
 
 ### Features
