@@ -18,8 +18,8 @@ function Eventos() {
 
     async function loadEvents() {
       try {
-        const { getUpcomingEvents } = await import("../services/eventsService");
-        const cmsEvents = await getUpcomingEvents();
+        const { getEventsTimeline } = await import("../services/eventsService");
+        const cmsEvents = await getEventsTimeline();
 
         if (isMounted) {
           setEvents(cmsEvents.length > 0 ? cmsEvents : fallbackEvents);
@@ -81,7 +81,7 @@ function Eventos() {
 
                   <div>
                     <h3>Carregando agenda</h3>
-                    <p>Buscando os próximos eventos da Chouga.</p>
+                    <p>Buscando a agenda de eventos da Chouga.</p>
                   </div>
                 </div>
               ) : events.length > 0 ? (

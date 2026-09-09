@@ -2,27 +2,77 @@ import { defineQuery } from "groq";
 
 import { isSanityConfigured, sanityClient } from "../lib/sanityClient";
 
-const UPCOMING_EVENTS_QUERY = defineQuery(/* groq */ `
-  *[
-    _type == "event" &&
-    eventStatus in ["scheduled", "postponed"] &&
-    defined(startDate) &&
-    defined(endDate) &&
-    endDate >= now()
-  ] | order(startDate asc) {
-    _id,
-    title,
-    summary,
-    startDate,
-    timezone,
-    eventStatus,
-    prominence,
-    location {
-      venue,
-      city,
-      state
+const EVENTS_TIMELINE_QUERY = defineQuery(/* groq */ `
+  {
+    "lastCompleted": *[
+      _type == "event" &&
+      eventStatus in ["scheduled", "postponed"] &&
+      defined(startDate) &&
+      defined(endDate) &&
+      endDate < now()
+    ] | order(endDate desc)[0] {
+      _id,
+      title,
+      summary,
+      startDate,
+      endDate,
+      timezone,
+      eventStatus,
+      prominence,
+      location {
+        venue,
+        city,
+        state
+      },
+      externalUrl
     },
-    externalUrl
+
+    "current": *[
+      _type == "event" &&
+      eventStatus in ["scheduled", "postponed"] &&
+      defined(startDate) &&
+      defined(endDate) &&
+      startDate <= now() &&
+      endDate >= now()
+    ] | order(startDate asc) {
+      _id,
+      title,
+      summary,
+      startDate,
+      endDate,
+      timezone,
+      eventStatus,
+      prominence,
+      location {
+        venue,
+        city,
+        state
+      },
+      externalUrl
+    },
+
+    "future": *[
+      _type == "event" &&
+      eventStatus in ["scheduled", "postponed"] &&
+      defined(startDate) &&
+      defined(endDate) &&
+      startDate > now()
+    ] | order(startDate asc) {
+      _id,
+      title,
+      summary,
+      startDate,
+      endDate,
+      timezone,
+      eventStatus,
+      prominence,
+      location {
+        venue,
+        city,
+        state
+      },
+      externalUrl
+    }
   }
 `);
 
@@ -58,8 +108,8 @@ function formatEventLocation(location) {
   return [location.venue, cityAndState].filter(Boolean).join(" · ");
 }
 
-function normalizeEvent(event) {
-  if (!event?._id || !event.title || !event.startDate) {
+function normalizeEvent(event, period) {
+  if (!event?._id || !event.title || !event.startDate || !event.endDate) {
     return null;
   }
 
@@ -67,21 +117,39 @@ function normalizeEvent(event) {
     id: event._id,
     title: event.title,
     date: event.startDate,
+    endDate: event.endDate,
     displayDate: formatEventDate(event.startDate, event.timezone),
     location: formatEventLocation(event.location),
     description: event.summary || "",
     url: event.externalUrl || undefined,
     status: event.eventStatus,
     prominence: event.prominence,
+    period,
   };
 }
 
-export async function getUpcomingEvents() {
+function normalizeEvents(events, period) {
+  if (!Array.isArray(events)) {
+    return [];
+  }
+
+  return events.map((event) => normalizeEvent(event, period)).filter(Boolean);
+}
+
+export async function getEventsTimeline() {
   if (!isSanityConfigured || !sanityClient) {
     return [];
   }
 
-  const documents = await sanityClient.fetch(UPCOMING_EVENTS_QUERY);
+  const documents = await sanityClient.fetch(EVENTS_TIMELINE_QUERY);
 
-  return (documents ?? []).map(normalizeEvent).filter(Boolean);
+  const lastCompleted = documents?.lastCompleted
+    ? normalizeEvent(documents.lastCompleted, "past")
+    : null;
+
+  return [
+    ...(lastCompleted ? [lastCompleted] : []),
+    ...normalizeEvents(documents?.current, "current"),
+    ...normalizeEvents(documents?.future, "future"),
+  ];
 }
