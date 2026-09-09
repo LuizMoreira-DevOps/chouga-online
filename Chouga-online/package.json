@@ -20,9 +20,11 @@
   "dependencies": {
     "@fontsource/oswald": "^5.2.8",
     "@microsoft/clarity": "^1.0.2",
+    "@sanity/client": "^8.6.1",
     "@supabase/supabase-js": "^2.107.0",
     "@tailwindcss/vite": "^4.2.4",
     "framer-motion": "^12.38.0",
+    "groq": "^6.13.0",
     "lucide-react": "^1.14.0",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",

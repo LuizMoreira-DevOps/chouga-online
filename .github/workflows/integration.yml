@@ -46,6 +46,8 @@ jobs:
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           VITE_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.VITE_SUPABASE_PUBLISHABLE_KEY }}
           VITE_SITE_URL: https://chouga.com.br
+          VITE_SANITY_PROJECT_ID: ${{ vars.VITE_SANITY_PROJECT_ID }}
+          VITE_SANITY_DATASET: ${{ vars.VITE_SANITY_DATASET }}
 
       - name: Build do cliente para o Dependabot
         if: github.actor == 'dependabot[bot]'
