@@ -1,77 +1,101 @@
 import { defineQuery } from "groq";
 
 import { isSanityConfigured, sanityClient } from "../lib/sanityClient";
+import { buildSanityImageUrl } from "../lib/sanityImage";
+
+const EVENT_LIST_FIELDS = /* groq */ `
+  _id,
+  title,
+  "slug": slug.current,
+  summary,
+  startDate,
+  endDate,
+  timezone,
+  eventStatus,
+  prominence,
+  location {
+    venue,
+    city,
+    state
+  },
+  externalUrl,
+  image {
+    asset,
+    alt,
+    hotspot,
+    crop,
+    "lqip": asset->metadata.lqip
+  }
+`;
 
 const EVENTS_TIMELINE_QUERY = defineQuery(/* groq */ `
   {
     "lastCompleted": *[
       _type == "event" &&
       eventStatus in ["scheduled", "postponed"] &&
+      defined(slug.current) &&
       defined(startDate) &&
       defined(endDate) &&
       endDate < now()
     ] | order(endDate desc)[0] {
-      _id,
-      title,
-      summary,
-      startDate,
-      endDate,
-      timezone,
-      eventStatus,
-      prominence,
-      location {
-        venue,
-        city,
-        state
-      },
-      externalUrl
+      ${EVENT_LIST_FIELDS}
     },
 
     "current": *[
       _type == "event" &&
       eventStatus in ["scheduled", "postponed"] &&
+      defined(slug.current) &&
       defined(startDate) &&
       defined(endDate) &&
       startDate <= now() &&
       endDate >= now()
     ] | order(startDate asc) {
-      _id,
-      title,
-      summary,
-      startDate,
-      endDate,
-      timezone,
-      eventStatus,
-      prominence,
-      location {
-        venue,
-        city,
-        state
-      },
-      externalUrl
+      ${EVENT_LIST_FIELDS}
     },
 
     "future": *[
       _type == "event" &&
       eventStatus in ["scheduled", "postponed"] &&
+      defined(slug.current) &&
       defined(startDate) &&
       defined(endDate) &&
       startDate > now()
     ] | order(startDate asc) {
-      _id,
-      title,
-      summary,
-      startDate,
-      endDate,
-      timezone,
-      eventStatus,
-      prominence,
-      location {
-        venue,
-        city,
-        state
-      },
-      externalUrl
+      ${EVENT_LIST_FIELDS}
+    }
+  }
+`);
+
+const EVENT_DETAIL_QUERY = defineQuery(/* groq */ `
+  *[
+    _type == "event" &&
+    slug.current == $slug &&
+    eventStatus in ["scheduled", "postponed"]
+  ][0] {
+    _id,
+    title,
+    "slug": slug.current,
+    summary,
+    description,
+    startDate,
+    endDate,
+    timezone,
+    eventStatus,
+    prominence,
+    location {
+      venue,
+      address,
+      city,
+      state,
+      mapsUrl
+    },
+    externalUrl,
+    image {
+      asset,
+      alt,
+      hotspot,
+      crop,
+      "lqip": asset->metadata.lqip
     }
   }
 `);
@@ -108,23 +132,77 @@ function formatEventLocation(location) {
   return [location.venue, cityAndState].filter(Boolean).join(" · ");
 }
 
+function getEventPeriod(event) {
+  const now = Date.now();
+  const startDate = Date.parse(event.startDate);
+  const endDate = Date.parse(event.endDate);
+
+  if (endDate < now) {
+    return "past";
+  }
+
+  if (startDate <= now && endDate >= now) {
+    return "current";
+  }
+
+  return "future";
+}
+
+function normalizeEventImage(image, title) {
+  if (!image?.asset) {
+    return null;
+  }
+
+  const cardUrl = buildSanityImageUrl(image, {
+    width: 720,
+    height: 480,
+  });
+
+  const detailUrl = buildSanityImageUrl(image, {
+    width: 1440,
+  });
+
+  if (!cardUrl || !detailUrl) {
+    return null;
+  }
+
+  return {
+    alt: image.alt?.trim() || `Imagem de divulgação de ${title}`,
+    cardUrl,
+    detailUrl,
+    lqip: image.lqip || undefined,
+  };
+}
+
 function normalizeEvent(event, period) {
-  if (!event?._id || !event.title || !event.startDate || !event.endDate) {
+  if (
+    !event?._id ||
+    !event.title ||
+    !event.slug ||
+    !event.startDate ||
+    !event.endDate
+  ) {
     return null;
   }
 
   return {
     id: event._id,
+    slug: event.slug,
     title: event.title,
     date: event.startDate,
     endDate: event.endDate,
     displayDate: formatEventDate(event.startDate, event.timezone),
+    displayEndDate: formatEventDate(event.endDate, event.timezone),
+    timezone: event.timezone || "America/Sao_Paulo",
     location: formatEventLocation(event.location),
-    description: event.summary || "",
+    locationDetails: event.location || null,
+    summary: event.summary || "",
+    description: Array.isArray(event.description) ? event.description : [],
+    image: normalizeEventImage(event.image, event.title),
     url: event.externalUrl || undefined,
     status: event.eventStatus,
     prominence: event.prominence,
-    period,
+    period: period || getEventPeriod(event),
   };
 }
 
@@ -152,4 +230,21 @@ export async function getEventsTimeline() {
     ...normalizeEvents(documents?.current, "current"),
     ...normalizeEvents(documents?.future, "future"),
   ];
+}
+
+export async function getEventBySlug(slug) {
+  if (
+    !isSanityConfigured ||
+    !sanityClient ||
+    typeof slug !== "string" ||
+    !slug.trim()
+  ) {
+    return null;
+  }
+
+  const document = await sanityClient.fetch(EVENT_DETAIL_QUERY, {
+    slug: slug.trim(),
+  });
+
+  return document ? normalizeEvent(document) : null;
 }

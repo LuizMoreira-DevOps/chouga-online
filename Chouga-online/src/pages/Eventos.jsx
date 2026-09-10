@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { FaCalendarAlt, FaMapMarkerAlt } from "react-icons/fa";
 
@@ -12,6 +13,12 @@ function Eventos() {
   const [events, setEvents] = useState(fallbackEvents);
   const [loading, setLoading] = useState(true);
   const [loadFailed, setLoadFailed] = useState(false);
+
+  const periodLabels = {
+    past: "Último evento realizado",
+    current: "Acontecendo agora",
+    future: "Evento futuro",
+  };
 
   useEffect(() => {
     let isMounted = true;
@@ -69,7 +76,6 @@ function Eventos() {
               aria-busy={loading}
             >
               <div className="events-section-heading">
-                <span>Agenda</span>
                 <h2 id="events-agenda-title">
                   {eventsPageContent.sectionTitle}
                 </h2>
@@ -87,25 +93,57 @@ function Eventos() {
               ) : events.length > 0 ? (
                 <div className="events-grid">
                   {events.map((event) => (
-                    <article className="event-card" key={event.id}>
-                      <time className="event-date" dateTime={event.date}>
-                        {event.displayDate}
-                      </time>
+                    <article
+                      className={`event-card event-card--${event.period}`}
+                      key={event.id}
+                    >
+                      <Link
+                        className="event-card-link"
+                        to={`/eventos/${encodeURIComponent(event.slug)}`}
+                      >
+                        <div
+                          className={`event-card-media ${
+                            event.image ? "" : "event-card-media--fallback"
+                          }`}
+                        >
+                          {event.image ? (
+                            <img
+                              src={event.image.cardUrl}
+                              alt={event.image.alt}
+                              loading="lazy"
+                              width="720"
+                              height="480"
+                            />
+                          ) : (
+                            <FaCalendarAlt aria-hidden="true" />
+                          )}
+                        </div>
 
-                      <h3>{event.title}</h3>
+                        <div className="event-card-content">
+                          <span className="event-period">
+                            {periodLabels[event.period] ?? "Evento"}
+                          </span>
 
-                      <p className="event-location">
-                        <FaMapMarkerAlt aria-hidden="true" />
-                        {event.location}
-                      </p>
+                          <time className="event-date" dateTime={event.date}>
+                            {event.displayDate}
+                          </time>
 
-                      <p className="event-description">{event.description}</p>
+                          <h3>{event.title}</h3>
 
-                      {event.url && (
-                        <a className="action" href={event.url}>
-                          Ver detalhes
-                        </a>
-                      )}
+                          <p className="event-location">
+                            <FaMapMarkerAlt aria-hidden="true" />
+                            {event.location}
+                          </p>
+
+                          {event.summary && (
+                            <p className="event-description">{event.summary}</p>
+                          )}
+
+                          <span className="event-card-action">
+                            Ver detalhes <span aria-hidden="true">→</span>
+                          </span>
+                        </div>
+                      </Link>
                     </article>
                   ))}
                 </div>

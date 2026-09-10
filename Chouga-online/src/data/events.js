@@ -1,8 +1,8 @@
 export const eventsPageContent = Object.freeze({
   eyebrow: "Chouga na rua",
-  title: "Eventos",
+  title: "Agenda de eventos",
   lead: "Sessões, campeonatos e encontros que fortalecem a cena do skate.",
-  sectionTitle: "Agenda de eventos",
+  sectionTitle: "Eventos",
   emptyTitle: "Novas datas em breve",
   emptyText:
     "A agenda está sendo preparada. Acompanhe a Chouga para não perder o próximo rolê.",

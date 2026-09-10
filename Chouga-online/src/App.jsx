@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import Produtos from "./pages/Produtos";
 import Sobre from "./pages/Sobre";
 import Eventos from "./pages/Eventos";
+import EventoDetalhes from "./pages/EventoDetalhes";
 import ProdutoDetalhes from "./pages/ProdutoDetalhes";
 import NotFound from "./pages/NotFound";
 
@@ -30,6 +31,7 @@ function App() {
       <Route path="/sobre" element={<Sobre />} />
       <Route path="/contato" element={<Contato />} />
       <Route path="/eventos" element={<Eventos />} />
+      <Route path="/eventos/:slug" element={<EventoDetalhes />} />
       <Route path="/em-breve" element={<EmBreve />} />
 
       <Route path="*" element={<NotFound />} />
