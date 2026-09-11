@@ -31,7 +31,7 @@ function App() {
       <Route path="/sobre" element={<Sobre />} />
       <Route path="/contato" element={<Contato />} />
       <Route path="/eventos" element={<Eventos />} />
-      <Route path="/eventos/:slug" element={<EventoDetalhes />} />
+      <Route path="/eventos/:slug" element={<Eventos />} />
       <Route path="/em-breve" element={<EmBreve />} />
 
       <Route path="*" element={<NotFound />} />
