@@ -1,4 +1,6 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { EffectCoverflow } from "swiper/modules";
 import { useNavigate, useParams } from "react-router-dom";
 import { FaCalendarAlt, FaMapMarkerAlt } from "react-icons/fa";
 import { PortableText } from "@portabletext/react";
@@ -9,6 +11,8 @@ import PageShell from "../components/PageShell";
 import { events as fallbackEvents, eventsPageContent } from "../data/events";
 
 import "../css/eventos.css";
+import "swiper/css";
+import "swiper/css/effect-coverflow";
 
 function Eventos() {
   const { slug } = useParams();
@@ -18,6 +22,7 @@ function Eventos() {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [loading, setLoading] = useState(true);
   const [loadFailed, setLoadFailed] = useState(false);
+  const selectedEventRef = useRef(null);
 
   const periodLabels = {
     past: "Evento encerrado",
@@ -128,9 +133,30 @@ function Eventos() {
     return result.slice(0, 3);
   }, [events]);
 
+  function handleSlideChange(swiper) {
+    const event = carouselEvents[swiper.activeIndex];
+
+    if (!event || event.id === selectedEvent?.id) {
+      return;
+    }
+
+    setSelectedEvent(event);
+
+    navigate(`/eventos/${encodeURIComponent(event.slug)}`, {
+      replace: true,
+    });
+  }
+
   function handleSelectEvent(event) {
     setSelectedEvent(event);
     navigate(`/eventos/${encodeURIComponent(event.slug)}`);
+
+    requestAnimationFrame(() => {
+      selectedEventRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    });
   }
 
   return (
@@ -160,58 +186,74 @@ function Eventos() {
                 </div>
               ) : carouselEvents.length > 0 ? (
                 <>
-                  <div className="events-carousel">
+                  <Swiper
+                    className="events-carousel"
+                    modules={[EffectCoverflow]}
+                    effect="coverflow"
+                    centeredSlides
+                    grabCursor
+                    slidesPerView="auto"
+                    onSlideChange={handleSlideChange}
+                    coverflowEffect={{
+                      rotate: 8,
+                      stretch: 0,
+                      depth: 120,
+                      modifier: 1.2,
+                      slideShadows: false,
+                    }}
+                  >
                     {carouselEvents.map((event) => (
-                      <button
-                        type="button"
-                        key={event.id}
-                        className={`event-card event-card--${event.period} ${
-                          selectedEvent?.id === event.id
-                            ? "event-card--selected"
-                            : ""
-                        }`}
-                        onClick={() => handleSelectEvent(event)}
-                      >
-                        <div
-                          className={`event-card-media ${
-                            event.image ? "" : "event-card-media--fallback"
+                      <SwiperSlide className="event-slide" key={event.id}>
+                        <button
+                          type="button"
+                          className={`event-card event-card--${event.period} ${
+                            selectedEvent?.id === event.id
+                              ? "event-card--selected"
+                              : ""
                           }`}
+                          onClick={() => handleSelectEvent(event)}
                         >
-                          {event.image ? (
-                            <img
-                              src={event.image.cardUrl}
-                              alt={event.image.alt}
-                              loading="lazy"
-                              width="720"
-                              height="480"
-                            />
-                          ) : (
-                            <FaCalendarAlt aria-hidden="true" />
-                          )}
-                        </div>
+                          <div
+                            className={`event-card-media ${
+                              event.image ? "" : "event-card-media--fallback"
+                            }`}
+                          >
+                            {event.image ? (
+                              <img
+                                src={event.image.cardUrl}
+                                alt={event.image.alt}
+                                loading="lazy"
+                                width="720"
+                                height="480"
+                              />
+                            ) : (
+                              <FaCalendarAlt aria-hidden="true" />
+                            )}
+                          </div>
 
-                        <div className="event-card-content">
-                          <span className="event-period">
-                            {periodLabels[event.period] ?? "Evento"}
-                          </span>
+                          <div className="event-card-content">
+                            <span className="event-period">
+                              {periodLabels[event.period] ?? "Evento"}
+                            </span>
 
-                          <h3>{event.title}</h3>
+                            <h3>{event.title}</h3>
 
-                          <time className="event-date" dateTime={event.date}>
-                            {event.displayDate}
-                          </time>
+                            <time className="event-date" dateTime={event.date}>
+                              {event.displayDate}
+                            </time>
 
-                          <p className="event-location">
-                            <FaMapMarkerAlt aria-hidden="true" />
-                            {event.location}
-                          </p>
-                        </div>
-                      </button>
+                            <p className="event-location">
+                              <FaMapMarkerAlt aria-hidden="true" />
+                              {event.location}
+                            </p>
+                          </div>
+                        </button>
+                      </SwiperSlide>
                     ))}
-                  </div>
+                  </Swiper>
 
                   {selectedEvent && (
-                    <article className="event-selected">
+                    <article className="event-selected" ref={selectedEventRef}>
                       <header className="event-selected-header">
                         <span className="event-period">
                           {periodLabels[selectedEvent.period] ?? "Evento"}

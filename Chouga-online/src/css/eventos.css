@@ -97,14 +97,15 @@
 }
 
 .events-carousel {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--spacing-5);
+  width: 100%;
+  overflow: hidden;
+
+  padding-block: clamp(24px, 4vw, 48px);
 }
 
-.events-carousel > :only-child {
-  max-width: 420px;
-  justify-self: start;
+.event-slide {
+  width: min(420px, 82vw);
+  height: auto;
 }
 
 /* =========================
@@ -386,10 +387,6 @@
   .events-title {
     font-size: var(--title-sm);
   }
-
-  .events-carousel {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
 }
 
 /* =========================
@@ -416,10 +413,6 @@
 
   .events-lead {
     font-size: var(--text-md);
-  }
-
-  .events-carousel {
-    grid-template-columns: 1fr;
   }
 
   .event-selected-header h2 {
