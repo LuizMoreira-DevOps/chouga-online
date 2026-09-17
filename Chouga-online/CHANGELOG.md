@@ -1,3 +1,9 @@
+## [1.28.0](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.27.0...v1.28.0) (2026-09-17)
+
+### Features
+
+* aprimorar experiência responsiva da página de eventos ([#325](https://github.com/LuizMoreira-DevOps/chouga-online/issues/325)) ([20018e3](https://github.com/LuizMoreira-DevOps/chouga-online/commit/20018e3aa6c91f9cff04e18c74d8c0f4854c0310))
+
 ## [1.27.0](https://github.com/LuizMoreira-DevOps/chouga-online/compare/v1.26.0...v1.27.0) (2026-09-17)
 
 ### Features
