@@ -49,7 +49,7 @@ function EventsCarousel({
               >
                 {event.image ? (
                   <img
-                    src={event.image.detailUrl ?? event.image.cardUrl}
+                    src={event.image.detailUrl}
                     alt={event.image.alt}
                     loading="lazy"
                     width="720"
