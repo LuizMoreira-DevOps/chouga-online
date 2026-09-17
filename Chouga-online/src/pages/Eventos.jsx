@@ -1,28 +1,49 @@
-import { useEffect, useMemo, useRef, useState } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { EffectCoverflow } from "swiper/modules";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { FaCalendarAlt, FaMapMarkerAlt } from "react-icons/fa";
-import { PortableText } from "@portabletext/react";
+import { FaCalendarAlt } from "react-icons/fa";
 
 import Layout from "../components/Layout";
 import PageShell from "../components/PageShell";
+import EventsMobileReel from "../components/events/EventsMobileReel";
+import EventsCarousel from "../components/events/EventsCarousel";
 
 import { events as fallbackEvents, eventsPageContent } from "../data/events";
 
 import "../css/eventos.css";
-import "swiper/css";
-import "swiper/css/effect-coverflow";
+
+function useMediaQuery(query) {
+  const [matches, setMatches] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia(query);
+
+    function handleChange() {
+      setMatches(mediaQuery.matches);
+    }
+
+    handleChange();
+
+    mediaQuery.addEventListener("change", handleChange);
+
+    return () => {
+      mediaQuery.removeEventListener("change", handleChange);
+    };
+  }, [query]);
+
+  return matches;
+}
 
 function Eventos() {
   const { slug } = useParams();
   const navigate = useNavigate();
 
+  const isReelViewport = useMediaQuery("(max-width: 349px)");
+
   const [events, setEvents] = useState(fallbackEvents);
   const [selectedEvent, setSelectedEvent] = useState(null);
+  const [previewEvent, setPreviewEvent] = useState(null);
   const [loading, setLoading] = useState(true);
   const [loadFailed, setLoadFailed] = useState(false);
-  const selectedEventRef = useRef(null);
 
   const periodLabels = {
     past: "Evento encerrado",
@@ -107,7 +128,7 @@ function Eventos() {
     };
   }, [slug]);
 
-  const carouselEvents = useMemo(() => {
+  const displayEvents = useMemo(() => {
     const pastEvent = events.find((event) => event.period === "past");
 
     const currentEvents = events.filter((event) => event.period === "current");
@@ -133,8 +154,12 @@ function Eventos() {
     return result.slice(0, 3);
   }, [events]);
 
+  const selectedIndex = displayEvents.findIndex(
+    (event) => event.id === selectedEvent?.id,
+  );
+
   function handleSlideChange(swiper) {
-    const event = carouselEvents[swiper.activeIndex];
+    const event = displayEvents[swiper.activeIndex];
 
     if (!event || event.id === selectedEvent?.id) {
       return;
@@ -149,166 +174,102 @@ function Eventos() {
 
   function handleSelectEvent(event) {
     setSelectedEvent(event);
-    navigate(`/eventos/${encodeURIComponent(event.slug)}`);
+    setPreviewEvent(event);
 
-    requestAnimationFrame(() => {
-      selectedEventRef.current?.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    });
+    navigate(`/eventos/${encodeURIComponent(event.slug)}`);
+  }
+
+  if (loading) {
+    return (
+      <Layout>
+        <PageShell className="events-page">
+          <div className="events-empty" role="status">
+            <FaCalendarAlt aria-hidden="true" />
+
+            <div>
+              <h3>Carregando eventos</h3>
+              <p>Buscando os eventos da Chouga.</p>
+            </div>
+          </div>
+        </PageShell>
+      </Layout>
+    );
+  }
+
+  if (displayEvents.length === 0) {
+    return (
+      <Layout>
+        <PageShell className="events-page">
+          <div className="events-empty">
+            <div>
+              <h3>
+                {loadFailed
+                  ? "Eventos temporariamente indisponíveis"
+                  : eventsPageContent.emptyTitle}
+              </h3>
+
+              <p>
+                {loadFailed
+                  ? "Não foi possível atualizar os eventos agora. Tente novamente mais tarde."
+                  : eventsPageContent.emptyText}
+              </p>
+            </div>
+          </div>
+        </PageShell>
+      </Layout>
+    );
+  }
+
+  if (isReelViewport) {
+    return (
+      <Layout hideFooter>
+        <EventsMobileReel
+          events={displayEvents}
+          selectedIndex={selectedIndex}
+        />
+      </Layout>
+    );
   }
 
   return (
     <Layout>
-      <PageShell className="events-page">
+      <PageShell className="events-page events-page--carousel">
         <section className="events-section page-section">
           <div className="events-container page-container">
-            <header className="events-hero">
-              <div className="events-copy">
-                <span className="events-tag">{eventsPageContent.eyebrow}</span>
-
-                <h1 className="events-title">{eventsPageContent.title}</h1>
-
-                <p className="events-lead">{eventsPageContent.lead}</p>
-              </div>
-            </header>
-
-            <section className="events-showcase" aria-busy={loading}>
-              {loading ? (
-                <div className="events-empty" role="status">
-                  <FaCalendarAlt aria-hidden="true" />
-
-                  <div>
-                    <h3>Carregando eventos</h3>
-                    <p>Buscando os eventos da Chouga.</p>
-                  </div>
-                </div>
-              ) : carouselEvents.length > 0 ? (
-                <>
-                  <Swiper
-                    className="events-carousel"
-                    modules={[EffectCoverflow]}
-                    effect="coverflow"
-                    centeredSlides
-                    grabCursor
-                    slidesPerView="auto"
-                    onSlideChange={handleSlideChange}
-                    coverflowEffect={{
-                      rotate: 8,
-                      stretch: 0,
-                      depth: 120,
-                      modifier: 1.2,
-                      slideShadows: false,
-                    }}
-                  >
-                    {carouselEvents.map((event) => (
-                      <SwiperSlide className="event-slide" key={event.id}>
-                        <button
-                          type="button"
-                          className={`event-card event-card--${event.period} ${
-                            selectedEvent?.id === event.id
-                              ? "event-card--selected"
-                              : ""
-                          }`}
-                          onClick={() => handleSelectEvent(event)}
-                        >
-                          <div
-                            className={`event-card-media ${
-                              event.image ? "" : "event-card-media--fallback"
-                            }`}
-                          >
-                            {event.image ? (
-                              <img
-                                src={event.image.cardUrl}
-                                alt={event.image.alt}
-                                loading="lazy"
-                                width="720"
-                                height="480"
-                              />
-                            ) : (
-                              <FaCalendarAlt aria-hidden="true" />
-                            )}
-                          </div>
-
-                          <div className="event-card-content">
-                            <span className="event-period">
-                              {periodLabels[event.period] ?? "Evento"}
-                            </span>
-
-                            <h3>{event.title}</h3>
-
-                            <time className="event-date" dateTime={event.date}>
-                              {event.displayDate}
-                            </time>
-
-                            <p className="event-location">
-                              <FaMapMarkerAlt aria-hidden="true" />
-                              {event.location}
-                            </p>
-                          </div>
-                        </button>
-                      </SwiperSlide>
-                    ))}
-                  </Swiper>
-
-                  {selectedEvent && (
-                    <article className="event-selected" ref={selectedEventRef}>
-                      <header className="event-selected-header">
-                        <span className="event-period">
-                          {periodLabels[selectedEvent.period] ?? "Evento"}
-                        </span>
-
-                        <h2>{selectedEvent.title}</h2>
-
-                        <time
-                          className="event-date"
-                          dateTime={selectedEvent.date}
-                        >
-                          {selectedEvent.displayDate}
-                        </time>
-
-                        <p className="event-location">
-                          <FaMapMarkerAlt aria-hidden="true" />
-                          {selectedEvent.location}
-                        </p>
-
-                        {selectedEvent.summary && (
-                          <p className="event-description">
-                            {selectedEvent.summary}
-                          </p>
-                        )}
-                      </header>
-
-                      {selectedEvent.description?.length > 0 && (
-                        <div className="event-selected-description">
-                          <PortableText value={selectedEvent.description} />
-                        </div>
-                      )}
-                    </article>
-                  )}
-                </>
-              ) : (
-                <div className="events-empty">
-                  <div>
-                    <h3>
-                      {loadFailed
-                        ? "Eventos temporariamente indisponíveis"
-                        : eventsPageContent.emptyTitle}
-                    </h3>
-
-                    <p>
-                      {loadFailed
-                        ? "Não foi possível atualizar os eventos agora. Tente novamente mais tarde."
-                        : eventsPageContent.emptyText}
-                    </p>
-                  </div>
-                </div>
-              )}
-            </section>
+            <EventsCarousel
+              events={displayEvents}
+              selectedEvent={selectedEvent}
+              selectedIndex={selectedIndex}
+              periodLabels={periodLabels}
+              onSlideChange={handleSlideChange}
+              onSelectEvent={handleSelectEvent}
+            />
           </div>
         </section>
       </PageShell>
+
+      {previewEvent?.image && (
+        <div
+          className="event-preview"
+          role="dialog"
+          aria-modal="true"
+          aria-label={`Visualização de ${previewEvent.title}`}
+        >
+          <button
+            type="button"
+            className="event-preview-close"
+            onClick={() => setPreviewEvent(null)}
+            aria-label="Fechar visualização"
+          >
+            ×
+          </button>
+
+          <img
+            src={previewEvent.image.detailUrl}
+            alt={previewEvent.image.alt}
+          />
+        </div>
+      )}
     </Layout>
   );
 }
