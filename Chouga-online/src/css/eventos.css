@@ -435,11 +435,45 @@
   }
 
   .events-showcase {
-    padding-block: 24px;
+    min-height: calc(100dvh - var(--header-height-mobile));
+
+    padding-block: 14px;
   }
 
   .events-carousel {
-    padding-block: 16px;
+    padding-block: 0;
+  }
+
+  .event-card {
+    display: flex;
+    flex-direction: column;
+
+    height: calc(100dvh - var(--header-height-mobile) - 48px);
+  }
+
+  .event-card-media {
+    display: block;
+    width: 100%;
+    height: auto;
+
+    min-height: 0;
+
+    aspect-ratio: auto;
+
+    overflow: hidden;
+  }
+
+  .event-card-media img {
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    object-fit: initial;
+  }
+
+  .event-card-content {
+    padding: 14px 16px;
   }
 }
 
