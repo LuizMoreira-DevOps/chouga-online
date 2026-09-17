@@ -3,6 +3,8 @@ import { dirname, isAbsolute, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { fetchActiveProducts } from "./lib/fetch-active-products.mjs";
 import { validateProductSlugs } from "./lib/validate-product-slugs.mjs";
+import { fetchPublishedEvents } from "./lib/fetch-published-events.mjs";
+import { validateEventSlugs } from "./lib/validate-event-slugs.mjs";
 
 const scriptDirectory = dirname(fileURLToPath(import.meta.url));
 const projectDirectory = resolve(scriptDirectory, "..");
@@ -278,6 +280,43 @@ async function generateStaticPages() {
 
   console.log(`[SSG] ${activeProducts.length} produtos ativos encontrados.`);
 
+  const fetchedEvents = await fetchPublishedEvents(projectDirectory);
+  const publishedEvents = validateEventSlugs(fetchedEvents);
+
+  console.log(
+    `[SSG] ${publishedEvents.length} eventos publicados encontrados.`,
+  );
+
+  for (const event of publishedEvents) {
+    const eventRoute = `/eventos/${event.slug}`;
+    const targetDirectory = resolveRouteDirectory(eventRoute);
+    const targetHtmlPath = resolve(targetDirectory, "index.html");
+
+    const eventPage = {
+      route: eventRoute,
+      title: `${event.title} | Chouga Skateboard`,
+      description:
+        event.summary ||
+        `Confira os detalhes do evento ${event.title} da Chouga Skateboard.`,
+      ogType: "website",
+    };
+
+    const eventHtml = applyCriticalAssets(
+      applyMetadata(sourceHtml, eventPage),
+      eventPage,
+      assetManifest,
+    );
+
+    await mkdir(targetDirectory, { recursive: true });
+    await writeFile(targetHtmlPath, eventHtml, "utf-8");
+
+    console.log(`[SSG] Evento gerado: ${eventRoute}`);
+  }
+
+  console.log(
+    `[SSG] ${publishedEvents.length} paginas de evento geradas com sucesso.`,
+  );
+
   for (const page of staticPages) {
     const targetDirectory = resolveRouteDirectory(page.route);
     const targetHtmlPath = resolve(targetDirectory, "index.html");
@@ -328,13 +367,17 @@ async function generateStaticPages() {
   );
 
   const staticRoutes = staticPages.map((page) => page.route);
+
   const productRoutes = activeProducts.map(
     (product) => `/produtos/${product.slug}`,
   );
 
+  const eventRoutes = publishedEvents.map((event) => `/eventos/${event.slug}`);
+
   const sitemapRoutes = [
     ...staticRoutes.filter((route) => route !== "/em-breve"),
     ...productRoutes,
+    ...eventRoutes,
   ];
 
   const sitemap = generateSitemap(sitemapRoutes);
@@ -345,9 +388,11 @@ async function generateStaticPages() {
 
   const manifest = {
     generatedAt: new Date().toISOString(),
-    totalRoutes: staticRoutes.length + productRoutes.length,
+    totalRoutes:
+      staticRoutes.length + productRoutes.length + eventRoutes.length,
     staticRoutes,
     productRoutes,
+    eventRoutes,
   };
 
   await writeFile(

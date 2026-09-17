@@ -153,7 +153,15 @@ async function validateSsgOutput() {
     throw new Error("productRoutes deve ser um array.");
   }
 
-  const routes = [...manifest.staticRoutes, ...manifest.productRoutes];
+  if (!Array.isArray(manifest.eventRoutes)) {
+    throw new Error("eventRoutes deve ser um array.");
+  }
+
+  const routes = [
+    ...manifest.staticRoutes,
+    ...manifest.productRoutes,
+    ...manifest.eventRoutes,
+  ];
 
   if (manifest.totalRoutes !== routes.length) {
     throw new Error(

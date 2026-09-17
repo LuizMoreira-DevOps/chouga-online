@@ -29,7 +29,7 @@ function getCurrentSection(pathname) {
     return "Produtos";
   }
 
-  if (pathname === "/eventos") {
+  if (pathname.startsWith("/eventos")) {
     return "Eventos";
   }
 
@@ -45,8 +45,8 @@ function getCurrentSection(pathname) {
 }
 
 function isCurrentSection(pathname, path) {
-  if (path === "/produtos") {
-    return pathname.startsWith("/produtos");
+  if (path === "/produtos" || path === "/eventos") {
+    return pathname.startsWith(path);
   }
 
   return pathname === path;
