@@ -24,7 +24,7 @@ function EventsMobileReel({ events, selectedIndex }) {
           <article className="event-reel-item" key={event.id}>
             {event.image ? (
               <img
-                src={event.image.detailUrl}
+                src={event.image.detailUrl ?? event.image.cardUrl}
                 alt={event.image.alt}
                 loading="lazy"
               />
